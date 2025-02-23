@@ -1,0 +1,42 @@
+# Variables de entorno
+.env
+
+# Base de datos
+db.sqlite3
+
+# Ignora la carpeta media
+media
+
+# ficheros con configuraciones
+secrets.txt
+secrets_OFICIAL_MUHIA.txt
+secrets_test_MNK.txt
+
+# el settings
+tienda/settings.py
+
+# ficheros basura
+cart/migrations/*
+cart/__pycache__/*
+catalog/migrations/*
+catalog/__pycache__/*
+ccheckout/migrations/*
+ccheckout/__pycache__/*
+contact/migrations/*
+contact/__pycache__/*
+pages/migrations/*
+pages/__pycache__/*
+promo/migrations/*
+promo/__pycache__/*
+registration/migrations/*
+registration/__pycache__/*
+stores/migrations/*
+stores/__pycache__/*
+utils/migrations/*
+utils/__pycache__/*
+sent_email
+tienda/settings.py
+tienda/__pycache__/*
+tienda/wsgi.py/*
+
+
