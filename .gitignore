@@ -4,8 +4,9 @@
 # Base de datos
 db.sqlite3
 
-# Ignora la carpeta media
+# Ignora la carpeta media y static_root
 media
+static_root
 
 # ficheros con configuraciones
 secrets.txt
