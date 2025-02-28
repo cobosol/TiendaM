@@ -1,5 +1,6 @@
 from django.urls import path, re_path
 from . import views
+from .views import ProductGipproListView
 from catalog.views import show_search, gestion_productos,eliminar_producto,crear_producto,actualizar_producto, gestion_productos_almacen,eliminar_producto_almacen,crear_producto_almacen,actualizar_producto_almacen
 from . import views
 #from ppreview import views
@@ -10,6 +11,7 @@ urlpatterns = [
     path("categoria/<category_slug>/", views.show_category, name='catalog_category'),
     path("producto/<product_slug>/", views.show_product, name='catalog_product'),
     path("productos/<productSearch>/", views.show_search, name='product_search'),
+    path('listarGippro/', ProductGipproListView.as_view(), name='product-gippro-list'),
     path("todos/", views.show_all_active, name='all_products'),
     path('gestion/', views.i_admin, name='gestion'),
     path('productos/', gestion_productos.as_view( template_name="catalog/products_admin.html"), name='productos'),
