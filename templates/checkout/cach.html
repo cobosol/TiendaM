@@ -5,6 +5,7 @@
 {% block content %}
 
 
+
     <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-2">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
@@ -83,16 +84,6 @@
         </div>
     </div>
     </div>
-</div>
-
-<div class="row px-xl-5">
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li class="{{ message.tags }} text-red">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
 </div>
 
 {% endblock %}

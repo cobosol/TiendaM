@@ -16,6 +16,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 #from django.views import View
 from django.views.generic import ListView, DetailView 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from rest_framework import generics
 
 # Habilitamos los formularios en Django
 from django import forms
@@ -29,6 +30,12 @@ from stores.models import Store, Product_Sales
 from catalog.models import *
 from pages.models import *
 from .forms import ProductAdminForm, ProductForm, ProductAlmacenForm
+from .serializers import ProductsGipproSerializer
+
+class ProductGipproListView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductsGipproSerializer
+
 
 def index(request, template_name="index.html"):
     context = {'name':'Tienda Virtual MUHIA'}
@@ -184,7 +191,7 @@ class gestion_productos(ListView):
 class crear_producto(SuccessMessageMixin, CreateView):
     model = Product
     form = ProductForm
-    fields = ('name', 'gname', 'presentation', 'brand', 'sku', 'price_base', 'old_price', 
+    fields = ('name', 'gname', 'presentation', 'brand', 'sku', 'price', 'price_base', 'old_price', 
               'image', 'is_active', 'is_bestseller', 'is_featured', 'prod_datasheet', 'description', 
               'is_feedstock', 'available_CUP', 'available_MLC',
               'meta_keywords', 'meta_description', 'categories')

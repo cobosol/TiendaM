@@ -169,7 +169,6 @@ def create_order(request, transaction_id, usd = True, cach = False):
         deliveryInfo = get_object_or_404(DeliveryInfo, client=request.user)
         cart_subtotal = cart.cart_subtotal(request)
         order.delivery_price = cart.cart_delivery_price(request, cart_subtotal, MND)
-        print(order.delivery_price)
     else:
         if cach: # Si se va a pagar en efectivo guardo la información de la Form para efectivo
             checkout_form = CachForm(request.POST, instance=order)
@@ -222,8 +221,6 @@ def create_order(request, transaction_id, usd = True, cach = False):
             oi.save()
         order.update_status(Order.SUBMITTED) 
         order.save()
-        print(order.delivery_price)
-        print(order.total)
         # all set, empty cart
         cart.empty_cart(request)
     # return the new order object
@@ -280,7 +277,7 @@ def export_pdf(request, id_orden):
     data['email'] = order.user.email
     data['phone'] = order.payment_phone
     data['address'] = user_profile.address
-    data['importe'] = decimal.Decimal(order.total)
+    data['importe'] = decimal.Decimal(round(order.total, 2))
     data['delivery_name'] = order.delivery_name
     if order.delivery_street and order.delivery_apto and order.delivery_between:
         delivery_add1 = order.delivery_street + " " + order.delivery_apto + " entre " + order.delivery_between + ". " + order.SUBSTATE[order.delivery_substate][1] + ", " + order.delivery_state

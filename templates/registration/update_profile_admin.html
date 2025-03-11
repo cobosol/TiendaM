@@ -13,12 +13,12 @@
 
 <main role="main">
   <div id="Actualizar estado" class="col-lg-4">
-    <h4 class="m-0 bg-primary mb-3 text-center text-light" style="font-family: sans-serif;">Actualizar tipo de moneda</h4>
+    <h4 class="m-0 mb-3 text-center text-primary" style="font-family: sans-serif;">Actualizar tipo de moneda</h4>
     <form action="." method="post" >
         {% csrf_token %}
         {{ form.money_type }}
-        <h4 class="m-0 bg-primary mb-3 text-center text-light" style="font-family: sans-serif;">Escoger tienda de preferencia</h4>
-        {{ form.prefered_store }}
+<!--         <h4 class="m-0 bg-primary mb-3 text-center text-light" style="font-family: sans-serif;">Escoger tienda de preferencia</h4>
+        {{ form.prefered_store }} -->
         <input type="submit" class="btn btn-block btn-primary my-2 py-2" name= "submit" value="Actualizar" class="submit" />
     </form>
 </div>

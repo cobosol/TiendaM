@@ -92,8 +92,8 @@ def update_profile_admin2(request, template_name="registration/update_profile_ad
                 if (user.is_authenticated):
                     profile = get_object_or_404(Profile, user = user)
                     profile.money_type = int(postdata['money_type'])
-                    store_pk = int(postdata['prefered_store'])
-                    profile.prefered_store =  get_object_or_404(Store, pk = store_pk) 
+                    #store_pk = int(postdata['prefered_store'])
+                    #profile.prefered_store =  get_object_or_404(Store, pk = store_pk) 
                     profile.save()
                     url = reverse('home')
                     return HttpResponseRedirect(url)
