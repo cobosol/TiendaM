@@ -181,7 +181,7 @@
                         {% else %}
                             <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Ir a pagar" alt="Checkout" />
                         {% endif %}
-                        {% if vendedor %}
+                        {% if vendedor == 'True' or comercial == 'True' %}
                         {% if MND == 'USD' or MND == 'CUP'%}
                         <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Confirmar pago" alt="Efectivo" />
                         {% endif %}

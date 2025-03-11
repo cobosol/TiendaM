@@ -26,7 +26,7 @@
     <link href="/static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/style2.css" rel="stylesheet">
 </head>
 
 <body>
@@ -41,7 +41,7 @@
                     <img class="flex-grow-2 text-center" id="logo" src={% static "img/LogoStrech.png" %} width="50%" href="https://produccionesmuhia.ca"></a>
                 </div>
             </div>
-            <div class="col-lg-3 d-lg-block">
+            <div id="buscador"  class="col-lg-3 d-lg-block">
                 <form method="post" action=".">
                     {% csrf_token %}    
                     <div class="input-group">
@@ -56,7 +56,7 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-6">
+            <div id="menú principal" class="col-lg-6">
                 <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
@@ -103,7 +103,7 @@
                                     {% endif %}
                                     {% if vendedor == 'True' or request.user.is_staff or comercial == 'True'%}
                                         <a href="{% url 'gestion' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar productos</i></a>
-                                        <a href="/accounts/profile/admin/" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar perfil</i></a>        
+                                        <a href="/accounts/profile/admin/" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Cambiar moneda</i></a>        
                                     {% endif %}
                                     {% if marketing == 'True' or request.user.is_staff %}
                                         <a href="{% url 'banners' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar banners</i></a>

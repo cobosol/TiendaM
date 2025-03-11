@@ -191,7 +191,7 @@ class gestion_productos(ListView):
 class crear_producto(SuccessMessageMixin, CreateView):
     model = Product
     form = ProductForm
-    fields = ('name', 'gname', 'presentation', 'brand', 'sku', 'price_base', 'old_price', 
+    fields = ('name', 'gname', 'presentation', 'brand', 'sku', 'price', 'price_base', 'old_price', 
               'image', 'is_active', 'is_bestseller', 'is_featured', 'prod_datasheet', 'description', 
               'is_feedstock', 'available_CUP', 'available_MLC',
               'meta_keywords', 'meta_description', 'categories')

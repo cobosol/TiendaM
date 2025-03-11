@@ -194,26 +194,30 @@ def update_cart(request):
         postdata = request.POST.copy()
         item_id = postdata['item_id']
         quantity = postdata['quantity']
-        int_quantity = int(quantity)
-        if int(quantity) - int_quantity == 0:
-            cart_item = get_single_item(request, item_id)
-            if cart_item:
-                if int(quantity) != cart_item.quantity:
-                    #dif = int(quantity) - cart_item.quantity
-                    if cart_item.product.count >= int(quantity):
-                        cart_item.quantity = int(quantity)
-                        #cart_item.product.save()
-                        cart_item.save()
-                    else:
-                        text = "No existe esa cantidad del producto {}.".format(cart_item.product.name)
-                        messages.info(request, text)
-            if int(quantity) <= 0:
-                remove_from_cart(request)
-            return cart_item.quantity
-        else:
-            text = "La cantidad debe ser un número entero"
-            print(text)
-            messages.info(request, text)
+        try: 
+            int_quantity = int(quantity)
+            if int(quantity) - int_quantity == 0:
+                cart_item = get_single_item(request, item_id)
+                if cart_item:
+                    if int(quantity) != cart_item.quantity:
+                        #dif = int(quantity) - cart_item.quantity
+                        if cart_item.product.count >= int(quantity):
+                            cart_item.quantity = int(quantity)
+                            #cart_item.product.save()
+                            cart_item.save()
+                        else:
+                            text = "No existe esa cantidad del producto {}.".format(cart_item.product.name)
+                            messages.info(request, text)
+                if int(quantity) <= 0:
+                    remove_from_cart(request)
+                return cart_item.quantity
+            else:
+                text = "La cantidad debe ser un número entero"
+                print(text)
+                messages.info(request, text)
+        except:
+            text = "Ocurrió algún error al actualizar el carrito. Por favor verifique los datos. Si persiste el error por favor, contacte con nosotros"
+            messages.error(request, text)
 
 # remove a single item from cart Rvisar porue ya actulice productos por otra parte creo
 def remove_from_cart(request):

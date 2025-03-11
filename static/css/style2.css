@@ -9686,7 +9686,7 @@ table#receipt{
 
 .message-container {
   position: fixed;
-  top: 50px;
+  top: 60px;
   right: 20px;
   z-index: 1000;
   max-width: 300px;
@@ -9694,7 +9694,7 @@ table#receipt{
 
 .message {
   padding: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   border-radius: 5px;
   color: black;
   opacity: 0.95;

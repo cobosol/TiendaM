@@ -244,7 +244,7 @@ def cach(request, template_name='checkout/cach.html'):
     deli = cart.get_delivery(request)
     if deli == '3':
         envio = True 
-    if (request.user.groups.filter(name='vendedores').exists() or request.user.is_superuser):
+    if (request.user.groups.filter(name = 'vendedores').exists() or request.user.groups.filter(name = 'comercial').exists() or request.user.is_staff):
         cobra_efectivo = True
     return render(request, template_name, locals())
 
@@ -289,7 +289,7 @@ def pagar(request, template_name='checkout/pagar.html'):
     deli = cart.get_delivery(request)
     if deli == '3':
         envio = True 
-    if (request.user.groups.filter(name='vendedor').exists() or request.user.is_superuser):
+    if (request.user.groups.filter(name = 'vendedores').exists() or request.user.groups.filter(name = 'comercial').exists() or request.user.is_staff):
         cobra_efectivo = True
     return render(request, template_name, locals())
 
