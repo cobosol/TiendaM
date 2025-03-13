@@ -149,6 +149,7 @@ def add_to_cart(request, p_slug, quantity=1):
         else:
             return True
     else:
+        print("No autenticado")
         messages.error(request, "Debe estar autenticado para efectuar compras")
         url = '/accounts/login/'
         return HttpResponseRedirect(url)       

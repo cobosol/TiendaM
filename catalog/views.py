@@ -196,15 +196,13 @@ def gestion_productos(request, template_name="catalog/productos_admin.html"):
             if postdata['submit'] == 'Ver':
                 form = SelectCategoryForm(request, postdata)
                 form.selected_category = postdata['selected_category']
-                print(postdata['selected_category'])
                 c = get_object_or_404(Category, pk=postdata['selected_category'])
-                print(c.name)
                 object_list = c.product_set.all()
                 #object_list = Product.objects.all()
         else:
             object_list = Product.objects.all()
     except:
-        text = "Error al seleccionar el almacén"
+        text = "Error al seleccionar la categoría"
         messages.error(request, text)
     context={'object_list':object_list, 'form':form}
     return render(request, template_name, context)
@@ -220,10 +218,11 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
                 c = get_object_or_404(Category, pk=postdata['selected_category'])
                 object_list = c.product_set.all()
             elif postdata['submit'] == 'Comprar':
+                print("A comprar")
                 product_slug = postdata.get('product_slug','') 
                 if not cart.add_to_cart(request, product_slug):
+                    print("No adicionó")
                     url = '/accounts/login/'
-                    flag = False
                     return HttpResponseRedirect(url)  
                 else:
                     flag = True

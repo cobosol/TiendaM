@@ -113,7 +113,7 @@
                             </div>
                         </div>
                             {% if not request.user.is_authenticated %}
-                                <a href="{% url 'login' %}" class="nav-item nav-link text-primary" style="font-family: sans-serif;">Entrar / </a>
+                                <a href="{% url 'login' %}?next={{ request.path }}" class="nav-item nav-link text-primary" style="font-family: sans-serif;">Entrar / </a>
                                 <a href="{% url 'signup' %}" class="nav-item nav-link text-primary" style="font-family: sans-serif;">Registrarse</a>
                             {% else %}
                                 <a href="{% url 'profile' %}" class="nav-item nav-link  text-primary" style="font-family: sans-serif;">Perfil</a>
