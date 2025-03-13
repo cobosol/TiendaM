@@ -217,6 +217,10 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
                 form.selected_category = postdata['selected_category']
                 c = get_object_or_404(Category, pk=postdata['selected_category'])
                 object_list = c.product_set.all()
+            elif postdata['submit'] == 'Materias primas':
+                object_list = Product.objects.filter(is_feedstock=True)
+            elif postdata['submit'] == 'Productos terminados':
+                object_list = Product.objects.filter(is_feedstock=False)
             elif postdata['submit'] == 'Comprar':
                 print("A comprar")
                 product_slug = postdata.get('product_slug','') 
