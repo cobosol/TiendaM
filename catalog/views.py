@@ -218,10 +218,11 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
                 c = get_object_or_404(Category, pk=postdata['selected_category'])
                 object_list = c.product_set.all()
             elif postdata['submit'] == 'Comprar':
+                print("A comprar")
                 product_slug = postdata.get('product_slug','') 
                 if not cart.add_to_cart(request, product_slug):
+                    print("No adicionó")
                     url = '/accounts/login/'
-                    flag = False
                     return HttpResponseRedirect(url)  
                 else:
                     flag = True

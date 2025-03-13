@@ -15,7 +15,7 @@ def index_view(request, template_name="index.html"):
     offers1 = Offer.objects.filter(main=True)
     offers2 = Offer.objects.filter(second=True)
     if not products.exists() or not banners.exists() or not offers1.exists() or not offers2.exists():
-        return HttpResponseRedirect('https://testtienda.produccionesmuhia.ca/admin')
+        return HttpResponseRedirect('https://tienda.produccionesmuhia.ca/admin')
     else:
         offer1 = offers1[0]
         offer2 = offers2[0]
