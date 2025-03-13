@@ -12,19 +12,33 @@
   </div>
 </div>
 <!-- Page Header End -->
-<div id="Seleccionar categoría" class="row px-xl-12">
-  <form method="post" action=".">
-    {% csrf_token %}
-<!--     <div class="input-group"> -->
-      <p><h6 class="font-weight-semi-bold text-primary" style="font-family:sans-serif ;">Seleccione la categoría</h6></p>
+<div id="Filtros" class="row px-xl-12">
+    <div id="Por categorías" class="col">
+      <form method="post" action=".">
+        {% csrf_token %}
+        <p><h6 class="font-weight-semi-bold text-primary" style="font-family:sans-serif ;">Seleccione la categoría</h6></p>
         <div class="input-group-append">
             <span class="input-group-text bg-transparent text-primary">
               {{form.selected_category}}
               <input type="submit" name="submit" value="Ver" class="btn btn-block btn-primary my-1 py-1"/>
             </span>
         </div>
-<!--     </div> -->
-  </form>
+      </form>
+    </div>
+    <div id="Materias primas" class="col">
+      <form method="post" action=".">
+        {% csrf_token %}
+      <input type="submit" name="submit" value="Materias primas" class="btn btn-block btn-primary my-1 py-1"/>
+      </form>
+    </div>
+    <div id="Productos terminados" class=" col">
+      <form method="post" action=".">
+        {% csrf_token %}
+      <input type="submit" name="submit" value="Productos terminados" class="btn btn-block btn-primary my-1 py-1"/>
+      </form>
+    </div>
+  <div id="Vacio" class="col">
+  </div>
 </div>
 
   <div class="container mt-3">
