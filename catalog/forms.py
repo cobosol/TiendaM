@@ -68,3 +68,10 @@ class SelectStoreForm(forms.Form):
     def __init__(self, request=None, *args, **kwargs):
         super(SelectStoreForm, self).__init__(*args, **kwargs)
 
+class SelectCategoryForm(forms.Form):    
+    from .models import Category
+    selected_category = forms.ModelChoiceField(queryset=Category.objects.all())
+
+    def __init__(self, request=None, *args, **kwargs):
+        super(SelectCategoryForm, self).__init__(*args, **kwargs)
+

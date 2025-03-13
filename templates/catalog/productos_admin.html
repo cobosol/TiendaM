@@ -2,7 +2,7 @@
 {% load static %}
 {% load catalog_filters %}
 
-<title>Muhia - Admininstración productos</title>
+<title>Muhia - Administración productos</title>
 
 {% block content %}
 
@@ -12,6 +12,20 @@
   </div>
 </div>
 <!-- Page Header End -->
+<div id="Seleccionar categoría" class="row px-xl-12">
+  <form method="post" action=".">
+    {% csrf_token %}
+<!--     <div class="input-group"> -->
+      <p><h6 class="font-weight-semi-bold text-primary" style="font-family:sans-serif ;">Seleccione la categoría</h6></p>
+        <div class="input-group-append">
+            <span class="input-group-text bg-transparent text-primary">
+              {{form.selected_category}}
+              <input type="submit" name="submit" value="Ver" class="btn btn-block btn-primary my-1 py-1"/>
+            </span>
+        </div>
+<!--     </div> -->
+  </form>
+</div>
 
 <div class="offset-1">
   <a href="{% url 'crear_producto' %}" class="nav-link active" aria-current="page" data-placement="top" title="Agregar" style="align-content: end;color:#036481; font-family: Lora, serif;">

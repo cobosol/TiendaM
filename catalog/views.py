@@ -25,7 +25,7 @@ from django import forms
 
 # Importamos lo necesario de la aplicación
 from cart import cart
-from catalog.forms import ProductAddToCartForm, SelectStoreForm
+from catalog.forms import ProductAddToCartForm, SelectStoreForm, SelectCategoryForm
 from stores.models import Store, Product_Sales
 from catalog.models import *
 from pages.models import *
@@ -185,8 +185,61 @@ def i_admin(request):
     return render(request, "catalog/gestion.html", {})
 
 #---------- Gestión de productos ----------------
-class gestion_productos(ListView):
-    model = Product
+""" class gestion_productos(ListView):
+    model = Product """
+
+def gestion_productos(request, template_name="catalog/productos_admin.html"):
+    form = SelectCategoryForm(request=request)
+    try:
+        if request.method == 'POST':
+            postdata = request.POST.copy()
+            if postdata['submit'] == 'Ver':
+                form = SelectCategoryForm(request, postdata)
+                form.selected_category = postdata['selected_category']
+                print(postdata['selected_category'])
+                c = get_object_or_404(Category, pk=postdata['selected_category'])
+                print(c.name)
+                object_list = c.product_set.all()
+                #object_list = Product.objects.all()
+        else:
+            object_list = Product.objects.all()
+    except:
+        text = "Error al seleccionar el almacén"
+        messages.error(request, text)
+    context={'object_list':object_list, 'form':form}
+    return render(request, template_name, context)
+
+def catalogo_productos(request, template_name="catalog/catalog.html"):
+    form = SelectCategoryForm(request=request)
+    try:
+        if request.method == 'POST':
+            postdata = request.POST.copy()
+            if postdata['submit'] == 'Ver':
+                form = SelectCategoryForm(request, postdata)
+                form.selected_category = postdata['selected_category']
+                c = get_object_or_404(Category, pk=postdata['selected_category'])
+                object_list = c.product_set.all()
+            elif postdata['submit'] == 'Comprar':
+                product_slug = postdata.get('product_slug','') 
+                if not cart.add_to_cart(request, product_slug):
+                    url = '/accounts/login/'
+                    flag = False
+                    return HttpResponseRedirect(url)  
+                else:
+                    flag = True
+                #flag = cart.add_to_cart(request, product_slug)
+                if request.session.test_cookie_worked():
+                    request.session.delete_test_cookie()
+                url = reverse('catalogo_productos')
+                return HttpResponseRedirect(url)
+        else:
+            object_list = Product.objects.all()
+    except:
+        text = "Error al seleccionar la categoria"
+        messages.error(request, text)
+    context={'object_list':object_list, 'form':form}
+    return render(request, template_name, context)
+
 
 class crear_producto(SuccessMessageMixin, CreateView):
     model = Product
@@ -228,8 +281,6 @@ class eliminar_producto(SuccessMessageMixin, DeleteView):
 
 
 #---------- Gestión de productos en almacen----------------
-""" class gestion_productos_almacen(ListView):
-    model = Product_Sales """
 
 def gestion_productos_almacen(request, template_name="catalog/productos_almacen_admin.html"):
     form = SelectStoreForm(request=request)
@@ -241,7 +292,7 @@ def gestion_productos_almacen(request, template_name="catalog/productos_almacen_
                 form.selected_store = postdata['selected_store']
                 object_list = Product_Sales.objects.filter(store=postdata['selected_store'])
         else:
-            object_list = Product_Sales.objects.filter(pk=1)
+            object_list = Product_Sales.objects.all()
     except:
         text = "Error al seleccionar el almacén"
         messages.error(request, text)

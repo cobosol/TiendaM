@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load catalog_filters %}
+
+<title>Muhia - Catálogo de productos</title>
+
+{% block content %}
+
+<div class="container-fluid bg-secondary mb-2">
+  <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 60px">
+      <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Catálogo de productos</h4>
+  </div>
+</div>
+<!-- Page Header End -->
+<div id="Seleccionar categoría" class="row px-xl-12">
+  <form method="post" action=".">
+    {% csrf_token %}
+<!--     <div class="input-group"> -->
+      <p><h6 class="font-weight-semi-bold text-primary" style="font-family:sans-serif ;">Seleccione la categoría</h6></p>
+        <div class="input-group-append">
+            <span class="input-group-text bg-transparent text-primary">
+              {{form.selected_category}}
+              <input type="submit" name="submit" value="Ver" class="btn btn-block btn-primary my-1 py-1"/>
+            </span>
+        </div>
+<!--     </div> -->
+  </form>
+</div>
+
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Paginación -->
+        <table class="table table-bordered text-center mb-0">
+          <thead class="bg-primary text-light">
+            <tr>
+              <th width="10%">Foto</th>
+              <th width="25%">Nombre</th>
+              <th width="10%">Disponible virtual</th>
+              <th width="10%">Disponible MLC</th>
+              <th width="10%">Disponible CUP</th>
+              <th width="10%">Estado</th>
+              <th width="20%">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+          <!-- Recorremos los objetos o registros que tenemos en nuestra tabla 'jugos' y los listamos -->
+          {% for elem in object_list %}
+            <tr>
+              <td><img src="{{elem.get_image_url}}" alt="{{elem.image}}" class="img-fluid" width="35%"></td>
+              <td><a href="{{elem.get_absolute_url}}" class="btn btn-sm text-dark p-0">{{ elem.name }}</a></td>
+              <td>{% if elem.available_online %} Si {% else %} No {% endif %}</td>
+              <td>{% if elem.available_CUP %} Si {% else %} No {% endif %}</td>
+              <td>{% if elem.available_MLC %} Si {% else %} No {% endif %}</td>
+              <td>{% if elem.count > 0 %} Disponible {% else %} Agotado {% endif %}</td>
+              <td>
+                {% if elem.count > 0 and elem.available_online %}
+                <form method="post" action="." class="cart">
+                  {% csrf_token %}
+                  <input type="hidden" name="product_slug" value="{{ elem.slug }}" />
+                  <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
+                    <i class="fas fa-shopping-cart text-secondary mr-1"> Comprar</i>
+                  </button>
+                </form>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
