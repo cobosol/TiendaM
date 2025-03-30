@@ -9,6 +9,7 @@
 <div class="container-fluid bg-secondary mb-2">
   <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 60px">
       <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Catálogo de productos</h4>
+      <h6 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Los productos disponibles en CUP y MLC los puede adquirir en nuestros <a href="{% url 'stores'%}">puntos de venta.</a></h6>
   </div>
 </div>
 <!-- Page Header End -->
@@ -49,23 +50,23 @@
           <thead class="bg-primary text-light">
             <tr>
               <th width="10%">Foto</th>
-              <th width="25%">Nombre</th>
-              <th width="10%">Disponible virtual</th>
+              <th width="35%">Nombre</th>
+              <th width="10%">Disponible T. virtual (USD)</th>
               <th width="10%">Disponible MLC</th>
               <th width="10%">Disponible CUP</th>
               <th width="10%">Estado</th>
-              <th width="20%">Acciones</th>
+              <th width="10%">Acciones</th>
             </tr>
           </thead>
           <tbody>
           <!-- Recorremos los objetos o registros que tenemos en nuestra tabla 'jugos' y los listamos -->
           {% for elem in object_list %}
             <tr>
-              <td><img src="{{elem.get_image_url}}" alt="{{elem.image}}" class="img-fluid" width="35%"></td>
+              <td><img src="{{elem.get_image_url}}" alt="{{elem.image}}" class="img-fluid" width="50%"></td>
               <td><a href="{{elem.get_absolute_url}}" class="btn btn-sm text-dark p-0">{{ elem.name }}</a></td>
               <td>{% if elem.available_online %} Si {% else %} No {% endif %}</td>
-              <td>{% if elem.available_CUP %} Si {% else %} No {% endif %}</td>
               <td>{% if elem.available_MLC %} Si {% else %} No {% endif %}</td>
+              <td>{% if elem.available_CUP %} Si {% else %} No {% endif %}</td>
               <td>{% if elem.count > 0 %} Disponible {% else %} Agotado {% endif %}</td>
               <td>
                 {% if elem.count > 0 and elem.available_online %}
