@@ -35,6 +35,8 @@ stores/migrations/*
 stores/__pycache__/*
 utils/migrations/*
 utils/__pycache__/*
+services/migrations/*
+services/__pycache__/*
 sent_email
 tienda/settings.py
 tienda/__pycache__/*

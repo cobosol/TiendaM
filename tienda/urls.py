@@ -21,6 +21,7 @@ urlpatterns = [
     path('tiendas/', include('stores.urls')),
     path('promo/', include('promo.urls')),
     path('precio/', include('utils.urls')),
+    path('servicios/', include('services.urls')),
     path('', index_view, name="home"),
 ]
 

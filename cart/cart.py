@@ -149,9 +149,8 @@ def add_to_cart(request, p_slug, quantity=1):
         else:
             return True
     else:
-        print("No autenticado")
-        messages.error(request, "Debe estar autenticado para efectuar compras")
-        url = '/accounts/login/'
+        messages.warning(request, "Debe estar autenticado para efectuar compras")
+        url = 'login'
         return HttpResponseRedirect(url)       
 
 # returns the total number of items in the user's cart
@@ -214,7 +213,6 @@ def update_cart(request):
                 return cart_item.quantity
             else:
                 text = "La cantidad debe ser un número entero"
-                print(text)
                 messages.info(request, text)
         except:
             text = "Ocurrió algún error al actualizar el carrito. Por favor verifique los datos. Si persiste el error por favor, contacte con nosotros"

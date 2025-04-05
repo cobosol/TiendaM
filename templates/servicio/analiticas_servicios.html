@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title> Muhia - Analíticas de servicios </title>
+
+{% block content %}
+<!-- Filtros -->
+<form method="get">
+    <select name="usuario">
+        <option value="">Todos los usuarios</option>
+        {% for u in usuarios %}
+        <option value="{{ u.id }}" {% if u.id == request.GET.usuario %}selected{% endif %}>{{ u.username }}</option>
+        {% endfor %}
+    </select>
+
+    <select name="servicio">
+        <option value="">Todos los servicios</option>
+        {% for s in servicios %}
+        <option value="{{ s.id }}" {% if s.id == request.GET.servicio %}selected{% endif %}>{{ s.nombre }}</option>
+        {% endfor %}
+    </select>
+
+    <select name="orden">
+        <option value="-fecha_creacion" {% if request.GET.orden == '-fecha_creacion' %}selected{% endif %}>
+            Más recientes primero
+        </option>
+        <option value="fecha_creacion" {% if request.GET.orden == 'fecha_creacion' %}selected{% endif %}>
+            Más antiguas primero
+        </option>
+    </select>
+
+    <button type="submit">Filtrar</button>
+</form>
+
+<!-- Estadísticas -->
+<div class="stats">
+    <h3>Total de solicitudes: {{ total_solicitudes }}</h3>
+</div>
+
+<!-- Gráficos -->
+<div class="charts">
+    <canvas id="servicioChart"></canvas>
+    <canvas id="temporalChart"></canvas>
+</div>
+
+<!-- Tabla de resultados -->
+<table>
+    <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Servicio</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for solicitud in solicitudes %}
+        <tr>
+            <td>{{ solicitud.usuario.username }}</td>
+            <td>{{ solicitud.servicios }}</td>
+            <td>{{ solicitud.fecha_solicitud|date:"SHORT_DATE_FORMAT" }}</td>
+            <td>{{ solicitud.estado }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Gráfico de servicios
+    const servicioCtx = document.getElementById('servicioChart').getContext('2d');
+    new Chart(servicioCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ servicios_labels|safe }},
+            datasets: [{
+                label: 'Solicitudes por servicio',
+                data: {{ servicios_data|safe }},
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+            }]
+        }
+    });
+
+    // Gráfico temporal
+    const temporalCtx = document.getElementById('temporalChart').getContext('2d');
+    new Chart(temporalCtx, {
+        type: 'line',
+        data: {
+            labels: {{ fecha_labels|safe }},
+            datasets: [{
+                label: 'Solicitudes últimos 7 días',
+                data: {{ fecha_data|safe }},
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+            }]
+        }
+    });
+</script>
