@@ -68,6 +68,7 @@
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="/" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Inicio</i></a>
                                     <a href="{% url 'catalogo_productos'%}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Todos los productos</i></a>
+                                    <a href="{% url 'solicitar_servicios' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Servicios</i></a>
                                 </div>
                             </div>
                             <a href="https://produccionesmuhia.ca" class="nav-item nav-link text-primary" target="_blank" style="font-family: sans-serif;">Nosotros</a>
@@ -97,6 +98,7 @@
                                 <div class="dropdown-menu rounded-0 m-0">
                                     {% if comercial == 'True' or request.user.is_staff %}
                                         <a href="{% url 'admin_orders_list' %}" style="font-family: sans-serif;"><i class="dropdown-item">Seguir órdenes de compra</i></a>
+                                        <a href="{% url 'gestion_solicitudes' %}" style="font-family: sans-serif;"><i class="dropdown-item">Servicios</i></a>
                                     {% endif %}
                                     {% if request.user.is_staff %}
                                         <a href="{% url 'precios' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar precio</i></a>
@@ -244,20 +246,22 @@
             <div class="col-lg-6">
                 <nav id="cintillo_redes" class="navbar navbar-light navbar-expand-lg navbar-collapse"  style="text-align: end; background: #153d50;border-color: #153d50; padding-left: 60%;">
                     <a class="nav-link" style="font-family:sans-serif; text-decoration: none; color: #ffffff;" href="#">Búscanos en:</a>
-                    <a id="instagram" class="instagram" href="https://www.instagram.com/muhia_producciones/" target="_blank" style="width: 2em; vertigal-align: middle;">
+                    <a id="instagram" class="instagram" href="https://www.instagram.com/muhia.produccion/" target="_blank" style="width: 2em; vertigal-align: middle;">
                         <svg class="bi bi-instagram" xmlns="http://www.w3.org/2000/svg" width="6em" height="4em" viewBox="5 0 24 24" href="https://www.instagram.com/muhia_cuba/" style="color:white; max-width: 32px;font-size: 20px;max-height: 24px;">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M12 7C9.23858 7 7 9.23858 7 12C7 14.7614 9.23858 17 12 17C14.7614 17 17 14.7614 17 12C17 9.23858 14.7614 7 12 7ZM9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12Z" fill="currentColor"></path>
                             <path d="M18 5C17.4477 5 17 5.44772 17 6C17 6.55228 17.4477 7 18 7C18.5523 7 19 6.55228 19 6C19 5.44772 18.5523 5 18 5Z" fill="currentColor"></path>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M5 1C2.79086 1 1 2.79086 1 5V19C1 21.2091 2.79086 23 5 23H19C21.2091 23 23 21.2091 23 19V5C23 2.79086 21.2091 1 19 1H5ZM19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" fill="currentColor"></path>
                         </svg>
                     </a>
-                    <a id="face" class="facebook" href="https://www.facebook.com/profile.php?id=61559488611749" target="_blank" style="color:#153d50; width: 1.5em; vertical-align: middle;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" fill="#ffffff" viewBox="0 0 16 16" class="bi bi-facebook text-light facebook" href="https://www.facebook.com/produccionesmuhia" style="max-width: 24px;font-size: 18px;max-height: 24px;">
+                    
+                    <a id="face" class="facebook" href="https://www.facebook.com/muhia.produccion" target="_blank" style="color:#153d50; width: 1.5em; vertical-align: middle;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" fill="#ffffff" viewBox="0 0 16 16" class="bi bi-facebook text-light facebook" href="https://www.facebook.com/produccionesmuhia" style="max-width: 24px;font-size: 18px;max-height: 24px;"> 
                             <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"></path>
                         </svg>
                     </a>
-                    <a id="whatsapp" class="bi bi-whatsapp" href="https://chat.whatsapp.com/JV83muQ3vQmKsHA1xdJ7j8" target="_blank" style="color:#153d50; width: 3em; vertical-align: middle;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" fill="#153d50" class="bi bi-whatsapp text-light whatsapp" viewBox="0 0 16 16">
+
+                    <a id="whatsapp" class="bi-whatsapp" href="https://l.facebook.com/l.php?u=https%3A%2F%2Fchat.whatsapp.com%2FJV83muQ3vQmKsHA1xdJ7j8%3Ffbclid%3DIwZXh0bgNhZW0CMTAAAR0lICp9A17Q4khzKH1IfAB7FwMFt6EP3ncOeN9ASuGA_9PGeUZlr3VpaTE_aem_5tZit85ussJJ5V2xNmCsEg&h=AT0LRrEv0xMvRhuK99zxfaA3xkLaEvREpg_xR_Zoq60YHjDSodcNEgjhFaAM11wkWugehfIVb6P2xy634znlYucEdbsba7Gjt_Mv4JUQ-j8jWm82auFjZzRsCZg&__tn__=-R" target="_blank" style="color:#ffffff; width: 1.5em; vertical-align: middle;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="1.5em" fill="#ffffff" viewBox="0 0 16 16"  class="bi bi-whatsapp text-light whatsapp" viewBox="0 0 16 16">
                             <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
                           </svg>
                     </a>

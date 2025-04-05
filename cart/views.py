@@ -13,19 +13,21 @@ from django.contrib.messages.views import SuccessMessageMixin
 from utils.models import Price
 from stores.models import Store
 from django.contrib.auth.decorators import login_required
-
+from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from ccheckout.ccheckout import get_checkout_url
 
-@login_required
 def show_cart(request, template_name="cart/cart.html"):
+    if not (request.user.is_authenticated):
+        messages.warning(request, "Debe estar autenticado para acceder al carrito")
+        url = reverse('login')
+        return HttpResponseRedirect(url)
     form = DeliveryForm(request=request)
     price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
     MND = 'USD'
     user = request.user
-    if (user.is_authenticated):
-        profile = get_object_or_404(Profile, user = user)
-        MND = profile.MONEY_TYPE[profile.money_type][1]
+    profile = get_object_or_404(Profile, user = user)
+    MND = profile.MONEY_TYPE[profile.money_type][1]
     try:
         if request.method == 'POST':
             postdata = request.POST.copy()

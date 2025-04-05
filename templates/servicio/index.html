@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Muhia - Gestión de servicios </title>
+{% endblock %}
+
+{% block content %}
+{% if request.user.is_superuser or request.user.is_staff%}
+<section class="content-header">   
+	<div class="content-header x_panel x_title">
+        <div class="x_title bold">
+            <h2 style="color:rgb(36,72,88); font-family: Lora, serif;">Tipos de contenidos</h2>
+        </div>
+    </div>
+</section>
+
+<div class="container mt-3">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Paginación -->
+        <table class="table" style="border: #036481; background-color: #fcfcfc;">
+          <thead>
+            <tr width="60%" class="h4" style="border: #036481; border-top: #036481;">
+              <th>Nombre del tipo de contenido</th>
+              <th>Descripción del tipo de contenido</th>
+            </tr>
+          </thead>
+          <tbody class="h5" >
+            <tr>
+                <td><a class="nav-link text-dark" href="{% url 'banners'  %}">Banners</a></td>
+                <td>Imágenes promocionales</td>
+            </tr>
+            <tr>
+                <td><a class="nav-link text-dark" href="{% url 'images'  %}">Galería de imágenes superior</a></td>
+                <td>Imágenes de la galería superior de la página principal, asociadas principalmente a promocionales.</td>
+            </tr>
+            <tr>
+                <td><a class="nav-link text-dark" href="{% url 'eventos'  %}">Eventos</a></td>
+                <td>Eventos relacionados con la empresa.</td>
+            </tr>
+            <tr>
+              <td><a class="nav-link text-dark" href="{% url 'curiosidades'  %}">Curiosidades/Noticias</a></td>
+              <td>Curiosidades o noticias interesantes.</td>
+            </tr>
+            <tr>
+              <td><a class="nav-link text-dark" href="{% url 'carrusel'  %}">Galería de imágenes inferior</a></td>
+              <td>Imágenes de la galería inferior de la página principal, asociada principalmente al catálogo.</td>
+            </tr>
+            <tr>
+                <td><a class="nav-link text-dark" href="{% url 'pregunta'  %}">Preguntas frecuentes</a></td>
+                <td>Preguntas que comunmente se hcen los clientes, con sus respuestas.</td>
+            </tr>
+            <tr>
+                <td><a class="nav-link text-dark" href="{% url 'enlaces'  %}">Enlaces externos</a></td>
+                <td>Páginas de empresas y entidades relacionadas con la empresa.</td>
+            </tr>
+            <tr>
+              <td><a class="nav-link text-dark" href="{% url 'miembros'  %}">Equipo</a></td>
+              <td>Miembros del equipo MUHIA que son públicos.</td>
+            </tr>
+            <tr>
+              <td><a class="nav-link text-dark" href="{% url 'paginas'  %}">Páginas</a></td>
+              <td>Páginas de empresas y entidades relacionadas con la empresa.</td>
+            </tr>
+            <tr>
+              <td><a class="nav-link text-dark" href="{% url 'tiendas'  %}">Tiendas físicas</a></td>
+              <td>Relación de puntos de venta física de la empresa.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

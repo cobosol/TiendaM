@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}{{page.title}}{% endblock %}
+
+{% block content %}
+<section id="sobre_nosotros" class="page-section">
+    <div class="container py-3 py-xl-3">
+        <div class="row mb-1">
+            <div class="col-12 col-md-8 text-center mx-auto" data-aos="zoom-in" data-aos-delay="50">
+                <h2 class="font-weight-bold" style="font-family: 'Abril Fatface', serif;">Nuestros servicios</h2>
+                <p class="w-lg-50" style="font-family: Lora, serif;font-size: 20px;">Acceda a nuestras asesorías personalizadas. 
+                    Para más información contáctenos a través del número: +53 5 988 0466
+                </p>
+            </div>
+            <div class="col col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                <div>
+                    <label>{{ form.telefono.label }}</label>
+                    {{ form.telefono }}
+                </div>
+                <div>
+                    <label>{{ form.correo.label }}</label>
+                    {{ form.correo }}
+                </div>
+                <div>
+                    <label>{{ form.carnet.label }}</label>
+                    {{ form.carnet }}
+                </div>
+            </br>
+                <div>
+                    <label> <h6 class="font-weight-bold" style="font-family: 'Abril Fatface', serif;">Seleccione los servicios de su interés:</h6></label>
+                    {{ form.servicios }}
+                </div>
+                <button type="submit" class="btn btn-sm btn-primary">Enviar solicitud</button>
+                </form>
+            </div>
+            <div class="col col-xs-4">
+                <h4 class="font-weight-bold" style="font-family: 'Abril Fatface', serif;">Asesorías abiertas:</h4>
+                <h6 style="font-family: 'Abril Fatface', serif;">Elaboración de detergentes</h6>
+                <h6 style="font-family: 'Abril Fatface', serif;">Elaboración de productos de limpieza</h6>
+                <h6 style="font-family: 'Abril Fatface', serif;">Elaboración de aseo</h6>
+                <h6 style="font-family: 'Abril Fatface', serif;">Elaboración de jabones</h6>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
