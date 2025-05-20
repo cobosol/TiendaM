@@ -32,7 +32,7 @@ def notification_sale(request):
     if order_number:
         order = Order.objects.filter(id=order_number)[0]
     subject = "El usuario {} ha realizado la compra número {}".format(name, order.id)
-    content = " El monto de la compra es: {} {} \n El número de transacción es: {}".format(order.total, order.currency, order.transaction_id)
+    content = " El monto de la compra es: {} {} \n El número de transacción es: {}".format(order.end_total, order.currency, order.transaction_id)
     e_mail = EmailMessage(
         subject,
         "Estimado {}: \n\n{}".format(name, content),

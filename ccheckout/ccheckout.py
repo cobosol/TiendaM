@@ -23,6 +23,7 @@ from django.contrib.staticfiles import finders
 import json
 from django.utils.html import strip_tags
 import decimal
+from payments.validators import CouponValidator
 
 def loadSecret():
     try:
@@ -219,7 +220,25 @@ def create_order(request, transaction_id, usd = True, cach = False):
             else:
                 oi.price = ci.price_MLC()
             oi.save()
-        order.update_status(Order.SUBMITTED) 
+        order.update_status(Order.SUBMITTED)
+        order.base_total = order.total_items
+        order.end_total = order.base_total + order.delivery_price
+        try:
+            print("En el try")
+            print(request.session['active_coupon'])
+            if request.session['active_coupon']:
+                print("En el session ")
+                coupon = CouponValidator.validate(request.session['active_coupon'],request.user)
+                order.coupon_percent = coupon.discount_percent
+                order.coupon = coupon
+                porciento = (1-coupon.discount_percent/100)
+                calculo = order.base_total*decimal.Decimal(porciento)
+                order.end_total = calculo + order.delivery_price
+                coupon.used = True
+                coupon.applied_to_order = order
+                coupon.save()
+        except :
+             pass                
         order.save()
         # all set, empty cart
         cart.empty_cart(request)
@@ -273,7 +292,10 @@ def export_pdf(request, id_orden):
     user_profile = Profile.objects.get(user=order.user)
     data['first_name'] = order.user.first_name
     data['last_name'] = order.user.last_name
-    data['date'] = order.date
+    if order.user.groups.filter(name__in=['comercial']):
+        data['date'] = ''
+    else:
+         data['date'] = order.date
     data['email'] = order.user.email
     data['phone'] = order.payment_phone
     data['address'] = user_profile.address

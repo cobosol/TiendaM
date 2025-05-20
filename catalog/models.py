@@ -87,8 +87,8 @@ class Product(models.Model):
     available_MLC = models.BooleanField(default=True, verbose_name = "Disponible en MLC")    
     image = models.ImageField(upload_to="Productos", null=True, blank=True,
         verbose_name="Imagen del producto")
-    count = models.IntegerField(default=0, verbose_name="Cantidad", help_text="Cantidad del producto en inventarios")
-    reserved = models.IntegerField(default=0, verbose_name="Reservados", help_text="Cantidad reservados para comprar")
+    count = models.DecimalField(max_digits=9,decimal_places=2, blank=True, default=0.00, verbose_name="Cantidad", help_text="Cantidad del producto en inventarios")
+    reserved = models.DecimalField(max_digits=9,decimal_places=2, blank=True, default=0.00, verbose_name="Reservados", help_text="Cantidad reservados para comprar")
     is_active = models.BooleanField(default=True, verbose_name = "Activo")
     """ más vendidos """
     is_bestseller = models.BooleanField(default=False, verbose_name = "Más vendido")

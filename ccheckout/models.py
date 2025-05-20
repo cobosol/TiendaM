@@ -67,17 +67,22 @@ class Order(models.Model):
     
 
     # order info
-    date = models.DateTimeField(auto_now_add=True, verbose_name = "Fecha")
+    date = models.DateTimeField(auto_now_add=True, verbose_name = "Fecha de facturación")
     status = models.IntegerField(choices=ORDER_STATUSES, default=SUBMITTED, verbose_name = "Estado")
     ip_address = models.GenericIPAddressField(verbose_name = "Dirección ip")
     last_updated = models.DateTimeField(auto_now=True, verbose_name = "Última actualización")
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE, verbose_name = "Usuario")
-    transaction_id = models.CharField(max_length=20, help_text="Ciudad del banco de la tarjeta", verbose_name = "Nro. Transacción")
+    transaction_id = models.CharField(max_length=20, help_text="No. de transacción", verbose_name = "Nro. Transacción")
     delivery_price = models.IntegerField(verbose_name="Precio de envío", default=0)
+    base_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total base")
+    end_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total final con descuento y envío")
     store_name = models.CharField(max_length=200, default="Envío Habana", verbose_name = "Nombre del tipo de entrega")
+    coupon_percent = models.PositiveIntegerField(default=0, verbose_name="Porciento de descuentos")
+    others_discount = models.PositiveIntegerField(default=0, verbose_name="Otros descuentos")
     pay_url = models.URLField(verbose_name="URL de pago", default="")
     currency = models.CharField(max_length=3, default="USD", verbose_name = "Tipo de moneda")
     price = models.ForeignKey(Price, on_delete = models.PROTECT, blank = True, null=True, verbose_name="Valores para el cálculo del Precio de la compra")
+    coupon = models.ForeignKey('payments.Coupon', on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
 
     # payment info
     payment_name = models.CharField(max_length=50, verbose_name = "Nombre del titular", null = True, blank = True)
@@ -118,8 +123,9 @@ class Order(models.Model):
         return total
     
     @property
-    def total(self): 
-        return self.total_items + decimal.Decimal(self.delivery_price)
+    def total(self):
+        return self.end_total 
+        #return self.total_items + decimal.Decimal(self.delivery_price)
 
     @property
     def statusS(self):
@@ -160,19 +166,20 @@ class Order(models.Model):
     # Incrementar la cantidad de reservados en Productos por Almacen
     # Devuelve Falso si en ese almacen algún producto no tiene disponible la cantidad solicitada. 
     def products_reserved(self):
+        print("En reserved")
         order_items = OrderItem.objects.filter(order=self)
         st = self.delivery
         all_available = True
         products_Sales = st.products
         for item in order_items:
-           for prod in products_Sales:
-               if item.product == prod.product:
-                   prod.reserved = prod.reserved + item.quantity
-                   prod.available = prod.available - item.quantity
-                   prod.save()
-                   if prod.available < 0:
-                       all_available = False
-                   break
+            for prod in products_Sales:
+                if item.product == prod.product:
+                    prod.reserved = prod.reserved + item.quantity
+                    prod.available = prod.available - item.quantity
+                    if prod.available < 0:
+                        all_available = False
+                        break
+                    prod.save()               
         return all_available
                
     # Al pagar:
@@ -180,6 +187,7 @@ class Order(models.Model):
     # Disminuye la cantidad de reservados
     # Devuelve falso si los reservados son menos de 0
     def products_sold(self):
+        print("En pagada")
         order_items = OrderItem.objects.filter(order=self)
         st = self.delivery
         products_Sales = st.products
@@ -201,6 +209,7 @@ class Order(models.Model):
     # Decrementar los reservados en el Producto
     # Devuelve falso si alguno de los valores se hace negativo 
     def products_delivered(self):
+        print("En entregada")
         order_items = OrderItem.objects.filter(order=self)
         st = self.delivery
         products_Sales = st.products
@@ -227,7 +236,8 @@ class Order(models.Model):
     # Aumenta la cantidad de disponibles en el almacen.
     # Decrementar los reservados en el Producto
     # Devuelve falso si alguno de los valores se hace negativo 
-    def order_cancelled(self):
+    def order_cancelled(self, preview):
+        print("En cancelada")
         order_items = OrderItem.objects.filter(order=self)
         st = self.delivery
         products_Sales = st.products
@@ -235,17 +245,16 @@ class Order(models.Model):
         for item in order_items:
             for prod in products_Sales:
                 if item.product == prod.product:
-                    prod.reserved = prod.reserved - item.quantity
-                    prod.available = prod.available + item.quantity
+                    print(preview)
+                    if preview == self.PROCESSED or preview == self.SUBMITTED:
+                        prod.reserved = prod.reserved - item.quantity
+                        prod.available = prod.available + item.quantity
+                    elif preview == self.PAIDED:
+                        prod.sold = prod.sold - item.quantity
+                    elif preview == self.DELIVERED:
+                        prod.count = prod.count + item.quantity
+                        prod.available = prod.available + item.quantity
                     prod.save()
-                    if prod.reserved < 0 :
-                        all_available = False
-                    break
-            prod = item.product
-            prod.reserved = prod.reserved - item.quantity
-            if prod.reserved < 0:
-                all_available = False
-            prod.save()
         return all_available
     
     # Al hacer una devolución de la orden: 
@@ -253,8 +262,10 @@ class Order(models.Model):
     # Aumenta la cantidad de disponibles en el almacen.
     # Decrementar los reservados en el Producto
     # Devuelve falso si alguno de los valores se hace negativo 
-    def order_returned(self):
-        order_items = OrderItem.objects.filter(order=self)
+    """def order_returned(self):
+        self.order_cancelled(self.DELIVERED)
+        self.status = self.RETURNED
+         order_items = OrderItem.objects.filter(order=self)
         st = self.delivery
         products_Sales = st.products
         all_available = True
@@ -267,8 +278,8 @@ class Order(models.Model):
                     break
             prod = item.product
             st.update_prod_count2(prod)
-            prod.save()
-        return all_available
+            prod.save() 
+        return all_available"""
 
     def verify_order_items(self):
         print("Entro a verificar")
@@ -284,20 +295,22 @@ class Order(models.Model):
         return True
 
     def update_status(self, new_status):   
+        preview = self.status
         self.status = new_status     
         if new_status == self.SUBMITTED:
-            self.products_reserved()
+            self.products_reserved() 
         elif new_status == self.PROCESSED:
             if not self.verify_order_items():
-                self.status = self.CANCELLED
+                self.order_cancelled(preview)
         elif new_status == self.PAIDED:
             self.products_sold()
         elif new_status == self.DELIVERED:
             self.products_delivered()
         elif new_status == self.CANCELLED:
-            self.order_cancelled()
-        elif new_status == self.RETURNED:
-            self.order_returned()
+            self.order_cancelled(preview)
+        else: 
+            return False
+        return True
 
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.PROTECT, verbose_name = "Producto")

@@ -16,6 +16,8 @@ def tienda_generales(request):
     vendedor = 'False'
     stores = Store.objects.all()
     if user.is_authenticated:
+        if user.is_staff:
+            adminAccess = 'True'
         profile = get_object_or_404(Profile, user = user)
         if user.groups.filter(name__in=['vendedores']):
             vendedor = 'True'

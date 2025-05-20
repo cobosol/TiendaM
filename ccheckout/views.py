@@ -295,6 +295,7 @@ def pagar(request, template_name='checkout/pagar.html'):
 
 @login_required
 def reserve(request, template_name='checkout/reserve.html'):
+    print("En reserve")
     MD = 'USD'
     if cart.is_empty(request):
         cart_url = reverse('show_cart')
@@ -328,6 +329,7 @@ def reserve(request, template_name='checkout/reserve.html'):
     page_title = 'Reservar'
     cobra_efectivo = False
     cart_subtotal = round(cart.cart_subtotal(request), 2)
+    print(cart_subtotal)
     cart_delivery = cart.cart_delivery_price(request, cart_subtotal, MD)
     cart_total = cart_subtotal + cart_delivery
     st_name = cart.delivery_Store(request).name
