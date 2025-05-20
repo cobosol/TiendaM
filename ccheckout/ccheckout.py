@@ -23,6 +23,7 @@ from django.contrib.staticfiles import finders
 import json
 from django.utils.html import strip_tags
 import decimal
+from payments.validators import CouponValidator
 
 def loadSecret():
     try:
@@ -219,7 +220,25 @@ def create_order(request, transaction_id, usd = True, cach = False):
             else:
                 oi.price = ci.price_MLC()
             oi.save()
-        order.update_status(Order.SUBMITTED) 
+        order.update_status(Order.SUBMITTED)
+        order.base_total = order.total_items
+        order.end_total = order.base_total + order.delivery_price
+        try:
+            print("En el try")
+            print(request.session['active_coupon'])
+            if request.session['active_coupon']:
+                print("En el session ")
+                coupon = CouponValidator.validate(request.session['active_coupon'],request.user)
+                order.coupon_percent = coupon.discount_percent
+                order.coupon = coupon
+                porciento = (1-coupon.discount_percent/100)
+                calculo = order.base_total*decimal.Decimal(porciento)
+                order.end_total = calculo + order.delivery_price
+                coupon.used = True
+                coupon.applied_to_order = order
+                coupon.save()
+        except :
+             pass                
         order.save()
         # all set, empty cart
         cart.empty_cart(request)
@@ -273,7 +292,60 @@ def export_pdf(request, id_orden):
     user_profile = Profile.objects.get(user=order.user)
     data['first_name'] = order.user.first_name
     data['last_name'] = order.user.last_name
-    data['date'] = order.date
+    if order.user.groups.filter(name__in=['comercial']):
+        data['date'] = ''
+    else:
+         data['date'] = order.date
+    data['email'] = order.user.email
+    data['phone'] = order.payment_phone
+    data['address'] = user_profile.address
+    data['importe'] = decimal.Decimal(round(order.total, 2))
+    data['delivery_name'] = order.delivery_name
+    if order.delivery_street and order.delivery_apto and order.delivery_between:
+        delivery_add1 = order.delivery_street + " " + order.delivery_apto + " entre " + order.delivery_between + ". " + order.SUBSTATE[order.delivery_substate][1] + ", " + order.delivery_state
+        data['delivery_add1'] = delivery_add1
+    else:
+        data['delivery_add1'] = " "
+    data['delivery_add2'] = order.delivery_address_2
+    data['state'] = order._state
+    data['delivery_phone'] = order.delivery_phone
+    data['delivery_ws'] = order.delivery_ws
+    data['CI'] = order.delivery_ci
+    data['delivery_price'] = decimal.Decimal(order.delivery_price)
+    data['currency'] = order.currency
+    context = {'data': data, 'orders': orders, 'request': request,'qr':qr_generado}
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="factura.pdf"'
+    html = template.render(context)
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response, link_callback=link_callback)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+def factura_comercial(request, id_orden):
+    data = {}
+    #Diccionario de factura
+    current_factura = {}        
+    #QR datos de transaccion
+    qr_generado = '{"id_orden": ' + str(id_orden) 
+    #Generando reporte PDF
+    template_src = 'checkout/factura_comercial.html'
+    template = get_template(template_src)
+    data['id_order'] = id_orden
+    orders = OrderItem.objects.filter(order=id_orden)
+    order = Order.objects.filter(id=id_orden)[0]
+    data['order'] = order
+    # Cargar el perfil del usurario
+    user_profile = Profile.objects.get(user=order.user)
+    data['first_name'] = order.user.first_name
+    data['last_name'] = order.user.last_name
+    if order.user.groups.filter(name__in=['comercial']):
+        data['date'] = ''
+    else:
+         data['date'] = order.date
     data['email'] = order.user.email
     data['phone'] = order.payment_phone
     data['address'] = user_profile.address

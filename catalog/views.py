@@ -293,9 +293,13 @@ def gestion_productos_almacen(request, template_name="catalog/productos_almacen_
             if postdata['submit'] == 'Ver':
                 form = SelectStoreForm(request, postdata)
                 form.selected_store = postdata['selected_store']
-                object_list = Product_Sales.objects.filter(store=postdata['selected_store'])
+                object_list = Product_Sales.objects.filter(store=postdata['selected_store']).order_by('product')
+            elif postdata['submit'] == 'Materias primas':
+                object_list = Product_Sales.objects.filter(product__is_feedstock=True).order_by('product')
+            elif postdata['submit'] == 'Productos terminados':
+                object_list = Product_Sales.objects.filter(product__is_feedstock=False).order_by('product')
         else:
-            object_list = Product_Sales.objects.all()
+            object_list = Product_Sales.objects.all().order_by('product')
     except:
         text = "Error al seleccionar el almacén"
         messages.error(request, text)

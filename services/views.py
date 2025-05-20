@@ -18,18 +18,19 @@ import json
 def crearSolicitudView(request):
     if not (request.user.is_authenticated):
         messages.warning(request, "Debe estar autenticado para acceder a este servicio")
-        url = reverse('login')
+        url = f"/accounts/login/?next={ request.path }"
         return HttpResponseRedirect(url)
     if request.method == 'POST':
         form = SolicitudForm(request.POST)
         if form.is_valid():
             Solicitud.objects.filter(usuario=request.user).delete()
 
-            for servicio in form.cleaned_data['home']:
+            for servicio in form.cleaned_data['servicios']:
                 Solicitud.objects.create(
                     usuario = request.user,
                     servicio = servicio
                 )
+            messages.success(request, "Su solicitud ha sido registrada correctamente")
             return redirect('home')
     else:
         form = SolicitudForm()

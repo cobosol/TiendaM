@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django import forms
 from django.urls import reverse
 from django.template import RequestContext
 from cart import cart
@@ -16,6 +17,9 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from ccheckout.ccheckout import get_checkout_url
+from payments.models import Coupon
+from payments.utils import send_coupon
+from payments.validators import CouponValidator
 
 def show_cart(request, template_name="cart/cart.html"):
     if not (request.user.is_authenticated):
@@ -31,6 +35,8 @@ def show_cart(request, template_name="cart/cart.html"):
     try:
         if request.method == 'POST':
             postdata = request.POST.copy()
+            print("postdata")
+            print(postdata)
             if postdata['submit'] == 'X':
                 cart.remove_from_cart(request)
                 form = DeliveryForm(request, postdata)
@@ -44,6 +50,12 @@ def show_cart(request, template_name="cart/cart.html"):
                 productSearch = postdata['producto']
                 url = '/catalogo/productos/' + productSearch + '/'
                 return HttpResponseRedirect(url)
+            elif postdata['submit'] == 'Aplicar cupón':
+                coupon = CouponValidator.validate(postdata['coupon'], user)
+                if coupon:
+                    request.session['active_coupon'] = str(coupon.code)
+                else:
+                    print(f"coupon falso {coupon}")
             elif postdata['submit'] == 'Reservar':
                 if request.user.is_authenticated:
                     if MND == 'USD':
@@ -67,6 +79,9 @@ def show_cart(request, template_name="cart/cart.html"):
             elif postdata['submit'] == 'Confirmar pago':
                 url = reverse('efectivo')
                 return HttpResponseRedirect(url)
+            elif postdata['submit'] == 'Facturar':
+                url = reverse('facturar')
+                return HttpResponseRedirect(url)
             elif postdata['submit'] == 'Buscar':
                 productSearch = postdata['producto']
                 url = '/catalogo/productos/' + productSearch + '/'
@@ -81,9 +96,11 @@ def show_cart(request, template_name="cart/cart.html"):
                 if (user.is_authenticated):
                     profile.prefered_store = get_object_or_404(Store, pk = postdata['storeDelivery'])
                     profile.save()
-    except:
-        if postdata['quantity']:           
-            cart.update_cart(request)
+            else:
+                messages.info(request, "Órden no identificada")
+    except forms.ValidationError as e:
+        messages.error(request, str(e))
+
     cart_items = cart.get_cart_items(request)
     for cart_i in cart_items:
         text = cart_i.discount_message()

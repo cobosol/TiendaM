@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from .forms import CheckoutForm, UpdateStatusForm, PagarForm, CachForm, ReserveForm
+from .forms import * 
 from django.urls import reverse
 from .models import Order, OrderItem
 from ccheckout.ccheckout import process2, export_pdf, createPaymentCardsJSON, tPAccessToken, loadSecret, create_order
@@ -248,6 +248,58 @@ def cach(request, template_name='checkout/cach.html'):
         cobra_efectivo = True
     return render(request, template_name, locals())
 
+@login_required
+def facturar(request, template_name='checkout/facturar.html'):
+    MD = 'USD'
+    if cart.is_empty(request):
+        cart_url = reverse('show_cart')
+        return HttpResponseRedirect(cart_url)
+    if request.method == 'POST': 
+        postdata = request.POST.copy()
+        if postdata['submit'] == 'Facturar':
+            form = FacturarForm(postdata)
+            if form.is_valid():
+                user = request.user
+                profile = get_object_or_404(Profile, user = user)
+                MD = profile.MONEY_TYPE[profile.money_type][1]
+                if MD == 'USD':
+                    order_number = create_order(request, 1, True, True) # Crear la orden con tipo de transacción 1 usd en cach
+                    if order_number['order_number'] == -1:
+                        fail = reverse('show_cart')
+                        return HttpResponseRedirect(fail)
+                else:
+                    order_number = create_order(request, 3, False, True)
+                    if order_number['order_number'] == -1:
+                        fail = reverse('show_cart')
+                        return HttpResponseRedirect(fail)
+                error_message = postdata.get('message','')
+                if order_number:
+                    request.session['order_number'] = order_number['order_number']
+                    order = Order.objects.filter(id=order_number['order_number'])[0]
+                    order.transaction_id = 1 # 1 para pago en efectivo USD 
+                    order.save()
+                    order.update_status(Order.PAIDED)
+                    order.update_status(Order.DELIVERED)
+                    order.save()
+                    receipt_url = reverse('checkout_receipt')
+                    return HttpResponseRedirect(receipt_url)
+    else:
+        form = CachForm()
+        form.name = request.user.first_name + request.user.last_name
+    page_title = 'Cach'
+    cobra_efectivo = False
+    cart_subtotal = round(cart.cart_subtotal(request), 2)
+    cart_delivery = cart.cart_delivery_price(request, cart_subtotal, MD)
+    cart_total = cart_subtotal + cart_delivery
+    st_name = cart.delivery_Store(request).name
+    envio = False
+    deli = cart.get_delivery(request)
+    if deli == '3':
+        envio = True 
+    if (request.user.groups.filter(name = 'vendedores').exists() or request.user.groups.filter(name = 'comercial').exists() or request.user.is_staff):
+        cobra_efectivo = True
+    return render(request, template_name, locals())
+
 # El view de la página de pago nacional
 @login_required
 def pagar(request, template_name='checkout/pagar.html'):
@@ -295,6 +347,7 @@ def pagar(request, template_name='checkout/pagar.html'):
 
 @login_required
 def reserve(request, template_name='checkout/reserve.html'):
+    print("En reserve")
     MD = 'USD'
     if cart.is_empty(request):
         cart_url = reverse('show_cart')
@@ -328,6 +381,7 @@ def reserve(request, template_name='checkout/reserve.html'):
     page_title = 'Reservar'
     cobra_efectivo = False
     cart_subtotal = round(cart.cart_subtotal(request), 2)
+    print(cart_subtotal)
     cart_delivery = cart.cart_delivery_price(request, cart_subtotal, MD)
     cart_total = cart_subtotal + cart_delivery
     st_name = cart.delivery_Store(request).name

@@ -9,6 +9,8 @@ from stores.models import Product_Sales, Store
 from registration.models import Profile
 from utils.models import Price
 from django.contrib import messages
+from payments.validators import CouponValidator
+from django import forms
 
 import decimal
 import random
@@ -233,7 +235,6 @@ def remove_from_cart(request):
 # gets the total cost for the current cart
 def cart_subtotal(request):
     cart_total = decimal.Decimal('0.00')
-    print("A llamar a Price en cart_subtotal")
     price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
     cart_products = get_cart_items(request)
     user = request.user
@@ -265,6 +266,12 @@ def cart_subtotal(request):
         c = round(falta, 2)
         text = "Le faltan $" + str(c) + " del monto total, para acceder a nuestra oferta especial del " + str(porciento) + "%"
         messages.info(request, text)
+    try:
+        coupon = CouponValidator.validate(request.session['active_coupon'], request.user)
+        if coupon:
+            cart_total = cart_total - (cart_total*coupon.discount_percent)/100
+    except:
+        pass
     return cart_total
 
 def cart_delivery_price(request, amount, MND):
