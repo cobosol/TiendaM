@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>¡Gracias por tu primera compra {{ user.first_name }}!</h2>
+    <p>Aquí tienes tu cupón de descuento para tu próxima compra:</p>
+    <div style="background: #f0f0f0; padding: 20px; margin: 20px 0;">
+        <strong>Código:</strong> {{ coupon.code }}<br>
+        <strong>Descuento:</strong> {{ coupon.discount_percent }}%<br>
+        <strong>Válido hasta:</strong> {{ coupon.expiration_date|date:"d M Y" }}
+    </div>
+    <p>Visita <a href="{{ site_url }}">{{ site_url }}</a> para usar tu cupón</p>
+</body>
+</html>

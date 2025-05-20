@@ -74,10 +74,10 @@ class Product_Sales(models.Model):
                             verbose_name = "Nombre único", default = "nombre")
     product = models.ForeignKey(Product, on_delete = models.CASCADE, verbose_name="Producto a vender")
     store = models.ForeignKey(Store, on_delete=models.CASCADE, verbose_name="Almacén de ventas" )
-    count = models.IntegerField(default=0, blank=False, null=False, verbose_name="Cantidad del producto en el almacén")
-    available = models.IntegerField(default=0, blank=False, null=False, verbose_name="Cantidad a la venta")
-    reserved = models.IntegerField(default=0, verbose_name="Cantidad de reservados, sin pagar")
-    sold = models.IntegerField(default=0, blank=True, null=True, verbose_name="Cantidad de vendidos por entregar")
+    count = models.DecimalField(max_digits=9,decimal_places=2, default=0.00, blank=False, null=False, verbose_name="Cantidad del producto en el almacén")
+    available = models.DecimalField(max_digits=9,decimal_places=2, default=0.00, blank=False, null=False, verbose_name="Cantidad a la venta")
+    reserved = models.DecimalField(max_digits=9,decimal_places=2, default=0.00, verbose_name="Cantidad de reservados, sin pagar")
+    sold = models.DecimalField(max_digits=9,decimal_places=2, default=0.00, blank=True, null=True, verbose_name="Cantidad de vendidos por entregar")
 
     class Meta:
         verbose_name = "producto en venta"

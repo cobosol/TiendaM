@@ -57,6 +57,7 @@
                             <form id="decimalCant" method="post" action="." class="cart">
                                 {% csrf_token %}
                                 <input type="hidden" name="item_id" value="{{ item.id }}" />
+                                <input type="hidden" name="submit" value="" />
                                 <input type="text" name="quantity" class="form-control form-control-sm bg-secondary text-center" value="{{ item.quantity|unlocalize }}">
                             </form>
                         </td>
@@ -176,6 +177,9 @@
                     </div>
                     <form method="post" action="." class="cart">
                         {% csrf_token %}
+                        <input type="text" name="coupon" class="form-control form-control-sm bg-transparent text-center" placeholder="código del cupón">
+                        <input type="submit" class="btn btn-block btn-success my-2 py-2" name="submit" value="Aplicar cupón" alt="Checkout" />
+                        <br>
                         {% if MND == 'USD' %}
                             <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Reservar" alt="Checkout" />
                         {% else %}

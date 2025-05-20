@@ -14,24 +14,25 @@
 
         th,
         th {
-            font-size: 8px;
+            font-size: 12px;
             font-weight: bold;
+            word-wrap: break-word,
         }
 
         td {
-            font-size: 8px;
+            font-size: 12px;
             padding: 2px;
             word-wrap: break-word,
         }
 
         .first-td {
-            font-size: 8px;
+            font-size: 14px;
             padding: 1px;
             word-wrap: break-word,
         }
 
         .table-info-td {
-            font-size: 6px;
+            font-size: 12px;
             padding: 0.8px;
             word-wrap: break-word,
         }
@@ -44,7 +45,7 @@
         }
 
         #footer_content label{
-            font-size: 8px;
+            font-size: 10px;
         }
     </style>
 </head>
@@ -59,26 +60,26 @@
                     <img style="height: 100%; width: 100%;" src="img/LogoStrech.png" />
                 </td>
                 <td class="header-td">
-                    <h1 style="text-align: left; font-size: 10px; margin-left: 125px;">PRODUCCIONES MUHIA SRL. No. {{data.id_order}}</h1> 
+                    <h1 style="text-align: left; font-size: 14px; margin-left: 125px;">PRODUCCIONES MUHIA SRL. No. {{data.id_order}}</h1> 
                 </td>
             </tr>
             <tr>
                 <td>
-                    <h1 style="text-align: left; font-size: 10px; margin-left: 170px;">Fecha de facturación: {{data.date|date:"d/m/Y" }}</h1> 
+                    <h1 style="text-align: left; font-size: 12px; margin-left: 170px;">Fecha de facturación: {{data.date|date:"d/m/Y" }}</h1> 
                 </td>                
             </tr>
         </tbody>
     </table>
-    <h1 style="text-align: center; font-size: 10px; "> VENTA ONLINE</h1>
+    <h1 style="text-align: center; font-size: 14px; "> VENTA ONLINE</h1>
     <table border="1" style="border-collapse: collapse;">
         <tbody>
             <tr>
                 <td colspan="3" style="text-align: center;" class="first-td"><strong>DATOS DEL CLIENTE</strong></td>
             </tr>
             <tr>
-                <td class="first-td"><strong>Nombre:</strong>{{data.first_name}} {{data.last_name}}</td>
-                <td class="first-td"><strong>email:</strong>{{data.email}}</td>
-                <td class="first-td"><strong>Teléfono:</strong>{{data.phone}}</td>
+                <td class="first-td"><strong>Nombre: </strong>{{data.first_name}} {{data.last_name}}</td>
+                <td class="first-td"><strong>email: </strong>{{data.email}}</td>
+                <td class="first-td"><strong>Teléfono: </strong>{{data.phone}}</td>
             </tr>
             <tr>
                 <td class="first-td" colspan="3"><strong>Dirección:</strong>{{data.address}}</td>
@@ -92,9 +93,9 @@
                 <td colspan="3" style="text-align: center;" class="first-td"><strong>DATOS DE LA ENTREGA</strong></td>
             </tr>
             <tr>
-                <td class="first-td"><strong>Nombre:</strong>{{data.delivery_name}}</td>
-                <td class="first-td"><strong>Carnet de identidad:</strong>{{data.CI}}</td>
-                <td class="first-td"><strong>Teléfono:</strong>{{data.delivery_phone}} {{data.delivery_ws}}</td>
+                <td class="first-td"><strong>Nombre: </strong>{{data.delivery_name}}</td>
+                <td class="first-td"><strong>Carnet de identidad: </strong>{{data.CI}}</td>
+                <td class="first-td"><strong>Teléfono: </strong>{{data.delivery_phone}} {{data.delivery_ws}}</td>
             </tr>
             <tr>
                 <td class="first-td" colspan="3"><strong>Dirección 1:</strong>{{data.delivery_add1}}</td>
@@ -108,22 +109,22 @@
     <table border="1" style="border-collapse: collapse; text-align: center;">
         <tbody>
             <tr>
-                <td colspan="4" style="text-align: center;" class="first-td"><br><strong>DETALLES DE LA FACTURA</strong></td>
+                <td colspan="5" style="text-align: center;" class="first-td"><br><strong>DETALLES DE LA FACTURA</strong></td>
             </tr>
             <tr>
-                <td class="table-info-td" style="width: 100px;"><strong>Nombre</strong></td>
-                <td class="table-info-td" style="width: 100px;"><strong>Precio</strong></td>
-                <td class="table-info-td" style="width: 100px;"><strong>Cantidad</strong></td>
-                <td class="table-info-td" style="width: 100px;"><strong>Forma de entrega</strong></td>
-                <td class="table-info-td" style="width: 125px;"><strong>Importe</strong></td>
+                <td class="table-info-td" style="width: 150px;"><strong>Nombre</strong></td>
+                <td class="table-info-td" style="width: 80px;"><strong>Precio</strong></td>
+                <td class="table-info-td" style="width: 70px;"><strong>Cantidad</strong></td>
+                <td class="table-info-td" style="width: 125px;"><strong>Forma de entrega</strong></td>
+                <td class="table-info-td" style="width: 100px;"><strong>Importe</strong></td>
             </tr>
             {% for item in orders %}
             <tr>
-                <td class="table-info-td" style="width: 100px;"> {{ item.name }} </td>
-                <td class="table-info-td" style="width: 100px;"> {{ item.price|currency }} </td>
-                <td class="table-info-td" style="width: 100px;"> {{ item.quantity }} </td>
-                <td class="table-info-td" style="width: 100px;"> {{ item.store_name }} </td>
-                <td class="table-info-td" style="width: 125px;"> {{ item.total|currency }} </td>
+                <td class="table-info-td" style="width: 150px;"> {{ item.name }} </td>
+                <td class="table-info-td" style="width: 180px;"> {{ item.price|currency }} </td>
+                <td class="table-info-td" style="width: 70px;"> {{ item.quantity }} </td>
+                <td class="table-info-td" style="width: 125px;"> {{ item.store_name }} </td>
+                <td class="table-info-td" style="width: 100px;"> {{ item.total|currency }} </td>
             </tr>
             {% endfor %}
         </tbody>

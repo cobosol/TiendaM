@@ -48,7 +48,9 @@ class CheckoutForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        exclude = ('status','ip_address','user','transaction_id','delivery_price', 'delivery_state', 'pay_url', 'delivery', 'currency', 'store_name')
+        exclude = ('status','ip_address','user','transaction_id',
+                   'delivery_price', 'delivery_state', 'pay_url', 'delivery', 'currency', 
+                   'store_name', 'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon')
 
     def clean_phone(self):
         phone = self.cleaned_data['phone']
@@ -85,7 +87,10 @@ class PagarForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery', 'store_name', 'payment_city', 'delivery_state', 'currency', 'payment_postCode')
+        exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery',
+                    'store_name', 'payment_city', 'delivery_state', 'currency', 'payment_postCode',
+                    'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon'
+                    )
     def clean_phone(self):
         phone = self.cleaned_data['phone']
         stripped_phone = strip_non_numbers(phone)
@@ -102,7 +107,9 @@ class ReserveForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery', 'store_name', 'payment_city', 'delivery_state', 'currency', 'payment_postCode')
+        exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery', 'store_name', 'payment_city', 
+                   'delivery_state', 'currency', 'payment_postCode',
+                     'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon')
     def clean_phone(self):
         phone = self.cleaned_data['phone']
         stripped_phone = strip_non_numbers(phone)
