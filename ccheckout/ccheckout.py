@@ -298,7 +298,10 @@ def export_pdf(request, id_orden):
          data['date'] = order.date
     data['email'] = order.user.email
     data['phone'] = order.payment_phone
-    data['address'] = user_profile.address
+    if user_profile.address:
+        data['address'] = user_profile.address
+    else:
+         data['address'] = ''
     data['importe'] = decimal.Decimal(round(order.total, 2))
     data['delivery_name'] = order.delivery_name
     if order.delivery_street and order.delivery_apto and order.delivery_between:
@@ -306,13 +309,20 @@ def export_pdf(request, id_orden):
         data['delivery_add1'] = delivery_add1
     else:
         data['delivery_add1'] = " "
-    data['delivery_add2'] = order.delivery_address_2
+    if order.delivery_address_2:
+        data['delivery_add2'] = order.delivery_address_2
     data['state'] = order._state
     data['delivery_phone'] = order.delivery_phone
     data['delivery_ws'] = order.delivery_ws
     data['CI'] = order.delivery_ci
     data['delivery_price'] = decimal.Decimal(order.delivery_price)
     data['currency'] = order.currency
+    data['coupon'] = '0'
+    if order.coupon:
+        data['coupon'] = order.coupon_percent 
+    data['discount'] = '0'
+    if order.others_discount:
+        data['discount'] = order.others_discount 
     context = {'data': data, 'orders': orders, 'request': request,'qr':qr_generado}
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="factura.pdf"'

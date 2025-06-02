@@ -26,6 +26,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.admin.views.decorators import staff_member_required
 from registration.models import Profile
 from contact.contact import notification_user_sale, notification_sale, notification_reserve
+from .filtros import *
 
 # Retorno del pago en Tropipay
 @csrf_exempt
@@ -464,17 +465,63 @@ def confirmado(request, order_id, template_name='checkout/confirmado.html'):
 # El view de la lista de órdenes (compras) realizadas por el usuario
 @login_required
 def orders_list(request, template_name='checkout/orders_list.html'):
+    orders = Order.objects.filter(user=request.user)
+    
+    filter = FiltroOrder
+
+    status = request.GET.get('status')
+    store_name = request.GET.get('store_name')
+    currency = request.GET.get('currency')
+
+    print(status)
+    print(store_name)
+    print(currency)
+
+    if status:
+        if status!='':
+            print(f'status:{status}')
+            orders = orders.filter(status__icontains = status)
+
+    if store_name:
+        if store_name!='':
+            print(f'store name:{store_name}')
+            orders = orders.filter(store_name__icontains = store_name)
+
+    if currency:
+        if currency!='':
+            print(f'currency:{currency}')
+            orders = orders.filter(currency__icontains=currency)
+
     if request.method == 'POST':
         postdata = request.POST.copy()
         if postdata['submit'] == 'Factura':
             order_number = postdata['order_id']
             return export_pdf(request, order_number)
-    orders = Order.objects.filter(user=request.user)
     user_name = request.user.first_name + " " + request.user.last_name
     return render(request, template_name, locals())
 
 # view de la lista de ordenes (compras) relizadas a la tienda
 def admin_orders_list(request, template_name='checkout/orders_list.html'):
+    orders = Order.objects.all()
+    
+    filter = FiltroOrder
+
+    status = request.GET.get('status')
+    store_name = request.GET.get('store_name')
+    currency = request.GET.get('currency')
+
+    if status:
+        if status!='':
+            orders = orders.filter(status__icontains = status)
+
+    if store_name:
+        if store_name!='':
+            orders = orders.filter(store_name__icontains = store_name)
+
+    if currency:
+        if currency!='':
+            orders = orders.filter(currency__icontains=currency)
+    
     if request.method == 'POST':
         postdata = request.POST.copy()
         if postdata['submit'] == 'Factura':
@@ -485,7 +532,6 @@ def admin_orders_list(request, template_name='checkout/orders_list.html'):
             template = 'checkout/details.html'
             return redirect(reverse('details'))
         return HttpResponseRedirect(receipt)
-    orders = Order.objects.all()
     user_name = ""
     return render(request, template_name, locals())
 
