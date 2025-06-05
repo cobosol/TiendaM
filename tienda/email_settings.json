@@ -2,6 +2,6 @@
     "EMAIL_HOST" : "produccionesmuhia.ca",
     "EMAIL_PORT" : 465,
     "EMAIL_HOST_USER" : "comercial@produccionesmuhia.ca",
-    "EMAIL_HOST_PASSWORD" : "Negociando2024++",
+    "EMAIL_HOST_PASSWORD" : "",
     "EMAIL_USE_TLS" : "True"
 }

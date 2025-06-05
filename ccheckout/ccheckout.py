@@ -233,6 +233,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
                 oi.totalf = ci.total_MLC()
             oi.save()
         order.update_status(Order.SUBMITTED)
+<<<<<<< HEAD
         order.base_total = cart.cart_subtotal(request) #order.total_items
         print(f'Base total en create order{order.base_total}')
         amounth_discount = "False"
@@ -243,6 +244,10 @@ def create_order(request, transaction_id, usd = True, cach = False):
             order.others_discount = mount
         order.end_total = order.base_total + order.delivery_price
         print("Antes del cupon end_total {order.end_total}")
+=======
+        order.base_total = order.total_items
+        order.end_total = order.base_total + order.delivery_price
+>>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
         try:
             print("En el try")
             print(request.session['active_coupon'])
@@ -250,6 +255,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
                 print("En el session ")
                 coupon = CouponValidator.validate(request.session['active_coupon'],request.user)
                 order.coupon_percent = coupon.discount_percent
+<<<<<<< HEAD
                 #print(f"En el cupon: end_total {order.end_total}")
                 order.coupon = coupon
                 #porciento = (1-coupon.discount_percent/100)
@@ -257,6 +263,12 @@ def create_order(request, transaction_id, usd = True, cach = False):
                 #print(f'base_total{order.base_total}')
                 #order.end_total = calculo + order.delivery_price
                 #print("end_total: {order.end_total}")
+=======
+                order.coupon = coupon
+                porciento = (1-coupon.discount_percent/100)
+                calculo = order.base_total*decimal.Decimal(porciento)
+                order.end_total = calculo + order.delivery_price
+>>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
                 coupon.used = True
                 coupon.applied_to_order = order
                 coupon.save()
