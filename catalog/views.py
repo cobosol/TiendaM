@@ -249,7 +249,7 @@ class crear_producto(SuccessMessageMixin, CreateView):
     form = ProductForm
     fields = ('name', 'gname', 'presentation', 'brand', 'sku', 'price', 'price_base', 'old_price', 
               'image', 'is_active', 'is_bestseller', 'is_featured', 'prod_datasheet', 'description', 
-              'is_feedstock', 'available_CUP', 'available_MLC',
+              'is_feedstock', 'available_CUP', 'available_MLC', 'whole_discount', 'min_quantity_whole',
               'meta_keywords', 'meta_description', 'categories')
     success_message = "Se ha subido correctamente el nuevo producto."
 
@@ -264,7 +264,7 @@ class actualizar_producto(SuccessMessageMixin, UpdateView):
     form = ProductForm
     fields = ('name', 'gname', 'presentation', 'brand', 'sku', 'price_base', 'old_price', 
               'image', 'is_active', 'is_bestseller', 'is_featured', 'prod_datasheet', 'description', 
-                'is_feedstock', 'available_online', 'available_CUP', 'available_MLC',
+                'is_feedstock', 'available_online', 'available_CUP', 'available_MLC', 'min_quantity_whole', 'whole_discount',
               'meta_keywords', 'meta_description', 'categories')
     success_message = "Se ha actualizado correctamente el producto."
 

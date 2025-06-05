@@ -26,7 +26,7 @@ def notification_user_sale(request):
 
 def notification_sale(request):
     name = request.user.first_name
-    email = "comercial@produccionesmuhia.ca"
+    email = "prueba@produccionesmuhia.ca" # "comercial@produccionesmuhia.ca"
     email2 = "ycoca@produccionesmuhia.ca"
     order_number = request.session.get('order_number','')
     if order_number:

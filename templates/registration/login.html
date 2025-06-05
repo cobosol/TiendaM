@@ -21,27 +21,33 @@
           Usuario registrado correctamente, ya puedes identificarte.
         </p>
         {% endif %}
+        <div class="col-md-3"> </div>
+        <div class="col-md-6">
         <form action="" method="post">{% csrf_token %}
           <!-- <h3 class="mb-4">Iniciar sesión</h3> -->
           {% if form.non_field_errors %}
             <p style="color:red">Usuario o contraseña incorrectos, prueba de nuevo.</p>
           {% endif %}
-          <p>
+          <p>Nombre: <br>
             <input type="text" name="username" autofocus maxlength="254" required
               id="id_username" class="form-control" placeholder="Nombre de usuario"/>
           </p>
-          <p>
+          <p> Contraseña: <br>
             <input type="password" name="password" required
               id="id_password" class="form-control" placeholder="Contraseña"/>
           </p>
           <input type="hidden" name="next" value="{{ next }}">
+          <div class="col-md-6">
           <p><input type="submit" class="btn btn-primary btn-block" value="Acceder"></p>
+          </div>
         </form>
+        </div>
+        <div class="col-md-3"></div>
         <p>
-          ¿Ha olvidado su clave? Puede restaurarla <a href="{% url 'password_reset' %}">aquí</a>.
+          ¿Ha olvidado su clave? Puede restaurarla <a href="{% url 'password_reset' %}" style="color:red">aquí</a>.
         </p>
         <p>
-          ¿No tiene cuenta? Puede registrarse <a href="{% url 'signup' %}">aquí</a>.
+          ¿No tiene cuenta? Puede registrarse <a href="{% url 'registro' %}" style="color:red">aquí</a>.
         </p>
       </div>
     </div>

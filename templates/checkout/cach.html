@@ -25,10 +25,11 @@
     <form action="." method="post">
     {% csrf_token %}
     <fieldset class="checkout">
-        <legend style="font-family: sans-serif;">Información para la entrega</legend>
+        <legend style="font-family: sans-serif;">Información del comprador</legend>
         <table>
-            {% form_table_row form.delivery_name %}
-            {% form_table_row form.delivery_phone %}
+            {% form_table_row form.payment_name %}
+            {% form_table_row form.payment_phone %}
+            {% form_table_row form.payment_email %}
         </table>
     </fieldset>
     <table>

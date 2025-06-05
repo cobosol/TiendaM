@@ -12,6 +12,25 @@
     </div>
     <!-- Page Header End -->
 
+    <h6> <i class="fa fa-plus">Buscar por:</i></h6>
+
+    <div class="mb-1">
+        <form enctype="multipart/form-data" method="GET" style="display: inline-block;">
+        {% csrf_token %}
+        {% load widget_tweaks %}
+        <div class="row">
+            {% for field in filter.form %}
+            <div class="mb-1 col-md-3">
+                <label for="{{field.id_for_label}}"> {{ field.label }} </label>
+                {{ field|add_class:"form-control" }}
+            </div>  
+            {% endfor %}
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary"> <i class="fas fa-search text-secondary mr-0"> </i> Filtrar</button>
+        </form>
+        <br>
+    </div>
 
 <div class="container-fluid pt-6">
     <div class="row px-xl-6">
@@ -20,6 +39,7 @@
                 <thead class="bg-primary text-light">
                     <tr>
                         <th>Id</th>
+                        <th>Usuario</th>
                         <th>Estado</th>
                         <th>Importe</th>
                         <th>Fecha</th>
@@ -32,6 +52,9 @@
                     <tr>
                         <td class="align-middle">
                                 {{ order.id }}
+                        </td>
+                        <td class="align-middle">
+                            {{ order.user.username }}
                         </td>
                         <td class="align-middle">
                             {{ order.statusS }}
@@ -61,32 +84,6 @@
                 </tbody>
             </table>
         </div>
-            <div class="card border-secondary mb-5">
-                <div class="card-header bg-primary border-0">
-                    <h4 class="font-weight-semi-bold m-0 text-light" style="font-family: sans-serif;">Total a pagar</h4>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex justify-content-between mb-3 pt-1">
-                        <h6 class="font-weight-medium" style="font-family: sans-serif;">Subtotal:{{ cart_item_count }}</h6>
-                        <h6 class="font-weight-medium" style="font-family: sans-serif;">$ {{ cart_subtotal }}</h6>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium" style="font-family: sans-serif;">Envío</h6>
-                        <h6 class="font-weight-medium" style="font-family: sans-serif;">$ {{ cart_delivery }}</h6>
-                    </div>
-                </div>
-                <div class="card-footer border-secondary bg-transparent">
-                    <div class="d-flex justify-content-between mt-2">
-                        <h5 class="font-weight-bold" style="font-family: sans-serif;">Total:{{ cart_item_count }}</h5>
-                        <h5 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total }}</h5>
-                    </div>
-                    <form method="post" action="." class="cart">
-                        {% csrf_token %}
-                        <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Pagar" alt="Checkout" />
-                    </form>
-                </div>
-            </div>
-        </div> -->
     </div>
 </div>
 

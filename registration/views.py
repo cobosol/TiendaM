@@ -17,13 +17,92 @@ from .forms import ProfileForm, UserCreationFormWithEmail, EmailForm, UpdateProf
 #Librerías para mensajes, algunos basados en views
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin 
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from django.contrib.auth.models import User
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
+from .tokens import token_activacion
+from tienda.settings import EMAIL_HOST_USER
+from django.contrib.auth.views import PasswordResetView
+
 
 # Instanciamos las vistas genéricas de Django 
 #from django.views import View
 from django.views.generic import ListView, DetailView 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
+from .forms import CustomPasswordResetForm
 
+class CustomPasswordResetView(PasswordResetView):
+    form_class=CustomPasswordResetForm
+    template_name='registration/password_reset_form.html'
+    email_template_name='registration/password_reset_email.txt',
+    html_email_template_name='registration/password_reset_email.html',
+    subject_template_name='registration/password_reset_subject.txt'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print("En el init de la CustomPasswordResetForm")
+        self.fields['email'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Tu correo electrónico'
+        })
+
+def registro(request):
+    if request.method == 'POST':
+        form = UserCreationFormWithEmail(request.POST)
+        if form.is_valid():
+            usuario = form.save(commit=False)
+            usuario.is_active = False  # Usuario inactivo hasta activación
+            usuario.first_name = form.cleaned_data['first_name']
+            usuario.last_name = form.cleaned_data['last_name']
+            usuario.save()
+            
+            # Crear correo de activación
+            asunto = 'Activa tu cuenta'
+            html_content = render_to_string('registration/activacion_cuenta.html', {
+                'usuario': usuario,
+                'dominio': request.META['HTTP_HOST'],
+                'uid': urlsafe_base64_encode(force_bytes(usuario.pk)),
+                'token': token_activacion.make_token(usuario),
+            })
+            email = EmailMultiAlternatives(
+                asunto,
+                "Por favor activa tu cuenta",
+                EMAIL_HOST_USER,
+                to=[usuario.email]
+            )
+            email.attach_alternative(html_content, "text/html")
+            email.send()
+            
+            return redirect('confirmacion_envio')
+    else:
+        form = UserCreationFormWithEmail()
+    return render(request, 'registration/signup.html', {'form': form})
+
+def activar_cuenta(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        usuario = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        usuario = None
+
+    if usuario is not None and token_activacion.check_token(usuario, token):
+        usuario.is_active = True
+        usuario.save()
+        login(request, usuario)
+        return redirect('cuenta_activada')
+    else:
+        return render(request, 'registration/activacion_invalida.html')        
+
+def confirmacion_envio(request):
+    return render(request, 'registration/confirmacion_envio.html')        
+    
+def cuenta_activada(request):
+    return render(request, 'registration/confirmacion_activacion.html')
 
 class SignUpView(CreateView):
     form_class = UserCreationFormWithEmail

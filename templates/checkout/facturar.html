@@ -24,7 +24,7 @@
     <form action="." method="post">
     {% csrf_token %}
     <fieldset class="checkout">
-        <legend style="font-family: sans-serif;">Información de contacto</legend>
+        <legend style="font-family: sans-serif;">Información del cliente</legend>
         <table> 
             <tr>
                 <td>
@@ -42,22 +42,10 @@
             <tr>
                 <td>
                     {% form_table_row form.payment_email %}
+                    {% form_table_row form.payment_address %}
+                    {% form_table_row form.payment_details %}
                 </td>
             </tr>   
-        </table>
-    </fieldset>
-    <fieldset class="checkout">
-        <legend style="font-family: sans-serif;">Información para la entrega</legend>
-        <table>
-            {% form_table_row form.delivery_name %}
-            {% form_table_row form.delivery_ci %}
-            {% form_table_row form.delivery_phone %}
-            {% form_table_row form.delivery_ws %}
-            {% form_table_row form.delivery_street %}
-            {% form_table_row form.delivery_apto %}
-            {% form_table_row form.delivery_between %}
-            {% form_table_row form.delivery_substate %}
-            {% form_table_row form.delivery_address_2 %}
         </table>
     </fieldset>
     
