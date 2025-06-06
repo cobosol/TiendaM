@@ -190,6 +190,9 @@
                         <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Confirmar pago" alt="Efectivo" />
                         {% endif %}
                         {% endif %}
+                        {% if comercial == 'True' %}
+                        <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Facturar" alt="Facturar" />
+                        {% endif %}
                     </form>
 
                 </div>

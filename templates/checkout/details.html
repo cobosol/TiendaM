@@ -50,10 +50,9 @@
                 <h6 class="font-weight-bold" style="font-family: sans-serif;">Total: </h5>
                 <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ order.total|currency }} {{ order.currency}}</h5>
             </div>
-            <form method="post" action="." class="Algo">
+<!--             <form method="post" action="." class="Algo">
                 {% csrf_token %}
-<!--                 <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Ir a pagar" alt="Checkout" /> -->
-            </form>
+            </form> -->
         </div>
         </div>
         </div>
@@ -62,7 +61,12 @@
         <div id = "Datos Factura" class="col-lg-12">
         <h4 class="bg-primary text-center mb-2 text-light" style="font-family: sans-serif;">Compras</h4>
             <table id="receipt">
-            <caption style="font-family: sans-serif;"> !!!!</caption>
+            <caption style="font-family: sans-serif;"> 
+                {% if discounts == "True" %}
+                    * Este producto tiene descuentos. <br>
+                {% endif %}
+                Gracias por su compra!!!!
+            </caption>
             <thead>
             <tr>
             <th scope="col">Producto</th>
@@ -71,23 +75,36 @@
             <th class="right" scope="col">Importe</th>
             </tr>
             </thead>
-<!--     <tfoot>
+    <!-- <tfoot>
         <tr>
             <td colspan="4" class="right" style="height:30px;">
                 <br>
                 <h6 class="text-dark font-weight-semi-bold mb-3" style="font-family: roboto;">{{ order.store_name }}: {{ order.delivery_price|currency }}<br />    
                  <br>
                  <h6 class="text-dark font-weight-semi-bold mb-3" style="font-family: roboto;">Importe Total: {{ order.total|currency }}<br />    
+                
             </td>
         </tr>
     </tfoot> -->
+    <tfoot>
+        <tr>
+            <td colspan="4" class="right" style="height:30px;">
+                Envío: {{ order.delivery_price|currency }} <br>
+                Valor Total: {{ order.total|currency }} {{ order.currency }} <br>
+                {% if amounth_discount == "True" %}
+                    Se aplicó un descuento del {{mount}} % al monto total
+                {% endif %}
+            </td>
+        </tr>
+    </tfoot>
+
     <tbody>
         {% for item in order_items %}
         <tr>
             <td>{{ item.name }}</td>
             <td>{{ item.price|currency }}</td>
             <td>{{ item.quantity }}</td>
-            <td class="right">{{ item.total|currency }}</td>
+            <td class="right">{{ item.total|currency }} {% if item.has_discount %} * {% endif %}</td>
         </tr>
         {% endfor %}
     </tbody>

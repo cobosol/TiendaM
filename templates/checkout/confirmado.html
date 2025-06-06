@@ -18,7 +18,12 @@
     <!-- <h6 class="text-dark font-weight-semi-bold mb-3" style="font-family: sans-serif;">Su número de transacción es: {{ order.transaction_id }}</h6> <br/> -->
 <!-- <h6 class="text-dark font-weight-semi-bold mb-3" style="font-family: roboto;">Su número de transacción bancaria es: {{ order.transaction_id }}</h6> -->    
 <table id="receipt">
-    <caption style="font-family: sans-serif;"> Gracias por su compra!!!!</caption>
+    <caption style="font-family: sans-serif;"> 
+        {% if discounts == "True" %}
+            * Este producto tiene descuentos. <br>
+        {% endif %}
+        Gracias por su compra!!!!
+    </caption>
     <thead>
         <tr>
             <th scope="col">Producto</th>
@@ -27,6 +32,19 @@
             <th class="right" scope="col">Total</th>
         </tr>
     </thead>
+
+    <tbody>
+        {% for item in order_items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price|currency }} {{ order.currency }}</td>
+            <td>{{ item.quantity }}</td>
+            <td class="right">{{ item.total|currency }} {{ order.currency }} {% if item.has_discount %} * {% endif %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+
     <tfoot>
         <tr>
             <td colspan="4" class="right" style="height:30px;">
@@ -35,16 +53,7 @@
             </td>
         </tr>
     </tfoot>
-    <tbody>
-        {% for item in order_items %}
-        <tr>
-            <td>{{ item.name }}</td>
-            <td>{{ item.price|currency }} {{ order.currency }}</td>
-            <td>{{ item.quantity }}</td>
-            <td class="right">{{ item.total|currency }} {{ order.currency }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
+
     </table>
 
     <form action="." method="post">

@@ -258,7 +258,7 @@ def cart_subtotal(request):
         min_quantity_amount = price.min_quantity_amount*price.change_usd_mlc
     if cart_total >= min_quantity_amount:
         porciento = 1-price.amunt_discount/100
-        return cart_total*decimal.Decimal(porciento)
+        cart_total = cart_total*decimal.Decimal(porciento)
     elif TU == 'Distribuidor':
         falta = decimal.Decimal('0.00')
         falta += min_quantity_amount-cart_total
@@ -269,7 +269,13 @@ def cart_subtotal(request):
     try:
         coupon = CouponValidator.validate(request.session['active_coupon'], request.user)
         if coupon:
+<<<<<<< HEAD
+            print("Cupó activo")
             cart_total = cart_total - (cart_total*coupon.discount_percent)/100
+            print(cart_total)
+=======
+            cart_total = cart_total - (cart_total*coupon.discount_percent)/100
+>>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
     except:
         pass
     return cart_total

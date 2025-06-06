@@ -95,7 +95,8 @@ class Product(models.Model):
     """ Próxima venta """
     is_featured = models.BooleanField(default=False, verbose_name = "Próxima venta")
     """ Descuento por cantidad """
-    #has_discount = models.BooleanField(default=False, verbose_name = "Descuento por cantidad")
+    whole_discount = models.IntegerField(default = 0, verbose_name="Porciento de descuento para ventas mayoristas")
+    min_quantity_whole = models.IntegerField(default = 0, verbose_name="Cantidad mínima para ventas mayoristas")
     """ Ficha del producto """
     prod_datasheet = models.FileField(blank=True, null=True, upload_to=generate_path, validators=[valid_extension],
                                       verbose_name="Ficha técnica")

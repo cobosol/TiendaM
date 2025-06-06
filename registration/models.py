@@ -102,7 +102,7 @@ class Profile(models.Model):
         if self.avatar and hasattr(self.avatar, 'url'):
             return self.avatar.url 
         else:
-            return "/static/images/Profile/silueta.jpg"
+            return "/static/img/Profile/pensativo.jpg"
 
 @receiver(post_save, sender=User)
 def ensure_profile_exists(sender, instance, **kwargs):

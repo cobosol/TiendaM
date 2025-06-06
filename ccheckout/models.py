@@ -77,8 +77,13 @@ class Order(models.Model):
     base_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total base")
     end_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total final con descuento y envío")
     store_name = models.CharField(max_length=200, default="Envío Habana", verbose_name = "Nombre del tipo de entrega")
+<<<<<<< HEAD
+    coupon_percent = models.PositiveIntegerField(default=0, verbose_name="Porciento de descuento de cupón")
+    others_discount = models.PositiveIntegerField(default=0, verbose_name="Porciento de otros descuentos")
+=======
     coupon_percent = models.PositiveIntegerField(default=0, verbose_name="Porciento de descuentos")
     others_discount = models.PositiveIntegerField(default=0, verbose_name="Otros descuentos")
+>>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
     pay_url = models.URLField(verbose_name="URL de pago", default="")
     currency = models.CharField(max_length=3, default="USD", verbose_name = "Tipo de moneda")
     price = models.ForeignKey(Price, on_delete = models.PROTECT, blank = True, null=True, verbose_name="Valores para el cálculo del Precio de la compra")
@@ -86,16 +91,18 @@ class Order(models.Model):
 
     # payment info
     payment_name = models.CharField(max_length=50, verbose_name = "Nombre del titular", null = True, blank = True)
-    payment_phone = models.CharField(max_length=20, verbose_name = "Teléfono móvil")
-    payment_email = models.EmailField(max_length=50, verbose_name = "Correo electrónico")
-    payment_city = models.CharField(max_length=20, verbose_name = "Ciudad del banco", help_text="Ciudad del banco de la tarjeta")
-    payment_postCode = models.CharField(max_length=20, verbose_name = "Código Postal")
+    payment_phone = models.CharField(max_length=20, blank = True, null=True, verbose_name = "Teléfono móvil")
+    payment_email = models.EmailField(max_length=50, blank = True, null=True, verbose_name = "Correo electrónico")
+    payment_city = models.CharField(max_length=20, blank = True, null=True, verbose_name = "Ciudad del banco", help_text="Ciudad del banco de la tarjeta")
+    payment_address = models.CharField(max_length=200, blank = True, null=True, verbose_name = "Dirección")
+    payment_postCode = models.CharField(max_length=20, blank = True, null=True, verbose_name = "Código Postal")
+    payment_details = models.CharField(max_length=200, blank = True, null=True, verbose_name = "Detalles de la compra")
     
     # delivery information
-    delivery_name = models.CharField(max_length=50, verbose_name = "Nombre para la entrega", null = True, blank = True)
+    delivery_name = models.CharField(max_length=50, verbose_name = "Nombre del beneficiario", null = True, blank = True)
     delivery_ci = models.CharField(max_length=25, verbose_name="Número de identidad", null=True, blank=True)
-    delivery_phone = models.CharField(max_length=20, verbose_name = "Teléfono")
-    delivery_ws = models.CharField(max_length=20, verbose_name = "Teléfono WhatsApp")
+    delivery_phone = models.CharField(max_length=20, verbose_name = "Teléfono", null=True, blank=True)
+    delivery_ws = models.CharField(max_length=20, verbose_name = "Teléfono WhatsApp", null=True, blank=True)
     delivery_street = models.CharField(default = " ", max_length=100, verbose_name = "Calle", null = True, blank = True)
     delivery_apto = models.CharField(default = " ", max_length=100, verbose_name = "Número/Apartamento", null = True, blank = True)
     delivery_between = models.CharField(default = " ", max_length=100, verbose_name = "Entre calles", null = True, blank = True)
@@ -103,7 +110,7 @@ class Order(models.Model):
     delivery_substate = models.IntegerField(choices=SUBSTATE, default=GUANABACOA, verbose_name = "Municipio")
     #delivery_substate = models.CharField(max_length=50, verbose_name = "Municipio", null = True, blank = True)
     #delivery_address_1 = models.CharField(max_length=250, verbose_name = "Dirección", null = True, blank = True)
-    delivery_address_2 = models.CharField(max_length=250, verbose_name = "Dirección alternativa", null = True, blank = True)
+    delivery_address_2 = models.CharField(max_length=500, verbose_name = "Dirección alternativa", null = True, blank = True)
     
     delivery = models.ForeignKey('stores.Store', unique=False, null = True, verbose_name = "Tipo de entrega", blank = True, on_delete=models.SET_NULL)
     
@@ -318,11 +325,28 @@ class OrderItem(models.Model):
     price = models.DecimalField(max_digits=9,decimal_places=2, verbose_name = "Precio")
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name = "Orden")
     store_name = models.CharField(max_length=250, default="Envío Habana", verbose_name = "Forma de entrega")
+    totalf = models.DecimalField(max_digits=9,decimal_places=2, default=-1.00, verbose_name = "Precio total del producto")
 
+    @property
+    def has_discount(self):
+        bool = abs((self.price * self.quantity) - self.total) > 0.01
+        print(f'self.price * self.quantity) - self.total) > 0.01 {bool}')
+        return abs((self.price * self.quantity) - self.total) > 0.01
+    
     @property
     def total(self):
         #MND = self.order.currency
-        price = self.product.price
+        if self.totalf > 0:
+            return self.totalf
+        if self.quantity >= self.product.min_quantity_whole:
+            porciento = decimal.Decimal('0.00')
+            porciento = 1-self.product.whole_discount/100
+            precio = decimal.Decimal('0.00')
+            precio = self.price * decimal.Decimal(porciento)
+            return self.quantity * precio
+        else:
+            return self.quantity * self.price
+        """ price = self.product.price
         if price:
             if self.quantity >= price.min_quantity_whole:
                 porciento = decimal.Decimal('0.00')
@@ -334,7 +358,7 @@ class OrderItem(models.Model):
             else:
                 return self.quantity * self.price
         else:
-            return -1
+            return -1 """
 
 
     @property

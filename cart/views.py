@@ -22,10 +22,12 @@ from payments.utils import send_coupon
 from payments.validators import CouponValidator
 
 def show_cart(request, template_name="cart/cart.html"):
+    # Verificar que esté autenticado
     if not (request.user.is_authenticated):
         messages.warning(request, "Debe estar autenticado para acceder al carrito")
         url = reverse('login')
         return HttpResponseRedirect(url)
+    
     form = DeliveryForm(request=request)
     price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
     MND = 'USD'
@@ -35,34 +37,54 @@ def show_cart(request, template_name="cart/cart.html"):
     try:
         if request.method == 'POST':
             postdata = request.POST.copy()
+<<<<<<< HEAD
+            """ print("postdata")
+            print(postdata) """
+=======
             print("postdata")
             print(postdata)
+>>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
             if postdata['submit'] == 'X':
                 cart.remove_from_cart(request)
-                form = DeliveryForm(request, postdata)
+                #form = DeliveryForm(request, postdata)
             elif postdata['submit'] == '':
                 cart.update_cart(request)
-                form = DeliveryForm(request, postdata)
+                #form = DeliveryForm(request, postdata)
             elif postdata['submit'] == '>':
                 cart.update_cart(request)
-                form = DeliveryForm(request, postdata)
+                #form = DeliveryForm(request, postdata)
             elif postdata['submit'] == 'Buscar':
                 productSearch = postdata['producto']
                 url = '/catalogo/productos/' + productSearch + '/'
                 return HttpResponseRedirect(url)
             elif postdata['submit'] == 'Aplicar cupón':
+<<<<<<< HEAD
+                if postdata['coupon'] == '':
+                    text = "Debe introducir un código de cupón válido"
+                    messages.error(request, text)
+                else:
+                    coupon = CouponValidator.validate(postdata['coupon'], user)
+                    if coupon:
+                        request.session['active_coupon'] = str(coupon.code)
+                        text = "Cupón activado correctamente"
+                        messages.info(request, text)
+                    else:
+                        print(f"cupon falso {coupon}")
+            elif postdata['submit'] == 'Reservar': # Reservar producto sin pagar
+=======
                 coupon = CouponValidator.validate(postdata['coupon'], user)
                 if coupon:
                     request.session['active_coupon'] = str(coupon.code)
                 else:
                     print(f"coupon falso {coupon}")
             elif postdata['submit'] == 'Reservar':
+>>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
                 if request.user.is_authenticated:
                     if MND == 'USD':
                         url = reverse('reservar')
                         return HttpResponseRedirect(url)
             elif postdata['submit'] == 'Ir a pagar':
-                if request.user.is_authenticated:
+                #if request.user.is_authenticated:
                     if MND == 'USD':
                         if cart.cart_subtotal(request) < 2:
                             text = "El monto mínimo para la compra en línea es de 2.00 USD"
@@ -74,10 +96,13 @@ def show_cart(request, template_name="cart/cart.html"):
                     else:
                         url = reverse('pagar')
                         return HttpResponseRedirect(url)
-                else:
-                    messages.warning(request,"Debe estar autenticado para ir a pagar")
+                    """ else:
+                    messages.warning(request,"Debe estar autenticado para ir a pagar") """
             elif postdata['submit'] == 'Confirmar pago':
                 url = reverse('efectivo')
+                return HttpResponseRedirect(url)
+            elif postdata['submit'] == 'Facturar':
+                url = reverse('facturar')
                 return HttpResponseRedirect(url)
             elif postdata['submit'] == 'Buscar':
                 productSearch = postdata['producto']

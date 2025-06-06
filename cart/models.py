@@ -145,15 +145,22 @@ class CartItem(models.Model):
         super().__init__(*args, **kwargs)
 
     def total_USD(self):
-        price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
+        #price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
         print("En total USD")
-        if self.quantity >= price.min_quantity_whole:
+        if self.quantity >= self.product.min_quantity_whole:
+            porciento = 1-self.product.whole_discount/100
+            discount = self.product.price_base*decimal.Decimal(porciento)
+            total = self.quantity*decimal.Decimal(discount) 
+            return decimal.Decimal(total)
+        total = self.quantity * self.product.price_base
+        return decimal.Decimal(total) 
+        """ if self.quantity >= price.min_quantity_whole:
             porciento = 1-price.whole_discount/100
             discount = self.product.price_base*decimal.Decimal(porciento)
             total = self.quantity*decimal.Decimal(discount) 
             return decimal.Decimal(total)
         total = self.quantity * self.product.price_base
-        return decimal.Decimal(total)
+        return decimal.Decimal(total) """
     
     def total_CUP(self):
         price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual

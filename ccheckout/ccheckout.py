@@ -1,7 +1,7 @@
 #from ecomstore.checkout import google_checkout
 from cart import cart
 from .models import Order, OrderItem
-from .forms import CheckoutForm, PagarForm, CachForm
+from .forms import CheckoutForm, PagarForm, CachForm, FacturarForm
 from stores.models import Store, Product_Sales
 from utils.models import Price
 #from ecomstore.checkout import authnet
@@ -163,13 +163,22 @@ def create_order(request, transaction_id, usd = True, cach = False):
     profile = get_object_or_404(Profile, user = user) # Accedo a su perfil
     MND = profile.MONEY_TYPE[profile.money_type][1] # Saco el tipo de moneda del usuario
     results = {} # Crear variable para la respuesta
-    if transaction_id == 2:
+    if transaction_id == 2: # Reservar
         checkout_form = PagarForm(request.POST, instance=order)
         order = checkout_form.save(commit=False)
         order.currency = 'USD'
         deliveryInfo = get_object_or_404(DeliveryInfo, client=request.user)
         cart_subtotal = cart.cart_subtotal(request)
         order.delivery_price = cart.cart_delivery_price(request, cart_subtotal, MND)
+    elif transaction_id == 3: # Facturar por contrato
+        checkout_form = FacturarForm(request.POST, instance=order)
+        order = checkout_form.save(commit=False)
+        if usd: # Guardo el tipo de moneda en efectivo
+            order.currency = 'USD'
+        elif cach:
+            order.currency = 'CUP'
+        else:
+            order.currency = 'MLC'
     else:
         if cach: # Si se va a pagar en efectivo guardo la información de la Form para efectivo
             checkout_form = CachForm(request.POST, instance=order)
@@ -209,20 +218,36 @@ def create_order(request, transaction_id, usd = True, cach = False):
             oi = OrderItem()
             oi.order = order
             oi.product = ci.product
-            oi.store_name = cart.delivery_name(request)
+            oi.store_name = cart.delivery_name(request) # Sobra
             oi.quantity = ci.quantity
             #actualizar la cantidad de reservado del producto en ese almacen
             prod = ci.product
             if MND == 'USD':
                 oi.price = ci.price_USD()
+                oi.totalf = ci.total_USD()
             elif MND == 'CUP':
                 oi.price = ci.price_CUP()
+                oi.totalf = ci.total_CUP()
             else:
                 oi.price = ci.price_MLC()
+                oi.totalf = ci.total_MLC()
             oi.save()
         order.update_status(Order.SUBMITTED)
+<<<<<<< HEAD
+        order.base_total = cart.cart_subtotal(request) #order.total_items
+        print(f'Base total en create order{order.base_total}')
+        amounth_discount = "False"
+        mount = 0
+        if abs(order.total_items - order.base_total) > 0.01:
+            amounth_discount = "True"
+            mount = 100 - round((order.base_total / order.total_items * 100 ), 0)
+            order.others_discount = mount
+        order.end_total = order.base_total + order.delivery_price
+        print("Antes del cupon end_total {order.end_total}")
+=======
         order.base_total = order.total_items
         order.end_total = order.base_total + order.delivery_price
+>>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
         try:
             print("En el try")
             print(request.session['active_coupon'])
@@ -230,10 +255,20 @@ def create_order(request, transaction_id, usd = True, cach = False):
                 print("En el session ")
                 coupon = CouponValidator.validate(request.session['active_coupon'],request.user)
                 order.coupon_percent = coupon.discount_percent
+<<<<<<< HEAD
+                #print(f"En el cupon: end_total {order.end_total}")
+                order.coupon = coupon
+                #porciento = (1-coupon.discount_percent/100)
+                #calculo = order.base_total*decimal.Decimal(porciento)
+                #print(f'base_total{order.base_total}')
+                #order.end_total = calculo + order.delivery_price
+                #print("end_total: {order.end_total}")
+=======
                 order.coupon = coupon
                 porciento = (1-coupon.discount_percent/100)
                 calculo = order.base_total*decimal.Decimal(porciento)
                 order.end_total = calculo + order.delivery_price
+>>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
                 coupon.used = True
                 coupon.applied_to_order = order
                 coupon.save()
@@ -280,9 +315,96 @@ def export_pdf(request, id_orden):
     #Diccionario de factura
     current_factura = {}        
     #QR datos de transaccion
+    qr_generado = '{"id_orden": ' + str(id_orden)
+    order = Order.objects.filter(id=id_orden)[0] 
+    #Generando reporte PDF
+    if order.user.groups.filter(name__in=['comercial']):
+        template_src = 'checkout/factura_por_contrato.html'
+        data['first_name'] = order.payment_name
+        data['email'] = order.payment_email
+        data['phone'] = order.payment_phone
+        data['address'] = order.payment_address
+        data['details'] = order.payment_details
+    elif order.user.groups.filter(name__in=['vendedores']):
+        template_src = 'checkout/factura_punto_de_venta.html'
+        data['first_name'] = order.payment_name
+        data['last_name'] = order.user.first_name + ' ' + order.user.last_name
+        data['email'] = order.payment_email
+        data['phone'] = order.payment_phone 
+    else:
+        template_src = 'checkout/factura_venta_online.html'
+        data['first_name'] = order.payment_name
+        data['last_name'] = order.user.username + ': ' + order.user.first_name + ' ' + order.user.last_name
+        data['email'] = order.payment_email
+        data['phone'] = order.payment_phone
+    template = get_template(template_src)
+    data['id_order'] = id_orden
+    orders = OrderItem.objects.filter(order=id_orden)
+    discount = False
+    for item in orders:
+         if item.has_discount:
+              discount = True
+              print(True)
+              break
+    if discount:
+        data['discount_item'] = "True"
+    else:
+         print("False")
+         data['discount_item'] = "False"
+    data['order'] = order
+    # Cargar el perfil del usuario
+    user_profile = Profile.objects.get(user=order.user)
+    if order.user.groups.filter(name__in=['comercial']):
+        data['date'] = ''
+    else:
+         data['date'] = order.date
+    data['importe'] = decimal.Decimal(round(order.total, 2))
+    data['delivery_name'] = order.delivery_name
+    try:
+        if order.store_name == "Envío Habana":
+            delivery_add1 = order.delivery_street + " " + order.delivery_apto
+            if order.delivery_between:
+                delivery_add1 = delivery_add1 + " entre " + order.delivery_between 
+            delivery_add1 = delivery_add1 + ". " + order.SUBSTATE[order.delivery_substate][1] + ", " + order.delivery_state
+            data['delivery_add1'] = delivery_add1
+        else:
+            data['delivery_add1'] = order.store_name
+    except:
+        data['delivery_add1'] = ''
+    if order.delivery_address_2:
+        data['delivery_add2'] = order.delivery_address_2
+    data['state'] = order._state
+    data['delivery_phone'] = order.delivery_phone
+    data['delivery_ws'] = order.delivery_ws
+    data['CI'] = order.delivery_ci
+    data['delivery_price'] = decimal.Decimal(order.delivery_price)
+    data['currency'] = order.currency
+    data['coupon'] = '0'
+    if order.coupon:
+        data['coupon'] = order.coupon_percent 
+    data['discount'] = '0'
+    if order.others_discount:
+        data['discount'] = order.others_discount 
+    context = {'data': data, 'orders': orders, 'request': request,'qr':qr_generado}
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="factura.pdf"'
+    html = template.render(context)
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response, link_callback=link_callback)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+""" def factura_comercial(request, id_orden):
+    data = {}
+    #Diccionario de factura
+    current_factura = {}        
+    #QR datos de transaccion
     qr_generado = '{"id_orden": ' + str(id_orden) 
     #Generando reporte PDF
-    template_src = 'checkout/factura_base.html'
+    template_src = 'checkout/factura_comercial.html'
     template = get_template(template_src)
     data['id_order'] = id_orden
     orders = OrderItem.objects.filter(order=id_orden)
@@ -323,4 +445,4 @@ def export_pdf(request, id_orden):
     # if error then show some funny view
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
-    return response
+    return response """

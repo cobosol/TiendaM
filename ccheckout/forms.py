@@ -59,24 +59,47 @@ class CheckoutForm(forms.ModelForm):
             raise forms.ValidationError('Entre un número de teléfono válido con el código del área.(ejemplo.555-555-5555)')
         return self.cleaned_data['phone']
     
+class FacturarForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(FacturarForm, self).__init__(*args, **kwargs)
+        # override default attributes
+    """         for field in self.fields:
+            self.fields[field].widget.attrs['size'] = '30' """
 
+    class Meta:
+        model = Order
+        fields = ['payment_name', 'payment_phone', 'payment_email', 'payment_address', 'payment_details']
+        widgets = {
+            'payment_address': forms.Textarea(attrs={'width':'300px', 'rows':3}),
+            'payment_details': forms.Textarea(attrs={'width':'600px', 'rows':4}),
+        }
+
+    def clean_phone(self):
+        phone = self.cleaned_data['payment_phone']
+        stripped_phone = strip_non_numbers(phone)
+        if len(stripped_phone) < 10:
+            raise forms.ValidationError('Entre un número de teléfono válido con el código del área.(ejemplo.555-555-5555)')
+        return self.cleaned_data['payment_phone']
+    
 class CachForm(forms.ModelForm):
+
+    class Meta:
+        model = Order
+        fields = ['payment_name', 'payment_phone', 'payment_email']
+
     def __init__(self, *args, **kwargs):
         super(CachForm, self).__init__(*args, **kwargs)
         # override default attributes
         for field in self.fields:
             self.fields[field].widget.attrs['size'] = '30'
-
-    class Meta:
-        model = Order
-        fields = ['delivery_name', 'delivery_phone']
+        self.fields['payment_name'].required = True
 
     def clean_phone(self):
-        phone = self.cleaned_data['phone']
+        phone = self.cleaned_data['payment_phone']
         stripped_phone = strip_non_numbers(phone)
-        if len(stripped_phone) < 10:
-            raise forms.ValidationError('Entre un número de teléfono válido con el código del área.(ejemplo.555-555-5555)')
-        return self.cleaned_data['phone']
+        if len(stripped_phone) < 8:
+            raise forms.ValidationError('Entre un número de teléfono válido de 8 dígitos.(ejemplo: 55 55 5555)')
+        return self.cleaned_data['payment_phone']
 
 class PagarForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -92,11 +115,11 @@ class PagarForm(forms.ModelForm):
                     'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon'
                     )
     def clean_phone(self):
-        phone = self.cleaned_data['phone']
+        phone = self.cleaned_data['payment_phone']
         stripped_phone = strip_non_numbers(phone)
-        if len(stripped_phone) < 10:
-            raise forms.ValidationError('Entre un número de teléfono válido con el código del área.(ejemplo.555-555-5555)')
-        return self.cleaned_data['phone']
+        if len(stripped_phone) < 8:
+            raise forms.ValidationError('Entre un número de teléfono válido de al menos 8 dígitos. (ejemplo: 5-555-5555)')
+        return self.cleaned_data['payment_phone']
 
 class ReserveForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -104,18 +127,55 @@ class ReserveForm(forms.ModelForm):
         # override default attributes
         """ for field in self.fields:
             self.fields[field].widget.attrs['size'] = '30' """
-
+        self.fields['payment_name'].required = True
+        self.fields['payment_phone'].required = True
+        self.fields['delivery_name'].required = True
+        self.fields['delivery_ci'].required = True
+        self.fields['delivery_phone'].required = True
+        self.fields['delivery_street'].required = True
+        self.fields['delivery_apto'].required = True
+    
     class Meta:
         model = Order
         exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery', 'store_name', 'payment_city', 
                    'delivery_state', 'currency', 'payment_postCode',
                      'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon')
+
     def clean_phone(self):
-        phone = self.cleaned_data['phone']
+        phone = self.cleaned_data['payment_phone']
         stripped_phone = strip_non_numbers(phone)
         if len(stripped_phone) < 10:
-            raise forms.ValidationError('Entre un número de teléfono válido con el código del área.(ejemplo.555-555-5555)')
-        return self.cleaned_data['phone']
+            raise forms.ValidationError('Entre un número de teléfono válido con el código del área. (ejemplo.555-555-5555)')
+        return self.cleaned_data['payment_phone']
+
+class ReserveEForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ReserveEForm, self).__init__(*args, **kwargs)
+        self.fields['payment_name'].required = True
+        self.fields['payment_phone'].required = True
+        self.fields['delivery_name'].required = True
+        self.fields['delivery_ci'].required = True
+        self.fields['delivery_phone'].required = True
+        self.fields['delivery_substate'].required = False
+    
+    class Meta:
+        model = Order
+        exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery', 'store_name', 'payment_city', 
+<<<<<<< HEAD
+                   'delivery_state', 'currency', 'payment_postCode', 'delivery_street', 'delivery_apto',
+                     'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon')
+
+=======
+                   'delivery_state', 'currency', 'payment_postCode',
+                     'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon')
+>>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
+    def clean_phone(self):
+        phone = self.cleaned_data['payment_phone']
+        stripped_phone = strip_non_numbers(phone)
+        if len(stripped_phone) < 10:
+            raise forms.ValidationError('Entre un número de teléfono válido con el código del área. (ejemplo.555-555-5555)')
+        return self.cleaned_data['payment_phone']
+    
     
 class UpdateStatusForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
