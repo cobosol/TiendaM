@@ -37,13 +37,6 @@ def show_cart(request, template_name="cart/cart.html"):
     try:
         if request.method == 'POST':
             postdata = request.POST.copy()
-<<<<<<< HEAD
-            """ print("postdata")
-            print(postdata) """
-=======
-            print("postdata")
-            print(postdata)
->>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
             if postdata['submit'] == 'X':
                 cart.remove_from_cart(request)
                 #form = DeliveryForm(request, postdata)
@@ -58,7 +51,6 @@ def show_cart(request, template_name="cart/cart.html"):
                 url = '/catalogo/productos/' + productSearch + '/'
                 return HttpResponseRedirect(url)
             elif postdata['submit'] == 'Aplicar cupón':
-<<<<<<< HEAD
                 if postdata['coupon'] == '':
                     text = "Debe introducir un código de cupón válido"
                     messages.error(request, text)
@@ -71,14 +63,6 @@ def show_cart(request, template_name="cart/cart.html"):
                     else:
                         print(f"cupon falso {coupon}")
             elif postdata['submit'] == 'Reservar': # Reservar producto sin pagar
-=======
-                coupon = CouponValidator.validate(postdata['coupon'], user)
-                if coupon:
-                    request.session['active_coupon'] = str(coupon.code)
-                else:
-                    print(f"coupon falso {coupon}")
-            elif postdata['submit'] == 'Reservar':
->>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
                 if request.user.is_authenticated:
                     if MND == 'USD':
                         url = reverse('reservar')

@@ -146,6 +146,7 @@ def show_checkout(request, template_name='checkout/checkout.html'):
                             response2 = createPaymentCardsJSON(request, order_number)
                             try:
                                 dicto2 = json.loads(response2.content)
+                                print(f'Dicto2{dicto2}')
                                 url_pay = dicto2["shortUrl"]
                                 order = Order.objects.filter(id=order_number['order_number'])[0]
                                 order.pay_url = url_pay
@@ -157,9 +158,11 @@ def show_checkout(request, template_name='checkout/checkout.html'):
                                 fail_url = reverse('checkout_fail')
                                 return HttpResponseRedirect(fail_url)
                         else:
+                            print(f'Error en AccessToken{dicto["error"]}')
                             fail_url = reverse('checkout_fail')
                             return HttpResponseRedirect(fail_url)
             else:
+                print('Error en la validación de la form')
                 fail_url = reverse('checkout_fail')
                 return HttpResponseRedirect(fail_url)
         """ else:
@@ -355,11 +358,7 @@ def pagar(request, template_name='checkout/pagar.html'):
 
 @login_required
 def reserve(request, template_name='checkout/reserve.html'):
-<<<<<<< HEAD
     # Reservar productos sin pagar
-=======
-    print("En reserve")
->>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
     MD = 'USD'
     st_name = cart.delivery_Store(request).name # Nombre del tipo de entrega
     if cart.is_empty(request): #Si el carrito está vacío
@@ -397,20 +396,11 @@ def reserve(request, template_name='checkout/reserve.html'):
         else:
             form = ReserveEForm() #Construyo la form sin datos de entrega  
     page_title = 'Reservar'
-<<<<<<< HEAD
     #cobra_efectivo = False
     cart_subtotal = round(cart.cart_subtotal(request), 2) # Capturo suma de productos 
     print(cart_subtotal)
     cart_delivery = cart.cart_delivery_price(request, cart_subtotal, MD) # Capturo precio de entrega
     cart_total = cart_subtotal + cart_delivery # Total: Productos + entrega
-=======
-    cobra_efectivo = False
-    cart_subtotal = round(cart.cart_subtotal(request), 2)
-    print(cart_subtotal)
-    cart_delivery = cart.cart_delivery_price(request, cart_subtotal, MD)
-    cart_total = cart_subtotal + cart_delivery
-    st_name = cart.delivery_Store(request).name
->>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
     envio = False
     deli = cart.get_delivery(request) # Capturo el id del tipo de entrega
     if deli == '3': # Si es 3 (Envío habana). ##### Esto hay que hacerlo genérico  

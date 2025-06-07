@@ -161,14 +161,9 @@ class ReserveEForm(forms.ModelForm):
     class Meta:
         model = Order
         exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery', 'store_name', 'payment_city', 
-<<<<<<< HEAD
                    'delivery_state', 'currency', 'payment_postCode', 'delivery_street', 'delivery_apto',
                      'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon')
 
-=======
-                   'delivery_state', 'currency', 'payment_postCode',
-                     'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon')
->>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
     def clean_phone(self):
         phone = self.cleaned_data['payment_phone']
         stripped_phone = strip_non_numbers(phone)

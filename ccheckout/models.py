@@ -77,13 +77,8 @@ class Order(models.Model):
     base_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total base")
     end_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total final con descuento y envío")
     store_name = models.CharField(max_length=200, default="Envío Habana", verbose_name = "Nombre del tipo de entrega")
-<<<<<<< HEAD
     coupon_percent = models.PositiveIntegerField(default=0, verbose_name="Porciento de descuento de cupón")
     others_discount = models.PositiveIntegerField(default=0, verbose_name="Porciento de otros descuentos")
-=======
-    coupon_percent = models.PositiveIntegerField(default=0, verbose_name="Porciento de descuentos")
-    others_discount = models.PositiveIntegerField(default=0, verbose_name="Otros descuentos")
->>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
     pay_url = models.URLField(verbose_name="URL de pago", default="")
     currency = models.CharField(max_length=3, default="USD", verbose_name = "Tipo de moneda")
     price = models.ForeignKey(Price, on_delete = models.PROTECT, blank = True, null=True, verbose_name="Valores para el cálculo del Precio de la compra")
