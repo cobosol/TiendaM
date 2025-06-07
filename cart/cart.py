@@ -269,13 +269,7 @@ def cart_subtotal(request):
     try:
         coupon = CouponValidator.validate(request.session['active_coupon'], request.user)
         if coupon:
-<<<<<<< HEAD
-            print("Cupó activo")
             cart_total = cart_total - (cart_total*coupon.discount_percent)/100
-            print(cart_total)
-=======
-            cart_total = cart_total - (cart_total*coupon.discount_percent)/100
->>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6
     except:
         pass
     return cart_total
