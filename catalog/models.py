@@ -6,6 +6,19 @@ from django_ckeditor_5.fields import CKEditor5Field
 from django.utils.text import slugify
 from utils.models import Price
 
+class SpecialProductManager(models.Manager):
+    def get_summary_product(self):
+        product, created = self.get_or_create(
+            sku='SUMMARY_ITEM',
+            defaults={
+                'name': 'Resumen Diario de Ventas Físicas',
+                'price_base': 0,
+                'is_active': False,  # No aparece en el catálogo normal
+                'is_summary_product': True
+            }
+        )
+        return product
+    
 class Category(models.Model):
     name = models.CharField(max_length=50, verbose_name="Nombre")
     slug = models.SlugField(max_length=50, unique=True, 
@@ -107,6 +120,9 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField(Category, verbose_name = "Categorías")
+    is_summary_product = models.BooleanField(default=False)
+    
+    objects = SpecialProductManager()
 
     class Meta:
         db_table = 'products'

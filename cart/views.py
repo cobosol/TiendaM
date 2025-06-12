@@ -88,6 +88,9 @@ def show_cart(request, template_name="cart/cart.html"):
             elif postdata['submit'] == 'Facturar':
                 url = reverse('facturar')
                 return HttpResponseRedirect(url)
+            elif postdata['submit'] == 'Resumen':
+                url = reverse('resumen')
+                return HttpResponseRedirect(url)
             elif postdata['submit'] == 'Buscar':
                 productSearch = postdata['producto']
                 url = '/catalogo/productos/' + productSearch + '/'

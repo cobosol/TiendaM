@@ -5,6 +5,8 @@ from catalog.models import Product
 from stores.models import Store, Product_Sales
 import decimal
 from utils.models import Price
+import json
+from django.core.exceptions import ValidationError
 
 # Crear una clase delivery que incluya todas las definiciones de los envios.
 # El municipio con los precios (diccionario), descuentos por monto...
@@ -82,7 +84,9 @@ class Order(models.Model):
     pay_url = models.URLField(verbose_name="URL de pago", default="")
     currency = models.CharField(max_length=3, default="USD", verbose_name = "Tipo de moneda")
     price = models.ForeignKey(Price, on_delete = models.PROTECT, blank = True, null=True, verbose_name="Valores para el cálculo del Precio de la compra")
-    coupon = models.ForeignKey('payments.Coupon', on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
+    coupon = models.ForeignKey('payments.Coupon', on_delete=models.SET_NULL, null=True, blank=True, related_name='orders', verbose_name="Cupón de descuento")
+    is_daily_summary = models.BooleanField(default=False, verbose_name="Es resumen diario")
+    seller = models.ForeignKey(User, related_name="order_sumary", on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Vendedor")
 
     # payment info
     payment_name = models.CharField(max_length=50, verbose_name = "Nombre del titular", null = True, blank = True)
@@ -162,6 +166,24 @@ class Order(models.Model):
             count_produc = str(count) + " " + str(product)
             products.append(count_produc)
         return products
+    
+    @property
+    def total_cash(self):
+        cash = self.payment_methods.filter(method='CASH').first()
+        return cash.amount if cash else 0
+    
+    @property
+    def cash_transactions(self):
+        cash = self.payment_methods.filter(method='CASH').first()
+        return cash.transaction_count if cash else 0
+    
+    @property
+    def transfer_details(self):
+        transfers = self.payment_methods.filter(method='TRANSFER')
+        return [{
+            'amount': t.amount,
+            'details': t.transaction_details
+        } for t in transfers]
 
     # Al crear la orden de compra:
     # Disminuye los disponibles en Productos por Almacen
@@ -315,10 +337,11 @@ class Order(models.Model):
         return True
 
 class OrderItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.PROTECT, verbose_name = "Producto")
-    quantity = models.DecimalField(max_digits=9,decimal_places=2,default=1.00, verbose_name = "Cantidad")
-    price = models.DecimalField(max_digits=9,decimal_places=2, verbose_name = "Precio")
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name = "Orden")
+    product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.SET_NULL, verbose_name = "Producto")
+    quantity = models.DecimalField(max_digits=9, decimal_places=2,default=1.00, verbose_name = "Cantidad")
+    price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name = "Precio")
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items', verbose_name = "Orden")
+    is_summary_item = models.BooleanField(default=False, verbose_name="Elemento especial de resumen diario ")  # Identificar items especiales
     store_name = models.CharField(max_length=250, default="Envío Habana", verbose_name = "Forma de entrega")
     totalf = models.DecimalField(max_digits=9,decimal_places=2, default=-1.00, verbose_name = "Precio total del producto")
 
@@ -373,5 +396,97 @@ class OrderItem(models.Model):
     def update_status(self, status):
         return True
     
+class PaymentMethod(models.Model):
+    METHOD_CHOICES = [
+        ('CASH', 'Efectivo'),
+        ('TRANSFER', 'Transferencia'),
+        ('CARD', 'Tarjeta'),
+    ]
+    
+    order = models.ForeignKey(Order, related_name='payment_methods', on_delete=models.CASCADE)
+    method = models.CharField(max_length=20, choices=METHOD_CHOICES, verbose_name="Métodos de pago")
+    amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Monto")
+    transaction_count = models.PositiveIntegerField(default=1, verbose_name="Cantidad de transacciones")  # Para contar operaciones
+    #transaction_details = models.JSONField(blank=True, null=True, verbose_name="Detalles")  # Para almacenar múltiples transacciones
+    transaction_details = models.TextField(blank=True, null=True, verbose_name="Detalles")  # Para almacenar múltiples transacciones
 
+    class Meta:
+        verbose_name = "Método de Pago"
+        verbose_name_plural = "Métodos de Pago"
 
+    @property
+    def details_json(self):
+        try:
+            return json.loads(self.transaction_details) if self.transaction_details else {}
+        except json.JSONDecodeError:
+            return {}
+    
+    # Método para guardar datos estructurados
+    def set_details(self, details):
+        if isinstance(details, dict):
+            self.transaction_details = json.dumps(details, ensure_ascii=False)
+        elif isinstance(details, str):
+            # Intentamos convertir texto a JSON
+            try:
+                # Validamos que sea convertible
+                parsed = self.parse_text_details(details)
+                self.transaction_details = json.dumps(parsed, ensure_ascii=False)
+            except ValueError as e:
+                raise ValidationError(str(e))
+    
+    # Convertir texto plano a estructura JSON
+    def parse_text_details(self, text):
+        result = []
+        lines = text.strip().split('\n')
+        
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+                
+            # Diferentes formatos de entrada
+            if ':' in line:
+                parts = [p.strip() for p in line.split(':', 1)]
+                if len(parts) == 2:
+                    result.append({
+                        'reference': parts[0],
+                        'amount': float(parts[1].replace(',', '.'))
+                    })
+                    continue
+                    
+            # Formato: referencia monto
+            parts = line.split()
+            if len(parts) >= 2:
+                try:
+                    amount = float(parts[-1].replace(',', '.'))
+                    reference = ' '.join(parts[:-1])
+                    result.append({
+                        'reference': reference,
+                        'amount': amount
+                    })
+                    continue
+                except ValueError:
+                    pass
+                    
+            # Si no coincide con ningún formato
+            result.append({
+                'reference': line,
+                'amount': 0.0
+            })
+        
+        return result
+
+    def clean(self):
+        if self.method == 'TRANSFER':
+            if not self.transaction_details:
+                raise ValidationError('Debe ingresar detalles para transferencias')
+            
+            # Validar que haya al menos una transferencia
+            details = self.details_json
+            if not details or not isinstance(details, list) or len(details) == 0:
+                raise ValidationError('Formato de transferencias inválido')
+                
+            # Validar montos
+            for item in details:
+                if 'amount' not in item or not isinstance(item['amount'], (int, float)):
+                    raise ValidationError('Cada transferencia debe tener un monto numérico')

@@ -1,7 +1,7 @@
 #from ecomstore.checkout import google_checkout
 from cart import cart
 from .models import Order, OrderItem
-from .forms import CheckoutForm, PagarForm, CachForm, FacturarForm
+from .forms import CheckoutForm, PagarForm, CachForm, FacturarForm, DailySummaryForm
 from stores.models import Store, Product_Sales
 from utils.models import Price
 #from ecomstore.checkout import authnet
@@ -180,6 +180,15 @@ def create_order(request, transaction_id, usd = True, cach = False):
             order.currency = 'CUP'
         else:
             order.currency = 'MLC'
+    elif transaction_id == 4:
+        checkout_form = DailySummaryForm(request.POST, instance=order)
+        if checkout_form.is_valid():
+            order = checkout_form.save(commit=False)
+            order.is_daily_summary = True
+            if usd: # Guardo el tipo de moneda en efectivo
+                order.currency = 'USD'
+            elif cach:
+                order.currency = 'CUP'
     else:
         if cach: # Si se va a pagar en efectivo guardo la información de la Form para efectivo
             checkout_form = CachForm(request.POST, instance=order)
@@ -307,7 +316,10 @@ def export_pdf(request, id_orden):
     qr_generado = '{"id_orden": ' + str(id_orden)
     order = Order.objects.filter(id=id_orden)[0] 
     #Generando reporte PDF
-    if order.user.groups.filter(name__in=['comercial']):
+    if order.is_daily_summary:
+        template_src = 'checkout/factura_resumen_diario.html' 
+        
+    elif order.user.groups.filter(name__in=['comercial']):
         template_src = 'checkout/factura_por_contrato.html'
         data['first_name'] = order.payment_name
         data['email'] = order.payment_email

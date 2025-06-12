@@ -70,43 +70,16 @@
             </tr>
         </tbody>
     </table>
-    <h1 style="text-align: center; font-size: 14px; "> {% if data.currency == 'USD' %} VENTA ONLINE {% else %} VENTA EN FÁBRICA {% endif %} </h1>
-    <table border="1" style="border-collapse: collapse;">
+    <h1 style="text-align: center; font-size: 14px; "> VENTA ONLINE </h1>
+    <table border="1" style="width: 100px;" border-collapse: collapse; text-align: center;">
         <tbody>
             <tr>
-                <td colspan="3" style="text-align: center;" class="first-td"><strong>DATOS DEL CLIENTE</strong></td>
+                <td colspan="4" style="text-align: center;" class="first-td"><br><strong>DETALLES DE COMPRA</strong></td>
             </tr>
             <tr>
-                <td class="first-td"><strong>Nombre: </strong>{{data.first_name}} {{data.last_name}}</td>
-                <td class="first-td"><strong>email: </strong>{{data.email}}</td>
-                <td class="first-td"><strong>Teléfono: </strong>{{data.phone}}</td>
-            </tr>
-            <tr>
-                <td class="first-td" colspan="3"><strong>Dirección:</strong>{{data.address}}</td>
-            </tr>
-        </tbody>
-    </table>
-    <hr>
-    <table border="1" style="border-collapse: collapse;">
-        <tbody>
-            <tr>
-                <td colspan="3" style="text-align: center;" class="first-td"><strong>DETALLES DEL PAGO</strong></td>
-            </tr>
-            <tr>
-                <td class="first-td" colspan="3"> </td>
-            </tr>
-        </tbody>
-    </table>
-    <hr>
-    <table border="1" style="border-collapse: collapse; text-align: center;">
-        <tbody>
-            <tr>
-                <td colspan="5" style="text-align: center;" class="first-td"><br><strong>DETALLES DE LA FACTURA</strong></td>
-            </tr>
-            <tr>
-                <td class="table-info-td" style="width: 350px;"><strong>Producto</strong></td>
-                <td class="table-info-td" style="width: 60px;"><strong>Precio</strong></td>
-                <td class="table-info-td" style="width: 1000px;"><strong>Cantidad</strong></td>
+                <td class="table-info-td" style="width: 150px;"><strong>Producto</strong></td>
+                <td class="table-info-td" style="width: 80px;"><strong>Precio</strong></td>
+                <td class="table-info-td" style="width: 70px;"><strong>Cantidad</strong></td>
                 <td class="table-info-td" style="width: 100px;"><strong>Importe</strong></td>
             </tr>
             {% for item in orders %}
@@ -127,15 +100,7 @@
     {% endif %} 
 
     <br>
-    <table border="0" style="border-collapse: collapse;">
-        <tbody>
-            <tr>
-                <td class="first-td"><strong>ENVÍO {{data.delivery_price}} {% if data.currency == 'USD' %} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td>
-                <td class="first-td"><strong>Cupón: {{data.coupon}} % </strong></td>
-                <td class="first-td"><strong>Descuento total: {{data.discount}} % </strong></td>
-            </tr>
-        </tbody>
-    </table>
+
     <hr>
 
     <br>
@@ -144,24 +109,44 @@
         <tbody>
             <tr>
                 <td class="first-td"><strong>IMPORTE TOTAL: {{data.importe}} {% if data.currency == 'USD'%} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td>
+                <td class="first-td"><strong>IMPORTE CUP: {{data.importeCUP}} CUP </strong></td>
             </tr>
         </tbody>
     </table>
     <hr>
+
+    <table border="1" style="border-collapse: collapse; text-align: center;">
+        <tbody>
+            <tr>
+                <td colspan="2" style="text-align: center;" class="first-td"><br><strong>DETALLES DEL PAGO</strong></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;" class="first-td"><br><strong>POR TRANSFERENCIA</strong></td>
+                <td colspan="2" style="text-align: center;" class="first-td"><br><strong>POR TARJETA (POST)</strong></td>
+            </tr>
+            <tr>
+                <td class="table-info-td" style="width: 150px;"><strong>No Trans.</strong></td>
+                <td class="table-info-td" style="width: 80px;"><strong>Monto</strong></td>
+                <td class="table-info-td" style="width: 150px;"><strong>No. Trans.</strong></td>
+                <td class="table-info-td" style="width: 80px;"><strong>Monto</strong></td>
+            </tr>
+            {% for item in orders %}
+            <tr>
+                <td class="table-info-td" style="width: 150px;"> {{ item.name }} </td>
+                <td class="table-info-td" style="width: 180px;"> {{ item.price|currency }} </td>
+                <td class="table-info-td" style="width: 70px;"> {{ item.quantity }} </td>
+                <td class="table-info-td" style="width: 100px;"> {{ item.total|currency }} {% if item.has_discount %} * {% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
     <table border="0" style="border-collapse: collapse;">
         <tbody>
             <tr>
                 <td class="first-td" colspan="2">
-                    <strong>ENTREGADO POR</strong><br>
-                    Nombre y apellidos <br>
-                    Carnet de identidad<br>
-                    Fecha
-                </td>
-                <td class="first-td" colspan="2">
-                    <strong>RECIBIDO POR</strong><br>
-                    Nombre y apellidos <br>
-                    Carnet de identidad<br>
-                    Fecha
+                    <strong>VENDEDOR</strong><br>
+                    {{ data.last_name}} <br>
                 </td>
             </tr>
         </tbody>

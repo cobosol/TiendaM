@@ -105,7 +105,7 @@
                                     {% endif %}
                                     {% if vendedor == 'True' or request.user.is_staff or comercial == 'True'%}
                                         <a href="{% url 'gestion' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar productos</i></a>
-                                        <a href="/accounts/profile/admin/" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Cambiar moneda</i></a>        
+                                        <a href="/accounts/profile/admin/" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Cambiar moneda</i></a>
                                     {% endif %}
                                     {% if marketing == 'True' or request.user.is_staff %}
                                         <a href="{% url 'banners' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar banners</i></a>
