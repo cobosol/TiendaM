@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+{% load static %}
+{% load checkout_tags %}
+{% load catalog_filters %}
+{% block content %}
+
+<!-- <style>
+    .payment-form {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    
+    #add-payment {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        margin-bottom: 20px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    
+    #add-payment:hover {
+        background-color: #45a049;
+    }
+</style> -->
+
+<style>
+    .payment-form {
+        border: 1px solid #e0e0e0;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+    }
+    
+    .payment-form:hover {
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    
+    .form-row {
+        margin-bottom: 12px;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+    
+    input, select, textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    
+    .transfer-details textarea {
+        min-height: 100px;
+    }
+    
+    #add-payment {
+        background-color: #4e73df;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 20px 0;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+    
+    #add-payment:hover {
+        background-color: #2e59d9;
+    }
+    
+    button[type="submit"] {
+        background-color: #1cc88a;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+    
+    button[type="submit"]:hover {
+        background-color: #17a673;
+    }
+</style>
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-2">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
+            <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Resumen diario del punto de venta</h4>
+        </div>
+    </div>
+    <!-- Page Header End -->
+<div class="row px-xl-6">
+    <div class="col-lg-6">
+    <form method="post" id="summary-form">
+        {% csrf_token %}
+        
+        {{ order_form.as_p }}
+        
+        <div id="payment-forms">
+            {{ formset.management_form }}
+            {% for form in formset %}
+                <div class="payment-form" data-method="{{ form.method.value|default:'CASH' }}">
+                    {{ form.id }}
+                    <div class="form-row">
+                        {{ form.method.label_tag }}
+                        {{ form.method }}
+                    </div>
+                    
+                    <div class="form-row">
+                        {{ form.amount.label_tag }}
+                        {{ form.amount }}
+                    </div>
+                    
+                    <div class="form-row">
+                        {{ form.transaction_count.label_tag }}
+                        {{ form.transaction_count }}
+                    </div>
+                    
+                    <!-- Campo de texto para detalles -->
+                    <div class="transfer-details" style="display: none;">
+                        {{ form.details_text.label_tag }}
+                        {{ form.details_text }}
+                    </div>
+                    
+                    <!-- Para errores -->
+                    {{ form.details_text.errors }}
+                </div>
+            {% endfor %}
+        </div>
+        
+        <button type="button" id="add-payment">+ Agregar otro método</button> <br>
+        <button type="submit">Guardar Resumen</button>
+    </form>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+    <div id = "Total a pagar" class="col-lg-4">
+        <div class="card border-secondary mb-5">
+            <div class="card-header bg-primary border-0">
+                <h4 class="font-weight-semi-bold m-0 text-light" style="font-family: sans-serif;">A pagar</h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3 pt-1">
+                    <h6 class="font-weight-medium" style="font-family: sans-serif;">Subtotal:{{ cart_item_count }}</h6>
+                    <h6 class="font-weight-medium" style="font-family: sans-serif;">{{ cart_total|currency }}</h6>
+                </div>
+                        <h6 class="font-weight-medium" style="font-family: sans-serif;"> {{ st_name }}</h6>
+            </div>
+            <div class="card-footer border-secondary bg-transparent">
+                <div class="d-flex justify-content-between mt-2">
+                    <h6 class="font-weight-bold" style="font-family: sans-serif;">Total:{{ cart_item_count }}</h5>
+                    <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total|currency }} USD</h5>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <h6 class="font-weight" style="font-family: sans-serif;">Total CUP al cambio:</h5>
+                    <h6 class="font-weight" style="font-family: sans-serif;">{{ t_CUP_alcambio|currency }} CUP</h5>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <h6 class="font-weight" style="font-family: sans-serif;">Total CUP Oficial:</h5>
+                    <h6 class="font-weight" style="font-family: sans-serif;">{{ t_CUP_oficial|currency }} CUP</h5>
+                </div>
+            </div>
+            <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
+                <a href="/carrito/carrito/" style="font-family: sans-serif;"><i class="fas fa-shopping-cart text-secondary mr-1"></i>Volver al carrito</a>
+                <h4 class="text-secondary  bg-primary mb-2" style="font-family: sans-serif;"></h4>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Función para mostrar/ocultar detalles de transferencia
+        function toggleTransferDetails() {
+            document.querySelectorAll('.payment-form').forEach(form => {
+                const method = form.dataset.method;
+                const details = form.querySelector('.transfer-details');
+                if ((method === 'TRANSFER') || (method === 'CARD')) {
+                    details.style.display = 'block';
+                } else {
+                    details.style.display = 'none';
+                }
+            });
+        }
+        
+        // Actualizar al cambiar métodos
+        document.querySelectorAll('.payment-method-select').forEach(select => {
+            select.addEventListener('change', function() {
+                this.closest('.payment-form').dataset.method = this.value;
+                toggleTransferDetails();
+            });
+        });
+        
+        // Inicializar visibilidad
+        toggleTransferDetails();
+        
+        // Código para agregar nuevos formularios (actualizado)
+        const addButton = document.getElementById('add-payment');
+        const paymentForms = document.getElementById('payment-forms');
+        const totalForms = document.getElementById('id_payments-TOTAL_FORMS');
+        let formCount = parseInt(totalForms.value);
+        
+        addButton.addEventListener('click', function() {
+            const newForm = document.createElement('div');
+            newForm.classList.add('payment-form');
+            newForm.dataset.method = 'CASH';
+            newForm.innerHTML = `
+                <div class="form-row">
+                    <label for="id_payments-${formCount}-method">Método:</label>
+                    <select name="payments-${formCount}-method" id="id_payments-${formCount}-method" class="payment-method-select">
+                        <option value="CASH">Efectivo</option>
+                        <option value="TRANSFER">Transferencia</option>
+                        <option value="CARD">Tarjeta</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label for="id_payments-${formCount}-amount">Monto:</label>
+                    <input type="number" name="payments-${formCount}-amount" step="0.01" id="id_payments-${formCount}-amount">
+                </div>
+                <div class="form-row">
+                    <label for="id_payments-${formCount}-transaction_count">Número de transacciones:</label>
+                    <input type="number" name="payments-${formCount}-transaction_count" id="id_payments-${formCount}-transaction_count" value="1">
+                </div>
+                <div class="transfer-details" style="display:none;">
+                    <label for="id_payments-${formCount}-details_text">Detalles de Transferencia:</label>
+                    <textarea name="payments-${formCount}-details_text" id="id_payments-${formCount}-details_text" rows="4" placeholder="Ingrese una transferencia por línea:\nEjemplo: TRX-001 150.00\nO: Referencia: TRX-001, Monto: 150.00"></textarea>
+                </div>
+                <input type="hidden" name="payments-${formCount}-id" id="id_payments-${formCount}-id">
+            `;
+            paymentForms.appendChild(newForm);
+            formCount++;
+            totalForms.value = formCount;
+
+            // Agregar evento al nuevo select
+        newForm.querySelector('.payment-method-select').addEventListener('change', function() {
+            this.closest('.payment-form').dataset.method = this.value;
+            toggleTransferDetails();
+        });
+    });
+});
+</script>
+
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addButton = document.getElementById('add-payment');
+        const paymentForms = document.getElementById('payment-forms');
+        const totalForms = document.getElementById('id_payments-TOTAL_FORMS');
+        let formCount = parseInt(totalForms.value);
+        
+        addButton.addEventListener('click', function() {
+            const newForm = document.createElement('div');
+            newForm.classList.add('payment-form');
+            newForm.innerHTML = `
+                <p>
+                    <label for="id_payments-${formCount}-method">Método:</label>
+                    <select name="payments-${formCount}-method" id="id_payments-${formCount}-method">
+                        <option value="">---------</option>
+                        <option value="CASH">Efectivo</option>
+                        <option value="TRANSFER">Transferencia</option>
+                        <option value="CARD">Tarjeta</option>
+                    </select>
+                </p>
+                <p>
+                    <label for="id_payments-${formCount}-amount">Monto:</label>
+                    <input type="number" name="payments-${formCount}-amount" step="0.01" id="id_payments-${formCount}-amount">
+                </p>
+                <p>
+                    <label for="id_payments-${formCount}-transaction_count">Número de transacciones:</label>
+                    <input type="number" name="payments-${formCount}-transaction_count" id="id_payments-${formCount}-transaction_count" value="1">
+                </p>
+                <p>
+                    <label for="id_payments-${formCount}-transaction_details">Detalles (solo transferencias):</label>
+                    <textarea name="payments-${formCount}-transaction_details" id="id_payments-${formCount}-transaction_details" rows="2"></textarea>
+                </p>
+                <input type="hidden" name="payments-${formCount}-id" id="id_payments-${formCount}-id">
+            `;
+            paymentForms.appendChild(newForm);
+            formCount++;
+            totalForms.value = formCount;
+        });
+    });
+</script> -->
+
+{% endblock %}

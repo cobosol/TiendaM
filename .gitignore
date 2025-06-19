@@ -12,6 +12,7 @@ static_root
 secrets.txt
 secrets_OFICIAL_MUHIA.txt
 secrets_test_MNK.txt
+secretsSandBox.txt
 
 # el settings
 tienda/settings.py
@@ -41,5 +42,6 @@ sent_email
 tienda/settings.py
 tienda/__pycache__/*
 tienda/wsgi.py/*
-
+payments/migrations/*
+payments/__pycache__/*
 

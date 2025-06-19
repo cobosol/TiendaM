@@ -144,9 +144,10 @@ class CartItem(models.Model):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
-    def total_USD(self):
+    def total_USD(self, special=False):
         #price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
-        print("En total USD")
+        if special:
+            return decimal.Decimal(self.quantity * self.product.price_base)
         if self.quantity >= self.product.min_quantity_whole:
             porciento = 1-self.product.whole_discount/100
             discount = self.product.price_base*decimal.Decimal(porciento)
@@ -162,20 +163,22 @@ class CartItem(models.Model):
         total = self.quantity * self.product.price_base
         return decimal.Decimal(total) """
     
-    def total_CUP(self):
-        price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
-        if self.quantity >= price.min_quantity_whole:
-            porciento = 1-price.whole_discount/100
+    def total_CUP(self, special=False):
+        if special:
+            return decimal.Decimal(self.quantity * self.product.price_cup)
+        if self.quantity >= self.product.min_quantity_whole:
+            porciento = 1-self.product.whole_discount/100
             discount = self.product.price_cup*decimal.Decimal(porciento)
             total = self.quantity*decimal.Decimal(discount)
             return decimal.Decimal(total)
         total = self.quantity * self.product.price_cup
         return decimal.Decimal(total)
     
-    def total_MLC(self):
-        price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
-        if self.quantity >= price.min_quantity_whole:
-            porciento = 1-price.whole_discount/100
+    def total_MLC(self, special=False):
+        if special:
+            return decimal.Decimal(self.quantity * self.product.price_mlc)
+        if self.quantity >= self.product.min_quantity_whole:
+            porciento = 1-self.product.whole_discount/100
             discount = self.product.price_mlc*decimal.Decimal(porciento)
             total = self.quantity*decimal.Decimal(discount)
             return decimal.Decimal(total)
@@ -183,11 +186,10 @@ class CartItem(models.Model):
         return decimal.Decimal(total)
     
     def discount_message(self):
-        price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
         text = ""
-        if price.whole_discount > 0:
-            to_whole = price.min_quantity_whole - self.quantity
-            porciento = price.whole_discount
+        if self.product.whole_discount > 0:
+            to_whole = self.product.min_quantity_whole - self.quantity
+            porciento = self.product.whole_discount
             product = self.product.gname
             if to_whole > 0:
                 if to_whole == 1:

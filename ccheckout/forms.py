@@ -1,7 +1,69 @@
 from django import forms
-from .models import Order
+from django.forms import inlineformset_factory
+from .models import Order, PaymentMethod
 import datetime
 import re
+from django.core.exceptions import ValidationError
+
+class DailySummaryForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['seller']  # Solo campo necesario
+
+class PaymentMethodForm(forms.ModelForm):
+    details_text = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'rows': 4,
+            'placeholder': 'Ingrese una transferencia por línea:\nEjemplo: TRX-001 150.00\nO: Referencia: TRX-001, Monto: 150.00'
+        }),
+        required=False,
+        label="Detalles de Transferencia"
+    )
+
+    class Meta:
+        model = PaymentMethod
+        fields = ['method', 'amount', 'transaction_count']
+        widgets = {
+            'method': forms.Select(attrs={'class': 'payment-method-select'}),
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        instance = kwargs.get('instance')
+        
+        # Si tenemos una instancia, cargamos los detalles como texto
+        if instance and instance.details_json:
+            details = instance.details_json
+            text_lines = []
+            for item in details:
+                text_lines.append(f"{item.get('reference', '')}: {item.get('amount', 0)}")
+            self.initial['details_text'] = '\n'.join(text_lines)
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        method = cleaned_data.get('method')
+        details_text = cleaned_data.get('details_text')
+        
+        # Solo procesar detalles si es transferencia o tarjeta
+        if method == 'TRANSFER' or method == 'CARD':
+            if not details_text:
+                self.add_error('details_text', 'Debe ingresar los detalles de las transferencias')
+            else:
+                try:
+                    # Convertir texto a estructura JSON
+                    self.instance.set_details(details_text)
+                except ValidationError as e:
+                    self.add_error('details_text', e)
+        
+        return cleaned_data
+
+PaymentMethodFormSet = inlineformset_factory(
+    Order,
+    PaymentMethod,
+    form=PaymentMethodForm,
+    extra=1,
+    can_delete=False
+)
 
 """ def cc_expire_years():
     current_year = datetime.datetime.now().year

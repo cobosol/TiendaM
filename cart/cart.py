@@ -233,7 +233,7 @@ def remove_from_cart(request):
         cart_item.delete()
 
 # gets the total cost for the current cart
-def cart_subtotal(request):
+def cart_subtotal(request, standard=True):
     cart_total = decimal.Decimal('0.00')
     price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
     cart_products = get_cart_items(request)
@@ -256,22 +256,23 @@ def cart_subtotal(request):
         for cart_item in cart_products:
             cart_total += cart_item.total_MLC()
         min_quantity_amount = price.min_quantity_amount*price.change_usd_mlc
-    if cart_total >= min_quantity_amount:
-        porciento = 1-price.amunt_discount/100
-        cart_total = cart_total*decimal.Decimal(porciento)
-    elif TU == 'Distribuidor':
-        falta = decimal.Decimal('0.00')
-        falta += min_quantity_amount-cart_total
-        porciento = price.amunt_discount
-        c = round(falta, 2)
-        text = "Le faltan $" + str(c) + " del monto total, para acceder a nuestra oferta especial del " + str(porciento) + "%"
-        messages.info(request, text)
-    try:
-        coupon = CouponValidator.validate(request.session['active_coupon'], request.user)
-        if coupon:
-            cart_total = cart_total - (cart_total*coupon.discount_percent)/100
-    except:
-        pass
+    if standard:
+        if (cart_total >= min_quantity_amount):
+            porciento = 1-price.amunt_discount/100
+            cart_total = cart_total*decimal.Decimal(porciento)
+        elif TU == 'Distribuidor':
+            falta = decimal.Decimal('0.00')
+            falta += min_quantity_amount-cart_total
+            porciento = price.amunt_discount
+            c = round(falta, 2)
+            text = "Le faltan $" + str(c) + " del monto total, para acceder a nuestra oferta especial del " + str(porciento) + "%"
+            messages.info(request, text)
+        try:
+            coupon = CouponValidator.validate(request.session['active_coupon'], request.user)
+            if coupon:
+                cart_total = cart_total - (cart_total*coupon.discount_percent)/100
+        except:
+            pass
     return cart_total
 
 def cart_delivery_price(request, amount, MND):

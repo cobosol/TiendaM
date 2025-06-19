@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from .forms import * 
 from django.urls import reverse
 from .models import Order, OrderItem
-from ccheckout.ccheckout import process2, export_pdf, createPaymentCardsJSON, tPAccessToken, loadSecret, create_order
+from ccheckout.ccheckout import generate_daily_summary_pdf, process2, export_pdf, createPaymentCardsJSON, tPAccessToken, loadSecret, create_order
 from cart import cart
 from cart.models import DeliveryInfo
 from django.contrib import messages
@@ -27,6 +27,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 from registration.models import Profile
 from contact.contact import notification_user_sale, notification_sale, notification_reserve
 from .filtros import *
+# Hacer resumen diario de punto de venta.
+from django.forms import formset_factory
+from django.shortcuts import render, redirect
+
 
 # Retorno del pago en Tropipay
 @csrf_exempt
@@ -429,6 +433,70 @@ def transfer(request, template_name='checkout/transfer.html', id=0):
             return HttpResponseRedirect(receipt_url)
     return render(request, template_name, locals())
 
+
+def create_daily_summary(request):
+    print("Entro a create daily")
+    MD = 'USD'
+    if cart.is_empty(request):
+        cart_url = reverse('show_cart')
+        return HttpResponseRedirect(cart_url)
+    if request.method == 'POST':
+        print("Entro a post")
+        formset = PaymentMethodFormSet(request.POST, prefix='payments')
+        if MD == 'USD':
+            order_number = create_order(request, 4, True, True) # Crear la orden con tipo de transacción 3 usd en cach
+            if order_number['order_number'] == -1:
+                fail = reverse('show_cart')
+                return HttpResponseRedirect(fail)
+        elif MD == 'CUP':
+            order_number = create_order(request, 4, False, True)
+            if order_number['order_number'] == -1:
+                fail = reverse('show_cart')
+                return HttpResponseRedirect(fail)
+        else:
+            messages.info(request, "El resumen es solo en CUP o USD")  
+        if order_number:
+            print("En order_number")
+            request.session['order_number'] = order_number['order_number']
+            order = Order.objects.filter(id=order_number['order_number'])[0] 
+            order.save()
+            order.update_status(Order.PAIDED)
+            order.update_status(Order.DELIVERED)
+            if formset.is_valid():
+                print("En el formset")
+                # Crear orden especial
+                formset.instance = order
+                formset.save()
+                order.end_total = sum([form.cleaned_data['amount'] for form in formset])
+                order.save()
+                app_label = order._meta.app_label
+                model_name = order._meta.model_name
+                messages.success(request, "Resumen creado con éxito")   
+                return redirect(f'admin:{app_label}_{model_name}_changelist')
+        else:
+            print("Error de validacion de la form")       
+    else:
+        order_form = DailySummaryForm()
+        formset = PaymentMethodFormSet(prefix='payments', queryset=PaymentMethod.objects.none())
+        cart_total = round(cart.cart_subtotal(request), 2)        
+        st_name = cart.delivery_Store(request).name
+        price = Price.objects.filter(is_active=True)[0] # Capturo la configuración de precio actual
+        t_CUP_alcambio = cart_total * price.change_usd_cup
+        t_CUP_Oficial = cart_total * 120
+    
+    return render(request, 'checkout/create_summary.html', {
+        'order_form': order_form,
+        'formset': formset,
+        'cart_total': cart_total,
+        'st_name': st_name,
+        't_CUP_alcambio': t_CUP_alcambio,
+        't_CUP_oficial': t_CUP_Oficial
+    })
+ 
+
+def download_daily_summary_pdf(request, order_id):
+    return generate_daily_summary_pdf(order_id)
+
 # El view de la página de pago completado por plataforma internacional
 @login_required
 def receipt(request, template_name='checkout/receipt.html'):
@@ -518,7 +586,7 @@ def orders_list(request, template_name='checkout/orders_list.html'):
 
 # view de la lista de ordenes (compras) relizadas a la tienda
 def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
-    orders = Order.objects.all()
+    orders = Order.objects.all().order_by('-date')
     
     filter = FiltroOrderAdmin
 
@@ -529,19 +597,19 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
 
     if user:
         if user != '':
-            orders= orders.filter(user=user)
+            orders= orders.filter(user=user).order_by('-date')
             
     if status:
         if status!='':
-            orders = orders.filter(status__icontains = status)
+            orders = orders.filter(status__icontains = status).order_by('-date')
 
     if store_name:
         if store_name!='':
-            orders = orders.filter(store_name__icontains = store_name)
+            orders = orders.filter(store_name__icontains = store_name).order_by('-date')
 
     if currency:
         if currency!='':
-            orders = orders.filter(currency__icontains=currency)
+            orders = orders.filter(currency__icontains=currency).order_by('-date')
     
     if request.method == 'POST':
         postdata = request.POST.copy()

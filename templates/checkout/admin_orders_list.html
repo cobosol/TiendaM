@@ -44,6 +44,7 @@
                         <th>Importe</th>
                         <th>Fecha</th>
                         <th>Factura </th>
+                        <th>Detalles</th>
                     </tr>
                 </thead>
                 <tbody class="align-middle text-primary">
@@ -70,6 +71,12 @@
                                 {% csrf_token %}
                                 <input type="hidden" name="order_id" value="{{ order.id }}" /> 
                                 <input type="submit" name="submit" class="btn btn-block btn-primary my-2 py-2" value="Factura" />
+                            </form>
+                        </td>
+                        <td>
+                            <form action="." method="post">
+                                {% csrf_token %}
+                                <a href="{{ order.get_absolute_url }}" class="cart">Detalles</a>
                             </form>
                         </td>
                     </tr>

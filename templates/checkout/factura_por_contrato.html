@@ -70,11 +70,7 @@
             </tr>
         </tbody>
     </table>
-<<<<<<< HEAD:templates/checkout/factura_por_contrato.html
     <h1 style="text-align: center; font-size: 14px; "> {% if data.currency == 'USD' %} VENTA ONLINE {% else %} VENTA EN FÁBRICA {% endif %} </h1>
-=======
-    <h1 style="text-align: center; font-size: 14px; "> VENTA ONLINE</h1>
->>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6:templates/checkout/factura_base.html
     <table border="1" style="border-collapse: collapse;">
         <tbody>
             <tr>
@@ -94,19 +90,7 @@
     <table border="1" style="border-collapse: collapse;">
         <tbody>
             <tr>
-<<<<<<< HEAD:templates/checkout/factura_por_contrato.html
                 <td colspan="3" style="text-align: center;" class="first-td"><strong>DETALLES DEL PAGO</strong></td>
-=======
-                <td colspan="3" style="text-align: center;" class="first-td"><strong>DATOS DE LA ENTREGA</strong></td>
-            </tr>
-            <tr>
-                <td class="first-td"><strong>Nombre: </strong>{{data.delivery_name}}</td>
-                <td class="first-td"><strong>Carnet de identidad: </strong>{{data.CI}}</td>
-                <td class="first-td"><strong>Teléfono: </strong>{{data.delivery_phone}} {{data.delivery_ws}}</td>
-            </tr>
-            <tr>
-                <td class="first-td" colspan="3"><strong>Dirección 1:</strong>{{data.delivery_add1}}</td>
->>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6:templates/checkout/factura_base.html
             </tr>
             <tr>
                 <td class="first-td" colspan="3"> </td>
@@ -120,16 +104,9 @@
                 <td colspan="5" style="text-align: center;" class="first-td"><br><strong>DETALLES DE LA FACTURA</strong></td>
             </tr>
             <tr>
-<<<<<<< HEAD:templates/checkout/factura_por_contrato.html
                 <td class="table-info-td" style="width: 350px;"><strong>Producto</strong></td>
                 <td class="table-info-td" style="width: 60px;"><strong>Precio</strong></td>
                 <td class="table-info-td" style="width: 1000px;"><strong>Cantidad</strong></td>
-=======
-                <td class="table-info-td" style="width: 150px;"><strong>Nombre</strong></td>
-                <td class="table-info-td" style="width: 80px;"><strong>Precio</strong></td>
-                <td class="table-info-td" style="width: 70px;"><strong>Cantidad</strong></td>
-                <td class="table-info-td" style="width: 125px;"><strong>Forma de entrega</strong></td>
->>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6:templates/checkout/factura_base.html
                 <td class="table-info-td" style="width: 100px;"><strong>Importe</strong></td>
             </tr>
             {% for item in orders %}
@@ -137,12 +114,7 @@
                 <td class="table-info-td" style="width: 150px;"> {{ item.name }} </td>
                 <td class="table-info-td" style="width: 180px;"> {{ item.price|currency }} </td>
                 <td class="table-info-td" style="width: 70px;"> {{ item.quantity }} </td>
-<<<<<<< HEAD:templates/checkout/factura_por_contrato.html
                 <td class="table-info-td" style="width: 100px;"> {{ item.total|currency }} {% if item.has_discount %} * {% endif %}</td>
-=======
-                <td class="table-info-td" style="width: 125px;"> {{ item.store_name }} </td>
-                <td class="table-info-td" style="width: 100px;"> {{ item.total|currency }} </td>
->>>>>>> 9e7bd4da0c6608635eac1352ae09edbb2f1285a6:templates/checkout/factura_base.html
             </tr>
             {% endfor %}
         </tbody>

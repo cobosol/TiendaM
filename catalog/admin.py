@@ -10,7 +10,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_per_page = 50
     ordering = ['-created_at']
     search_fields = ['name', 'description', 'meta_keywords', 'meta_description']
-    exclude = ('created_at', 'updated_at',)
+    exclude = ('created_at', 'updated_at','is_summary_product',)
     # sets up slug to be generated from product name
     prepopulated_fields = {'slug' : ('name',)}
     
