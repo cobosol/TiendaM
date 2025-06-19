@@ -144,7 +144,8 @@ class Product(models.Model):
     @property        
     def price_cup(self):
         price_actual = Price.objects.filter(is_active=True)[0]
-        return self.price_base * price_actual.change_usd_cup
+        p = self.price_base * price_actual.change_usd_cup
+        return (p) + 5 - (p % 5) 
         
     @property
     def price_mlc(self):

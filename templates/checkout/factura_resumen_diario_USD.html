@@ -86,9 +86,9 @@
             {% for item in orders %}
             <tr>
                 <td class="table-info-td" style="width: 250px;"> {{ item.name }} </td>
-                <td class="table-info-td" style="width: 100px;"> {{ item.price_CUP|currency }} </td>
+                <td class="table-info-td" style="width: 100px;"> {{ item.price|currency }} </td>
                 <td class="table-info-td" style="width: 70px;"> {{ item.quantity }} </td>
-                <td class="table-info-td" style="width: 100px;"> {{ item.total_base_CUP|currency }} </td>
+                <td class="table-info-td" style="width: 100px;"> {{ item.total|currency }} </td>
             </tr>
             {% endfor %}
         </tbody>
@@ -103,8 +103,8 @@
     <table border="0" style="border-collapse: collapse;">
         <tbody>
             <tr>
-                <!-- <td class="first-td"><strong>IMPORTE TOTAL: {{data.importeCUP}} {% if data.currency == 'USD'%} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td> -->
-                <td class="first-td"><strong>IMPORTE: {{data.importeCUP}} CUP </strong></td>
+                <td class="first-td"><strong>IMPORTE TOTAL: {{data.importe}} {% if data.currency == 'USD'%} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td>
+                <td class="first-td"><strong>IMPORTE CUP: {{data.importeCUP}} CUP </strong></td>
             </tr>
         </tbody>
     </table>
@@ -125,7 +125,7 @@
             {% for payment in data.payment_methods %}
             <tr>
                 <td style="text-align: center;">{{ payment.method }}</td>
-                <td style="text-align: center;">${{ payment.amount|floatformat:2 }}</td>
+                <td style="text-align: center;">$ {% if payment.method == 'Efectivo'%} {{data.efectivo}} {% else %} {{ payment.amount|floatformat:2 }} {% endif %}</td>
                 <td style="text-align: center;">{{ payment.transaction_count }}</td>
             </tr>
             {% endfor %}
@@ -168,6 +168,11 @@
             </tr>
         </tbody>
     </table>
+    
+<!--     <div style="page-break-after: always;"><span style="display: none;">&nbsp;</span></div>
+    <div id="footer_content">
+        <label>Tienda Virtual MUHIA. Desarrollado por Cobosis</label>
+    </div> -->
 
 </body>
 

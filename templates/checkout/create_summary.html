@@ -104,14 +104,13 @@
         </div>
     </div>
     <!-- Page Header End -->
-
+<div class="row px-xl-6">
+    <div class="col-lg-6">
     <form method="post" id="summary-form">
         {% csrf_token %}
         
-        <h2>Resumen Diario</h2>
         {{ order_form.as_p }}
         
-        <h3>Métodos de Pago</h3>
         <div id="payment-forms">
             {{ formset.management_form }}
             {% for form in formset %}
@@ -144,29 +143,47 @@
             {% endfor %}
         </div>
         
-        <button type="button" id="add-payment">+ Agregar otro método</button>
+        <button type="button" id="add-payment">+ Agregar otro método</button> <br>
         <button type="submit">Guardar Resumen</button>
     </form>
-
-<!-- <form method="post" id="summary_form">
-    {% csrf_token %}
-
-    {{ order_form.as_p }}
-    
-    <h3>Métodos de Pago</h3>
-    <div id="payment-forms">
-    {{ formset.management_form }}
-    {% for form in formset %}
-        <div class="payment-form">
-            {{ form.as_p }}
-        </div>
-    {% endfor %}
     </div>
+    <div class="col-lg-2">
 
-    <button type="button" id="add-payment">+ Agregar otro método de pago</button>
-    <button type="submit">Guardar Resumen</button>
-
-</form> -->
+    </div>
+    <div id = "Total a pagar" class="col-lg-4">
+        <div class="card border-secondary mb-5">
+            <div class="card-header bg-primary border-0">
+                <h4 class="font-weight-semi-bold m-0 text-light" style="font-family: sans-serif;">A pagar</h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3 pt-1">
+                    <h6 class="font-weight-medium" style="font-family: sans-serif;">Subtotal:{{ cart_item_count }}</h6>
+                    <h6 class="font-weight-medium" style="font-family: sans-serif;">{{ cart_total|currency }}</h6>
+                </div>
+                        <h6 class="font-weight-medium" style="font-family: sans-serif;"> {{ st_name }}</h6>
+            </div>
+            <div class="card-footer border-secondary bg-transparent">
+                <div class="d-flex justify-content-between mt-2">
+                    <h6 class="font-weight-bold" style="font-family: sans-serif;">Total:{{ cart_item_count }}</h5>
+                    <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total|currency }} USD</h5>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <h6 class="font-weight" style="font-family: sans-serif;">Total CUP al cambio:</h5>
+                    <h6 class="font-weight" style="font-family: sans-serif;">{{ t_CUP_alcambio|currency }} CUP</h5>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <h6 class="font-weight" style="font-family: sans-serif;">Total CUP Oficial:</h5>
+                    <h6 class="font-weight" style="font-family: sans-serif;">{{ t_CUP_oficial|currency }} CUP</h5>
+                </div>
+            </div>
+            <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
+                <a href="/carrito/carrito/" style="font-family: sans-serif;"><i class="fas fa-shopping-cart text-secondary mr-1"></i>Volver al carrito</a>
+                <h4 class="text-secondary  bg-primary mb-2" style="font-family: sans-serif;"></h4>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -175,7 +192,7 @@
             document.querySelectorAll('.payment-form').forEach(form => {
                 const method = form.dataset.method;
                 const details = form.querySelector('.transfer-details');
-                if (method === 'TRANSFER') {
+                if ((method === 'TRANSFER') || (method === 'CARD')) {
                     details.style.display = 'block';
                 } else {
                     details.style.display = 'none';

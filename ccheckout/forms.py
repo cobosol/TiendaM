@@ -44,8 +44,8 @@ class PaymentMethodForm(forms.ModelForm):
         method = cleaned_data.get('method')
         details_text = cleaned_data.get('details_text')
         
-        # Solo procesar detalles si es transferencia
-        if method == 'TRANSFER':
+        # Solo procesar detalles si es transferencia o tarjeta
+        if method == 'TRANSFER' or method == 'CARD':
             if not details_text:
                 self.add_error('details_text', 'Debe ingresar los detalles de las transferencias')
             else:

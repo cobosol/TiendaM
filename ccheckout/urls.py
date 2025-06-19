@@ -8,6 +8,7 @@ urlpatterns = [
     path("reservar/", views.reserve, name='reservar'),
     path("transfer/", views.transfer, name='transfer'), 
     path("efectivo/", views.cach, name='efectivo'),    
+    path("resumen/<order_id>/", views.download_daily_summary_pdf, name='resumen_pdf'),
     path("recibo/", views.receipt, name='checkout_receipt'),
     path("procesado/<order_id>/", views.confirmado, name='checkout_procesado'),
     path('pdf/', views.export_pdf, name='export_pdf'),

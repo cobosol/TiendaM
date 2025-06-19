@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from .forms import * 
 from django.urls import reverse
 from .models import Order, OrderItem
-from ccheckout.ccheckout import process2, export_pdf, createPaymentCardsJSON, tPAccessToken, loadSecret, create_order
+from ccheckout.ccheckout import generate_daily_summary_pdf, process2, export_pdf, createPaymentCardsJSON, tPAccessToken, loadSecret, create_order
 from cart import cart
 from cart.models import DeliveryInfo
 from django.contrib import messages
@@ -478,12 +478,25 @@ def create_daily_summary(request):
     else:
         order_form = DailySummaryForm()
         formset = PaymentMethodFormSet(prefix='payments', queryset=PaymentMethod.objects.none())
+        cart_total = round(cart.cart_subtotal(request), 2)        
+        st_name = cart.delivery_Store(request).name
+        price = Price.objects.filter(is_active=True)[0] # Capturo la configuración de precio actual
+        t_CUP_alcambio = cart_total * price.change_usd_cup
+        t_CUP_Oficial = cart_total * 120
     
     return render(request, 'checkout/create_summary.html', {
         'order_form': order_form,
-        'formset': formset
+        'formset': formset,
+        'cart_total': cart_total,
+        'st_name': st_name,
+        't_CUP_alcambio': t_CUP_alcambio,
+        't_CUP_oficial': t_CUP_Oficial
     })
  
+
+def download_daily_summary_pdf(request, order_id):
+    return generate_daily_summary_pdf(order_id)
+
 # El view de la página de pago completado por plataforma internacional
 @login_required
 def receipt(request, template_name='checkout/receipt.html'):
@@ -573,7 +586,7 @@ def orders_list(request, template_name='checkout/orders_list.html'):
 
 # view de la lista de ordenes (compras) relizadas a la tienda
 def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
-    orders = Order.objects.all()
+    orders = Order.objects.all().order_by('-date')
     
     filter = FiltroOrderAdmin
 
@@ -584,19 +597,19 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
 
     if user:
         if user != '':
-            orders= orders.filter(user=user)
+            orders= orders.filter(user=user).order_by('-date')
             
     if status:
         if status!='':
-            orders = orders.filter(status__icontains = status)
+            orders = orders.filter(status__icontains = status).order_by('-date')
 
     if store_name:
         if store_name!='':
-            orders = orders.filter(store_name__icontains = store_name)
+            orders = orders.filter(store_name__icontains = store_name).order_by('-date')
 
     if currency:
         if currency!='':
-            orders = orders.filter(currency__icontains=currency)
+            orders = orders.filter(currency__icontains=currency).order_by('-date')
     
     if request.method == 'POST':
         postdata = request.POST.copy()

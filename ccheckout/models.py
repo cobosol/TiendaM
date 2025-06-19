@@ -128,6 +128,19 @@ class Order(models.Model):
             total = total + decimal.Decimal(t)
         return total
     
+    #Revisar esto
+    @property
+    def total_CUP(self):
+        if self.currency == 'USD':
+            total = decimal.Decimal('0.00')
+            order_items = OrderItem.objects.filter(order=self)
+            for item in order_items:
+                t = item.total
+                total = total + decimal.Decimal(t)
+            return total * self.price.change_usd_cup
+        else:
+            return self.end_total
+    
     @property
     def total(self):
         return self.end_total 
@@ -364,24 +377,26 @@ class OrderItem(models.Model):
             return self.quantity * precio
         else:
             return self.quantity * self.price
-        """ price = self.product.price
-        if price:
-            if self.quantity >= price.min_quantity_whole:
-                porciento = decimal.Decimal('0.00')
-                porciento = 1-price.whole_discount/100
-                precio = decimal.Decimal('0.00')
-                precio = self.price * decimal.Decimal(porciento)
-                print(self.quantity)
-                return self.quantity * precio
-            else:
-                return self.quantity * self.price
-        else:
-            return -1 """
 
+    @property
+    def total_base_CUP(self):
+        return self.quantity * self.price_CUP
 
     @property
     def name(self):
         return self.product.name
+
+    @property
+    def price_CUP(self):
+        cup_price = 0
+        if self.order.currency == 'USD':
+            cup_price = self.price * self.order.price.change_usd_cup
+        elif self.order.currency == 'MLC':
+            cup_price = (self.price / self.order.price.change_usd_mlc) * self.order.price.change_usd_cup
+        else:
+            cup_price = self.price
+
+        return cup_price + 5 - (cup_price % 5)
 
     @property
     def sku(self):
@@ -477,7 +492,7 @@ class PaymentMethod(models.Model):
         return result
 
     def clean(self):
-        if self.method == 'TRANSFER':
+        if self.method == 'TRANSFER' or self.method == 'CARD':
             if not self.transaction_details:
                 raise ValidationError('Debe ingresar detalles para transferencias')
             
