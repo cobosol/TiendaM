@@ -9,7 +9,7 @@ from stores.models import Product_Sales, Store
 from registration.models import Profile
 from utils.models import Price
 from django.contrib import messages
-from payments.validators import CouponValidator
+from ccheckout.validators import CouponValidator
 from django import forms
 
 import decimal

@@ -17,9 +17,9 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from ccheckout.ccheckout import get_checkout_url
-from payments.models import Coupon
-from payments.utils import send_coupon
-from payments.validators import CouponValidator
+from ccheckout.models import Coupon
+from ccheckout.utils import send_coupon
+from ccheckout.validators import CouponValidator
 
 def show_cart(request, template_name="cart/cart.html"):
     # Verificar que esté autenticado

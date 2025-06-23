@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order, OrderItem, PaymentMethod
+from .models import Order, OrderItem, PaymentMethod, Coupon
 #, DeliveryType
 
 class PaymentMethodInline(admin.TabularInline):
@@ -34,3 +34,9 @@ class OrderAdmin(admin.ModelAdmin):
 
 admin.site.register(Order, OrderAdmin)
 
+@admin.register(Coupon)
+class CouponAdmin(admin.ModelAdmin):
+    list_display = ('code', 'user', 'discount_percent', 'expiration_date', 'used')
+    list_filter = ('used', 'expiration_date')
+    search_fields = ('user__email', 'code')
+    readonly_fields = ('code',)

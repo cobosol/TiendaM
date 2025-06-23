@@ -7,6 +7,9 @@ import decimal
 from utils.models import Price
 import json
 from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
+import uuid
+import datetime
 
 # Crear una clase delivery que incluya todas las definiciones de los envios.
 # El municipio con los precios (diccionario), descuentos por monto...
@@ -84,15 +87,15 @@ class Order(models.Model):
     pay_url = models.URLField(verbose_name="URL de pago", default="")
     currency = models.CharField(max_length=3, default="USD", verbose_name = "Tipo de moneda")
     price = models.ForeignKey(Price, on_delete = models.PROTECT, blank = True, null=True, verbose_name="Valores para el cálculo del Precio de la compra")
-    coupon = models.ForeignKey('payments.Coupon', on_delete=models.SET_NULL, null=True, blank=True, related_name='orders', verbose_name="Cupón de descuento")
+    coupon = models.ForeignKey('Coupon', on_delete=models.SET_NULL, null=True, blank=True, related_name='orders', verbose_name="Cupón de descuento")
     is_daily_summary = models.BooleanField(default=False, verbose_name="Es resumen diario")
     seller = models.ForeignKey(User, related_name="order_sumary", on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Vendedor")
 
     # payment info
     payment_name = models.CharField(max_length=50, verbose_name = "Nombre del titular", null = True, blank = True)
     payment_phone = models.CharField(max_length=20, blank = True, null=True, verbose_name = "Teléfono móvil")
-    payment_email = models.EmailField(max_length=50, blank = True, null=True, verbose_name = "Correo electrónico")
-    payment_city = models.CharField(max_length=20, blank = True, null=True, verbose_name = "Ciudad del banco", help_text="Ciudad del banco de la tarjeta")
+    payment_city = models.CharField(max_length=20, null=True, blank = True, default=None, verbose_name = "Ciudad del banco", help_text="Ciudad del banco de la tarjeta")
+    payment_email = models.EmailField(max_length=50, null=True, blank = True, default=None, verbose_name = "Correo electrónico")
     payment_address = models.CharField(max_length=200, blank = True, null=True, verbose_name = "Dirección")
     payment_postCode = models.CharField(max_length=20, blank = True, null=True, verbose_name = "Código Postal")
     payment_details = models.CharField(max_length=200, blank = True, null=True, verbose_name = "Detalles de la compra")
@@ -505,3 +508,22 @@ class PaymentMethod(models.Model):
             for item in details:
                 if 'amount' not in item or not isinstance(item['amount'], (int, float)):
                     raise ValidationError('Cada transferencia debe tener un monto numérico')
+                
+class Coupon(models.Model):
+    code = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    discount_percent = models.PositiveIntegerField(default=10)
+    expiration_date = models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(days=30))
+    used = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    applied_to_order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True, 
+                                         related_name='applied_coupon', verbose_name="Orden a la que se le aplica el cupón")
+
+    def is_valid(self):
+        return not self.used and self.expiration_date > datetime.datetime.now()
+    
+    def __str__(self):
+        return str(self.code)
+    
+class Coupon_first(Coupon):
+    related_order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, verbose_name="Orden que genera el cupón")
