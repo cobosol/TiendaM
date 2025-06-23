@@ -21,7 +21,7 @@ from stores.models import Store, Product_Sales
 from utils.models import Price
 from registration.models import Profile
 from cart.models import DeliveryInfo
-from payments.validators import CouponValidator
+from .validators import CouponValidator
 
 
 def loadSecret():
