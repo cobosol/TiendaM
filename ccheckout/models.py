@@ -121,7 +121,13 @@ class Order(models.Model):
 
     def __unicode__(self):
         return 'Orden #' + str(self.id)
-    
+
+
+    def save(self, *args, **kwargs):
+        if self.end_total is None or self.end_total == 0:
+            self.end_total = self.total_items + decimal.Decimal(self.delivery_price)
+        super().save(*args, **kwargs)
+
     @property
     def total_items(self):
         total = decimal.Decimal('0.00')
@@ -146,8 +152,10 @@ class Order(models.Model):
     
     @property
     def total(self):
-        return self.end_total 
-        #return self.total_items + decimal.Decimal(self.delivery_price)
+        if self.end_total != 0:
+            return self.end_total
+        else:
+            return self.total_items + decimal.Decimal(self.delivery_price) 
 
     @property
     def statusS(self):
@@ -206,11 +214,12 @@ class Order(models.Model):
     # Incrementar la cantidad de reservados en Productos por Almacen
     # Devuelve Falso si en ese almacen algún producto no tiene disponible la cantidad solicitada. 
     def products_reserved(self):
-        print("En reserved")
         order_items = OrderItem.objects.filter(order=self)
         st = self.delivery
         all_available = True
         products_Sales = st.products
+        if not products_Sales:
+            return False
         for item in order_items:
             for prod in products_Sales:
                 if item.product == prod.product:
@@ -231,6 +240,8 @@ class Order(models.Model):
         order_items = OrderItem.objects.filter(order=self)
         st = self.delivery
         products_Sales = st.products
+        if not products_Sales:
+            return False
         all_available = True
         for item in order_items:
            for prod in products_Sales:
@@ -253,6 +264,8 @@ class Order(models.Model):
         order_items = OrderItem.objects.filter(order=self)
         st = self.delivery
         products_Sales = st.products
+        if not products_Sales:
+            return False
         all_available = True
         for item in order_items:
             for prod_s in products_Sales:
@@ -281,6 +294,8 @@ class Order(models.Model):
         order_items = OrderItem.objects.filter(order=self)
         st = self.delivery
         products_Sales = st.products
+        if not products_Sales:
+            return False
         all_available = True
         for item in order_items:
             for prod in products_Sales:

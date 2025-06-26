@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resumen de ventas por productos</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0"></script>
+</head>
+<body>
+    <h1>Resumen de ventas por productos ({{ start_date }} al {{ end_date }})</h1>
+    
+    <form method="get">
+        <label>Desde: <input type="date" name="start_date" value="{{ start_date }}"></label>
+        <label>Hasta: <input type="date" name="end_date" value="{{ end_date }}"></label>
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <!-- Gráfica: Cantidad por Producto -->
+    <div style="width: 800px;">
+        <h2>Productos Más Vendidos</h2>
+        <canvas id="productsChart"></canvas>
+    </div>
+
+    <!-- Gráfica: Monto por Producto -->
+    <div style="width: 800px;">
+        <h2>Ingresos por Producto</h2>
+        <canvas id="revenueChart"></canvas>
+    </div>
+
+</div>
+
+    <script>
+        // Configuración común para gráficas
+        const chartOptions = {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                tooltip: { mode: 'index', intersect: false }
+            },
+            scales: { y: { beginAtZero: true } }
+        };
+
+        // Gráfica 1: Cantidad por Producto
+        const productsData = JSON.parse('{{ products|escapejs }}');
+        new Chart(document.getElementById('productsChart'), {
+            type: 'bar',
+            data: {
+                labels: productsData.map(item => item.product__name),
+                datasets: [{
+                    label: 'Unidades Vendidas',
+                    data: productsData.map(item => item.total_quantity),
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)'
+                }]
+            },
+            options: chartOptions
+        });
+
+        // Gráfica 2: Monto por Producto
+        const revenueData = JSON.parse('{{ revenue_data|escapejs }}');
+        new Chart(document.getElementById('revenueChart'), {
+            type: 'bar',
+            data: {
+                labels: revenueData.map(item => item.product__name),
+                datasets: [{
+                    label: 'Ingresos ($)',
+                    data: revenueData.map(item => item.total_revenue),
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                }]
+            },
+            options: chartOptions
+        });
+    </script>
+</body>
+</html>

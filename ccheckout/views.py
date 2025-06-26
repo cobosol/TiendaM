@@ -34,6 +34,10 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .validators import CouponValidator
+from django.db.models import Sum, Count, Avg, F, ExpressionWrapper, FloatField
+from datetime import datetime, timedelta
+from django.db.models.functions import TruncDate, TruncWeek, TruncMonth
+from django.utils import timezone
 
 @require_POST
 @login_required
@@ -449,7 +453,6 @@ def transfer(request, template_name='checkout/transfer.html', id=0):
             return HttpResponseRedirect(receipt_url)
     return render(request, template_name, locals())
 
-
 def create_daily_summary(request):
     print("Entro a create daily")
     MD = 'USD'
@@ -487,8 +490,9 @@ def create_daily_summary(request):
                 order.save()
                 app_label = order._meta.app_label
                 model_name = order._meta.model_name
-                messages.success(request, "Resumen creado con éxito")   
-                return redirect(f'admin:{app_label}_{model_name}_changelist')
+                messages.success(request, "Resumen creado con éxito")
+                receipt_url = order.get_absolute_url()
+                return HttpResponseRedirect(receipt_url)
         else:
             print("Error de validacion de la form")       
     else:
@@ -569,7 +573,7 @@ def confirmado(request, order_id, template_name='checkout/confirmado.html'):
 # El view de la lista de órdenes (compras) realizadas por el usuario
 @login_required
 def orders_list(request, template_name='checkout/orders_list.html'):
-    orders = Order.objects.filter(user=request.user)
+    orders = Order.objects.filter(user=request.user).order_by('-date')
     
     filter = FiltroOrder
 
@@ -704,3 +708,158 @@ def transfer_pay(request, order_id, template_name='checkout/transfer.html'):
             receipt_url = order.get_paided_url()
             return HttpResponseRedirect(receipt_url)
     return render(request, template_name, locals())
+
+def sales_manages(request):
+    context = {}
+    return render(request, 'checkout/resumenes_gaficos.html', locals())
+
+def sales_products(request):
+    # Obtener fechas del request
+    start_date = request.GET.get('start_date', '2023-01-01')
+    end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
+    
+    # Convertir a objetos datetime
+    start = datetime.strptime(start_date, '%Y-%m-%d')
+    end = datetime.strptime(end_date, '%Y-%m-%d')
+    
+    # Filtrar órdenes en el rango
+    orders = Order.objects.filter(date__range=[start, end], currency='USD')
+    
+    # 1. Cantidad vendida por producto
+    products_data = list(
+        OrderItem.objects
+        .filter(order__in=orders)
+        .values('product__name')
+        .annotate(total_quantity=Sum('quantity'))
+        .order_by('-total_quantity')
+    )
+    # Convertir Decimal a float
+    for p in products_data:
+        p['total_quantity'] = float(p['total_quantity'])
+    
+    # 2. Monto total por producto
+    revenue_by_product = list(
+        OrderItem.objects
+        .filter(order__in=orders)
+        .values('product__name')
+        .annotate(total_revenue=ExpressionWrapper(Sum(F('price') * F('quantity')),
+                                                  output_field=FloatField()
+                                                  ) # Utilizar totalf que incluye los descuentos
+        )
+        .order_by('-total_revenue')
+    )
+    
+    # Preparar datos para gráficas
+    context = {
+        'start_date': start_date,
+        'end_date': end_date,
+        'products': json.dumps(products_data),
+        'revenue_data': json.dumps(revenue_by_product),
+    }
+
+    return render(request, 'checkout/venta_productos.html', context)
+
+def sales_client(request):
+    # Obtener fechas del request
+    start_date = request.GET.get('start_date', '2023-01-01')
+    end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
+    
+    # Convertir a objetos datetime
+    start = datetime.strptime(start_date, '%Y-%m-%d')
+    end = datetime.strptime(end_date, '%Y-%m-%d')
+    
+    # Filtrar órdenes en el rango
+    orders = Order.objects.filter(date__range=[start, end], currency='USD')
+    
+    # 4. Compras por usuario (top 10)
+    top_customers = list(
+        orders.values('user__username')
+        .annotate(
+            total_spent=Sum('end_total'),
+            order_count=Count('id')
+        )
+        .order_by('-total_spent')[:10]
+    )
+
+    for c in top_customers:
+        c['total_spent'] = float(c['total_spent'])
+
+    
+    # Preparar datos para gráficas
+    context = {
+        'start_date': start_date,
+        'end_date': end_date,
+        'top_customers': json.dumps(top_customers),
+    }
+
+    return render(request, 'checkout/venta_clientes.html', context)
+
+def sales_summary(request):
+    # Obtener fechas del request
+    start_date = request.GET.get('start_date', '2023-01-01')
+    end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
+    
+    # Convertir a objetos datetime
+    start = datetime.strptime(start_date, '%Y-%m-%d')
+    end = datetime.strptime(end_date, '%Y-%m-%d')
+    
+    # Filtrar órdenes en el rango
+    orders = Order.objects.filter(date__range=[start, end], currency='USD')
+    
+    # 3. Estadísticas generales
+    total_orders = orders.count()
+
+    avg_order_amount = orders.aggregate(avg=Avg('end_total'))['avg'] or 0
+    avg_order_amount = float(avg_order_amount)
+
+    # Gráfica temporal
+    granularity = request.GET.get('granularity', 'day')
+
+    if granularity == 'week':
+        trunc_func = TruncWeek('date', tzinfo=timezone.get_current_timezone())
+    elif granularity == 'month':
+        trunc_func = TruncMonth('date', tzinfo=timezone.get_current_timezone())
+    else:  # Incluye 'day' y cualquier otro valor
+        trunc_func = TruncDate('date', tzinfo=timezone.get_current_timezone())
+    
+    # Consulta de ventas por período
+    sales_by_period = (
+        Order.objects
+        .filter(date__range=[start_date, end_date], currency='USD')
+        .annotate(period=trunc_func)
+        .values('period')
+        .annotate(
+            total_sales=Sum('end_total'),
+            order_count=Count('id')
+        )
+        .order_by('period')
+    )
+    
+    # Formatear etiquetas según granularidad
+    labels = []
+    for item in sales_by_period:
+        period = item['period']
+        if granularity == 'week':
+            labels.append(f"Sem {period.isocalendar()[1]} {period.year}")
+        elif granularity == 'month':
+            labels.append(period.strftime("%b %Y"))
+        else:
+            labels.append(period.strftime("%d/%m/%Y"))
+    
+    # Convertir datos a formato compatible con JSON
+    period_totals = [float(item['total_sales']) for item in sales_by_period]
+
+    
+    # Preparar datos para gráficas
+    context = {
+        'start_date': start_date,
+        'end_date': end_date,
+        'granularity': granularity,
+        'period_labels': json.dumps(labels),
+        'period_totals': json.dumps(period_totals),
+        'total_orders': total_orders,
+        'avg_order_amount': avg_order_amount,
+    }
+
+    return render(request, 'checkout/venta_resumen.html', context)
+

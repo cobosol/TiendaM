@@ -116,10 +116,6 @@ def delivery_name(request):
 # add an item to the cart
 def add_to_cart(request, p_slug, quantity=1):
     if request.user.is_authenticated:
-        """ messages.warning(request, "Advertencia")
-        messages.error(request, "Error")
-        messages.info(request, "Info")
-        messages.success(request, "Exito") """
         postdata = request.POST.copy()
         p = get_object_or_404(Product, slug=p_slug)
         cart_products = get_cart_items(request)

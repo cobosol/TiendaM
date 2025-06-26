@@ -23,12 +23,14 @@
             </h6> <br/>
         </div>
         <div id="Actualizar estado" class="col-lg-4">
+            {% if comercial == 'True' %}
             <h4 class="m-0 bg-primary mb-3 text-center text-light" style="font-family: sans-serif;">Actualizar estado</h4>
             <form action="." method="post" >
                 {% csrf_token %}
                 {{ form.status }}
                 <input type="submit" class="btn btn-block btn-primary my-2 py-2" name= "submit" value="Actualizar" class="submit" />
             </form>
+            {% endif %}
         </div>
         <div id = "Importe" class="col-lg-3 mb-2">
         <div class="card border-secondary mb-5">
