@@ -1,23 +1,36 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
+{% load static %}
+{% load checkout_tags %}
+{% load catalog_filters %}
+{% block content %}
+
 <head>
     <title>Resumen de Ventas</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0"></script>
 </head>
-<body>
-    <h1>Resumen de ventas por clientes ({{ start_date }} al {{ end_date }})</h1>
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-2">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
+            <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Resumen de ventas por clientes ({{ start_date }} al {{ end_date }})</h4>
+        </div>
+    </div>
+    <!-- Page Header End -->
     
     <form method="get">
         <label>Desde: <input type="date" name="start_date" value="{{ start_date }}"></label>
         <label>Hasta: <input type="date" name="end_date" value="{{ end_date }}"></label>
-        <button type="submit">Filtrar</button>
+        <button type="submit" class="btn btn-primary">Filtrar</button>
     </form>
+
+    <br>
+    <br>
 
     <!-- Gráfica: Top Clientes -->
     <div style="width: 800px;">
-        <h2>Top 10 Clientes</h2>
+        <h6 class="font-weight-bold" style="font-family: sans-serif;">Primeros 10: </h6>
         <canvas id="customersChart"></canvas>
     </div>
 
@@ -51,5 +64,5 @@
             options: chartOptions
         });
     </script>
-</body>
-</html>
+
+{% endblock %}

@@ -1,23 +1,27 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
+{% load static %}
+{% load checkout_tags %}
+{% load catalog_filters %}
+{% block content %}
+
 <head>
     <title>Resumen de Ventas</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.4"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0"></script>
 </head>
-<body>
-    <h1>Resumen de Ventas ({{ start_date }} al {{ end_date }})</h1>
-    
-<!--     <form method="get">
-        <label>Desde: <input type="date" name="start_date" value="{{ start_date }}"></label>
-        <label>Hasta: <input type="date" name="end_date" value="{{ end_date }}"></label>
-        <button type="submit">Filtrar</button>
-    </form> -->
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-2">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
+            <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Resumen de ventas ({{ start_date }} al {{ end_date }})</h4>
+        </div>
+    </div>
+    <!-- Page Header End -->
 
     <!-- Gráfica de Ventas Diarias -->
 <div style="width: 100%; height: 400px;">
-    <h2>Seleccione rango de fechas y granularidad</h2>
+    <h6 class="font-weight-bold" style="font-family: sans-serif;">Seleccione rango de fechas y granularidad: </h6>
     <form method="get">
         <label>Desde: <input type="date" name="start_date" value="{{ start_date }}"></label>
         <label>Hasta: <input type="date" name="end_date" value="{{ end_date }}"></label>
@@ -31,26 +35,32 @@
             </select>
         </label>
         
-        <button type="submit">Filtrar</button>
+        <button type="submit" class="btn btn-primary">Filtrar</button>
     </form>
+
+    <br>
+    <br>
 
         <!-- Estadísticas Generales -->
         <div>
-            <h2>Estadísticas generales</h2>
-            <p>Total Órdenes: {{ total_orders }}</p>
-            <p>Valor Promedio por Orden: ${{ avg_order_amount|floatformat:2 }}</p>
+            <h6 class="font-weight-bold" style="font-family: sans-serif;">Estadísticas generales: </h6>
+            <p><strong>Total Órdenes: </strong>{{ total_orders }}<br>
+                <strong>Valor Promedio por Orden:</strong> ${{ avg_order_amount|floatformat:2 }}
+            </p>
         </div>
 
+        <br>
+
     <div style="width: 100%; height: 400px;">
-    <h2>Ventas por 
+    <h6 class="font-weight-bold" style="font-family: sans-serif;">Ventas por 
         {% if granularity == 'day' %}Día
         {% elif granularity == 'week' %}Semana
-        {% else %}Mes{% endif %}
-    </h2>
+        {% else %}Mes{% endif %}: </h6>
     <canvas id="salesChart"></canvas>
     </div>
 
 </div>
+<br>
 
     <script>
         // Configuración común para gráficas
@@ -130,5 +140,5 @@
         }
         });
     </script>
-</body>
-</html>
+<br>
+{% endblock %}
