@@ -8,16 +8,10 @@ import datetime
 
 @receiver(post_save, sender=Order)
 def generate_first_purchase_coupon(sender, instance, created, **kwargs):
-    print("En el signals")
-    print(instance.id)
-    print(instance.status)
-    print(instance.PAIDED)
     if instance.status == instance.PROCESSED:
-        print("En procesada")
         user = instance.user
         # Verificar si es la primera compra exitosa
         if Order.objects.filter(user=user, status__in = [instance.PAIDED, instance.PROCESSED]).count() == 1:
-            print("Primera orden")
             # Crear cupón
             coupon = Coupon_first.objects.create(
                 user=user,

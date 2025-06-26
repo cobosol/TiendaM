@@ -223,9 +223,6 @@ def remove_from_cart(request):
     quantity = postdata['quantity']
     cart_item = get_single_item(request, item_id)
     if cart_item:
-        """     prod = cart_item.product
-        prod.set_reserved(int(quantity))
-        prod.save() """
         cart_item.delete()
 
 # gets the total cost for the current cart

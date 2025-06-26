@@ -69,17 +69,13 @@ def payment_notification(request):
     print("response[status]")
     print(st) """
 
-    print("response.get(status)")
     status = response.get("status")
-    print(status)
     
     try:
-        print(response.get("status") == 'OK')
         if response.get("status") == 'OK':
-            print("Entró al if")
+            print("if")
         
         data = response["data"]
-        print(data)
         signature = data["signaturev2"]
         bankOrderCode = data["bankOrderCode"]
         creds = loadSecret()
@@ -170,7 +166,6 @@ def show_checkout(request, template_name='checkout/checkout.html'):
                             response2 = createPaymentCardsJSON(request, order_number)
                             try:
                                 dicto2 = json.loads(response2.content)
-                                print(f'Dicto2{dicto2}')
                                 url_pay = dicto2["shortUrl"]
                                 order = Order.objects.filter(id=order_number['order_number'])[0]
                                 order.pay_url = url_pay
@@ -186,7 +181,6 @@ def show_checkout(request, template_name='checkout/checkout.html'):
                             fail_url = reverse('checkout_fail')
                             return HttpResponseRedirect(fail_url)
             else:
-                print('Error en la validación de la form')
                 fail_url = reverse('checkout_fail')
                 return HttpResponseRedirect(fail_url)
         """ else:
@@ -277,19 +271,15 @@ def cach(request, template_name='checkout/cach.html'):
 
 @login_required
 def facturar(request, template_name='checkout/facturar.html'):
-    print("En el facturar")
     MD = 'USD'
     if cart.is_empty(request):
         cart_url = reverse('show_cart')
         return HttpResponseRedirect(cart_url)
     if request.method == 'POST': 
-        print("En el post del facturar")
         postdata = request.POST.copy()
         if postdata['submit'] == 'Efectuar pago':
-            print("En el facturar del post")
             form = FacturarForm(postdata)
             if form.is_valid():
-                print("Form valida")
                 user = request.user
                 profile = get_object_or_404(Profile, user = user)
                 MD = profile.MONEY_TYPE[profile.money_type][1]
@@ -403,11 +393,9 @@ def reserve(request, template_name='checkout/reserve.html'):
                 if order_number['order_number'] == -1: # Si no se creó una orden
                     fail = reverse('show_cart')
                     return HttpResponseRedirect(fail) # Vuelvo al carrito
-                #error_message = postdata.get('message','') # capturo mensaje de error que no hago nada con él
                 if order_number: # Si se generó correctamente la orden
                     request.session['order_number'] = order_number['order_number'] #Guardo el número de orden en la sesión
                     order = Order.objects.filter(id=order_number['order_number'])[0] #Construyo la orden a partir del numero
-                    #print(f"Numero de orden: {order.pk}")
                     order.update_status(Order.PROCESSED) # Actualizo el status a procesada.
                     order.save() 
                     notification_user_sale(request) # Envío notificación por correo a usuario
@@ -422,16 +410,12 @@ def reserve(request, template_name='checkout/reserve.html'):
     page_title = 'Reservar'
     #cobra_efectivo = False
     cart_subtotal = round(cart.cart_subtotal(request), 2) # Capturo suma de productos 
-    print(cart_subtotal)
     cart_delivery = cart.cart_delivery_price(request, cart_subtotal, MD) # Capturo precio de entrega
     cart_total = cart_subtotal + cart_delivery # Total: Productos + entrega
     envio = False
     deli = cart.get_delivery(request) # Capturo el id del tipo de entrega
     if deli == '3': # Si es 3 (Envío habana). ##### Esto hay que hacerlo genérico  
         envio = True 
-    # Para qué necesito que cobre en efectivo???
-    """     if (request.user.groups.filter(name='vendedores').exists() or request.user.is_superuser):
-        cobra_efectivo = True """
     return render(request, template_name, locals())
 
 @login_required
@@ -454,13 +438,11 @@ def transfer(request, template_name='checkout/transfer.html', id=0):
     return render(request, template_name, locals())
 
 def create_daily_summary(request):
-    print("Entro a create daily")
     MD = 'USD'
     if cart.is_empty(request):
         cart_url = reverse('show_cart')
         return HttpResponseRedirect(cart_url)
     if request.method == 'POST':
-        print("Entro a post")
         formset = PaymentMethodFormSet(request.POST, prefix='payments')
         if MD == 'USD':
             order_number = create_order(request, 4, True, True) # Crear la orden con tipo de transacción 3 usd en cach
@@ -475,14 +457,12 @@ def create_daily_summary(request):
         else:
             messages.info(request, "El resumen es solo en CUP o USD")  
         if order_number:
-            print("En order_number")
             request.session['order_number'] = order_number['order_number']
             order = Order.objects.filter(id=order_number['order_number'])[0] 
             order.save()
             order.update_status(Order.PAIDED)
             order.update_status(Order.DELIVERED)
             if formset.is_valid():
-                print("En el formset")
                 # Crear orden especial
                 formset.instance = order
                 formset.save()
@@ -583,17 +563,14 @@ def orders_list(request, template_name='checkout/orders_list.html'):
 
     if status:
         if status!='':
-            print(f'status:{status}')
             orders = orders.filter(status__icontains = status)
 
     if store_name:
         if store_name!='':
-            print(f'store name:{store_name}')
             orders = orders.filter(store_name__icontains = store_name)
 
     if currency:
         if currency!='':
-            print(f'currency:{currency}')
             orders = orders.filter(currency__icontains=currency)
 
     if request.method == 'POST':
@@ -693,8 +670,6 @@ def transfer_pay(request, order_id, template_name='checkout/transfer.html'):
     user = order.user
     if request.method == 'POST': 
         postdata = request.POST.copy()
-        print(postdata)
-        print(order_id)
         if postdata['submit'] == 'Confirmar':
             if order_id == 0:
                 order = Order.objects.filter(id=request.session['order_number'])[0]

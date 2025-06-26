@@ -7,6 +7,7 @@ from registration.models import Profile
 from cart import cart
 from promo.models import Banner, Offer
 from registration.forms import UpdateProfileAdminForm
+from django.contrib import messages
 
 def index_view(request, template_name="index.html"):
     products = Product.objects.filter(is_active=True)
@@ -19,25 +20,10 @@ def index_view(request, template_name="index.html"):
     else:
         offer1 = offers1[0]
         offer2 = offers2[0]
-    """ distribuidor = False
-    productor = False
-    vendedor = False
-    marketing = False
-    adminAccess = False
-    comercial = False """
     user = request.user
     profile = Profile
     if (user.is_authenticated):
         profile = get_object_or_404(Profile, user = user)
-        """ if user.groups.filter(name__in=['vendedores']):
-            vendedor = True
-            adminAccess = True
-        if user.groups.filter(name__in=['marketing']):
-            marketing = True
-            adminAccess = True
-        if user.groups.filter(name__in=['comercial']):
-            comercial = True
-            adminAccess = True """
     if request.method == 'POST':
         try:
             postdata = request.POST.copy()
@@ -53,7 +39,7 @@ def index_view(request, template_name="index.html"):
                 url = '/catalogo/productos/' + productSearch + '/'
                 return HttpResponseRedirect(url)
         except Exception:
-                print("Error en el envío de información")
+                messages.error(request, "Error en el envío de información")
     return render(request, 'index.html', {'products':products, 'banners':banners, 'bestsellers':bestsellers, 'offer1':offer1, 'offer2':offer2, 'profile':profile})
 
 

@@ -118,24 +118,12 @@ class DeliveryInfo(models.Model):
         cart_delivery = decimal.Decimal('0.00')
         cart_delivery += self.C_DELIVERY_ZONE[self.deliveryZone][2] 
         return cart_delivery
-        """ if int(self.deliveryZone) == int(self.GUANABACOA):
-            valor = 3
-            valorD = decimal.Decimal(valor)
-            return valorD
-        elif self.deliveryZone == self.HABANADELESTE:
-            print("Habana del este")
-            return decimal.Decimal('4.00')
-        else:
-            valor = 15
-            valorD = decimal.Decimal(valor)
-            return valorD """
 
 class CartItem(models.Model):
     cart_id = models.CharField(max_length=50)
     date_added = models.DateTimeField(auto_now_add=True)
     quantity = models.DecimalField(max_digits=9, decimal_places=2, default=1.00, verbose_name = "Cantidad del producto")
     product = models.ForeignKey('catalog.Product', unique=False, on_delete=models.CASCADE)
-    #price = models.ForeignKey('utils.Price', on_delete = models.CASCADE, blank=True, null=True, verbose_name="Cálculo de precio")
 
     class Meta:
         db_table = 'cart_items'
@@ -145,7 +133,6 @@ class CartItem(models.Model):
         super().__init__(*args, **kwargs)
 
     def total_USD(self, special=False):
-        #price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
         if special:
             return decimal.Decimal(self.quantity * self.product.price_base)
         if self.quantity >= self.product.min_quantity_whole:
@@ -155,13 +142,6 @@ class CartItem(models.Model):
             return decimal.Decimal(total)
         total = self.quantity * self.product.price_base
         return decimal.Decimal(total) 
-        """ if self.quantity >= price.min_quantity_whole:
-            porciento = 1-price.whole_discount/100
-            discount = self.product.price_base*decimal.Decimal(porciento)
-            total = self.quantity*decimal.Decimal(discount) 
-            return decimal.Decimal(total)
-        total = self.quantity * self.product.price_base
-        return decimal.Decimal(total) """
     
     def total_CUP(self, special=False):
         if special:

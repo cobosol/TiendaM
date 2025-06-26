@@ -11,7 +11,6 @@ from tienda.settings import EMAIL_HOST_USER
 class CustomPasswordResetForm(PasswordResetForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        print("En el init de la CustomPasswordResetForm")
         self.fields['email'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Tu correo electrónico'
@@ -25,7 +24,6 @@ class CustomPasswordResetForm(PasswordResetForm):
         subject = render_to_string(subject_template_name, context)
         subject = ''.join(subject.splitlines())  # Elimina saltos de línea
         body = render_to_string(email_template_name, context)
-        print(f'Correo para: {to_email}')
         email = EmailMultiAlternatives(
             subject,
             body,
@@ -35,9 +33,7 @@ class CustomPasswordResetForm(PasswordResetForm):
         
         if html_email_template_name:
             html_email = render_to_string(html_email_template_name, context)
-            print(html_email)
             email.attach_alternative(html_email, 'text/html')
-        print("A enviar el correo de cambio de contrasenna")
         email.send()
 
 

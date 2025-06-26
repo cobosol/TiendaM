@@ -6,7 +6,6 @@ from django.contrib import messages
 class CouponValidator:
     @staticmethod
     def validate(coupon_code, user):
-        print("En el validate coupon")
         try:
             coupon = Coupon.objects.get(code=coupon_code)
             if coupon.user != user:
