@@ -95,16 +95,11 @@ def show_category(request, category_slug, template_name="catalog/category.html")
     meta_description = c.meta_description
     cart_items = cart.get_cart_items(request)
     product = get_object_or_404(Product, pk=1)
-    """ vendedor = False
-    if (request.user.is_authenticated):
-        if request.user.groups.filter(name__in=['vendedores']):
-            vendedor = True """
     # Add to cart
     if request.method == 'POST':
         try:
             postdata = request.POST.copy()
             if postdata['submit'] == 'Comprar': 
-                print("Comprar")
                 product_slug = postdata.get('product_slug','')
                 if cart.add_to_cart(request, product_slug):
                     if request.session.test_cookie_worked():
@@ -167,7 +162,6 @@ def show_product(request, product_slug, template_name="catalog/product.html"):
                     return HttpResponseRedirect(url)  
                 else:
                     flag = True
-                #flag = cart.add_to_cart(request, product_slug)
                 if request.session.test_cookie_worked():
                     request.session.delete_test_cookie()
                 url = reverse('show_cart')
@@ -185,8 +179,6 @@ def i_admin(request):
     return render(request, "catalog/gestion.html", {})
 
 #---------- Gestión de productos ----------------
-""" class gestion_productos(ListView):
-    model = Product """
 
 def gestion_productos(request, template_name="catalog/productos_admin.html"):
     form = SelectCategoryForm(request=request)
@@ -198,7 +190,6 @@ def gestion_productos(request, template_name="catalog/productos_admin.html"):
                 form.selected_category = postdata['selected_category']
                 c = get_object_or_404(Category, pk=postdata['selected_category'])
                 object_list = c.product_set.all()
-                #object_list = Product.objects.all()
         else:
             object_list = Product.objects.all()
     except:
@@ -222,7 +213,6 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
             elif postdata['submit'] == 'Productos terminados':
                 object_list = Product.objects.filter(is_feedstock=False)
             elif postdata['submit'] == 'Comprar':
-                print("A comprar")
                 product_slug = postdata.get('product_slug','') 
                 if not cart.add_to_cart(request, product_slug):
                     print("No adicionó")
@@ -230,7 +220,6 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
                     return HttpResponseRedirect(url)  
                 else:
                     flag = True
-                #flag = cart.add_to_cart(request, product_slug)
                 if request.session.test_cookie_worked():
                     request.session.delete_test_cookie()
                 url = reverse('catalogo_productos')

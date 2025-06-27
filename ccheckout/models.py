@@ -121,7 +121,13 @@ class Order(models.Model):
 
     def __unicode__(self):
         return 'Orden #' + str(self.id)
-    
+
+
+    def save(self, *args, **kwargs):
+        if self.end_total is None or self.end_total == 0:
+            self.end_total = self.total_items + decimal.Decimal(self.delivery_price)
+        super().save(*args, **kwargs)
+
     @property
     def total_items(self):
         total = decimal.Decimal('0.00')
@@ -146,8 +152,10 @@ class Order(models.Model):
     
     @property
     def total(self):
-        return self.end_total 
-        #return self.total_items + decimal.Decimal(self.delivery_price)
+        if self.end_total != 0:
+            return self.end_total
+        else:
+            return self.total_items + decimal.Decimal(self.delivery_price) 
 
     @property
     def statusS(self):
@@ -206,11 +214,12 @@ class Order(models.Model):
     # Incrementar la cantidad de reservados en Productos por Almacen
     # Devuelve Falso si en ese almacen algún producto no tiene disponible la cantidad solicitada. 
     def products_reserved(self):
-        print("En reserved")
         order_items = OrderItem.objects.filter(order=self)
         st = self.delivery
         all_available = True
         products_Sales = st.products
+        if not products_Sales:
+            return False
         for item in order_items:
             for prod in products_Sales:
                 if item.product == prod.product:
@@ -227,10 +236,11 @@ class Order(models.Model):
     # Disminuye la cantidad de reservados
     # Devuelve falso si los reservados son menos de 0
     def products_sold(self):
-        print("En pagada")
         order_items = OrderItem.objects.filter(order=self)
         st = self.delivery
         products_Sales = st.products
+        if not products_Sales:
+            return False
         all_available = True
         for item in order_items:
            for prod in products_Sales:
@@ -249,10 +259,11 @@ class Order(models.Model):
     # Decrementar los reservados en el Producto
     # Devuelve falso si alguno de los valores se hace negativo 
     def products_delivered(self):
-        print("En entregada")
         order_items = OrderItem.objects.filter(order=self)
         st = self.delivery
         products_Sales = st.products
+        if not products_Sales:
+            return False
         all_available = True
         for item in order_items:
             for prod_s in products_Sales:
@@ -277,15 +288,15 @@ class Order(models.Model):
     # Decrementar los reservados en el Producto
     # Devuelve falso si alguno de los valores se hace negativo 
     def order_cancelled(self, preview):
-        print("En cancelada")
         order_items = OrderItem.objects.filter(order=self)
         st = self.delivery
         products_Sales = st.products
+        if not products_Sales:
+            return False
         all_available = True
         for item in order_items:
             for prod in products_Sales:
                 if item.product == prod.product:
-                    print(preview)
                     if preview == self.PROCESSED or preview == self.SUBMITTED:
                         prod.reserved = prod.reserved - item.quantity
                         prod.available = prod.available + item.quantity
@@ -322,14 +333,12 @@ class Order(models.Model):
         return all_available"""
 
     def verify_order_items(self):
-        print("Entro a verificar")
         order_items = OrderItem.objects.filter(order=self)
         for item in order_items:
             disp = item.product.count - item.product.reserved
             if item.quantity >= disp:
                 return False
         for item in order_items:
-            print("Entro a actualizar reservados")
             item.product.reserved = item.product.reserved + item.quantity
             item.product.save()
         return True
@@ -364,7 +373,6 @@ class OrderItem(models.Model):
     @property
     def has_discount(self):
         bool = abs((self.price * self.quantity) - self.total) > 0.01
-        print(f'self.price * self.quantity) - self.total) > 0.01 {bool}')
         return abs((self.price * self.quantity) - self.total) > 0.01
     
     @property
@@ -425,7 +433,6 @@ class PaymentMethod(models.Model):
     method = models.CharField(max_length=20, choices=METHOD_CHOICES, verbose_name="Métodos de pago")
     amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Monto")
     transaction_count = models.PositiveIntegerField(default=1, verbose_name="Cantidad de transacciones")  # Para contar operaciones
-    #transaction_details = models.JSONField(blank=True, null=True, verbose_name="Detalles")  # Para almacenar múltiples transacciones
     transaction_details = models.TextField(blank=True, null=True, verbose_name="Detalles")  # Para almacenar múltiples transacciones
 
     class Meta:

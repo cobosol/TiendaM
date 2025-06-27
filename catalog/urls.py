@@ -19,7 +19,6 @@ urlpatterns = [
     path('productos/eliminar/<int:pk>', eliminar_producto.as_view(), name='eliminar_producto'),
     path('productos/crear', crear_producto.as_view(template_name = "catalog/producto_crear.html"), name='crear_producto'),
     path('productos/editar/<int:pk>', actualizar_producto.as_view(template_name = "catalog/producto_actualizar.html"), name='actualizar_producto'),
-    #path('productos_almacen/', gestion_productos_almacen.as_view( template_name="catalog/productos_almacen_admin.html"), name='productos_almacen'),
     path('productos_almacen/', views.gestion_productos_almacen, name='productos_almacen'),
     path('productos_almacen/eliminar/<int:pk>', eliminar_producto_almacen.as_view(), name='eliminar_producto_almacen'),
     path('productos_almacen/crear', crear_producto_almacen.as_view(template_name = "catalog/producto_almacen_crear.html"), name='crear_producto_almacen'),

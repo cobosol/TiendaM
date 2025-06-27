@@ -24,6 +24,7 @@ catalog/migrations/*
 catalog/__pycache__/*
 ccheckout/migrations/*
 ccheckout/__pycache__/*
+ccheckout/authenticationNNO.py
 contact/migrations/*
 contact/__pycache__/*
 pages/migrations/*

@@ -22,14 +22,7 @@ def contact(request):
             )
             subject = "MUHIA: Nuevo mensaje de la tienda"
             try:
-                print("A enviar")
                 e_mail.send()
-                #send_mail(subject = subject, message = content, from_email = 'ycoca@produccionesmuhia.ca', recipient_list = ["informatica@produccionesmuhia.ca", "ycocab@gmail.com", "ycoca@uci.cu"], fail_silently = False, auth_user = 'ycoca@produccionesmuhia.ca', auth_password = 'TestingCorreo2024++', connection = 'produccionesmuhia.ca:465')
-                #send_mail(subject, content, email, ['ycoca@produccionesmuhia.ca'], auth_user = 'tienda@produccionesmuhia.ca', auth_password = '', connection = 'produccionesmuhia.ca:465')
-                
-                """          EmailMessage('Contact Form Submission from {}'.format(name),content,'informatica@produccionesmuhia.ca',
-                             ['ycoca@produccionesmuhia.ca'],[],reply_to=[email]).send() """
-                print("enviado")
                 return redirect(reverse('contact') + "?ok")
             except:
                 return redirect(reverse('contact') + "?fail")

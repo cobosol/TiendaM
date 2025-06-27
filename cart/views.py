@@ -39,13 +39,10 @@ def show_cart(request, template_name="cart/cart.html"):
             postdata = request.POST.copy()
             if postdata['submit'] == 'X':
                 cart.remove_from_cart(request)
-                #form = DeliveryForm(request, postdata)
             elif postdata['submit'] == '':
                 cart.update_cart(request)
-                #form = DeliveryForm(request, postdata)
             elif postdata['submit'] == '>':
                 cart.update_cart(request)
-                #form = DeliveryForm(request, postdata)
             elif postdata['submit'] == 'Buscar':
                 productSearch = postdata['producto']
                 url = '/catalogo/productos/' + productSearch + '/'
@@ -68,7 +65,6 @@ def show_cart(request, template_name="cart/cart.html"):
                         url = reverse('reservar')
                         return HttpResponseRedirect(url)
             elif postdata['submit'] == 'Ir a pagar':
-                #if request.user.is_authenticated:
                     if MND == 'USD':
                         if cart.cart_subtotal(request) < 2:
                             text = "El monto mínimo para la compra en línea es de 2.00 USD"
@@ -80,8 +76,6 @@ def show_cart(request, template_name="cart/cart.html"):
                     else:
                         url = reverse('pagar')
                         return HttpResponseRedirect(url)
-                    """ else:
-                    messages.warning(request,"Debe estar autenticado para ir a pagar") """
             elif postdata['submit'] == 'Confirmar pago':
                 url = reverse('efectivo')
                 return HttpResponseRedirect(url)
@@ -115,7 +109,6 @@ def show_cart(request, template_name="cart/cart.html"):
         text = cart_i.discount_message()
         if text != "":
             messages.info(request, text)
-    #st = cart.delivery_Store(request)    
     page_title = 'Shopping Cart'
     cart_subtotal = cart.cart_subtotal(request)
     cart_delivery = cart.cart_delivery_price(request, cart_subtotal, MND)

@@ -62,7 +62,6 @@ class ProductAddToCartForm(forms.Form):
         return self.cleaned_data
     
 class SelectStoreForm(forms.Form):    
-    #prefered_store = 3
     selected_store = forms.ModelChoiceField(queryset=Store.objects.all())
 
     def __init__(self, request=None, *args, **kwargs):

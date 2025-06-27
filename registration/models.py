@@ -72,27 +72,6 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.first_name
 
-    """     def save(self, *args, **kwargs):
-        print("Entre a save")
-        super(Profile, self).save(*args, **kwargs)
-        if self.client_type == self.PRODUCTOR:
-            group = Group.objects.get(name='productores')
-            self.user.groups.add(group)
-            group2 = Group.objects.get(name='distribuidores')
-            self.user.groups.remove(group2)
-        elif self.client_type == self.DISTRIBUIDOR:
-            group = Group.objects.get(name='distribuidores')
-            self.user.groups.add(group)
-            group2 = Group.objects.get(name='productores')
-            self.user.groups.remove(group2)
-        else:
-            group = Group.objects.get(name='distribuidores')
-            self.user.groups.remove(group)
-            group2 = Group.objects.get(name='productores')
-            self.user.groups.remove(group2)
-        print("Verifique")
-        super(Profile, self).save(*args, **kwargs) """
-
     @property
     def name(self):
         return self.user.first_name

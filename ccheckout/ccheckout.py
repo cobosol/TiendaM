@@ -33,19 +33,6 @@ def loadSecret():
             print("Error Leyendo el fichero secrets")
             sys.exit("System error: " + str(e) )
 
-""" env = {
-            "base_url" : "https://www.tropipay.com",
-            "mail" : "mmalbo@nauta.cu",
-            "password" : "...",
-            "client_id": "0d94edaf6b147f37453a239f8b7a9451",
-            "client_secret": "e303cdd52ec325ff7c88577cfdef63c4",
-            "access_token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJlbnQiOm51bGwsImNyZWRlbnRpYWxJZCI6MTI5ODE4LCJjcmVkZW50aWFsTmFtZSI6IjU1ZmM4MDVmYzM1NTY0ZTk1NjI3YTczY2JmODkyY2QzIiwiaWQiOiI3YmY0NTE1MC02NTU4LTExZWQtYmQzMy1mYjc2MWRhNjQ5ODgiLCJpYXQiOjE3MTQ1NzA3NDUsImV4cCI6MTcxNDU3Nzk0NX0.TYIFJHQnK-IoLb6hsrIKC77TfNKqPBhoe7U_j9-DFAE",
-            "refresh_token" : "MTcxNDU3MDc0NTg2ODpkNDU3NzY0ZTc5ZDdjOTgzZDNkYjc4NjQ0MzRkOTFmODozNzYyNjYzNDM1MzEzNTMwMmQzNjM1MzUzODJkMzEzMTY1NjQyZDYyNjQzMzMzMmQ2NjYyMzczNjMxNjQ2MTM2MzQzOTM4Mzg=",
-            "expires_in" : "1714577945",
-            "Funciona bien" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJlbnQiOm51bGwsImNyZWRlbnRpYWxJZCI6MTI5ODM4LCJjcmVkZW50aWFsTmFtZSI6IjhkMTg2MjUwNjQxNDcwNWZiNTRiOTZiNDFiYWE5OTJkIiwiaWQiOiI3YmY0NTE1MC02NTU4LTExZWQtYmQzMy1mYjc2MWRhNjQ5ODgiLCJpYXQiOjE3MTQ2NTExMDUsImV4cCI6MTcxNDY1ODMwNX0.OI98aEvQyCrg-6_CKH028VdQFs74dwkIaoRf0dGh8pQ",
-            "Nuevo generado" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXJlbnQiOm51bGwsImNyZWRlbnRpYWxJZCI6MTI5ODM3LCJjcmVkZW50aWFsTmFtZSI6ImM2YTk5NWI5ZTFkYjI0MmYzMDdmZWE2ODI4NmMyMGY4IiwiaWQiOiI3YmY0NTE1MC02NTU4LTExZWQtYmQzMy1mYjc2MWRhNjQ5ODgiLCJpYXQiOjE3MTQ2NTM5NTEsImV4cCI6MTcxNDY2MTE1MX0.EuEI_QCBAAt7U1_NdKxdbiRp_hJHYLqyItBAB4m7kco"
-      }      """ 
-
 def createPaymentCardsJSON(request, order_number):
     creds = loadSecret()
     print(creds)
@@ -243,7 +230,6 @@ def create_order(request, transaction_id, usd = True, cach = False):
             oi.save()
         order.update_status(Order.SUBMITTED)
         order.base_total = cart.cart_subtotal(request, not order.is_daily_summary) #order.total_items
-        print(f'Base total en create order{order.base_total}')
         amounth_discount = "False"
         mount = 0
         if not order.is_daily_summary:
@@ -252,21 +238,11 @@ def create_order(request, transaction_id, usd = True, cach = False):
                 mount = 100 - round((order.base_total / order.total_items * 100 ), 0)
                 order.others_discount = mount
             order.end_total = order.base_total + order.delivery_price
-            print("Antes del cupon end_total {order.end_total}")
             try:
-                print("En el try")
-                print(request.session['active_coupon'])
                 if request.session['active_coupon']:
-                    print("En el session ")
                     coupon = CouponValidator.validate(request.session['active_coupon'],request.user)
                     order.coupon_percent = coupon.discount_percent
-                    #print(f"En el cupon: end_total {order.end_total}")
                     order.coupon = coupon
-                    #porciento = (1-coupon.discount_percent/100)
-                    #calculo = order.base_total*decimal.Decimal(porciento)
-                    #print(f'base_total{order.base_total}')
-                    #order.end_total = calculo + order.delivery_price
-                    #print("end_total: {order.end_total}")
                     coupon.used = True
                     coupon.applied_to_order = order
                     coupon.save()
@@ -307,10 +283,6 @@ def link_callback(uri, rel):
                             'media URI must start with %s or %s' % (sUrl, mUrl)
                     )
             return path
-
-""" ('CASH', 'Efectivo'),
-        ('TRANSFER', 'Transferencia'),
-        ('CARD', 'Tarjeta') """
 
 
 def generate_daily_summary_pdf(order_id):
@@ -374,12 +346,9 @@ def checkOrderSummary(id_order):
         for payment in payment_methods:
             if payment.method == "TRANSFER":
                 transfer_amount = transfer_amount + payment.amount
-                print(transfer_amount)
             elif payment.method == "CARD":
                 cards_amount = cards_amount + payment.amount
-                print(cards_amount)
         efectivo = (order.total_items * 120) - transfer_amount - cards_amount
-        print(f"efectivo: {efectivo}")
         return (order.total_items * 120) - transfer_amount - cards_amount
 
 def export_pdf(request, id_orden):
@@ -391,8 +360,6 @@ def export_pdf(request, id_orden):
     order = Order.objects.filter(id=id_orden)[0] 
     #Generando reporte PDF
     if order.is_daily_summary:
-        """ url = '/compra/resumen/' + str(id_orden) + '/'
-        return HttpResponseRedirect(url) """
         check = checkOrderSummary(id_order=id_orden)
         # Procesar métodos de pago con detalles
         payment_methods = []
@@ -407,9 +374,7 @@ def export_pdf(request, id_orden):
 
             # Procesar detalles para transferencias
             if (payment.method == 'TRANSFER' or payment.method == 'CARD'):
-                print("Detalles de transferencia")
                 transfer_sum = transfer_sum + payment.amount
-                print(f'suma: {transfer_sum}')
             if (payment.method == 'TRANSFER' or payment.method == 'CARD') and payment.transaction_details:
                 try:
                     # Convertir JSON a lista de diccionarios
@@ -424,14 +389,12 @@ def export_pdf(request, id_orden):
         total_general = sum(p.amount for p in order.payment_methods.all())
         data['total_general'] = total_general
         if check > 0:
-            print("mayor que cero")
             data['importe'] = decimal.Decimal(round(order.total_items, 2))
             data['importeCUP'] = decimal.Decimal(round(order.total_items, 2))*120
             data['efectivo'] = data['importeCUP'] - transfer_sum
             data['seller'] = order.seller.first_name + ' ' + order.seller.last_name
             template_src = 'checkout/factura_resumen_diario_USD.html'
         else:
-            print("Menor que cero")
             data['importe'] = decimal.Decimal(round(order.total_items, 2))
             data['importeCUP'] = decimal.Decimal(round(order.end_total, 2))
             data['seller'] = order.seller.first_name + ' ' + order.seller.last_name
@@ -465,12 +428,10 @@ def export_pdf(request, id_orden):
     for item in orders:
          if item.has_discount:
               discount = True
-              print(True)
               break
     if discount:
         data['discount_item'] = "True"
     else:
-         print("False")
          data['discount_item'] = "False"
     data['order'] = order
     # Cargar el perfil del usuario
@@ -516,53 +477,3 @@ def export_pdf(request, id_orden):
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
-
-""" def factura_comercial(request, id_orden):
-    data = {}
-    #Diccionario de factura
-    current_factura = {}        
-    #QR datos de transaccion
-    qr_generado = '{"id_orden": ' + str(id_orden) 
-    #Generando reporte PDF
-    template_src = 'checkout/factura_comercial.html'
-    template = get_template(template_src)
-    data['id_order'] = id_orden
-    orders = OrderItem.objects.filter(order=id_orden)
-    order = Order.objects.filter(id=id_orden)[0]
-    data['order'] = order
-    # Cargar el perfil del usurario
-    user_profile = Profile.objects.get(user=order.user)
-    data['first_name'] = order.user.first_name
-    data['last_name'] = order.user.last_name
-    if order.user.groups.filter(name__in=['comercial']):
-        data['date'] = ''
-    else:
-         data['date'] = order.date
-    data['email'] = order.user.email
-    data['phone'] = order.payment_phone
-    data['address'] = user_profile.address
-    data['importe'] = decimal.Decimal(round(order.total, 2))
-    data['delivery_name'] = order.delivery_name
-    if order.delivery_street and order.delivery_apto and order.delivery_between:
-        delivery_add1 = order.delivery_street + " " + order.delivery_apto + " entre " + order.delivery_between + ". " + order.SUBSTATE[order.delivery_substate][1] + ", " + order.delivery_state
-        data['delivery_add1'] = delivery_add1
-    else:
-        data['delivery_add1'] = " "
-    data['delivery_add2'] = order.delivery_address_2
-    data['state'] = order._state
-    data['delivery_phone'] = order.delivery_phone
-    data['delivery_ws'] = order.delivery_ws
-    data['CI'] = order.delivery_ci
-    data['delivery_price'] = decimal.Decimal(order.delivery_price)
-    data['currency'] = order.currency
-    context = {'data': data, 'orders': orders, 'request': request,'qr':qr_generado}
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="factura.pdf"'
-    html = template.render(context)
-    # create a pdf
-    pisa_status = pisa.CreatePDF(
-       html, dest=response, link_callback=link_callback)
-    # if error then show some funny view
-    if pisa_status.err:
-       return HttpResponse('We had some errors <pre>' + html + '</pre>')
-    return response """

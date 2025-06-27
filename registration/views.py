@@ -45,7 +45,6 @@ class CustomPasswordResetView(PasswordResetView):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        print("En el init de la CustomPasswordResetForm")
         self.fields['email'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Tu correo electrónico'

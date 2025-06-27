@@ -102,6 +102,7 @@
                                     {% endif %}
                                     {% if request.user.is_staff %}
                                         <a href="{% url 'precios' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar precio</i></a>
+                                        <a href="{% url 'ventas' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Resumenes de ventas</i></a>
                                     {% endif %}
                                     {% if vendedor == 'True' or request.user.is_staff or comercial == 'True'%}
                                         <a href="{% url 'gestion' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar productos</i></a>
