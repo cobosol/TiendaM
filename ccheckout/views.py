@@ -583,6 +583,8 @@ def orders_list(request, template_name='checkout/orders_list.html'):
 
 # view de la lista de ordenes (compras) relizadas a la tienda
 def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
+
+    #orders = Order.objects.filter(date__range=[start, end]).order_by('-date')
     orders = Order.objects.all().order_by('-date')
     
     filter = FiltroOrderAdmin
@@ -591,6 +593,7 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
     store_name = request.GET.get('store_name')
     currency = request.GET.get('currency')
     user = request.GET.get('user')
+
 
     if user:
         if user != '':
@@ -608,6 +611,7 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
         if currency!='':
             orders = orders.filter(currency__icontains=currency).order_by('-date')
     
+
     if request.method == 'POST':
         postdata = request.POST.copy()
         if postdata['submit'] == 'Factura':
@@ -703,7 +707,7 @@ def sales_products(request):
     # 1. Cantidad vendida por producto
     products_data = list(
         OrderItem.objects
-        .filter(order__in=orders)
+        .filter(order__in=orders, quantity__gt=0)
         .values('product__name')
         .annotate(total_quantity=Sum('quantity'))
         .order_by('-total_quantity')
@@ -715,7 +719,7 @@ def sales_products(request):
     # 2. Monto total por producto
     revenue_by_product = list(
         OrderItem.objects
-        .filter(order__in=orders)
+        .filter(order__in=orders, quantity__gt=0)
         .values('product__name')
         .annotate(total_revenue=ExpressionWrapper(Sum(F('price') * F('quantity')),
                                                   output_field=FloatField()
@@ -771,7 +775,7 @@ def sales_client(request):
 
 def sales_summary(request):
     # Obtener fechas del request
-    start_date = request.GET.get('start_date', '2023-01-01')
+    start_date = request.GET.get('start_date', '2025-01-01')
     end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
     
     # Convertir a objetos datetime
@@ -779,8 +783,12 @@ def sales_summary(request):
     end = datetime.strptime(end_date, '%Y-%m-%d')
     
     # Filtrar órdenes en el rango
-    orders = Order.objects.filter(date__range=[start, end], currency='USD')
+    orders = Order.objects.filter(date__range=[start, end], currency='USD', status__in=[Order.DELIVERED, Order.PAIDED])
     
+    for o in orders:
+        print(o.status)
+        #o.save()
+
     # 3. Estadísticas generales
     total_orders = orders.count()
 

@@ -84,7 +84,7 @@ class Order(models.Model):
     store_name = models.CharField(max_length=200, default="Envío Habana", verbose_name = "Nombre del tipo de entrega")
     coupon_percent = models.PositiveIntegerField(default=0, verbose_name="Porciento de descuento de cupón")
     others_discount = models.PositiveIntegerField(default=0, verbose_name="Porciento de otros descuentos")
-    pay_url = models.URLField(verbose_name="URL de pago", default="")
+    pay_url = models.URLField(verbose_name="URL de pago", blank = True, null=True, default="")
     currency = models.CharField(max_length=3, default="USD", verbose_name = "Tipo de moneda")
     price = models.ForeignKey(Price, on_delete = models.PROTECT, blank = True, null=True, verbose_name="Valores para el cálculo del Precio de la compra")
     coupon = models.ForeignKey('Coupon', on_delete=models.SET_NULL, null=True, blank=True, related_name='orders', verbose_name="Cupón de descuento")
