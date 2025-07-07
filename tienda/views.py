@@ -29,7 +29,7 @@ def index_view(request, template_name="index.html"):
             postdata = request.POST.copy()
             if postdata['submit'] == 'Comprar':
                 product_slug = postdata.get('product_slug','')
-                if not cart.add_to_cart(request, product_slug):
+                if not cart.add_to_cart(request, product_slug, quantity=postdata['quantity']):
                   url = '/accounts/login/'
                   return HttpResponseRedirect(url)  
                 if request.session.test_cookie_worked():

@@ -360,6 +360,7 @@ def export_pdf(request, id_orden):
     order = Order.objects.filter(id=id_orden)[0] 
     #Generando reporte PDF
     if order.is_daily_summary:
+        print(f"Factura resumen diario {order.transaction_id}")
         check = checkOrderSummary(id_order=id_orden)
         # Procesar métodos de pago con detalles
         payment_methods = []
@@ -396,11 +397,12 @@ def export_pdf(request, id_orden):
             template_src = 'checkout/factura_resumen_diario_USD.html'
         else:
             data['importe'] = decimal.Decimal(round(order.total_items, 2))
-            data['importeCUP'] = decimal.Decimal(round(order.end_total, 2))
+            data['importeCUP'] = decimal.Decimal(round(order.total_reported, 2))
             data['seller'] = order.seller.first_name + ' ' + order.seller.last_name
             template_src = 'checkout/factura_resumen_diario.html' 
-    elif order.user.groups.filter(name__in=['comercial']):
+    elif order.transaction_id == '3': # Factura por contrato order.user.groups.filter(name__in=['comercial']):
         template_src = 'checkout/factura_por_contrato.html'
+        print(f"Factura por contrato {order.transaction_id}")
         data['first_name'] = order.payment_name
         data['email'] = order.payment_email
         data['phone'] = order.payment_phone
@@ -408,6 +410,7 @@ def export_pdf(request, id_orden):
         data['details'] = order.payment_details
         data['importe'] = decimal.Decimal(round(order.total, 2))
     elif order.user.groups.filter(name__in=['vendedores']):
+        print(f"Factura punto de venta{order.transaction_id}")
         template_src = 'checkout/factura_punto_de_venta.html'
         data['first_name'] = order.payment_name
         data['last_name'] = order.user.first_name + ' ' + order.user.last_name
@@ -415,6 +418,7 @@ def export_pdf(request, id_orden):
         data['phone'] = order.payment_phone 
         data['importe'] = decimal.Decimal(round(order.total, 2))
     else:
+        print(f"Factura venta online {order.transaction_id}")
         template_src = 'checkout/factura_venta_online.html'
         data['first_name'] = order.payment_name
         data['last_name'] = order.user.username + ': ' + order.user.first_name + ' ' + order.user.last_name

@@ -90,11 +90,11 @@
                     <h6 class="font-weight-medium" style="font-family: sans-serif;">Envío</h6>
                     <h6 class="font-weight-medium" style="font-family: sans-serif;">$ {{ cart_delivery }}</h6>
                 {% else %}
-                    <h6 class="font-weight-medium" style="font-family: sans-serif;">Recogida en</h6>
+                    <h6 class="font-weight-medium" style="font-family: sans-serif;">Venta en</h6>
                     <h6 class="font-weight-medium" style="font-family: sans-serif;">$ {{ cart_delivery }}</h6>
             </div>
             <div class="d-flex justify-content-between mb-3 pt-1">
-                <a href="{{st.get_absolute_url}}" class="text-dark font-weight-medium mb-0 mr-3" style="font-family: sans-serif;">{{ st_name }}:</a>
+                <a href="{{st.get_absolute_url}}" class="text-dark font-weight-medium mb-0 mr-3" style="font-family: sans-serif;">{{ st_name }}</a>
                 <!-- <h6 class="font-weight-medium" style="font-family: roboto;">{{ delivery_name }}</h6> -->
             </div>
             {% endif %}
@@ -105,6 +105,8 @@
                 <br>
                 {% if MND == 'CUP' %} 
                     <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total|currency }} CUP</h6>
+                {% elif MND == 'USD' %}
+                    <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total|currency }} USD</h6>
                 {% else %}
                     <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total|currency }} MLC</h6>
                 {% endif %}

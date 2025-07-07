@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from .forms import * 
-from django.urls import reverse
-from .models import Order, OrderItem
+from django.urls import reverse, reverse_lazy
+from .models import Order, OrderItem, Coupon
 from ccheckout.ccheckout import generate_daily_summary_pdf, process2, export_pdf, createPaymentCardsJSON, tPAccessToken, loadSecret, create_order
 from cart import cart
 from cart.models import DeliveryInfo
@@ -38,6 +38,9 @@ from django.db.models import Sum, Count, Avg, F, ExpressionWrapper, FloatField
 from datetime import datetime, timedelta
 from django.db.models.functions import TruncDate, TruncWeek, TruncMonth
 from django.utils import timezone
+from django.views.generic import CreateView, UpdateView, ListView, DeleteView
+
+
 
 @require_POST
 @login_required
@@ -466,7 +469,7 @@ def create_daily_summary(request):
                 # Crear orden especial
                 formset.instance = order
                 formset.save()
-                order.end_total = sum([form.cleaned_data['amount'] for form in formset])
+                order.total_reported = sum([form.cleaned_data['amount'] for form in formset])
                 order.save()
                 app_label = order._meta.app_label
                 model_name = order._meta.model_name
@@ -583,6 +586,8 @@ def orders_list(request, template_name='checkout/orders_list.html'):
 
 # view de la lista de ordenes (compras) relizadas a la tienda
 def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
+
+    #orders = Order.objects.filter(date__range=[start, end]).order_by('-date')
     orders = Order.objects.all().order_by('-date')
     
     filter = FiltroOrderAdmin
@@ -591,6 +596,7 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
     store_name = request.GET.get('store_name')
     currency = request.GET.get('currency')
     user = request.GET.get('user')
+
 
     if user:
         if user != '':
@@ -608,6 +614,7 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
         if currency!='':
             orders = orders.filter(currency__icontains=currency).order_by('-date')
     
+
     if request.method == 'POST':
         postdata = request.POST.copy()
         if postdata['submit'] == 'Factura':
@@ -703,7 +710,7 @@ def sales_products(request):
     # 1. Cantidad vendida por producto
     products_data = list(
         OrderItem.objects
-        .filter(order__in=orders)
+        .filter(order__in=orders, quantity__gt=0)
         .values('product__name')
         .annotate(total_quantity=Sum('quantity'))
         .order_by('-total_quantity')
@@ -715,7 +722,7 @@ def sales_products(request):
     # 2. Monto total por producto
     revenue_by_product = list(
         OrderItem.objects
-        .filter(order__in=orders)
+        .filter(order__in=orders, quantity__gt=0)
         .values('product__name')
         .annotate(total_revenue=ExpressionWrapper(Sum(F('price') * F('quantity')),
                                                   output_field=FloatField()
@@ -745,6 +752,8 @@ def sales_client(request):
     
     # Filtrar órdenes en el rango
     orders = Order.objects.filter(date__range=[start, end], currency='USD')
+
+    users = User.objects.all().order_by('last_name')
     
     # 4. Compras por usuario (top 10)
     top_customers = list(
@@ -765,13 +774,14 @@ def sales_client(request):
         'start_date': start_date,
         'end_date': end_date,
         'top_customers': json.dumps(top_customers),
+        'users': users,
     }
 
     return render(request, 'checkout/venta_clientes.html', context)
 
 def sales_summary(request):
     # Obtener fechas del request
-    start_date = request.GET.get('start_date', '2023-01-01')
+    start_date = request.GET.get('start_date', '2025-01-01')
     end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
     
     # Convertir a objetos datetime
@@ -779,8 +789,8 @@ def sales_summary(request):
     end = datetime.strptime(end_date, '%Y-%m-%d')
     
     # Filtrar órdenes en el rango
-    orders = Order.objects.filter(date__range=[start, end], currency='USD')
-    
+    orders = Order.objects.filter(date__range=[start, end], currency='USD', status__in=[Order.DELIVERED, Order.PAIDED])
+
     # 3. Estadísticas generales
     total_orders = orders.count()
 
@@ -838,3 +848,56 @@ def sales_summary(request):
 
     return render(request, 'checkout/venta_resumen.html', context)
 
+""" Gestión de cupones """
+@method_decorator(login_required, name='dispatch')    
+class Gestion_cupones(ListView):
+    model = Coupon
+    template_name = 'checkout/cupones/cupons_list.html'
+    context_object_name = 'cupones'
+
+    def get_queryset(self):
+        consulta = super().get_queryset()
+        #consulta = consulta.filter(activo=True)
+        self.filter = FiltroCoupon(self.request.GET, queryset=consulta) #crea el objeto filtro
+        if self.filter:
+            ['user', 'expiration_date', 'discount_percent']
+            usuario = self.request.GET.get('user')
+            vence = self.request.GET.get('expiration_date')
+            descuento = self.request.GET.get('discount_percent')
+            if usuario:
+                consulta = consulta.filter(user = usuario)
+            if vence:
+                consulta = consulta.filter(expiration_date__lte = vence)
+            if descuento:
+                consulta = consulta.filter(discount_percent__lte = descuento) 
+        return consulta
+    
+    def get_context_data(self, **kwargs):
+        contexto = super().get_context_data(**kwargs)
+        contexto['filter'] = self.filter
+        return contexto
+
+@method_decorator(login_required, name='dispatch')
+class Crear_cupones(CreateView):
+    model = Coupon
+    form_class = CouponForm
+    success_message = "Se ha creado correctamente el cupón."
+
+    def get_success_url(self):
+        return reverse_lazy('cupones')
+    
+@method_decorator(login_required, name='dispatch')
+class Update_cupones(UpdateView):
+    model = Coupon
+    form_class = CouponForm
+    success_message = "Se ha actualizado correctamente el cupón."
+
+    def get_success_url(self):
+        return reverse('cupones')
+
+def eliminar_cupon(request, code):
+    cupon = get_object_or_404(Coupon, code=code)
+    cupon.used = True
+    cupon.save()
+
+    return redirect('cupones')

@@ -56,7 +56,10 @@
         {% if granularity == 'day' %}Día
         {% elif granularity == 'week' %}Semana
         {% else %}Mes{% endif %}: </h6>
-    <canvas id="salesChart"></canvas>
+
+    <div style="position: relative; height: 65vh; width: 100%;">
+        <canvas id="salesChart"></canvas>
+    </div>
     </div>
 
 </div>
@@ -72,6 +75,7 @@
             },
             scales: { y: { beginAtZero: true } }
         };
+        
 
         new Chart(document.getElementById('salesChart'), {
             type: 'line',
@@ -88,7 +92,14 @@
             },
             options: {
                 responsive: true,
-                scales: {
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        bottom: 80
+                    }
+                }
+            },
+            scales: {
                     y: {
                         beginAtZero: true,
                         title: { display: true, text: 'Monto ($)' }
@@ -97,13 +108,15 @@
                         title: { display: true, text: 'Período' },
                         ticks: {
                             autoSkip: true,
-                            maxRotation: 45,
-                            minRotation: 45
+                            maxRotation: 80,
+                            minRotation: 40,
+                            padding: 15
                         }
                     }
                 }
-            }
         });
+
+        window
 
 
         // Gráfica 4: Ventas diarias

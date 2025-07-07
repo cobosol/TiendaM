@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Listado de cupones</title>
+{% endblock %}
+
+{% block content %}
+<section class="content-header">
+  <div class="content-header x_panel x_title">
+      <h3 class="mt-3" style="color:#036481; font-family: Lora, serif;">Listado de cupones </h3>
+      </br>
+      <h6> <i class="fa fa-plus">Buscar por:</i></h6>
+      <form enctype="multipart/form-data" method="GET" style="display: inline-block;">
+        {% csrf_token %}
+        <div> {{ filter.form }}                
+          <button type="submit" class="btn btn-primary" style="display: inline-block;"> <i class="fas fa-search text-secondary mr-0"> </i> Filtrar</button>
+        </div>   
+      </form>
+
+  </div>
+  <a href="{% url 'crear_cupon' %}" class="nav-link active" aria-current="page" data-placement="top" title="Agregar" style="align-content: end;color:#036481; font-family: Lora, serif;">
+    <i class="fa fa-plus">Añadir nuevo</i>
+  </a>
+</section>
+  
+  {% if messages %}
+  <ul class="messages list-group mb-3">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }} list-group-item list-group-item-primary"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Paginación -->
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Usuario</th>
+              <th>Descuento</th>
+              <th>Expira</th>
+              <th>Usado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+          <!-- Recorremos los objetos o registros que tenemos en nuestra tabla y los listamos -->
+          {% for elem in object_list %}
+            <tr>
+              <td>{{ elem.code }} </td>
+              <td>{{ elem.user }}</td>
+              <td>{{ elem.discount_percent }}</td>
+              <td>{{ elem.expiration_date }}</td>
+              <td>{{ elem.used }}</td>
+              <td>
+                <!-- Usaremos un formulario que realizará la tarea de eliminar un registro desde la misma tabla HTML -->                        
+                <form method="POST" action="eliminar/{{elem.code}}">
+                  {% csrf_token %}
+                  <div class="btn-group">
+                    <!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o jugos -->
+                    <!--<a href="detalle/{{elem.id}}" title="Ver" type="button" class="btn btn-success">Ver </a>-->
+                    <a href="editar/{{elem.code}}" title="Editar" type="button" class="btn btn-primary">Editar </a>
+                    <button class="btn btn-danger" onclick="return eliminar();" type="submit">
+                      Eliminar
+                    </button>
+                  </div>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+          <script type="text/javascript">
+            function eliminar() {
+              var x = confirm("¿Está seguro de que desea eliminar el objeto seleccionado?");
+              if (x)
+                return true;
+              else
+                return false;
+            }
+          </script>
+          </tbody>
+      </table>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
