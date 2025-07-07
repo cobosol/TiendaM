@@ -24,4 +24,8 @@ urlpatterns = [
     path('venta-clientes/', views.sales_client, name='venta_clientes'),
     path('venta-resumen/', views.sales_summary, name='venta_resumen'),
     path('ventas/', views.sales_manages, name='ventas'),
+    path('cupones/crear', views.Crear_cupones.as_view(template_name="checkout/cupon_create.html"), name='crear_cupon'),
+    path('cupones/', views.Gestion_cupones.as_view(template_name="checkout/cupon_list.html"), name='cupones'),
+    path('cupones/editar/<int:pk>', views.Update_cupones.as_view(template_name="checkout/cupon_update.html"), name = 'update_cupon'),
+    path('cupones/eliminar/<int:pk>', views.eliminar_cupon, name = 'eliminar_cupon'),
 ]

@@ -1,14 +1,30 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Order, PaymentMethod
+from .models import Order, PaymentMethod, Coupon
 import datetime
 import re
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import Group, User
 
 class DailySummaryForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['seller']  # Solo campo necesario
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Obtener el grupo de vendedores
+        vendedores_group = Group.objects.filter(name='vendedores').first()
+        
+        if vendedores_group:
+            # Filtrar usuarios que pertenecen al grupo
+            self.fields['seller'].queryset = User.objects.filter(groups=vendedores_group)
+        else:
+            # Si el grupo no existe, mostrar usuarios vacíos
+            self.fields['seller'].queryset = User.objects.none()
+        
+        # Opcional: ordenar por nombre completo
+        self.fields['seller'].label_from_instance = lambda obj: f"{obj.get_full_name()} ({obj.username})"
 
 class PaymentMethodForm(forms.ModelForm):
     details_text = forms.CharField(
@@ -241,3 +257,17 @@ class UpdateStatusForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['status']
+
+class CouponForm(forms.ModelForm):
+    class Meta:
+        model = Coupon
+        fields = '__all__'
+        """ widgets = {
+            'nombre': forms.TextInput(attrs={
+                'size': '50'
+            }),
+            'creditos': forms.NumberInput(attrs={
+                'size': 2,
+                'style': 'width: 80px'
+            }),
+        } """

@@ -1,6 +1,15 @@
 {% load static %}
 {% load catalog_filters %}
 
+<style>
+  .cantidad-input {
+      width: 60px;       /* Ancho reducido */
+      padding: 5px;      /* Espaciado interno */
+      font-size: 14px;   /* Tamaño de fuente */
+      text-align: center; /* Centrar el número */
+  }
+</style>
+
     <!-- Page Header Start -->
     <div class="container-fluid bg-purple-300 mb-5">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
@@ -37,15 +46,16 @@
                                 {% if p.count > 0 %}
                                 <form method="post" action="." class="cart">
                                         {% csrf_token %}
+                                        <input type="number" name="quantity" value="1" min="1" class="cantidad-input">
                                         <input type="hidden" name="product_slug" value="{{ p.slug }}" />
                                         <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
-                                            <i class="fas fa-shopping-cart text-secondary mr-1"> Comprar</i>
+                                            <i class="fas fa-shopping-cart text-secondary mr-1"> Al carrito</i>
                                         </button>
 <!--                                         <button type="submit" name="submit" value="Comprar" class="btn btn-block btn-primary fa fa-shopping-cart my-2 py-2" name="submit" alt="Add To Cart"/> -->
                                         <a href="{{p.get_absolute_url}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-dark mr-1"></i>Detalles</a>
                                 </form>
                                 {% else %}
-                                   <h6 class="text-red text-center" style="font-family: sans-serif;"> AGOTADO </h6>                               
+                                   <h6 class="text-red text-center" style="font-family: sans-serif;"> AGOTADO</h6>                               
                                 {% endif %}
                               </div>
                             </div>
@@ -69,9 +79,10 @@
                               {% if p.count > 0 %}
                               <form method="post" action="." class="cart">
                                       {% csrf_token %}
+                                      <input type="number" name="quantity" value="1" min="1" class="cantidad-input">
                                       <input type="hidden" name="product_slug" value="{{ p.slug }}" />
                                       <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
-                                          <i class="fas fa-shopping-cart text-secondary mr-1"> Comprar</i>
+                                          <i class="fas fa-shopping-cart text-secondary mr-1"> Al carrito</i>
                                       </button>
 <!--                                         <button type="submit" name="submit" value="Comprar" class="btn btn-block btn-primary fa fa-shopping-cart my-2 py-2" name="submit" alt="Add To Cart"/> -->
                                       <a href="{{p.get_absolute_url}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-dark mr-1"></i>Detalles</a>
@@ -103,9 +114,10 @@
                             {% if p.count > 0 %}
                             <form method="post" action="." class="cart">
                                     {% csrf_token %}
+                                    <input type="number" name="quantity" value="1" min="1" class="cantidad-input">
                                     <input type="hidden" name="product_slug" value="{{ p.slug }}" />
                                     <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
-                                        <i class="fas fa-shopping-cart text-secondary mr-1"> Comprar</i>
+                                        <i class="fas fa-shopping-cart text-secondary mr-1"> Al carrito</i>
                                     </button>
 <!--                                         <button type="submit" name="submit" value="Comprar" class="btn btn-block btn-primary fa fa-shopping-cart my-2 py-2" name="submit" alt="Add To Cart"/> -->
                                     <a href="{{p.get_absolute_url}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-dark mr-1"></i>Detalles</a>
@@ -135,9 +147,10 @@
                           {% if p.count > 0 %}
                           <form method="post" action="." class="cart">
                                   {% csrf_token %}
+                                  <input type="number" name="quantity" value="1" min="1" class="cantidad-input">
                                   <input type="hidden" name="product_slug" value="{{ p.slug }}" />
                                   <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
-                                      <i class="fas fa-shopping-cart text-secondary mr-1"> Comprar</i>
+                                      <i class="fas fa-shopping-cart text-secondary mr-1"> Al carrito</i>
                                   </button>
 <!--                                         <button type="submit" name="submit" value="Comprar" class="btn btn-block btn-primary fa fa-shopping-cart my-2 py-2" name="submit" alt="Add To Cart"/> -->
                                   <a href="{{p.get_absolute_url}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-dark mr-1"></i>Detalles</a>
@@ -169,9 +182,10 @@
                           {% if p.count > 0 %}
                           <form method="post" action="." class="cart">
                                   {% csrf_token %}
+                                  <input type="number" name="quantity" value="1" min="1" class="cantidad-input">
                                   <input type="hidden" name="product_slug" value="{{ p.slug }}" />
                                   <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
-                                      <i class="fas fa-shopping-cart text-secondary mr-1"> Comprar</i>
+                                      <i class="fas fa-shopping-cart text-secondary mr-1"> Al carrito</i>
                                   </button>
 <!--                                         <button type="submit" name="submit" value="Comprar" class="btn btn-block btn-primary fa fa-shopping-cart my-2 py-2" name="submit" alt="Add To Cart"/> -->
                                   <a href="{{p.get_absolute_url}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-dark mr-1"></i>Detalles</a>
@@ -201,9 +215,10 @@
                         {% if p.count > 0 %}
                         <form method="post" action="." class="cart">
                                 {% csrf_token %}
+                                <input type="number" name="quantity" value="1" min="1" class="cantidad-input">
                                 <input type="hidden" name="product_slug" value="{{ p.slug }}" />
                                 <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
-                                    <i class="fas fa-shopping-cart text-secondary mr-1"> Comprar</i>
+                                    <i class="fas fa-shopping-cart text-secondary mr-1"> Al carrito</i>
                                 </button>
 <!--                                         <button type="submit" name="submit" value="Comprar" class="btn btn-block btn-primary fa fa-shopping-cart my-2 py-2" name="submit" alt="Add To Cart"/> -->
                                 <a href="{{p.get_absolute_url}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-dark mr-1"></i>Detalles</a>

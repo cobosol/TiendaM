@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from .forms import * 
-from django.urls import reverse
-from .models import Order, OrderItem
+from django.urls import reverse, reverse_lazy
+from .models import Order, OrderItem, Coupon
 from ccheckout.ccheckout import generate_daily_summary_pdf, process2, export_pdf, createPaymentCardsJSON, tPAccessToken, loadSecret, create_order
 from cart import cart
 from cart.models import DeliveryInfo
@@ -38,6 +38,9 @@ from django.db.models import Sum, Count, Avg, F, ExpressionWrapper, FloatField
 from datetime import datetime, timedelta
 from django.db.models.functions import TruncDate, TruncWeek, TruncMonth
 from django.utils import timezone
+from django.views.generic import CreateView, UpdateView, ListView, DeleteView
+
+
 
 @require_POST
 @login_required
@@ -466,7 +469,7 @@ def create_daily_summary(request):
                 # Crear orden especial
                 formset.instance = order
                 formset.save()
-                order.end_total = sum([form.cleaned_data['amount'] for form in formset])
+                order.total_reported = sum([form.cleaned_data['amount'] for form in formset])
                 order.save()
                 app_label = order._meta.app_label
                 model_name = order._meta.model_name
@@ -749,6 +752,8 @@ def sales_client(request):
     
     # Filtrar órdenes en el rango
     orders = Order.objects.filter(date__range=[start, end], currency='USD')
+
+    users = User.objects.all().order_by('last_name')
     
     # 4. Compras por usuario (top 10)
     top_customers = list(
@@ -769,6 +774,7 @@ def sales_client(request):
         'start_date': start_date,
         'end_date': end_date,
         'top_customers': json.dumps(top_customers),
+        'users': users,
     }
 
     return render(request, 'checkout/venta_clientes.html', context)
@@ -784,10 +790,6 @@ def sales_summary(request):
     
     # Filtrar órdenes en el rango
     orders = Order.objects.filter(date__range=[start, end], currency='USD', status__in=[Order.DELIVERED, Order.PAIDED])
-    
-    for o in orders:
-        print(o.status)
-        #o.save()
 
     # 3. Estadísticas generales
     total_orders = orders.count()
@@ -846,3 +848,56 @@ def sales_summary(request):
 
     return render(request, 'checkout/venta_resumen.html', context)
 
+""" Gestión de cupones """
+@method_decorator(login_required, name='dispatch')    
+class Gestion_cupones(ListView):
+    model = Coupon
+    template_name = 'checkout/cupones/cupons_list.html'
+    context_object_name = 'cupones'
+
+    def get_queryset(self):
+        consulta = super().get_queryset()
+        #consulta = consulta.filter(activo=True)
+        self.filter = FiltroCoupon(self.request.GET, queryset=consulta) #crea el objeto filtro
+        if self.filter:
+            ['user', 'expiration_date', 'discount_percent']
+            usuario = self.request.GET.get('user')
+            vence = self.request.GET.get('expiration_date')
+            descuento = self.request.GET.get('discount_percent')
+            if usuario:
+                consulta = consulta.filter(user = usuario)
+            if vence:
+                consulta = consulta.filter(expiration_date__lte = vence)
+            if descuento:
+                consulta = consulta.filter(discount_percent__lte = descuento) 
+        return consulta
+    
+    def get_context_data(self, **kwargs):
+        contexto = super().get_context_data(**kwargs)
+        contexto['filter'] = self.filter
+        return contexto
+
+@method_decorator(login_required, name='dispatch')
+class Crear_cupones(CreateView):
+    model = Coupon
+    form_class = CouponForm
+    success_message = "Se ha creado correctamente el cupón."
+
+    def get_success_url(self):
+        return reverse_lazy('cupones')
+    
+@method_decorator(login_required, name='dispatch')
+class Update_cupones(UpdateView):
+    model = Coupon
+    form_class = CouponForm
+    success_message = "Se ha actualizado correctamente el cupón."
+
+    def get_success_url(self):
+        return reverse('cupones')
+
+def eliminar_cupon(request, code):
+    cupon = get_object_or_404(Coupon, code=code)
+    cupon.used = True
+    cupon.save()
+
+    return redirect('cupones')

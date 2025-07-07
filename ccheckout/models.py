@@ -81,6 +81,7 @@ class Order(models.Model):
     delivery_price = models.IntegerField(verbose_name="Precio de envío", default=0)
     base_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total base")
     end_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total final con descuento y envío")
+    total_reported = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total reportado")
     store_name = models.CharField(max_length=200, default="Envío Habana", verbose_name = "Nombre del tipo de entrega")
     coupon_percent = models.PositiveIntegerField(default=0, verbose_name="Porciento de descuento de cupón")
     others_discount = models.PositiveIntegerField(default=0, verbose_name="Porciento de otros descuentos")
@@ -126,6 +127,8 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         if self.end_total is None or self.end_total == 0:
             self.end_total = self.total_items + decimal.Decimal(self.delivery_price)
+        if self.total_reported == 0.00:
+            self.total_reported = self.end_total
         super().save(*args, **kwargs)
 
     @property
@@ -518,10 +521,10 @@ class PaymentMethod(models.Model):
                 
 class Coupon(models.Model):
     code = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    discount_percent = models.PositiveIntegerField(default=10)
-    expiration_date = models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(days=30))
-    used = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Usuario")
+    discount_percent = models.PositiveIntegerField(default=10, verbose_name="Descuento (%)")
+    expiration_date = models.DateTimeField(default=datetime.datetime.now() + datetime.timedelta(days=30), verbose_name="Expira")
+    used = models.BooleanField(default=False, verbose_name="Usado")
     created_at = models.DateTimeField(auto_now_add=True)
     applied_to_order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True, 
                                          related_name='applied_coupon', verbose_name="Orden a la que se le aplica el cupón")
