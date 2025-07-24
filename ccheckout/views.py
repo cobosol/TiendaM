@@ -469,6 +469,7 @@ def create_daily_summary(request):
                 # Crear orden especial
                 formset.instance = order
                 formset.save()
+                #Verificar que reportado coincida con la suma de elementos 
                 order.total_reported = sum([form.cleaned_data['amount'] for form in formset])
                 order.save()
                 app_label = order._meta.app_label
@@ -699,6 +700,8 @@ def sales_products(request):
     # Obtener fechas del request
     start_date = request.GET.get('start_date', '2023-01-01')
     end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
+
+    cant_prod = int(request.GET.get('cant_prod', '10'))
     
     # Convertir a objetos datetime
     start = datetime.strptime(start_date, '%Y-%m-%d')
@@ -707,7 +710,7 @@ def sales_products(request):
     # Filtrar órdenes en el rango
     orders = Order.objects.filter(date__range=[start, end], currency='USD')
     
-    # 1. Cantidad vendida por producto
+    """     # 1. Cantidad vendida por producto
     products_data = list(
         OrderItem.objects
         .filter(order__in=orders, quantity__gt=0)
@@ -729,12 +732,43 @@ def sales_products(request):
                                                   ) # Utilizar totalf que incluye los descuentos
         )
         .order_by('-total_revenue')
-    )
+    ) """
     
+    # 1. Cantidad vendida por producto (top 10)
+    products_data = list(
+        OrderItem.objects
+        .filter(order__in=orders)
+        .values('product__name')
+        .annotate(total_quantity=Sum('quantity'))
+        .order_by('-total_quantity')[:cant_prod]  # ¡Solo los 10 primeros!
+    )
+
+    # 2. Monto total por producto (top 10)
+    revenue_by_product = list(
+        OrderItem.objects
+        .filter(order__in=orders)
+        .values('product__name')
+        .annotate(
+            total_revenue=ExpressionWrapper(
+                Sum(F('price') * F('quantity')),
+                output_field=FloatField()
+            )
+        )
+        .order_by('-total_revenue')[:cant_prod]  # ¡Solo los 10 primeros!
+    )
+
+    # Convertir Decimal a float
+    for p in products_data:
+        p['total_quantity'] = float(p['total_quantity'])
+
+    for r in revenue_by_product:
+        r['total_revenue'] = float(r['total_revenue'])
+
     # Preparar datos para gráficas
     context = {
         'start_date': start_date,
         'end_date': end_date,
+        'cant_prod': cant_prod,
         'products': json.dumps(products_data),
         'revenue_data': json.dumps(revenue_by_product),
     }
@@ -762,7 +796,7 @@ def sales_client(request):
             total_spent=Sum('end_total'),
             order_count=Count('id')
         )
-        .order_by('-total_spent')[:10]
+        .order_by('-total_spent')
     )
 
     for c in top_customers:
@@ -788,14 +822,20 @@ def sales_summary(request):
     start = datetime.strptime(start_date, '%Y-%m-%d')
     end = datetime.strptime(end_date, '%Y-%m-%d')
     
+    # Tipo de moneda
+    currency = request.GET.get('currency', 'USD')
+
     # Filtrar órdenes en el rango
-    orders = Order.objects.filter(date__range=[start, end], currency='USD', status__in=[Order.DELIVERED, Order.PAIDED])
+    orders = Order.objects.filter(date__range=[start, end], currency=currency, status__in=[Order.DELIVERED, Order.PAIDED])
+    
 
     # 3. Estadísticas generales
     total_orders = orders.count()
 
     avg_order_amount = orders.aggregate(avg=Avg('end_total'))['avg'] or 0
     avg_order_amount = float(avg_order_amount)
+    sum_order_amount = orders.aggregate(sum=Sum('end_total'))['sum'] or 0
+    sum_order_amount = float(sum_order_amount)
 
     # Gráfica temporal
     granularity = request.GET.get('granularity', 'day')
@@ -806,11 +846,11 @@ def sales_summary(request):
         trunc_func = TruncMonth('date', tzinfo=timezone.get_current_timezone())
     else:  # Incluye 'day' y cualquier otro valor
         trunc_func = TruncDate('date', tzinfo=timezone.get_current_timezone())
-    
+
     # Consulta de ventas por período
     sales_by_period = (
         Order.objects
-        .filter(date__range=[start_date, end_date], currency='USD')
+        .filter(date__range=[start_date, end_date], currency=currency)
         .annotate(period=trunc_func)
         .values('period')
         .annotate(
@@ -844,9 +884,96 @@ def sales_summary(request):
         'period_totals': json.dumps(period_totals),
         'total_orders': total_orders,
         'avg_order_amount': avg_order_amount,
+        'sum_order_amount': sum_order_amount,
     }
 
     return render(request, 'checkout/venta_resumen.html', context)
+
+def sales_total_summary(request):
+    # Obtener fechas del request
+    start_date = request.GET.get('start_date', '2025-01-01')
+    end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
+    
+    # Convertir a objetos datetime
+    start = datetime.strptime(start_date, '%Y-%m-%d')
+    end = datetime.strptime(end_date, '%Y-%m-%d')
+    
+    # Tipo de moneda
+    currency = request.GET.get('currency', 'USD')
+
+    # Filtrar órdenes en el rango
+    orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED, Order.PAIDED])
+    
+    """ for o in orders:
+        o.save() """
+
+    # 3. Estadísticas generales
+    total_orders = orders.count()
+
+    if currency == 'USD':
+        atrr = 'usd_total'
+    elif currency == 'CUP':
+        atrr = 'cup_total'
+    else:
+        atrr = 'mlc_total'
+
+    avg_order_amount = orders.aggregate(avg=Avg(atrr))['avg'] or 0
+    avg_order_amount = float(avg_order_amount)
+    sum_order_amount = orders.aggregate(sum=Sum(atrr))['sum'] or 0
+    sum_order_amount = float(sum_order_amount)
+
+    # Gráfica temporal
+    granularity = request.GET.get('granularity', 'day')
+
+    if granularity == 'week':
+        trunc_func = TruncWeek('date', tzinfo=timezone.get_current_timezone())
+    elif granularity == 'month':
+        trunc_func = TruncMonth('date', tzinfo=timezone.get_current_timezone())
+    else:  # Incluye 'day' y cualquier otro valor
+        trunc_func = TruncDate('date', tzinfo=timezone.get_current_timezone())
+
+    # Consulta de ventas por período
+    sales_by_period = (
+        Order.objects
+        .filter(date__range=[start_date, end_date])
+        .annotate(period=trunc_func)
+        .values('period')
+        .annotate(
+            total_sales=Sum(atrr),
+            order_count=Count('id')
+        )
+        .order_by('period')
+    )
+    
+    # Formatear etiquetas según granularidad
+    labels = []
+    for item in sales_by_period:
+        period = item['period']
+        if granularity == 'week':
+            labels.append(f"Sem {period.isocalendar()[1]} {period.year}")
+        elif granularity == 'month':
+            labels.append(period.strftime("%b %Y"))
+        else:
+            labels.append(period.strftime("%d/%m/%Y"))
+    
+    # Convertir datos a formato compatible con JSON
+    period_totals = [float(item['total_sales']) for item in sales_by_period]
+
+    
+    # Preparar datos para gráficas
+    context = {
+        'start_date': start_date,
+        'end_date': end_date,
+        'granularity': granularity,
+        'period_labels': json.dumps(labels),
+        'period_totals': json.dumps(period_totals),
+        'total_orders': total_orders,
+        'avg_order_amount': avg_order_amount,
+        'sum_order_amount': sum_order_amount,
+    }
+
+    return render(request, 'checkout/venta_resumen.html', context)
+
 
 """ Gestión de cupones """
 @method_decorator(login_required, name='dispatch')    

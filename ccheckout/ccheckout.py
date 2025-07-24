@@ -166,7 +166,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
             order.currency = 'CUP'
         else:
             order.currency = 'MLC'
-    elif transaction_id == 4:
+    elif transaction_id == 4: # Resumen dario
         checkout_form = DailySummaryForm(request.POST, instance=order)
         if checkout_form.is_valid():
             order = checkout_form.save(commit=False)
@@ -427,7 +427,7 @@ def export_pdf(request, id_orden):
         data['importe'] = decimal.Decimal(round(order.total, 2))
     template = get_template(template_src)
     data['id_order'] = id_orden
-    orders = OrderItem.objects.filter(order=id_orden)
+    orders = OrderItem.objects.filter(order=id_orden).order_by('product')
     discount = False
     for item in orders:
          if item.has_discount:
