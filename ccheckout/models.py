@@ -81,6 +81,9 @@ class Order(models.Model):
     delivery_price = models.IntegerField(verbose_name="Precio de envío", default=0)
     base_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total base")
     end_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total final con descuento y envío")
+    usd_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total en USD")
+    cup_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total en CUP")
+    mlc_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total en MLC")
     total_reported = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total reportado")
     store_name = models.CharField(max_length=200, default="Envío Habana", verbose_name = "Nombre del tipo de entrega")
     coupon_percent = models.PositiveIntegerField(default=0, verbose_name="Porciento de descuento de cupón")
@@ -123,12 +126,24 @@ class Order(models.Model):
     def __unicode__(self):
         return 'Orden #' + str(self.id)
 
-
     def save(self, *args, **kwargs):
         if self.end_total is None or self.end_total == 0:
             self.end_total = self.total_items + decimal.Decimal(self.delivery_price)
         if self.total_reported == 0.00:
             self.total_reported = self.end_total
+        if self.price:
+            if self.currency == 'USD':
+                self.usd_total = self.base_total
+                self.cup_total = self.base_total * self.price.change_usd_cup
+                self.mlc_total = self.base_total * self.price.change_usd_mlc
+            elif self.currency == 'CUP':
+                self.usd_total = self.base_total / self.price.change_usd_cup
+                self.cup_total = self.base_total
+                self.mlc_total = self.base_total / self.price.change_usd_cup * self.price.change_usd_mlc
+            else:
+                self.usd_total = self.base_total / self.price.change_usd_mlc
+                self.cup_total = self.base_total / self.price.change_usd_mlc * self.price.change_usd_cup
+                self.mlc_total = self.base_total
         super().save(*args, **kwargs)
 
     @property
@@ -199,6 +214,7 @@ class Order(models.Model):
         cash = self.payment_methods.filter(method='CASH').first()
         return cash.amount if cash else 0
     
+    #Revisar este método
     @property
     def cash_transactions(self):
         cash = self.payment_methods.filter(method='CASH').first()
@@ -377,7 +393,8 @@ class OrderItem(models.Model):
     def has_discount(self):
         bool = abs((self.price * self.quantity) - self.total) > 0.01
         return abs((self.price * self.quantity) - self.total) > 0.01
-    
+
+    #Revisar...    
     @property
     def total(self):
         #MND = self.order.currency

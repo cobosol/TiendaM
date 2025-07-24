@@ -15,6 +15,12 @@
     <div class="container-fluid bg-secondary mb-2">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
             <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Resumen de ventas por clientes ({{ start_date }} al {{ end_date }})</h4>
+            <p>
+                <a href="{% url 'venta_productos'  %}">Productos</a> | 
+                <a href="{% url 'venta_clientes'  %}">Usuarios</a> | 
+                <a href="{% url 'venta_resumen'  %}">Ventas parciales</a> | 
+                <a href="{% url 'ventas_totales_resumen'  %}">Ventas totales</a>
+            </p>
         </div>
     </div>
     <!-- Page Header End -->

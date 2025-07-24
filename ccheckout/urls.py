@@ -23,6 +23,7 @@ urlpatterns = [
     path('venta-productos/', views.sales_products, name='venta_productos'),
     path('venta-clientes/', views.sales_client, name='venta_clientes'),
     path('venta-resumen/', views.sales_summary, name='venta_resumen'),
+    path('ventas-totales-resumen/', views.sales_total_summary, name='ventas_totales_resumen'),
     path('ventas/', views.sales_manages, name='ventas'),
     path('cupones/crear', views.Crear_cupones.as_view(template_name="checkout/cupon_create.html"), name='crear_cupon'),
     path('cupones/', views.Gestion_cupones.as_view(template_name="checkout/cupon_list.html"), name='cupones'),

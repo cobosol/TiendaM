@@ -101,7 +101,7 @@ def show_category(request, category_slug, template_name="catalog/category.html")
             postdata = request.POST.copy()
             if postdata['submit'] == 'Comprar': 
                 product_slug = postdata.get('product_slug','')
-                if cart.add_to_cart(request, product_slug):
+                if cart.add_to_cart(request, product_slug, postdata['quantity']):
                     if request.session.test_cookie_worked():
                         request.session.delete_test_cookie()
                 else: 
