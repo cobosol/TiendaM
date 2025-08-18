@@ -140,6 +140,10 @@ class Product(models.Model):
             return self.image.url
         else:
             return "/static/img/prod_Default.webp"
+        
+    @property
+    def a_granel(self):
+        return True if 'granel' in self.presentation.lower() else False
     
     @property        
     def price_cup(self):

@@ -3,7 +3,7 @@
 
 <style>
   .cantidad-input {
-      width: 60px;       /* Ancho reducido */
+      width: 80px;       /* Ancho reducido */
       padding: 5px;      /* Espaciado interno */
       font-size: 14px;   /* Tamaño de fuente */
       text-align: center; /* Centrar el número */
@@ -46,7 +46,7 @@
                                 {% if p.count > 0 %}
                                 <form method="post" action="." class="cart">
                                         {% csrf_token %}
-                                        <input type="number" name="quantity" value="1" min="1" class="cantidad-input">
+                                        <input type="decimal" name="quantity" value="1" min="1" step="{% if p.a_granel %}0.1{%else%}1{%endif%}" class="cantidad-input">
                                         <input type="hidden" name="product_slug" value="{{ p.slug }}" />
                                         <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
                                             <i class="fas fa-shopping-cart text-secondary mr-1"> Al carrito</i>
@@ -79,7 +79,7 @@
                               {% if p.count > 0 %}
                               <form method="post" action="." class="cart">
                                       {% csrf_token %}
-                                      <input type="number" name="quantity" value="1" min="1" class="cantidad-input">
+                                      <input type="number" name="quantity" value="1" min="1" step="{% if p.a_granel %}0.1{%else%}1{%endif%}" class="cantidad-input">
                                       <input type="hidden" name="product_slug" value="{{ p.slug }}" />
                                       <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
                                           <i class="fas fa-shopping-cart text-secondary mr-1"> Al carrito</i>
@@ -114,7 +114,7 @@
                             {% if p.count > 0 %}
                             <form method="post" action="." class="cart">
                                     {% csrf_token %}
-                                    <input type="number" name="quantity" value="1" min="1" class="cantidad-input">
+                                    <input type="number" name="quantity" value="1" min="1" step="0.1" class="cantidad-input">
                                     <input type="hidden" name="product_slug" value="{{ p.slug }}" />
                                     <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
                                         <i class="fas fa-shopping-cart text-secondary mr-1"> Al carrito</i>
@@ -147,7 +147,7 @@
                           {% if p.count > 0 %}
                           <form method="post" action="." class="cart">
                                   {% csrf_token %}
-                                  <input type="number" name="quantity" value="1" min="1" class="cantidad-input">
+                                  <input type="number" name="quantity" value="1" min="1" step="0.1" class="cantidad-input">
                                   <input type="hidden" name="product_slug" value="{{ p.slug }}" />
                                   <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
                                       <i class="fas fa-shopping-cart text-secondary mr-1"> Al carrito</i>
@@ -182,7 +182,7 @@
                           {% if p.count > 0 %}
                           <form method="post" action="." class="cart">
                                   {% csrf_token %}
-                                  <input type="number" name="quantity" value="1" min="1" class="cantidad-input">
+                                  <input type="number" name="quantity" value="1" min="1" step="0.1" class="cantidad-input">
                                   <input type="hidden" name="product_slug" value="{{ p.slug }}" />
                                   <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
                                       <i class="fas fa-shopping-cart text-secondary mr-1"> Al carrito</i>
@@ -215,7 +215,7 @@
                         {% if p.count > 0 %}
                         <form method="post" action="." class="cart">
                                 {% csrf_token %}
-                                <input type="number" name="quantity" value="1" min="1" class="cantidad-input">
+                                <input type="number" name="quantity" value="1" min="1" step="0.1" class="cantidad-input">
                                 <input type="hidden" name="product_slug" value="{{ p.slug }}" />
                                 <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
                                     <i class="fas fa-shopping-cart text-secondary mr-1"> Al carrito</i>

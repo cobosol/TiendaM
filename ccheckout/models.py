@@ -129,6 +129,8 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         if self.end_total is None or self.end_total == 0:
             self.end_total = self.total_items + decimal.Decimal(self.delivery_price)
+        if self.base_total is None or self.base_total == 0:
+            self.base_total = self.total_items 
         if self.total_reported == 0.00:
             self.total_reported = self.end_total
         if self.price:
