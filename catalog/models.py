@@ -140,12 +140,16 @@ class Product(models.Model):
             return self.image.url
         else:
             return "/static/img/prod_Default.webp"
+        
+    @property
+    def a_granel(self):
+        return True if 'granel' in self.presentation.lower() else False
     
     @property        
     def price_cup(self):
         price_actual = Price.objects.filter(is_active=True)[0]
         p = self.price_base * price_actual.change_usd_cup
-        return (p) + 5 - (p % 5) 
+        return (p) + 5 - (p % 5) if (p % 5) > 0 else p
         
     @property
     def price_mlc(self):

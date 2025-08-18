@@ -104,47 +104,97 @@
         </div>
     </div>
     <!-- Page Header End -->
+
+
 <div class="row px-xl-6">
     <div class="col-lg-6">
     <form method="post" id="summary-form">
         {% csrf_token %}
-        
-        {{ order_form.as_p }}
-        
-        <div id="payment-forms">
-            {{ formset.management_form }}
-            {% for form in formset %}
-                <div class="payment-form" data-method="{{ form.method.value|default:'CASH' }}">
-                    {{ form.id }}
-                    <div class="form-row">
-                        {{ form.method.label_tag }}
-                        {{ form.method }}
-                    </div>
-                    
-                    <div class="form-row">
-                        {{ form.amount.label_tag }}
-                        {{ form.amount }}
-                    </div>
-                    
-                    <div class="form-row">
-                        {{ form.transaction_count.label_tag }}
-                        {{ form.transaction_count }}
-                    </div>
-                    
-                    <!-- Campo de texto para detalles -->
-                    <div class="transfer-details" style="display: none;">
-                        {{ form.details_text.label_tag }}
-                        {{ form.details_text }}
-                    </div>
-                    
-                    <!-- Para errores -->
-                    {{ form.details_text.errors }}
-                </div>
-            {% endfor %}
+
+        {% if order_form.non_field_errors %}
+        <div class="alert alert-danger">
+            {{ order_form.non_field_errors }}
         </div>
+        {% endif %}
+    
+        {% if formset.non_form_errors %}
+            <div class="alert alert-danger">
+                {% for error in formset.non_form_errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
         
-        <button type="button" id="add-payment">+ Agregar otro método</button> <br>
-        <button type="submit">Guardar Resumen</button>
+        <!-- Campo vendedor con validación -->
+    <div class="form-group">
+        <label for="id_seller">Vendedor:</label>
+        {{ order_form.seller }}
+        {% if order_form.seller.errors %}
+            <div class="text-danger">
+                {% for error in order_form.seller.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+        
+    <h3>Métodos de Pago</h3>
+    <div id="payment-forms">
+        {{ formset.management_form }}
+        {% for form in formset %}
+            <div class="payment-form" data-method="{{ form.method.value|default:'CASH' }}">
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <!-- Campos de método de pago -->
+                <div class="form-row">
+                    {{ form.method.label_tag }}
+                    {{ form.method }}
+                    {% if form.method.errors %}
+                        <div class="text-danger">{{ form.method.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-row">
+                    {{ form.amount.label_tag }}
+                    {{ form.amount }}
+                    {% if form.amount.errors %}
+                        <div class="text-danger">{{ form.amount.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-row">
+                    {{ form.transaction_count.label_tag }}
+                    {{ form.transaction_count }}
+                    {% if form.transaction_count.errors %}
+                        <div class="text-danger">{{ form.transaction_count.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <!-- Detalles de transferencia -->
+                <div class="transfer-details" style="display: none;">
+                    {{ form.details_text.label_tag }}
+                    {{ form.details_text }}
+                    {% if form.details_text.errors %}
+                        <div class="text-danger">{{ form.details_text.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <!-- Campos ocultos necesarios -->
+                {{ form.id }}
+                {{ form.DELETE }}
+            </div>
+        {% endfor %}
+    </div>
+        
+        <button type="button" class="btn btn-primary" id="add-payment">+ Agregar otro método</button> <br>
+        <button type="submit" class="btn btn-secondary">Guardar Resumen</button>
     </form>
     </div>
     <div class="col-lg-2">
@@ -199,6 +249,14 @@
                 }
             });
         }
+        
+        // Mostrar errores en detalles de transferencia al cargar
+        document.querySelectorAll('.payment-form').forEach(form => {
+            const method = form.dataset.method;
+            if (method === 'TRANSFER') {
+                form.querySelector('.transfer-details').style.display = 'block';
+            }
+        });
         
         // Actualizar al cambiar métodos
         document.querySelectorAll('.payment-method-select').forEach(select => {

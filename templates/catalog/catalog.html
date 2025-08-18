@@ -6,6 +6,15 @@
 
 {% block content %}
 
+<style>
+  .cantidad-input {
+      width: 80px;       /* Ancho reducido */
+      padding: 5px;      /* Espaciado interno */
+      font-size: 14px;   /* Tamaño de fuente */
+      text-align: center; /* Centrar el número */
+  }
+</style>
+
 <div class="container-fluid bg-secondary mb-2">
   <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 60px">
       <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Catálogo de productos</h4>
@@ -73,7 +82,7 @@
                 <div id="item-{{ item.id }}">
                 <form method="post" action="." class="cart">
                   {% csrf_token %}
-                  <input type="number" name="quantity" style="width: 80px;" value="1" min="1" class="cantidad-input">
+                  <input type="number" name="quantity" value="1" min="1" step="{% if elem.a_granel %}0.1{%else%}1{%endif%}" class="cantidad-input">
                     <input type="hidden" name="item-id" value="{{ item.id }}" />
                     <input type="hidden" name="product_slug" value="{{ elem.slug }}" />
                     <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">

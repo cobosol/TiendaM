@@ -213,10 +213,8 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
             elif postdata['submit'] == 'Productos terminados':
                 object_list = Product.objects.filter(is_feedstock=False)
             elif postdata['submit'] == 'Comprar':
-                print(postdata)
                 product_slug = postdata.get('product_slug','') 
                 if not cart.add_to_cart(request, product_slug, quantity=postdata['quantity']):
-                    print("No adicionó")
                     url = '/accounts/login/'
                     return HttpResponseRedirect(url)  
                 else:
@@ -230,6 +228,7 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
     except:
         text = "Error al seleccionar la categoria"
         messages.error(request, text)
+        object_list = Product.objects.all()
     context={'object_list':object_list, 'form':form}
     return render(request, template_name, context)
 

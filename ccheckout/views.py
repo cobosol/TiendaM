@@ -446,27 +446,33 @@ def create_daily_summary(request):
         cart_url = reverse('show_cart')
         return HttpResponseRedirect(cart_url)
     if request.method == 'POST':
+        order_form = DailySummaryForm(request.POST)
         formset = PaymentMethodFormSet(request.POST, prefix='payments')
-        if MD == 'USD':
-            order_number = create_order(request, 4, True, True) # Crear la orden con tipo de transacción 3 usd en cach
-            if order_number['order_number'] == -1:
-                fail = reverse('show_cart')
-                return HttpResponseRedirect(fail)
-        elif MD == 'CUP':
-            order_number = create_order(request, 4, False, True)
-            if order_number['order_number'] == -1:
-                fail = reverse('show_cart')
-                return HttpResponseRedirect(fail)
+        if not order_form.is_valid():
+            messages.error(request, "Por favor corrija los errores en order_form")
+        elif not formset.is_valid():
+            print(formset.errors)
+            messages.error(request, "Por favor corrija los errores en formset")
         else:
-            messages.info(request, "El resumen es solo en CUP o USD")  
-        if order_number:
-            request.session['order_number'] = order_number['order_number']
-            order = Order.objects.filter(id=order_number['order_number'])[0] 
-            order.save()
-            order.update_status(Order.PAIDED)
-            order.update_status(Order.DELIVERED)
-            if formset.is_valid():
-                # Crear orden especial
+            print('No hay error de validacion')
+            if MD == 'USD':
+                order_number = create_order(request, 4, True, True) # Crear la orden con tipo de transacción 3 usd en cach
+                if order_number['order_number'] == -1:
+                    fail = reverse('show_cart')
+                    return HttpResponseRedirect(fail)
+            elif MD == 'CUP':
+                order_number = create_order(request, 4, False, True)
+                if order_number['order_number'] == -1:
+                    fail = reverse('show_cart')
+                    return HttpResponseRedirect(fail)
+            else:
+                messages.info(request, "El resumen es solo en CUP o USD")  
+            if order_number:
+                request.session['order_number'] = order_number['order_number']
+                order = Order.objects.filter(id=order_number['order_number'])[0] 
+                order.save()
+                order.update_status(Order.PAIDED)
+                order.update_status(Order.DELIVERED)
                 formset.instance = order
                 formset.save()
                 #Verificar que reportado coincida con la suma de elementos 
@@ -477,16 +483,15 @@ def create_daily_summary(request):
                 messages.success(request, "Resumen creado con éxito")
                 receipt_url = order.get_absolute_url()
                 return HttpResponseRedirect(receipt_url)
-        else:
-            print("Error de validacion de la form")       
     else:
         order_form = DailySummaryForm()
         formset = PaymentMethodFormSet(prefix='payments', queryset=PaymentMethod.objects.none())
-        cart_total = round(cart.cart_subtotal(request), 2)        
-        st_name = cart.delivery_Store(request).name
-        price = Price.objects.filter(is_active=True)[0] # Capturo la configuración de precio actual
-        t_CUP_alcambio = cart_total * price.change_usd_cup
-        t_CUP_Oficial = cart_total * 120
+    t_CUP_alcambio = round(cart.cart_subtotal(request, mCUP=True), 2)
+    cart_total = round(cart.cart_subtotal(request), 2)        
+    st_name = cart.delivery_Store(request).name
+    price = Price.objects.filter(is_active=True)[0] # Capturo la configuración de precio actual
+    #t_CUP_alcambio = cart_total * price.change_usd_cup
+    t_CUP_Oficial = cart_total * 120
     
     return render(request, 'checkout/create_summary.html', {
         'order_form': order_form,

@@ -129,6 +129,8 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         if self.end_total is None or self.end_total == 0:
             self.end_total = self.total_items + decimal.Decimal(self.delivery_price)
+        if self.base_total is None or self.base_total == 0:
+            self.base_total = self.total_items 
         if self.total_reported == 0.00:
             self.total_reported = self.end_total
         if self.price:
@@ -398,16 +400,20 @@ class OrderItem(models.Model):
     @property
     def total(self):
         #MND = self.order.currency
-        if self.totalf > 0:
-            return self.totalf
-        if self.quantity >= self.product.min_quantity_whole:
-            porciento = decimal.Decimal('0.00')
-            porciento = 1-self.product.whole_discount/100
-            precio = decimal.Decimal('0.00')
-            precio = self.price * decimal.Decimal(porciento)
-            return self.quantity * precio
-        else:
-            return self.quantity * self.price
+        try:
+            if self.totalf > 0:
+                return self.totalf
+            if self.quantity >= self.product.min_quantity_whole:
+                porciento = decimal.Decimal('0.00')
+                porciento = 1-self.product.whole_discount/100
+                precio = decimal.Decimal('0.00')
+                precio = self.price * decimal.Decimal(porciento)
+                return self.quantity * precio
+            else:
+                return self.quantity * self.price
+        except:
+            print(self.order.pk)
+            return 0
 
     @property
     def total_base_CUP(self):
@@ -415,7 +421,10 @@ class OrderItem(models.Model):
 
     @property
     def name(self):
-        return self.product.name
+        if self.product:
+            return self.product.name
+        else:
+            return ''
 
     @property
     def price_CUP(self):
@@ -466,21 +475,88 @@ class PaymentMethod(models.Model):
         except json.JSONDecodeError:
             return {}
     
+    #Validar que coincidan los detalles con el monto
+    def validate_amount(self, details, amount):
+        sum = 0
+        line = details.split('\n')
+        for l in line:
+            monto = l.split()
+            sum = sum + float(monto[1])
+        if sum != amount:
+            return False
+        return True
+
+    def parse_text_details(self, text):
+        result = []
+        lines = text.strip().split('\n')
+        
+        if not lines or not any(line.strip() for line in lines):
+            raise ValidationError("Debe ingresar al menos una transferencia")
+        
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+                
+            # Intentar diferentes formatos
+            if ':' in line:
+                parts = [p.strip() for p in line.split(':', 1)]
+                if len(parts) >= 2:
+                    reference = parts[0]
+                    # Extraer el monto del segundo segmento
+                    amount_str = ''.join(filter(lambda x: x.isdigit() or x in ['.', ','], parts[1]))
+                    try:
+                        amount = float(amount_str.replace(',', '.'))
+                        result.append({'reference': reference, 'amount': amount})
+                        continue
+                    except ValueError:
+                        pass
+            
+            # Formato: referencia monto
+            parts = line.split()
+            if len(parts) >= 2:
+                try:
+                    # El último elemento debería ser el monto
+                    amount_str = parts[-1].replace(',', '.')
+                    amount = float(amount_str)
+                    reference = ' '.join(parts[:-1])
+                    result.append({'reference': reference, 'amount': amount})
+                    continue
+                except ValueError:
+                    pass
+            
+            # Si no coincide con ningún formato
+            raise ValidationError(f"Formato inválido en línea: '{line}'")
+        
+        # Validar que haya al menos una transferencia válida
+        if not result:
+            raise ValidationError("No se encontraron transferencias válidas")
+        
+        return result
+        
     # Método para guardar datos estructurados
-    def set_details(self, details):
-        if isinstance(details, dict):
-            self.transaction_details = json.dumps(details, ensure_ascii=False)
-        elif isinstance(details, str):
-            # Intentamos convertir texto a JSON
-            try:
-                # Validamos que sea convertible
-                parsed = self.parse_text_details(details)
-                self.transaction_details = json.dumps(parsed, ensure_ascii=False)
-            except ValueError as e:
-                raise ValidationError(str(e))
+    def set_details(self, details, amount):
+        print(f'monto: {amount}')
+        if self.validate_amount(details, amount):
+            if isinstance(details, dict):
+                self.transaction_details = json.dumps(details, ensure_ascii=False)
+            elif isinstance(details, str):
+                # Intentamos convertir texto a JSON
+                try:
+                    # Validamos que sea convertible
+                    parsed = self.parse_text_details(details)
+                    det = json.dumps(parsed, ensure_ascii=False)
+                    self.transaction_details = det
+                except ValueError as e:
+                    raise ValidationError(str(e))
+        else:
+            print('No coincide el monto con los detalles especificados')
+            return False
+        return True
+        
     
     # Convertir texto plano a estructura JSON
-    def parse_text_details(self, text):
+    """ def parse_text_details(self, text):
         result = []
         lines = text.strip().split('\n')
         
@@ -519,9 +595,9 @@ class PaymentMethod(models.Model):
                 'amount': 0.0
             })
         
-        return result
+        return result """
 
-    def clean(self):
+    """ def clean(self):
         if self.method == 'TRANSFER' or self.method == 'CARD':
             if not self.transaction_details:
                 raise ValidationError('Debe ingresar detalles para transferencias')
@@ -534,7 +610,7 @@ class PaymentMethod(models.Model):
             # Validar montos
             for item in details:
                 if 'amount' not in item or not isinstance(item['amount'], (int, float)):
-                    raise ValidationError('Cada transferencia debe tener un monto numérico')
+                    raise ValidationError('Cada transferencia debe tener un monto numérico') """
                 
 class Coupon(models.Model):
     code = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
