@@ -22,9 +22,19 @@ class DailySummaryForm(forms.ModelForm):
         else:
             # Si el grupo no existe, mostrar usuarios vacíos
             self.fields['seller'].queryset = User.objects.none()
-        
+
+        # Hacer el campo requerido
+        self.fields['seller'].required = True
+        self.fields['seller'].empty_label = "Seleccione un vendedor"
+
         # Opcional: ordenar por nombre completo
         self.fields['seller'].label_from_instance = lambda obj: f"{obj.get_full_name()} ({obj.username})"
+
+    def clean_seller(self):
+        seller = self.cleaned_data.get('seller')
+        if not seller:
+            raise ValidationError("Debe seleccionar un vendedor")
+        return seller
 
 class PaymentMethodForm(forms.ModelForm):
     details_text = forms.CharField(
@@ -58,7 +68,22 @@ class PaymentMethodForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         method = cleaned_data.get('method')
+        transaction_count = cleaned_data.get('transaction_count')
         details_text = cleaned_data.get('details_text')
+        amount = cleaned_data.get('amount', 0)
+
+        # Validar que se haya seleccionado un método
+        if not method:
+            raise ValidationError("Debe seleccionar un método de pago")
+        
+
+        # Validar que se haya seleccionado la cantidad de transacciones
+        if not transaction_count:
+            raise ValidationError("Debe especificar la cantidad de transacciones")
+        
+        # Validar que el monto sea positivo
+        if not amount or amount <= 0:
+            self.add_error('amount', "El monto debe ser mayor que cero")
         
         # Solo procesar detalles si es transferencia o tarjeta
         if method == 'TRANSFER' or method == 'CARD':
@@ -66,17 +91,43 @@ class PaymentMethodForm(forms.ModelForm):
                 self.add_error('details_text', 'Debe ingresar los detalles de las transferencias')
             else:
                 try:
-                    # Convertir texto a estructura JSON
-                    self.instance.set_details(details_text)
+                    parsed = self.instance.parse_text_details(details_text)
+                    if not parsed:
+                        self.add_error('details_text', "Debe ingresar al menos una transferencia válida")
+                    if not self.instance.set_details(details_text, amount):
+                        print('Not set_details')
+                        self.add_error('details_text', 'Deben coincidir los montos de los detalles con el monto total declarado')
                 except ValidationError as e:
-                    self.add_error('details_text', e)
+                    self.add_error('details_text', str(e))
+                # Convertir texto a estructura JSON
+                
         
         return cleaned_data
+
+from django.forms import BaseInlineFormSet
+
+class PaymentMethodFormSet(BaseInlineFormSet):
+    def clean(self):
+        super().clean()
+        
+        # Verificar que haya al menos un método de pago
+        if not any(form.has_changed() for form in self.forms):
+            raise ValidationError("Debe agregar al menos un método de pago")
+        else:
+            print('No hay error en metodo de pago')
+        
+        # Verificar que todos los métodos tengan datos válidos
+        for form in self.forms:
+            if form.has_changed() and not form.cleaned_data.get('method'):
+                form.add_error('method', "Este campo es obligatorio")
+            else:
+                print('No hay error en los metodos')
 
 PaymentMethodFormSet = inlineformset_factory(
     Order,
     PaymentMethod,
     form=PaymentMethodForm,
+    formset=PaymentMethodFormSet,
     extra=1,
     can_delete=False
 )

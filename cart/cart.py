@@ -226,7 +226,7 @@ def remove_from_cart(request):
         cart_item.delete()
 
 # gets the total cost for the current cart
-def cart_subtotal(request, standard=True):
+def cart_subtotal(request, standard=True, mCUP=False):
     cart_total = decimal.Decimal('0.00')
     price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
     cart_products = get_cart_items(request)
@@ -235,7 +235,10 @@ def cart_subtotal(request, standard=True):
     TU = 'Comprador'
     if (user.is_authenticated):
         profile = get_object_or_404(Profile, user = user)
-        MND = profile.MONEY_TYPE[profile.money_type][1]
+        if mCUP:
+            MND = 'CUP'
+        else:
+            MND = profile.MONEY_TYPE[profile.money_type][1]
         TU = profile.CLIENT_TYPE[profile.client_type][1]
     if MND == 'USD': 
         for cart_item in cart_products:

@@ -52,7 +52,8 @@
                               {{ item.price_MLC|currency }} MLC
                             {% endif %}
                         </td>
-                        {% if vendedor == 'True' or comercial == 'True' %}
+                        {{item.product.a_granel}}
+                        {% if item.product.a_granel %}
                         <td class="align-middle">
                             <form id="decimalCant" method="post" action="." class="cart">
                                 {% csrf_token %}

@@ -228,6 +228,7 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
     except:
         text = "Error al seleccionar la categoria"
         messages.error(request, text)
+        object_list = Product.objects.all()
     context={'object_list':object_list, 'form':form}
     return render(request, template_name, context)
 
