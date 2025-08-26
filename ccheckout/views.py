@@ -376,19 +376,25 @@ def pagar(request, template_name='checkout/pagar.html'):
 @login_required
 def reserve(request, template_name='checkout/reserve.html'):
     # Reservar productos sin pagar
+    print("En reserve")
     MD = 'USD'
     st_name = cart.delivery_Store(request).name # Nombre del tipo de entrega
     if cart.is_empty(request): #Si el carrito está vacío
         cart_url = reverse('show_cart')
         return HttpResponseRedirect(cart_url) # Vuelvo al carrito
     if request.method == 'POST': # Analizo todas las funcionalidades disponibles
+        print("En post de reserve")
         postdata = request.POST.copy()
         if postdata['submit'] == 'Reservar': # Cuando el cliente va a reservar sin pagar
+            print("En boton reservar")
             if st_name == 'Envío Habana':
+                print("Envío Habana")
                 form = ReserveForm(postdata) #Guardo los datos que vienen en la form con datos de entrega
             else:
+                print("No envío")
                 form = ReserveEForm(postdata) #Guardo los datos que vienen en la form sin datos de entrega
             if form.is_valid(): # Si trae todos los datos necesarios
+                print("Form valid")
                 user = request.user
                 profile = get_object_or_404(Profile, user = user)
                 MD = profile.MONEY_TYPE[profile.money_type][1] # Guardo el tipo de moneda con que está el cliente
@@ -397,6 +403,7 @@ def reserve(request, template_name='checkout/reserve.html'):
                     fail = reverse('show_cart')
                     return HttpResponseRedirect(fail) # Vuelvo al carrito
                 if order_number: # Si se generó correctamente la orden
+                    print("Creo la orden")
                     request.session['order_number'] = order_number['order_number'] #Guardo el número de orden en la sesión
                     order = Order.objects.filter(id=order_number['order_number'])[0] #Construyo la orden a partir del numero
                     order.update_status(Order.PROCESSED) # Actualizo el status a procesada.
@@ -405,6 +412,9 @@ def reserve(request, template_name='checkout/reserve.html'):
                     notification_reserve(request) # Envío notificacion por correo a la administración
                     receipt_url = order.get_paided_url() # Capturo elurl de detales de la orden
                     return HttpResponseRedirect(receipt_url) # redirijo a los detalles
+            else:
+                print("Error en los datos de entrada")
+                print(form.errors)
     else: #Si no es llamada post. Cargar la página normal
         if st_name == 'Envío Habana':
             form = ReserveForm() # construyo la form con datos de entrega
