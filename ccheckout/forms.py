@@ -241,7 +241,8 @@ class PagarForm(forms.ModelForm):
         model = Order
         exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery',
                     'store_name', 'payment_city', 'delivery_state', 'currency', 'payment_postCode',
-                    'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon'
+                    'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon', 'usd_total',
+                      'cup_total', 'mlc_total', 'total_reported' 
                     )
     def clean_phone(self):
         phone = self.cleaned_data['payment_phone']
@@ -268,7 +269,8 @@ class ReserveForm(forms.ModelForm):
         model = Order
         exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery', 'store_name', 'payment_city', 
                    'delivery_state', 'currency', 'payment_postCode',
-                     'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon')
+                     'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon', 'usd_total',
+                      'cup_total', 'mlc_total', 'total_reported')
 
     def clean_phone(self):
         phone = self.cleaned_data['payment_phone']
@@ -291,7 +293,8 @@ class ReserveEForm(forms.ModelForm):
         model = Order
         exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery', 'store_name', 'payment_city', 
                    'delivery_state', 'currency', 'payment_postCode', 'delivery_street', 'delivery_apto',
-                     'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon')
+                     'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon', 'usd_total',
+                      'cup_total', 'mlc_total', 'total_reported')
 
     def clean_phone(self):
         phone = self.cleaned_data['payment_phone']

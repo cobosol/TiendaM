@@ -283,14 +283,15 @@ def cart_delivery_price(request, amount, MND):
         deliveryObj.deliveryZone = 0
         deliveryObj.save()
     cart_delivery = decimal.Decimal('0.00')
-    if amount >= price.get_min_delivery_free(MND):
-        return cart_delivery 
-    else:
-        if amount > 0:
-            falta = price.get_min_delivery_free(MND) - amount
-            c = round(falta, 2)
-            text = "Le faltan $" + str(c) + " del monto total, para acceder a nuestra oferta de envío gratis."
-            messages.info(request, text)
+    if price.get_min_delivery_free(MND) > 0:
+        if amount >= price.get_min_delivery_free(MND):
+            return cart_delivery 
+        else:
+            if amount > 0:
+                falta = price.get_min_delivery_free(MND) - amount
+                c = round(falta, 2)
+                text = "Le faltan $" + str(c) + " del monto total, para acceder a nuestra oferta de envío gratis."
+                messages.info(request, text)
     cart_products = get_cart_items(request)
     stores = get_stores(request)
     MND = 'USD'

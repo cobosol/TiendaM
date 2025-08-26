@@ -144,6 +144,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
         results = {'order_number':-1,'message':'No se pudo crear la orden'}
         return results
     order = Order() # Creo la nueva orden vacía
+    print("Orden crada vacía")
     store = cart.delivery_Store(request) # Capturo el almacen
     price2 = Price.objects.filter(is_active=True)[0] # Capturo la configuración de precio actual
     user = request.user # capturo el usuario registrado
@@ -151,6 +152,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
     MND = profile.MONEY_TYPE[profile.money_type][1] # Saco el tipo de moneda del usuario
     results = {} # Crear variable para la respuesta
     if transaction_id == 2: # Reservar
+        print("En transaction id 2")
         checkout_form = PagarForm(request.POST, instance=order)
         order = checkout_form.save(commit=False)
         order.currency = 'USD'

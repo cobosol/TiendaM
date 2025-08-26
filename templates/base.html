@@ -26,7 +26,7 @@
     <link href="/static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="/static/css/style1.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -36,19 +36,14 @@
 
     <section id="top_presentacion">
         <nav class="navbar navbar-expand-lg bg-light navbar-light">
-            <div class="col-lg-2 text-center d-none d-lg-block">
-                <div class="d-inline-flex align-items-center">
-                    <img class="flex-grow-2 text-center" id="logo" src={% static "img/LogoStrech.png" %} width="50%" href="https://produccionesmuhia.ca"></a>
-                </div>
-            </div>
             <div id="buscador"  class="col-lg-3 d-lg-block">
                 <form method="post" action=".">
                     {% csrf_token %}    
                     <div class="input-group">
                         <input type="text" class="form-control" name="producto" placeholder="Buscar productos">
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
-                                <button type="submit" name="submit" value="Buscar" alt="Buscar">
+                            <span class="input-group-text bg-transparent text-primary" style="border: 0ch;">
+                                <button type="submit"  name="submit" value="Buscar" alt="Buscar">
                                     <i class="fas fa-search text-secondary mr-0"> </i>
                                 </button>
                             </span>
@@ -57,7 +52,7 @@
                 </form>
             </div>
             <div id="menú principal" class="col-lg-6">
-                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-0 py-lg-0 px-0">
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>                        
@@ -115,13 +110,24 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </nav>
+            </div>
+            <div id="menú principal" class="col-lg-2">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-2 py-lg-0 px-0">
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>                        
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
                             {% if not request.user.is_authenticated %}
-                                <a href="{% url 'login' %}?next={{ request.path }}" class="nav-item nav-link text-primary" style="font-family: sans-serif;">Entrar / </a>
-                                <a href="{% url 'registro' %}" class="nav-item nav-link text-primary" style="font-family: sans-serif;">Registrarse</a>
+                            <a href="{% url 'login' %}?next={{ request.path }}" class="nav-item nav-link text-primary" style="font-family: sans-serif;">Entrar </a> / 
+                            <a href="{% url 'registro' %}" class="nav-item nav-link text-primary" style="font-family: sans-serif;">Registrarse</a>
                             {% else %}
-                                <a href="{% url 'profile' %}" class="nav-item nav-link  text-primary" style="font-family: sans-serif;">Perfil</a>
-                                <a href="{% url 'logout' %}" class="nav-item nav-link text-primary" style="font-family: sans-serif;">Salir</a>
+                            <a href="{% url 'profile' %}" class="nav-item nav-link  text-primary" style="font-family: sans-serif;">Perfil  </a> / 
+                            <a href="{% url 'logout' %}" class="nav-item nav-link text-primary" style="font-family: sans-serif;">Salir</a>
                             {% endif %}
+                        </div>
                     </div>
                 </nav>
             </div>
@@ -148,6 +154,9 @@
 
             <!-- Zona vertical izquierda -->
             <div class="col-lg-2 d-none d-lg-block text-light"> 
+                    <div class="d-inline-flex justify-content-center">
+                        <img class="flex-grow-2 text-center" id="logo" src={% static "img/LogoStrech.png" %} width="50%" href="https://produccionesmuhia.ca"></a>
+                    </div>
                 <!-- Menu productos-->
                 <div class="Productos row border-top px-xl-1">
                     <a class="btn btn-primary shadow-none d-flex align-items-center justify-content-between bg-red text-light w-60" data-toggle="collapse" href="#navbar-vertical" style="height: 60px; margin-top: -1px; padding: 0 30px;">

@@ -4059,7 +4059,7 @@ input[type="button"].btn-block {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  padding: 0rem 0rem;
 }
 
 .navbar .container,
@@ -4070,10 +4070,12 @@ input[type="button"].btn-block {
   justify-content: space-between;
 }
 
+/*  */
+
 .navbar-brand {
   display: inline-block;
   padding-top: 0.3125rem;
-  padding-bottom: 0.3125rem;
+  padding-bottom: 0.3125rem;  
   margin-right: 1rem;
   font-size: 1.25rem;
   line-height: inherit;
@@ -9544,7 +9546,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .navbar-light .navbar-nav .nav-link {
-  padding: 20px 10px;
+  padding: 3px 3px;
   color: #1C1C1C;
   outline: none;
 }
