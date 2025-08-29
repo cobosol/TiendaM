@@ -196,13 +196,15 @@
                         <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Reservar" alt="Checkout" />
                         {% endif %}
                         {% if vendedor == 'True' or comercial == 'True' %}
-                        {% if MND == 'USD' or MND == 'CUP'%}
-                        <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Confirmar pago" alt="Efectivo" />
-                        <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Resumen" alt="Resumen" />
-                        {% endif %}
+                            {% if MND == 'USD' or MND == 'CUP'%}
+                                <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Confirmar pago" alt="Efectivo" />
+                            {% endif %}
+                            {% if MND == 'USD' %}
+                                <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Resumen" alt="Resumen" />
+                            {% endif %}
                         {% endif %}
                         {% if comercial == 'True' %}
-                        <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Facturar" alt="Facturar" />
+                            <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Facturar" alt="Facturar" />
                         {% endif %}
                     </form>
 
