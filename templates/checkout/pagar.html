@@ -4,7 +4,6 @@
 {% load catalog_filters %}
 {% block content %}
 
-
     <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-2">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
@@ -28,9 +27,8 @@
         <table> 
             <tr>
                 <td>
-                    {% form.payment_name %}
-                    {% form.payment_phone %}
-                    {% form.payment_email %}
+                    {% form_table_row form.payment_name %}
+                    {% form_table_row form.payment_phone %}
                 </td>
             </tr>    
             <tr>
@@ -118,6 +116,8 @@
                 <br>
                 {% if MND == 'CUP' %} 
                     <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total|currency }} CUP</h6>
+                {% elif MND == 'USD' %} 
+                    <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total|currency }} USD</h6>
                 {% else %}
                     <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total|currency }} MLC</h6>
                 {% endif %}

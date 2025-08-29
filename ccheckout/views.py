@@ -221,6 +221,7 @@ def show_checkout(request, template_name='checkout/checkout.html'):
         cobra_efectivo = True
     return render(request, template_name, locals())
 
+#Pagar en efectivo
 @login_required
 def cach(request, template_name='checkout/cach.html'):
     MD = 'USD'
@@ -272,6 +273,7 @@ def cach(request, template_name='checkout/cach.html'):
         cobra_efectivo = True
     return render(request, template_name, locals())
 
+#Pagar los grandes compradores con contratos
 @login_required
 def facturar(request, template_name='checkout/facturar.html'):
     MD = 'USD'

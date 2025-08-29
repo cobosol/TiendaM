@@ -11,6 +11,7 @@ from utils.models import Price
 from django.contrib import messages
 from ccheckout.validators import CouponValidator
 from django import forms
+from utils.context_processors import active_mnd
 
 import decimal
 import random
@@ -20,7 +21,7 @@ CART_ID_SESSION_KEY = 'cart_id'
 SESSION_DELIVERY = 'delivery'
 
 # Pedir el delivery por defecto envio habana pk = 3
-def get_delivery(request, delivery='3'):
+def get_delivery(request, delivery='1'):
     if request.session.get(SESSION_DELIVERY,'') == '':
         if request.user.is_authenticated:
             user = request.user
@@ -30,7 +31,7 @@ def get_delivery(request, delivery='3'):
             if (store):
                 set_delivery(request, str(store.pk))
             else:
-                set_delivery(request, str(3))
+                set_delivery(request, str(1))
         else:
            set_delivery(request, delivery)
            #request.session[SESSION_DELIVERY] = delivery
@@ -51,7 +52,14 @@ def set_delivery(request, delivery, zone=0):
     deliveryInfo.deliveryZone = zone
     deliveryInfo.save()
 
-
+# verificar si todos los productos en el carrito se corresponden con el tipo de moneda
+def verify_mnd(request):
+    items = CartItem.objects.filter(cart_id=_cart_id(request))
+    for item in items:
+        mnd = active_mnd(request)
+        if (mnd == 'CUP' and not item.product.available_CUP) or (mnd == 'MLC' and not item.product.available_MLC):
+            messages.info(request, f'El producto {item.product} no está disponible en {mnd}')
+            item.delete()
 
 # get the current user's cart id, sets new one if blank
 def _cart_id(request):
@@ -118,6 +126,13 @@ def add_to_cart(request, p_slug, quantity=1):
     if request.user.is_authenticated:
         postdata = request.POST.copy()
         p = get_object_or_404(Product, slug=p_slug)
+        #Verificar si el producto está disponible en la moneda activa
+        if active_mnd(request) == 'CUP' and not p.available_CUP:
+            messages.warning(request, "Ese producto no está disponible en CUP")
+            return False
+        elif active_mnd(request) == 'MLC' and not p.available_MLC:
+            messages.warning(request, "Ese producto no está disponible en MLC")
+            return False
         cart_products = get_cart_items(request)
         product_in_cart = False
         # check to see if item is already in cart

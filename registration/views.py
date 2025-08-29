@@ -11,11 +11,13 @@ from .forms import UserCreationFormWithEmail
 from django.views.generic.edit import UpdateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from .models import Profile
 from stores.models import Store
 from .forms import ProfileForm, UserCreationFormWithEmail, EmailForm, UpdateProfileAdminForm
 #Librerías para mensajes, algunos basados en views
 from django.contrib import messages
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.contrib.messages.views import SuccessMessageMixin 
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
@@ -34,7 +36,8 @@ from django.contrib.auth.views import PasswordResetView
 from django.views.generic import ListView, DetailView 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
-from .forms import CustomPasswordResetForm
+from .forms import CustomPasswordResetForm, MNDForm
+
 
 class CustomPasswordResetView(PasswordResetView):
     form_class=CustomPasswordResetForm
@@ -161,6 +164,7 @@ class update_profile_admin(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse('home')
     
+@login_required
 def update_profile_admin2(request, template_name="registration/update_profile_admin.html"):
     if request.method == 'POST':
         try:
@@ -179,3 +183,18 @@ def update_profile_admin2(request, template_name="registration/update_profile_ad
             print("Error") 
     form = UpdateProfileAdminForm()
     return render(request, template_name, locals())
+
+@login_required
+@require_POST
+def update_mnd(request):
+    form = MNDForm(request.POST)
+    if form.is_valid():
+        profile = get_object_or_404(Profile, user = request.user)
+        profile.money_type =  form.cleaned_data['mnd']
+        profile.save()
+    # Redirige a la misma página desde donde se envió el formulario
+    next_url = request.POST.get('next', '/')  # Valor por defecto si no hay 'next'
+    if url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
+        return redirect(next_url)
+    else:
+        return redirect('/')

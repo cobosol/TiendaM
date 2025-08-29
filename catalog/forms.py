@@ -3,8 +3,36 @@ from catalog.models import Product
 from stores.models import Store, Product_Sales
 from django.db import models
 from django_ckeditor_5.widgets import CKEditor5Widget
+from stores.models import Store 
+
+class ProductAlmacenFilterForm(forms.Form):
+    """ product = forms.ModelChoiceField(
+        queryset=Product_Sales.objects.all(),
+        required=False,
+        label='Filtrar por producto',
+        empty_label="Todos los producto",
+        widget=forms.Select(attrs={'class': 'select2'})
+    ) """
+    store = forms.ModelChoiceField(
+        queryset=Store.objects.all(),
+        required=False,
+        label='Filtrar por almacén:',
+        widget=forms.Select(attrs={'class': 'select2'})
+    )
+   
+    product_texto = forms.CharField(
+        required=False,
+        label='Buscar en producto:',
+        widget=forms.TextInput(attrs={'placeholder': 'Buscar por nombre...'})
+    )
+    """ store_texto = forms.CharField(
+        required=False,
+        label='Buscar en almacén',
+        widget=forms.TextInput(attrs={'placeholder': 'Buscar por almacén...'})
+    ) """
 
 
+    
 class ProductForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
           super().__init__(*args, **kwargs)
