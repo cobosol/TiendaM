@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from catalog.models import Category, Product
 from django.template import RequestContext
 from django.urls import reverse, reverse_lazy
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
 import uuid
 from django.core.files.base import ContentFile
@@ -31,6 +31,13 @@ from catalog.models import *
 from pages.models import *
 from .forms import ProductAdminForm, ProductForm, ProductAlmacenForm
 from .serializers import ProductsGipproSerializer
+
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
+from .forms import ProductAlmacenFilterForm
+
+
 
 class ProductGipproListView(generics.ListAPIView):
     queryset = Product.objects.all()
@@ -275,25 +282,42 @@ class eliminar_producto(SuccessMessageMixin, DeleteView):
 #---------- Gestión de productos en almacen----------------
 
 def gestion_productos_almacen(request, template_name="catalog/productos_almacen_admin.html"):
-    form = SelectStoreForm(request=request)
-    try:
-        if request.method == 'POST':
-            postdata = request.POST.copy()
-            if postdata['submit'] == 'Ver':
-                form = SelectStoreForm(request, postdata)
-                form.selected_store = postdata['selected_store']
-                object_list = Product_Sales.objects.filter(store=postdata['selected_store']).order_by('product')
-            elif postdata['submit'] == 'Materias primas':
-                object_list = Product_Sales.objects.filter(product__is_feedstock=True).order_by('product')
-            elif postdata['submit'] == 'Productos terminados':
-                object_list = Product_Sales.objects.filter(product__is_feedstock=False).order_by('product')
-        else:
-            object_list = Product_Sales.objects.all().order_by('product')
-    except:
-        text = "Error al seleccionar el almacén"
-        messages.error(request, text)
-    context={'object_list':object_list, 'form':form}
-    return render(request, template_name, context)
+    print('gestion producto almacen')
+    form = ProductAlmacenFilterForm(request.GET or None)
+    objetos = Product_Sales.objects.all().order_by('product')
+    objetos2 = Product_Sales.objects.all().select_related('product', 'store')
+    if request.method == 'POST':
+        print('En POST')
+        postdata = request.POST.copy()
+        if postdata['submit'] == 'Materias primas':
+            objetos = Product_Sales.objects.filter(product__is_feedstock=True).order_by('product')
+        elif postdata['submit'] == 'Productos terminados':
+            objetos = Product_Sales.objects.filter(product__is_feedstock=False).order_by('product')
+    elif form.is_valid():
+        print('En filtrar')
+        # Filtrar por producto si se proporciona
+        if form.cleaned_data.get('product'):
+            print(form.cleaned_data['product'])
+            objetos = objetos2.filter(product=form.cleaned_data['product']).order_by('store')        
+        # Filtrar por almacen si se proporciona
+        if form.cleaned_data.get('store'):
+            objetos = objetos2.filter(store=form.cleaned_data['store']).order_by('product')
+        # Filtrar por texto en product si se proporciona
+        if form.cleaned_data.get('product_texto'):
+            objetos = objetos.filter(product__name__icontains=form.cleaned_data['product_texto'])
+        # Filtrar por texto en almacen si se proporciona
+        if form.cleaned_data.get('store_texto'):
+            objetos = objetos.filter(
+                Q(store__name__icontains=form.cleaned_data['store_texto']) |
+                Q(store__address__icontains=form.cleaned_data['store_texto'])
+            )
+    else:
+        print(form.errors)
+
+    return render(request, template_name, {
+        'objetos': objetos,
+        'form': form
+    })
 
 class crear_producto_almacen(SuccessMessageMixin, CreateView):
     model = Product_Sales
@@ -316,6 +340,66 @@ class actualizar_producto_almacen(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse('productos_almacen')
 
+def lista_productos_inventario(request):
+    # Obtener y procesar filtros
+    print('En lista productos')
+    print(request.GET)
+    form = ProductAlmacenFilterForm(request.GET or None)
+    objetos = Product_Sales.objects.all().order_by('product')
+    objetos2 = Product_Sales.objects.all().select_related('product', 'store')
+    
+    if form.is_valid():
+        print('formvalid')
+        # Filtrar por producto si se proporciona
+        if form.cleaned_data.get('product'):
+            objetos = objetos2.filter(product=form.cleaned_data['product']).order_by('store')
+        
+        if request.GET.get('productos'):
+            objetos = objetos2.filter(product__is_feedstock=False).order_by('product')
+
+        if request.GET.get('materias'):
+            objetos = objetos2.filter(product__is_feedstock=True).order_by('product')
+
+        # Filtrar por almacen si se proporciona
+        if form.cleaned_data.get('store'):
+            objetos = objetos2.filter(store=form.cleaned_data['store']).order_by('product')
+        
+        # Filtrar por texto en product si se proporciona
+        if form.cleaned_data.get('product_texto'):
+            objetos = objetos.filter(product__name__icontains=form.cleaned_data['product_texto'])
+            
+        # Filtrar por texto en almacen si se proporciona
+        if form.cleaned_data.get('store_texto'):
+            objetos = objetos.filter(
+                Q(store__name__icontains=form.cleaned_data['store_texto']) |
+                Q(store__address__icontains=form.cleaned_data['store_texto'])
+            )
+    else:
+        print(form.errors)
+    
+    return render(request, 'catalog/actualiza_inventario.html', {
+        'objetos': objetos,
+        'form': form
+    })
+
+@csrf_exempt
+@require_POST
+def actualizar_inventario(request, pk, campo):
+    objeto = get_object_or_404(Product_Sales, pk=pk)
+    nuevo_valor = request.POST.get(campo)
+    campos_editables = ['count', 'available']
+
+    if campo not in campos_editables:
+        return JsonResponse({'status': 'error', 'message': 'Campo no editable'})
+    
+    try:
+        # Actualizar el valor
+        setattr(objeto, campo, nuevo_valor)
+        objeto.save()
+        return JsonResponse({'status': 'success', 'nuevo_valor': str(getattr(objeto, campo))})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)})
+    
 class eliminar_producto_almacen(SuccessMessageMixin, DeleteView):
     model = Product_Sales
     form = ProductAlmacenForm

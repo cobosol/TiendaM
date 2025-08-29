@@ -20,7 +20,7 @@ CART_ID_SESSION_KEY = 'cart_id'
 SESSION_DELIVERY = 'delivery'
 
 # Pedir el delivery por defecto envio habana pk = 3
-def get_delivery(request, delivery='3'):
+def get_delivery(request, delivery='1'):
     if request.session.get(SESSION_DELIVERY,'') == '':
         if request.user.is_authenticated:
             user = request.user
@@ -30,7 +30,7 @@ def get_delivery(request, delivery='3'):
             if (store):
                 set_delivery(request, str(store.pk))
             else:
-                set_delivery(request, str(3))
+                set_delivery(request, str(1))
         else:
            set_delivery(request, delivery)
            #request.session[SESSION_DELIVERY] = delivery

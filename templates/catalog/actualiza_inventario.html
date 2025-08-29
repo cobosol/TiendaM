@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@1.5.2/dist/select2-bootstrap4.min.css" rel="stylesheet">
+<style>
+.editable-field {
+    position: relative;
+    min-width: 120px;
+}
+
+.field-value {
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    display: inline-block;
+    min-width: 80px;
+    border: 1px solid transparent;
+}
+
+.field-value:hover {
+    background-color: #f8f9fa;
+    border: 1px dashed #ccc;
+}
+
+.field-input {
+    width: 100px;
+    display: inline-block;
+}
+
+.field-actions {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+/* Estilos para Select2 */
+.select2-container--bootstrap4 .select2-selection--single {
+    height: calc(1.5em + 0.75rem + 2px) !important;
+    padding: 0.375rem 0.75rem !important;
+}
+
+/* Indicador visual de que el campo es editable */
+.editable-field .field-value::after {
+    content: "✎";
+    margin-left: 5px;
+    opacity: 0.5;
+    font-size: 0.9em;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="container-fluid bg-secondary mb-2">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 60px">
+            <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Actualizar inventarios</h4>
+        </div>
+      </div>
+    
+    <!-- Formulario de Filtros -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Filtros</h5>
+        </div>
+        <div class="card-body">
+            <form method="get" id="filter-form">
+                <div class="row">
+                    <!-- Filtro por texto en productos -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="{{ form.product_texto.id_for_label }}">{{ form.product_texto.label }}</label>
+                            <input type="text" id="{{ form.product_texto.id_for_label }}" name="{{ form.product_texto.name }}" 
+                                   value="{{ form.product_texto.value|default:'' }}" class="form-control" 
+                                   placeholder="Por nombre...">
+                        </div>
+                    </div>
+                    
+                    <!-- Filtro por selección de Almacén -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="{{ form.store.id_for_label }}">{{ form.store.label }}</label>
+                            <select id="{{ form.store.id_for_label }}" name="{{ form.store.name }}" class="form-control select2">
+                                <option value="">Todos los Almacenes</option>
+                                {% for value, label in form.store.field.choices %}
+                                    <option value="{{ value }}" {% if form.store.value == value|stringformat:"s" %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Filtrar por productos terminados -->
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label> Filtrar por: </label>
+                            <input type="submit" id="terminados" class="btn btn-primary" name="productos" 
+                                   value="Productos" class="form-control">
+                        </div>
+                    </div>
+
+                    <!-- Filtrar por materias primas -->
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label> Filtrar por: </label>
+                            <input type="submit" id="terminados" class="btn btn-primary" name="materias" 
+                                   value="Materias primas" class="form-control">
+                        </div>
+                    </div>
+
+                </div>
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+                <a href="{% url 'lista_productos_inventario' %}" class="btn btn-secondary">Limpiar</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabla de Objetos -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5>Resultados</h5>
+            <span class="badge bg-secondary">{{ objetos.count }} productos</span>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped" id="tabla-objetos">
+                    <thead class="bg-primary text-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Almacén</th>
+                            <th>Cantidad (editable)</th>
+                            <th>A la venta (editable)</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for objeto in objetos %}
+                        <tr id="objeto-{{ objeto.id }}">
+                            <td>{{ objeto.id }}</td>
+                            <td>{{ objeto.product.name }}</td>
+                            <td>{{ objeto.store.name }}</td>
+                            <!-- Campo Cantidad editable -->
+                            <td>
+                                <div class="editable-field" data-field="count" data-pk="{{ objeto.id }}">
+                                    <span class="field-value">{{ objeto.count }}</span>
+                                    <input type="number" step="0.01" class="form-control field-input d-none" 
+                                           value="{{ objeto.count }}" data-original-value="{{ objeto.count }}">
+                                    <div class="field-actions d-none mt-1">
+                                        <button class="btn btn-success btn-sm save-btn">✓</button>
+                                        <button class="btn btn-secondary btn-sm cancel-btn">✕</button>
+                                    </div>
+                                </div>
+                            </td>
+                            <!-- Campo disponibles a la venta editable -->
+                            <td>
+                                <div class="editable-field" data-field="available" data-pk="{{ objeto.id }}">
+                                    <span class="field-value">{{ objeto.available }}</span>
+                                    <input type="number" step="0.01" class="form-control field-input d-none" 
+                                           value="{{ objeto.available }}" data-original-value="{{ objeto.available }}">
+                                    <div class="field-actions d-none mt-1">
+                                        <button class="btn btn-success btn-sm save-btn">✓</button>
+                                        <button class="btn btn-secondary btn-sm cancel-btn">✕</button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <form method="POST" action="eliminar/{{objeto.id}}">
+                                    {% csrf_token %}
+                                    <div class="btn-group">
+                                      <!-- Creamos 3 botones que son ver, Editar y Eliminar, nos sirven para gestionar nuestros registros o jugos -->
+                                      <!--<a href="detalle/{{elem.id}}" title="Ver" type="button" class="btn btn-success">Ver </a>-->
+                                      <a href="editar/{{objeto.id}}" title="Editar" type="button" class="btn btn-primary">Editar </a>
+                                      <button class="btn btn-danger" onclick="return eliminar();" type="submit">
+                                        Eliminar
+                                      </button>
+                                    </div>
+                                  </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">No se encontraron objetos</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery (necesario para Select2) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/i18n/es.js"></script>
+
+<script>
+// Función para obtener el token CSRF
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Inicializar Select2 cuando el documento esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar Select2 en español
+    if (typeof $.fn.select2 !== 'undefined') {
+        $('.select2').select2({
+            theme: 'bootstrap4',
+            language: 'es',
+            placeholder: "Seleccione una opción",
+            allowClear: true,
+            width: '100%'
+        });
+    } else {
+        console.error('Select2 no está disponible. Verifica que la librería se haya cargado correctamente.');
+    }
+    
+    // Función para activar la edición
+    function activateEdit(field) {
+        field.querySelector('.field-value').classList.add('d-none');
+        field.querySelector('.field-input').classList.remove('d-none');
+        field.querySelector('.field-actions').classList.remove('d-none');
+        field.querySelector('.field-input').focus();
+        
+        // Deshabilitar otros campos editables mientras se edita este
+        document.querySelectorAll('.editable-field').forEach(otherField => {
+            if (otherField !== field) {
+                otherField.style.opacity = '0.5';
+                otherField.style.pointerEvents = 'none';
+            }
+        });
+    }
+    
+    // Función para desactivar la edición
+    function deactivateEdit(field) {
+        field.querySelector('.field-value').classList.remove('d-none');
+        field.querySelector('.field-input').classList.add('d-none');
+        field.querySelector('.field-actions').classList.add('d-none');
+        
+        // Reactivar todos los campos editables
+        document.querySelectorAll('.editable-field').forEach(otherField => {
+            otherField.style.opacity = '';
+            otherField.style.pointerEvents = '';
+        });
+    }
+    
+    // Función para guardar los cambios
+    function saveChanges(field) {
+        var input = field.querySelector('.field-input');
+        var originalValue = input.dataset.originalValue;
+        var newValue = input.value.trim();
+        var pk = field.dataset.pk;
+        var fieldName = field.dataset.field;
+        
+        // Si el valor no cambió, simplemente desactivar edición
+        if (newValue === originalValue) {
+            deactivateEdit(field);
+            return;
+        }
+        
+        // Mostrar indicador de carga
+        var spinner = document.createElement('div');
+        spinner.className = 'spinner-border spinner-border-sm ms-2';
+        spinner.setAttribute('role', 'status');
+        field.appendChild(spinner);
+        
+        // Deshabilitar inputs durante la actualización
+        input.disabled = true;
+        field.querySelectorAll('button').forEach(btn => btn.disabled = true);
+        
+        // Enviar actualización al servidor
+        fetch(`/catalogo/productos_almacen/actualizar/${pk}/${fieldName}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `${fieldName}=${encodeURIComponent(newValue)}`
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                // Actualizar visualmente
+                field.querySelector('.field-value').textContent = data.nuevo_valor;
+                input.value = data.nuevo_valor;
+                input.dataset.originalValue = data.nuevo_valor;
+                
+                // Mostrar mensaje de éxito breve
+                var success = document.createElement('span');
+                success.className = 'text-success ms-2';
+                success.innerHTML = '<i class="fas fa-check"></i>';
+                field.appendChild(success);
+                
+                setTimeout(() => {
+                    success.remove();
+                }, 2000);
+            } else {
+                alert('Error: ' + data.message);
+                input.value = originalValue;
+            }
+        })
+        .catch(error => {
+            alert('Error de conexión: ' + error);
+            input.value = originalValue;
+        })
+        .finally(() => {
+            // Restaurar interfaz
+            spinner.remove();
+            input.disabled = false;
+            field.querySelectorAll('button').forEach(btn => btn.disabled = false);
+            deactivateEdit(field);
+        });
+    }
+    
+    // Asignar eventos a los campos editables
+    document.querySelectorAll('.editable-field').forEach(field => {
+        // Activar edición al hacer clic en el valor
+        field.querySelector('.field-value').addEventListener('click', function() {
+            activateEdit(field);
+        });
+        
+        // Guardar cambios al hacer clic en el botón Guardar
+        field.querySelector('.save-btn').addEventListener('click', function() {
+            saveChanges(field);
+        });
+        
+        // Cancelar edición al hacer clic en el botón Cancelar
+        field.querySelector('.cancel-btn').addEventListener('click', function() {
+            var input = field.querySelector('.field-input');
+            input.value = input.dataset.originalValue;
+            deactivateEdit(field);
+        });
+        
+        // Guardar cambios al presionar Enter en el input
+        field.querySelector('.field-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                saveChanges(field);
+            }
+        });
+        
+        // Cancelar edición al presionar Escape
+        field.querySelector('.field-input').addEventListener('keyup', function(e) {
+            if (e.key === 'Escape') {
+                this.value = this.dataset.originalValue;
+                deactivateEdit(field);
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

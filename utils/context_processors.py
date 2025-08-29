@@ -4,6 +4,15 @@ from tienda import settings
 from registration.models import Profile
 from stores.models import Store
 
+USD = 0
+CUP = 1
+MLC = 2
+
+MONEY_TYPE = ((USD,'USD'),
+                   (CUP,'CUP'),
+                   (MLC,'MLC'),
+                   )
+
 def tienda_generales(request):
     user = request.user
     MND = 'USD'
@@ -47,5 +56,6 @@ def tienda_generales(request):
         'site_name': settings.SITE_NAME,
         'meta_keywords': settings.META_KEYWORDS,
         'meta_description': settings.META_DESCRIPTION,
-        'request': request
+        'request': request,
+        'MONEY_TYPE': MONEY_TYPE
         }

@@ -109,3 +109,9 @@ class UpdateProfileAdminForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['money_type', 'prefered_store']
+
+from utils.context_processors import MONEY_TYPE
+
+class MNDForm(forms.Form):
+    mnd = forms.ChoiceField(choices=MONEY_TYPE)
+    
