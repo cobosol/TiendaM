@@ -27,7 +27,7 @@ def show_cart(request, template_name="cart/cart.html"):
         messages.warning(request, "Debe estar autenticado para acceder al carrito")
         url = reverse('login')
         return HttpResponseRedirect(url)
-    
+    cart.verify_mnd(request)
     form = DeliveryForm(request=request)
     price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
     MND = 'USD'
@@ -37,17 +37,17 @@ def show_cart(request, template_name="cart/cart.html"):
     try:
         if request.method == 'POST':
             postdata = request.POST.copy()
-            if postdata['submit'] == 'X':
+            if postdata['submit'] == 'X': # Eliminar producto del carrito
                 cart.remove_from_cart(request)
-            elif postdata['submit'] == '':
+            elif postdata['submit'] == '': # Actualizar cantidades del carrito (disminuir)
                 cart.update_cart(request)
-            elif postdata['submit'] == '>':
+            elif postdata['submit'] == '>': # Actualizar cantidades del carrito (aumentar)
                 cart.update_cart(request)
-            elif postdata['submit'] == 'Buscar':
+            elif postdata['submit'] == 'Buscar': # Buscar producto
                 productSearch = postdata['producto']
                 url = '/catalogo/productos/' + productSearch + '/'
                 return HttpResponseRedirect(url)
-            elif postdata['submit'] == 'Aplicar cupón':
+            elif postdata['submit'] == 'Aplicar cupón': # Aplicar cupón de descuento
                 if postdata['coupon'] == '':
                     text = "Debe introducir un código de cupón válido"
                     messages.error(request, text)
@@ -66,12 +66,12 @@ def show_cart(request, template_name="cart/cart.html"):
                         return HttpResponseRedirect(url)
             elif postdata['submit'] == 'Ir a pagar':
                     if MND == 'USD':
-                        if cart.cart_subtotal(request) < 2:
+                        """if cart.cart_subtotal(request) < 2:
                             text = "El monto mínimo para la compra en línea es de 2.00 USD"
                             messages.error(request, text)
                             cart_url = reverse('show_cart')
-                            return HttpResponseRedirect(cart_url)
-                        url = reverse('checkout')
+                            return HttpResponseRedirect(cart_url) """
+                        url = reverse('reservar') #reverse('checkout') Mientras no esté activa la plataforma de pagos
                         return HttpResponseRedirect(url)
                     else:
                         url = reverse('pagar')

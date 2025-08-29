@@ -239,7 +239,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
                 amounth_discount = "True"
                 mount = 100 - round((order.base_total / order.total_items * 100 ), 0)
                 order.others_discount = mount
-            order.end_total = order.base_total + order.delivery_price
+            order.end_total = order.base_total + decimal.Decimal(order.delivery_price)
             try:
                 if request.session['active_coupon']:
                     coupon = CouponValidator.validate(request.session['active_coupon'],request.user)

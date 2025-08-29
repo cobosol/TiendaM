@@ -142,8 +142,11 @@
                 </div>  -->
                 <div id="Info entrega" class="col-lg-12">
                     <p><h6 class="font-weight-medium text-dark" style="font-family: sans-serif;">
-                        Los<strong> envíos a domicilio </strong>implican un costo adicional que debe colegiar previamente. 
+                        Los<strong> envíos a domicilio </strong> dentro de <strong> La Habana </strong>implican un costo adicional que debe colegiar previamente. 
                         Contáctenos a través del siguiente enlace a nuestro grupo de WhatsApp:
+                        <br>
+                        <br>
+                        Por lo pronto no tenemos envíos fuera de La Habana 
 
                     </h6></p>
                 </div>
@@ -187,8 +190,10 @@
                         <input type="text" name="coupon" class="form-control form-control-sm bg-transparent text-center" placeholder="código del cupón">
                         <input type="submit" class="btn btn-block btn-success my-2 py-2" name="submit" value="Aplicar cupón" alt="Checkout" />
                         <br>
-                        {% if MND == 'USD' %}
-                            <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Reservar" alt="Checkout" />
+                        {% if MND == 'MLC' or MND == 'CUP'%}
+                        <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Ir a pagar" alt="Checkout" />
+                        {% else %}
+                        <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Reservar" alt="Checkout" />
                         {% endif %}
                         {% if vendedor == 'True' or comercial == 'True' %}
                         {% if MND == 'USD' or MND == 'CUP'%}

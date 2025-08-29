@@ -127,7 +127,6 @@
                             <a href="{% url 'profile' %}" class="nav-item nav-link  text-primary" style="font-family: sans-serif;">Perfil  </a> / 
                             <a href="{% url 'logout' %}" class="nav-item nav-link text-primary" style="font-family: sans-serif;">Salir</a>
                             {% endif %}
-                            {% if adminAccess == 'True' %}
                             <div style="padding-left: 2ch;">                    
                                 <form method="post" action="{% url 'update_mnd' %}">
                                     {% csrf_token %}
@@ -142,7 +141,6 @@
                                     </select>
                                 </form>
                             </div>
-                            {% endif %}
                         </div>
 
                     </div>

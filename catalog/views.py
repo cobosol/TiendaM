@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 import uuid
 from django.core.files.base import ContentFile
 from base64 import b64decode
-
+import logging
 #Librerías para mensajes, algunos basados en views
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin 
@@ -222,7 +222,7 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
             elif postdata['submit'] == 'Comprar':
                 product_slug = postdata.get('product_slug','') 
                 if not cart.add_to_cart(request, product_slug, quantity=postdata['quantity']):
-                    url = '/accounts/login/'
+                    url = reverse('catalogo_productos')
                     return HttpResponseRedirect(url)  
                 else:
                     flag = True
@@ -398,7 +398,8 @@ def actualizar_inventario(request, pk, campo):
         objeto.save()
         return JsonResponse({'status': 'success', 'nuevo_valor': str(getattr(objeto, campo))})
     except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)})
+        logging.exception("Error actualizando inventario:")
+        return JsonResponse({'status': 'error', 'message': 'Ha ocurrido un error interno. Por favor, inténtalo de nuevo más tarde.'})
     
 class eliminar_producto_almacen(SuccessMessageMixin, DeleteView):
     model = Product_Sales

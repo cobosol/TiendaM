@@ -59,3 +59,7 @@ def tienda_generales(request):
         'request': request,
         'MONEY_TYPE': MONEY_TYPE
         }
+
+def active_mnd(request):
+    profile = get_object_or_404(Profile, user = request.user)
+    return profile.MONEY_TYPE[profile.money_type][1]

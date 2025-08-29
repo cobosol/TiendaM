@@ -17,6 +17,7 @@ from stores.models import Store
 from .forms import ProfileForm, UserCreationFormWithEmail, EmailForm, UpdateProfileAdminForm
 #Librerías para mensajes, algunos basados en views
 from django.contrib import messages
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.contrib.messages.views import SuccessMessageMixin 
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
@@ -186,15 +187,14 @@ def update_profile_admin2(request, template_name="registration/update_profile_ad
 @login_required
 @require_POST
 def update_mnd(request):
-    print('En el update mnd')
     form = MNDForm(request.POST)
     if form.is_valid():
-        print('Form valid')
         profile = get_object_or_404(Profile, user = request.user)
-        print(form.cleaned_data['mnd'])
         profile.money_type =  form.cleaned_data['mnd']
-        print(profile.money_type)
         profile.save()
     # Redirige a la misma página desde donde se envió el formulario
     next_url = request.POST.get('next', '/')  # Valor por defecto si no hay 'next'
-    return redirect(next_url)
+    if url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
+        return redirect(next_url)
+    else:
+        return redirect('/')
