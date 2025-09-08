@@ -6,7 +6,7 @@ from django.conf import settings
 from .utils import send_coupon
 import datetime
 
-@receiver(post_save, sender=Order)
+""" @receiver(post_save, sender=Order)
 def generate_first_purchase_coupon(sender, instance, created, **kwargs):
     if instance.status == instance.PROCESSED:
         user = instance.user
@@ -22,4 +22,4 @@ def generate_first_purchase_coupon(sender, instance, created, **kwargs):
             
             # Enviar cupón de forma asincrónica
             from .tasks import send_coupon_task
-            send_coupon_task(user.id, coupon.pk)
+            send_coupon_task(user.id, coupon.pk) """

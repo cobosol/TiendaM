@@ -78,6 +78,7 @@ class Order(models.Model):
     last_updated = models.DateTimeField(auto_now=True, verbose_name = "Última actualización")
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE, verbose_name = "Usuario")
     transaction_id = models.CharField(max_length=20, help_text="No. de transacción", verbose_name = "Nro. Transacción")
+    vale_salida = models.CharField(max_length=20, null=True, blank=True, help_text="Vale salida almacén", verbose_name = "Vale almacén")
     delivery_price = models.IntegerField(verbose_name="Precio de envío", default=0)
     base_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total base")
     end_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total final con descuento y envío")
@@ -436,7 +437,7 @@ class OrderItem(models.Model):
         else:
             cup_price = self.price
 
-        return cup_price + 5 - (cup_price % 5)
+        return (cup_price) + 10 - (cup_price % 10) if (cup_price % 10) > 0 else cup_price
 
     @property
     def sku(self):

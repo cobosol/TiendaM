@@ -149,7 +149,7 @@ class Product(models.Model):
     def price_cup(self):
         price_actual = Price.objects.filter(is_active=True)[0]
         p = self.price_base * price_actual.change_usd_cup
-        return (p) + 5 - (p % 5) if (p % 5) > 0 else p
+        return (p) + 10 - (p % 10) if (p % 10) > 0 else p
         
     @property
     def price_mlc(self):

@@ -214,11 +214,11 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
                 form = SelectCategoryForm(request, postdata)
                 form.selected_category = postdata['selected_category']
                 c = get_object_or_404(Category, pk=postdata['selected_category'])
-                object_list = c.product_set.all()
+                object_list = c.product_set.filter(is_active=True)
             elif postdata['submit'] == 'Materias primas':
-                object_list = Product.objects.filter(is_feedstock=True)
+                object_list = Product.objects.filter(is_feedstock=True, is_active=True)
             elif postdata['submit'] == 'Productos terminados':
-                object_list = Product.objects.filter(is_feedstock=False)
+                object_list = Product.objects.filter(is_feedstock=False, is_active=True)
             elif postdata['submit'] == 'Comprar':
                 product_slug = postdata.get('product_slug','') 
                 if not cart.add_to_cart(request, product_slug, quantity=postdata['quantity']):
@@ -231,11 +231,11 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
                 url = reverse('catalogo_productos')
                 return HttpResponseRedirect(url)
         else:
-            object_list = Product.objects.all()
+            object_list = Product.objects.filter(is_active=True)
     except:
         text = "Error al seleccionar la categoria"
         messages.error(request, text)
-        object_list = Product.objects.all()
+        object_list = Product.objects.filter(is_active=True)
     context={'object_list':object_list, 'form':form}
     return render(request, template_name, context)
 
@@ -342,8 +342,6 @@ class actualizar_producto_almacen(SuccessMessageMixin, UpdateView):
 
 def lista_productos_inventario(request):
     # Obtener y procesar filtros
-    print('En lista productos')
-    print(request.GET)
     form = ProductAlmacenFilterForm(request.GET or None)
     objetos = Product_Sales.objects.all().order_by('product')
     objetos2 = Product_Sales.objects.all().select_related('product', 'store')

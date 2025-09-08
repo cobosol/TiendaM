@@ -19,6 +19,7 @@ urlpatterns = [
     path("transfer/<order_id>/", views.transfer_pay, name='transfer_pay'),
     path("notification/", views.payment_notification, name='notification'),
     path("gestion/", views.admin_orders_list, name='admin_orders_list'),
+    path("actualiza_orden/", views.vendedor_orders_list, name='vendedor_orders_list'),
     path("resumen_diario/", views.create_daily_summary, name='resumen'),
     path('venta-productos/', views.sales_products, name='venta_productos'),
     path('venta-clientes/', views.sales_client, name='venta_clientes'),

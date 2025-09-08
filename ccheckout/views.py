@@ -378,25 +378,19 @@ def pagar(request, template_name='checkout/pagar.html'):
 @login_required
 def reserve(request, template_name='checkout/reserve.html'):
     # Reservar productos sin pagar
-    print("En reserve")
     MD = 'USD'
     st_name = cart.delivery_Store(request).name # Nombre del tipo de entrega
     if cart.is_empty(request): #Si el carrito está vacío
         cart_url = reverse('show_cart')
         return HttpResponseRedirect(cart_url) # Vuelvo al carrito
     if request.method == 'POST': # Analizo todas las funcionalidades disponibles
-        print("En post de reserve")
         postdata = request.POST.copy()
         if postdata['submit'] == 'Reservar': # Cuando el cliente va a reservar sin pagar
-            print("En boton reservar")
             if st_name == 'Envío Habana':
-                print("Envío Habana")
                 form = ReserveForm(postdata) #Guardo los datos que vienen en la form con datos de entrega
             else:
-                print("No envío")
                 form = ReserveEForm(postdata) #Guardo los datos que vienen en la form sin datos de entrega
             if form.is_valid(): # Si trae todos los datos necesarios
-                print("Form valid")
                 user = request.user
                 profile = get_object_or_404(Profile, user = user)
                 MD = profile.MONEY_TYPE[profile.money_type][1] # Guardo el tipo de moneda con que está el cliente
@@ -405,7 +399,6 @@ def reserve(request, template_name='checkout/reserve.html'):
                     fail = reverse('show_cart')
                     return HttpResponseRedirect(fail) # Vuelvo al carrito
                 if order_number: # Si se generó correctamente la orden
-                    print("Creo la orden")
                     request.session['order_number'] = order_number['order_number'] #Guardo el número de orden en la sesión
                     order = Order.objects.filter(id=order_number['order_number'])[0] #Construyo la orden a partir del numero
                     order.update_status(Order.PROCESSED) # Actualizo el status a procesada.
@@ -415,8 +408,7 @@ def reserve(request, template_name='checkout/reserve.html'):
                     receipt_url = order.get_paided_url() # Capturo elurl de detales de la orden
                     return HttpResponseRedirect(receipt_url) # redirijo a los detalles
             else:
-                print("Error en los datos de entrada")
-                print(form.errors)
+                messages.error(request, 'Error. Por favor contacte a los administradores del sitio')
     else: #Si no es llamada post. Cargar la página normal
         if st_name == 'Envío Habana':
             form = ReserveForm() # construyo la form con datos de entrega
@@ -463,10 +455,8 @@ def create_daily_summary(request):
         if not order_form.is_valid():
             messages.error(request, "Por favor corrija los errores en order_form")
         elif not formset.is_valid():
-            print(formset.errors)
             messages.error(request, "Por favor corrija los errores en formset")
         else:
-            print('No hay error de validacion')
             if MD == 'USD':
                 order_number = create_order(request, 4, True, True) # Crear la orden con tipo de transacción 3 usd en cach
                 if order_number['order_number'] == -1:
@@ -600,6 +590,55 @@ def orders_list(request, template_name='checkout/orders_list.html'):
             order_number = postdata['order_id']
             return export_pdf(request, order_number)
     user_name = request.user.first_name + " " + request.user.last_name
+    return render(request, template_name, locals())
+
+# view de la lista de ordenes (compras) relizadas a la tienda
+def vendedor_orders_list(request, template_name='checkout/vendedor_orders_list.html'):
+
+    #orders = Order.objects.filter(date__range=[start, end]).order_by('-date')
+    orders = Order.objects.filter(status__in = [1,2]).order_by('-date')
+    
+    filter = FiltroOrderVendedor
+
+    store_name = request.GET.get('store_name')
+    currency = request.GET.get('currency')
+    user = request.GET.get('user')
+
+
+    if user:
+        if user != '':
+            orders= orders.filter(user=user).order_by('-date')
+
+    if store_name:
+        if store_name!='':
+            orders = orders.filter(store_name__icontains = store_name).order_by('-date')
+
+    if currency:
+        if currency!='':
+            orders = orders.filter(currency__icontains=currency).order_by('-date')
+    
+    if request.method == 'POST':
+        postdata = request.POST.copy()
+        if postdata['submit'] == 'Factura':
+            order_number = postdata['order_id']
+            return export_pdf(request, order_number)
+        elif postdata['submit'] == 'Entregada':
+            order_number = postdata['order_id']
+            order = get_object_or_404(Order,id=order_number)
+            order.vale_salida = postdata['vale']
+            order.status = order.DELIVERED
+            order.save()
+        elif postdata['submit'] == 'Pagada':
+            order_number = postdata['order_id']
+            order = get_object_or_404(Order,id=order_number)
+            order.transaction_id = postdata['transaccion']
+            order.status = order.PAIDED
+            order.save()
+        """ if postdata['submit'] == 'Detalles':
+            order_id = postdata['order_id']
+            template = 'checkout/details.html'
+            return redirect(reverse('details')) """
+    user_name = ""
     return render(request, template_name, locals())
 
 # view de la lista de ordenes (compras) relizadas a la tienda

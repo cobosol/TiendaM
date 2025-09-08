@@ -56,8 +56,8 @@ def notification_sale(request):
 
 def notification_reserve(request):
     name = request.user.username
-    email = "ycoca@produccionesmuhia.ca"
-    email2 = "ycocab@gmail.com"
+    email = "comercial@produccionesmuhia.ca"
+    email2 = "presidencia@produccionesmuhia.ca"
     order_number = request.session.get('order_number','')
     if order_number:
         order = Order.objects.filter(id=order_number)[0]
@@ -71,7 +71,7 @@ def notification_reserve(request):
         )
     e_mail2 = EmailMessage(
         subject,
-        "Estimado {}: \n\n{}".format("ycocab", content),
+        "Estimada {}: \n\n{}".format("Inés", content),
         EMAIL_HOST_USER, # Correo servidor
         [email2] # Para quien va el mensaje
         )

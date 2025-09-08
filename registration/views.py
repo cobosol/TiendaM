@@ -55,32 +55,37 @@ class CustomPasswordResetView(PasswordResetView):
 
 def registro(request):
     if request.method == 'POST':
-        form = UserCreationFormWithEmail(request.POST)
-        if form.is_valid():
-            usuario = form.save(commit=False)
-            usuario.is_active = False  # Usuario inactivo hasta activación
-            usuario.first_name = form.cleaned_data['first_name']
-            usuario.last_name = form.cleaned_data['last_name']
-            usuario.save()
+        try:
+            form = UserCreationFormWithEmail(request.POST)
+            if form.is_valid():
+                usuario = form.save(commit=False)
+                usuario.is_active = False  # Usuario inactivo hasta activación
+                usuario.first_name = form.cleaned_data['first_name']
+                usuario.last_name = form.cleaned_data['last_name']
+                usuario.save()
             
-            # Crear correo de activación
-            asunto = 'Activa tu cuenta'
-            html_content = render_to_string('registration/activacion_cuenta.html', {
-                'usuario': usuario,
-                'dominio': request.META['HTTP_HOST'],
-                'uid': urlsafe_base64_encode(force_bytes(usuario.pk)),
-                'token': token_activacion.make_token(usuario),
-            })
-            email = EmailMultiAlternatives(
-                asunto,
-                "Por favor activa tu cuenta",
-                EMAIL_HOST_USER,
-                to=[usuario.email]
-            )
-            email.attach_alternative(html_content, "text/html")
-            email.send()
-            
-            return redirect('confirmacion_envio')
+                # Crear correo de activación
+                asunto = 'Activa tu cuenta'
+                html_content = render_to_string('registration/activacion_cuenta.html', {
+                    'usuario': usuario,
+                    'dominio': request.META['HTTP_HOST'],
+                    'uid': urlsafe_base64_encode(force_bytes(usuario.pk)),
+                    'token': token_activacion.make_token(usuario),
+                })
+                email = EmailMultiAlternatives(
+                    asunto,
+                    "Por favor activa tu cuenta",
+                    EMAIL_HOST_USER,
+                    to=[usuario.email]
+                )
+                email.attach_alternative(html_content, "text/html")
+                email.send()
+                messages.success(request,"Correo de activación enviado con éxito")
+                return redirect('confirmacion_envio')
+            else:
+                messages.error(request,"Error de validación de la form")
+        except:
+            messages.error('Error desconocido. Contacte con la administración')
     else:
         form = UserCreationFormWithEmail()
     return render(request, 'registration/signup.html', {'form': form})
@@ -96,9 +101,11 @@ def activar_cuenta(request, uidb64, token):
         usuario.is_active = True
         usuario.save()
         login(request, usuario)
+        print('activada')
         return redirect('cuenta_activada')
-    else:
-        return render(request, 'registration/activacion_invalida.html')        
+    else: 
+        print('No activada')
+        return redirect('signup') #render(request, 'registration/activacion_invalida.html')        
 
 def confirmacion_envio(request):
     return render(request, 'registration/confirmacion_envio.html')        
@@ -183,6 +190,11 @@ def update_profile_admin2(request, template_name="registration/update_profile_ad
             print("Error") 
     form = UpdateProfileAdminForm()
     return render(request, template_name, locals())
+
+def users_list(request, template_name="registration/users_list.html"):
+    perfiles = Profile.objects.all().order_by('-user__date_joined')
+    return render(request, template_name, locals())
+
 
 @login_required
 @require_POST

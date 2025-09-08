@@ -144,7 +144,6 @@ def create_order(request, transaction_id, usd = True, cach = False):
         results = {'order_number':-1,'message':'No se pudo crear la orden'}
         return results
     order = Order() # Creo la nueva orden vacía
-    print("Orden crada vacía")
     store = cart.delivery_Store(request) # Capturo el almacen
     price2 = Price.objects.filter(is_active=True)[0] # Capturo la configuración de precio actual
     user = request.user # capturo el usuario registrado
@@ -152,7 +151,6 @@ def create_order(request, transaction_id, usd = True, cach = False):
     MND = profile.MONEY_TYPE[profile.money_type][1] # Saco el tipo de moneda del usuario
     results = {} # Crear variable para la respuesta
     if transaction_id == 2: # Reservar
-        print("En transaction id 2")
         checkout_form = PagarForm(request.POST, instance=order)
         order = checkout_form.save(commit=False)
         order.currency = 'USD'
@@ -168,7 +166,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
             order.currency = 'CUP'
         else:
             order.currency = 'MLC'
-    elif transaction_id == 4: # Resumen dario
+    elif transaction_id == 4: # Resumen diario
         checkout_form = DailySummaryForm(request.POST, instance=order)
         if checkout_form.is_valid():
             order = checkout_form.save(commit=False)
@@ -362,7 +360,6 @@ def export_pdf(request, id_orden):
     order = Order.objects.filter(id=id_orden)[0] 
     #Generando reporte PDF
     if order.is_daily_summary:
-        print(f"Factura resumen diario {order.transaction_id}")
         check = checkOrderSummary(id_order=id_orden)
         # Procesar métodos de pago con detalles
         payment_methods = []
@@ -404,7 +401,6 @@ def export_pdf(request, id_orden):
             template_src = 'checkout/factura_resumen_diario.html' 
     elif order.transaction_id == '3': # Factura por contrato order.user.groups.filter(name__in=['comercial']):
         template_src = 'checkout/factura_por_contrato.html'
-        print(f"Factura por contrato {order.transaction_id}")
         data['first_name'] = order.payment_name
         data['email'] = order.payment_email
         data['phone'] = order.payment_phone
@@ -412,7 +408,6 @@ def export_pdf(request, id_orden):
         data['details'] = order.payment_details
         data['importe'] = decimal.Decimal(round(order.total, 2))
     elif order.user.groups.filter(name__in=['vendedores']):
-        print(f"Factura punto de venta{order.transaction_id}")
         template_src = 'checkout/factura_punto_de_venta.html'
         data['first_name'] = order.payment_name
         data['last_name'] = order.user.first_name + ' ' + order.user.last_name
@@ -420,15 +415,15 @@ def export_pdf(request, id_orden):
         data['phone'] = order.payment_phone 
         data['importe'] = decimal.Decimal(round(order.total, 2))
     else:
-        print(f"Factura venta online {order.transaction_id}")
         template_src = 'checkout/factura_venta_online.html'
         data['first_name'] = order.payment_name
         data['last_name'] = order.user.username + ': ' + order.user.first_name + ' ' + order.user.last_name
         data['email'] = order.payment_email
         data['phone'] = order.payment_phone
         data['importe'] = decimal.Decimal(round(order.total, 2))
+        data['status'] = order.statusS
     template = get_template(template_src)
-    data['id_order'] = id_orden
+    data['id_order'] = str(id_orden).zfill(6)
     orders = OrderItem.objects.filter(order=id_orden).order_by('product')
     discount = False
     for item in orders:
