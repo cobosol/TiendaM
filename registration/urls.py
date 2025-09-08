@@ -10,6 +10,7 @@ urlpatterns = [
     path('profile/admin/', views.update_profile_admin2, name = 'profile_admin'),
     path('profile/email/', EmailUpdate.as_view(), name = 'profile_email'),
     path('update-mnd/', views.update_mnd, name='update_mnd'),
+    path('users_list/', views.users_list, name='users_list'),
     
     path('registro/', views.registro, name='registro'),
     path('confirmacion-envio/', views.confirmacion_envio, name='confirmacion_envio'),

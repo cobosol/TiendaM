@@ -20,10 +20,12 @@ import random
 CART_ID_SESSION_KEY = 'cart_id'
 SESSION_DELIVERY = 'delivery'
 
-# Pedir el delivery por defecto envio habana pk = 3
+# Pedir el delivery por defecto entrega en planta pk = 1
 def get_delivery(request, delivery='1'):
-    if request.session.get(SESSION_DELIVERY,'') == '':
-        if request.user.is_authenticated:
+    delivery = '1'
+    if request.session.get(SESSION_DELIVERY,'') != '1':
+        set_delivery(request, '1')
+        """ if request.user.is_authenticated:
             user = request.user
             profile = get_object_or_404(Profile, user = user)
             #print(profile.prefered_store)
@@ -34,9 +36,12 @@ def get_delivery(request, delivery='1'):
                 set_delivery(request, str(1))
         else:
            set_delivery(request, delivery)
-           #request.session[SESSION_DELIVERY] = delivery
+           #request.session[SESSION_DELIVERY] = delivery """
     try:
         deliveryInfo = get_object_or_404(DeliveryInfo, client=request.user)
+        deliveryInfo.storeDelivery = get_object_or_404(Store, pk=delivery)
+        deliveryInfo.deliveryZone = 0
+        deliveryInfo.save()
     except:
         deliveryInfo = DeliveryInfo()
         deliveryInfo.client = request.user
@@ -298,7 +303,7 @@ def cart_delivery_price(request, amount, MND):
         deliveryObj.deliveryZone = 0
         deliveryObj.save()
     cart_delivery = decimal.Decimal('0.00')
-    if price.get_min_delivery_free(MND) > 0:
+    """ if price.get_min_delivery_free(MND) > 0:
         if amount >= price.get_min_delivery_free(MND):
             return cart_delivery 
         else:
@@ -306,7 +311,7 @@ def cart_delivery_price(request, amount, MND):
                 falta = price.get_min_delivery_free(MND) - amount
                 c = round(falta, 2)
                 text = "Le faltan $" + str(c) + " del monto total, para acceder a nuestra oferta de envío gratis."
-                messages.info(request, text)
+                messages.info(request, text) """
     cart_products = get_cart_items(request)
     stores = get_stores(request)
     MND = 'USD'

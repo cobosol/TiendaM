@@ -33,6 +33,9 @@ def show_cart(request, template_name="cart/cart.html"):
     MND = 'USD'
     user = request.user
     profile = get_object_or_404(Profile, user = user)
+    #No hay envío, solo recogida en planta
+    profile.prefered_store = get_object_or_404(Store, pk=1)
+    print(profile.prefered_store.name)
     MND = profile.MONEY_TYPE[profile.money_type][1]
     try:
         if request.method == 'POST':
@@ -105,10 +108,10 @@ def show_cart(request, template_name="cart/cart.html"):
         messages.error(request, str(e))
 
     cart_items = cart.get_cart_items(request)
-    for cart_i in cart_items:
+    """ for cart_i in cart_items:
         text = cart_i.discount_message()
         if text != "":
-            messages.info(request, text)
+            messages.info(request, text) """
     page_title = 'Shopping Cart'
     cart_subtotal = cart.cart_subtotal(request)
     cart_delivery = cart.cart_delivery_price(request, cart_subtotal, MND)

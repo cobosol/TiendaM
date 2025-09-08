@@ -70,7 +70,7 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle text-primary" data-toggle="dropdown" style="font-family: sans-serif;">Compras</a>
                                 <div class="dropdown-menu rounded-0 m-0">   
-                                    <a href="/tiendas/" style="font-family: sans-serif;"><i class="dropdown-item">Entregas</i></a>
+<!--                                     <a href="/tiendas/" style="font-family: sans-serif;"><i class="dropdown-item">Entregas</i></a> -->
                                     <a href="/carrito/carrito/" style="font-family: sans-serif;"><i class="dropdown-item">Carrito</i></a>
                                     {% if request.user.is_authenticated %}
                                     <a href="/compra/compras/" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Compras realizadas</i></a>
@@ -102,10 +102,12 @@
                                     {% if vendedor == 'True' or request.user.is_staff or comercial == 'True'%}
                                         <a href="{% url 'gestion' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar productos</i></a>
                                         <a href="/accounts/profile/admin/" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Cambiar moneda</i></a>
+                                        <a href="{% url 'vendedor_orders_list' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Listar órdenes a entregar</i></a>                                        
                                     {% endif %}
                                     {% if marketing == 'True' or request.user.is_staff %}
                                         <a href="{% url 'banners' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar banners</i></a>
                                         <a href="{% url 'offers' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar ofertas</i></a>
+                                        <a href="{% url 'users_list' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Listar usuarios</i></a>
                                     {% endif %}
                                 </div>
                             </div>
@@ -299,8 +301,8 @@
                 <p class="mb-md-0 text-light" style="font-family: sans-serif;">
                     &copy; <a class="text-light font-weight-semi-bold" href="#">Producciones MUHIA</a>. Todos los derechos reservados.                  
                     </br>
-                    <a class="text-light font-weight-semi-bold" href="#">CoBosi</a>.
-                    <a class = "text-light"> <small>V_1.0 2024 </small></a>
+                    <a class="text-light font-weight-semi-bold" href="#">CoBosis</a>.
+                    <a class = "text-light"> <small>V_2.0 2025 </small></a>
                 </p>
             </div>
 <!--         </div> -->

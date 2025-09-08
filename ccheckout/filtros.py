@@ -6,6 +6,11 @@ class FiltroOrderAdmin(django_filters.FilterSet):
         model = Order
         fields = ['status', 'user', 'store_name', 'currency']
 
+class FiltroOrderVendedor(django_filters.FilterSet):
+    class Meta:
+        model = Order
+        fields = ['user', 'currency']
+
 class FiltroOrder(django_filters.FilterSet):
     class Meta:
         model = Order

@@ -86,7 +86,7 @@
             {% for item in orders %}
             <tr>
                 <td class="table-info-td" style="width: 250px;"> {{ item.name }} </td>
-                <td class="table-info-td" style="width: 100px;"> {{ item.price_CUP|currency }} </td>
+                <td class="table-info-td" style="width: 100px;"> {{ item.product.price_cup|currency }} </td>
                 <td class="table-info-td" style="width: 70px;"> {{ item.quantity }} </td>
                 <td class="table-info-td" style="width: 100px;"> {{ item.total_base_CUP|currency }} </td>
             </tr>

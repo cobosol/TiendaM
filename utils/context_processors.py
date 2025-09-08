@@ -10,8 +10,9 @@ MLC = 2
 
 MONEY_TYPE = ((USD,'USD'),
                    (CUP,'CUP'),
-                   (MLC,'MLC'),
                    )
+
+#(MLC,'MLC'),
 
 def tienda_generales(request):
     user = request.user
