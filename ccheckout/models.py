@@ -80,18 +80,29 @@ class Order(models.Model):
     transaction_id = models.CharField(max_length=20, help_text="No. de transacción", verbose_name = "Nro. Transacción")
     vale_salida = models.CharField(max_length=20, null=True, blank=True, help_text="Vale salida almacén", verbose_name = "Vale almacén")
     delivery_price = models.IntegerField(verbose_name="Precio de envío", default=0)
+    # Solo suma de precio de los items - descuentos básicos
     base_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total base")
+    # base_total + envio - monedero
     end_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total final con descuento y envío")
+
+    # base_total + envío
     usd_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total en USD")
     cup_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total en CUP")
     mlc_total = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total en MLC")
+    cup_oficial = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total en CUP oficial")
+
+    # Total reportado para los resumenes diarios
     total_reported = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total reportado")
-    store_name = models.CharField(max_length=200, default="Envío Habana", verbose_name = "Nombre del tipo de entrega")
+    # Descuentos
     coupon_percent = models.PositiveIntegerField(default=0, verbose_name="Porciento de descuento de cupón")
     others_discount = models.PositiveIntegerField(default=0, verbose_name="Porciento de otros descuentos")
-    pay_url = models.URLField(verbose_name="URL de pago", blank = True, null=True, default="")
+    wallet_discount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name="descuento del monedero")
+
+    # Configuración de monedas, sus cambios y de los descuentos
     currency = models.CharField(max_length=3, default="USD", verbose_name = "Tipo de moneda")
     price = models.ForeignKey(Price, on_delete = models.PROTECT, blank = True, null=True, verbose_name="Valores para el cálculo del Precio de la compra")
+    store_name = models.CharField(max_length=200, default="Envío Habana", verbose_name = "Nombre del tipo de entrega")
+    pay_url = models.URLField(verbose_name="URL de pago", blank = True, null=True, default="")
     coupon = models.ForeignKey('Coupon', on_delete=models.SET_NULL, null=True, blank=True, related_name='orders', verbose_name="Cupón de descuento")
     is_daily_summary = models.BooleanField(default=False, verbose_name="Es resumen diario")
     seller = models.ForeignKey(User, related_name="order_sumary", on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Vendedor")
@@ -128,26 +139,41 @@ class Order(models.Model):
         return 'Orden #' + str(self.id)
 
     def save(self, *args, **kwargs):
-        if self.end_total is None or self.end_total == 0:
-            self.end_total = self.total_items + decimal.Decimal(self.delivery_price)
         if self.base_total is None or self.base_total == 0:
-            self.base_total = self.total_items 
+            self.base_total = self.total_items
+        if self.end_total is None or self.end_total == 0:
+            self.end_total = self.base_total + decimal.Decimal(self.delivery_price)
+            if self.wallet_discount:
+                self.end_total = self.end_total - self.wallet_discount 
+        if self.cup_oficial is None or self.cup_oficial == 0:
+            if self.currency == 'CUP':
+                    self.cup_oficial = self.base_total 
+            else:
+                self.cup_oficial = self.base_total * 120 # Crear una variable cambio oficial en Price
+
         if self.total_reported == 0.00:
             self.total_reported = self.end_total
         if self.price:
             if self.currency == 'USD':
-                self.usd_total = self.base_total
-                self.cup_total = self.base_total * self.price.change_usd_cup
-                self.mlc_total = self.base_total * self.price.change_usd_mlc
+                self.usd_total = self.base_total   #No voy a incluir el envío
+                self.cup_total = (self.base_total) * self.price.change_usd_cup 
+                self.mlc_total = (self.base_total) * self.price.change_usd_mlc
             elif self.currency == 'CUP':
-                self.usd_total = self.base_total / self.price.change_usd_cup
+                self.usd_total = (self.base_total) / self.price.change_usd_cup
                 self.cup_total = self.base_total
-                self.mlc_total = self.base_total / self.price.change_usd_cup * self.price.change_usd_mlc
+                self.mlc_total = (self.base_total) / self.price.change_usd_cup * self.price.change_usd_mlc
             else:
-                self.usd_total = self.base_total / self.price.change_usd_mlc
-                self.cup_total = self.base_total / self.price.change_usd_mlc * self.price.change_usd_cup
+                self.usd_total = (self.base_total) / self.price.change_usd_mlc
+                self.cup_total = (self.base_total) / self.price.change_usd_mlc * self.price.change_usd_cup
                 self.mlc_total = self.base_total
         super().save(*args, **kwargs)
+
+    @property
+    def get_wallet_discount(self):
+        if self.currency == 'CUP':
+            return self.wallet_discount  
+        else:
+            return self.wallet_discount/120
 
     @property
     def total_items(self):
@@ -159,7 +185,7 @@ class Order(models.Model):
         return total
     
     #Revisar esto
-    @property
+    """ @property
     def total_CUP(self):
         if self.currency == 'USD':
             total = decimal.Decimal('0.00')
@@ -169,14 +195,14 @@ class Order(models.Model):
                 total = total + decimal.Decimal(t)
             return total * self.price.change_usd_cup
         else:
-            return self.end_total
+            return self.end_total """
     
     @property
     def total(self):
         if self.end_total != 0:
             return self.end_total
         else:
-            return self.total_items + decimal.Decimal(self.delivery_price) 
+            return self.total_items + decimal.Decimal(self.delivery_price) - self.total_items*self.coupon_percent/100 -  self.wallet_discount
 
     @property
     def statusS(self):

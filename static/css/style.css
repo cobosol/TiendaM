@@ -9735,3 +9735,41 @@ table#receipt{
   cursor: pointer;
   margin-left: 15px;
 }
+
+.estrellas {
+  font-size: 24px;
+  color: #FFD700; /* Color dorado para estrellas */
+  margin: 10px 0;
+}
+
+.clasificacion-cliente {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  margin: 20px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Change default background and text color */
+.accordion-button {
+  background-color: #143d4f; /* MUHIA color background */
+  color: #fff; /* Dark gray text */
+}
+
+/* Change background and text color when active (not collapsed) */
+.accordion-button:not(.collapsed) {
+  background-color: #601010; /* Red MUHIA background */
+  color: #fff; /* White text */
+}
+
+/* Customize focus outline */
+.accordion-button:focus {
+  border-color: #0056b3; /* Darker blue border on focus */
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Custom shadow */
+}
+
+/* Change the icon color (example for a red icon) */
+.accordion-button::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}

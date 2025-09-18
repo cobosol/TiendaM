@@ -8,6 +8,7 @@ from catalog.forms import ProductAddToCartForm
 from cart.forms import DeliveryForm
 from cart.models import DeliveryInfo
 import requests
+import json
 from registration.models import Profile
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
@@ -20,10 +21,13 @@ from ccheckout.ccheckout import get_checkout_url
 from ccheckout.models import Coupon
 from ccheckout.utils import send_coupon
 from ccheckout.validators import CouponValidator
+import decimal
+
 
 def show_cart(request, template_name="cart/cart.html"):
     # Verificar que esté autenticado
     if not (request.user.is_authenticated):
+        request.session['wallet_discount'] = ''
         messages.warning(request, "Debe estar autenticado para acceder al carrito")
         url = reverse('login')
         return HttpResponseRedirect(url)
@@ -35,11 +39,11 @@ def show_cart(request, template_name="cart/cart.html"):
     profile = get_object_or_404(Profile, user = user)
     #No hay envío, solo recogida en planta
     profile.prefered_store = get_object_or_404(Store, pk=1)
-    print(profile.prefered_store.name)
     MND = profile.MONEY_TYPE[profile.money_type][1]
     try:
         if request.method == 'POST':
             postdata = request.POST.copy()
+            print(f'postdata {postdata}')
             if postdata['submit'] == 'X': # Eliminar producto del carrito
                 cart.remove_from_cart(request)
             elif postdata['submit'] == '': # Actualizar cantidades del carrito (disminuir)
@@ -62,6 +66,33 @@ def show_cart(request, template_name="cart/cart.html"):
                         messages.info(request, text)
                     else:
                         print(f"cupon falso {coupon}")
+            elif postdata['submit'] == 'Usar puntos': # Aplicar puntos
+                try:
+                    cart_subtotal = cart.cart_subtotal(request)
+                    wallet_to_apply = request.POST.get('wallet_to_apply', '')
+                    if float(wallet_to_apply) > float(request.user.wallet.balance):
+                        messages.info(request, 'No puede utilizar más puntos de los disponibles')
+                        url = reverse('show_cart')
+                        return HttpResponseRedirect(url)
+                    if MND == 'CUP':
+                        if float(wallet_to_apply) > cart_subtotal/2:
+                            messages.info(request, 'No puede utilizar en la compra más del 50% de puntos')
+                            url = reverse('show_cart')
+                            return HttpResponseRedirect(url)
+                    else:
+                        if float(wallet_to_apply) > cart_subtotal*120/2:
+                            messages.info(request, 'No puede utilizar en la compra más del 50% en puntos')
+                            url = reverse('show_cart')
+                            return HttpResponseRedirect(url)
+                    response = cart.apply_wallet_discount(request, cart_subtotal, wallet_to_apply)
+                    resp = json.loads(response.content)
+                    if not resp.get('success'):
+                        text = response['message']
+                        messages.info(request, text)
+                    else:
+                        messages.success(request, 'Puntos aplicados con éxito')
+                except Exception as e:
+                    print(e)
             elif postdata['submit'] == 'Reservar': # Reservar producto sin pagar
                 if request.user.is_authenticated:
                     if MND == 'USD':
@@ -108,6 +139,8 @@ def show_cart(request, template_name="cart/cart.html"):
         messages.error(request, str(e))
 
     cart_items = cart.get_cart_items(request)
+    if not cart_items:
+        request.session['wallet_discount'] = ''
     """ for cart_i in cart_items:
         text = cart_i.discount_message()
         if text != "":
@@ -119,10 +152,28 @@ def show_cart(request, template_name="cart/cart.html"):
     envio = False
     if delivery_name == 'Envío Habana':
         envio = True 
-    cart_total = cart_subtotal + cart_delivery
+    discount = request.session.get('wallet_discount', 0)
+    if discount:
+        if MND == "CUP":
+            cart_total = cart_subtotal + cart_delivery - decimal.Decimal(discount)
+        else:
+            discount = discount/120
+            cart_total = cart_subtotal + cart_delivery - decimal.Decimal(discount)
+    else:
+        cart_total = cart_subtotal + cart_delivery
+        discount = 0.00
     deliveryObj = get_object_or_404(DeliveryInfo, client=user)
     zone = deliveryObj.getDeliveryZone
+    cart_subtotal = float(cart_subtotal)
+    cart_delivery = float(cart_delivery)
+    cart_total = float(cart_total)
+    if MND == 'CUP':
+        wallet_to_apply = min((cart_subtotal/2),user.wallet.balance)
+    elif MND == 'USD':
+        wallet_to_apply = min((cart_subtotal*120/2),user.wallet.balance)
+    else:
+        wallet_to_apply = 0.00
     context = {'cart_total':cart_total, 'envio': envio, 
-               'delivery_name': delivery_name, 'cart_delivery':cart_delivery, 
-               'cart_subtotal':cart_subtotal, 'zone':zone, 'cart_items':cart_items, 'form':form, 'MND':MND}
-    return render(request, template_name, context)
+               'delivery_name': delivery_name, 'cart_delivery':cart_delivery, 'discount':discount, 
+               'cart_subtotal':cart_subtotal, 'zone':zone, 'cart_items':cart_items, 'MND':MND}
+    return render(request, template_name, locals())

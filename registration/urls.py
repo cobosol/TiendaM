@@ -7,6 +7,7 @@ from .forms import CustomPasswordResetForm
 urlpatterns = [
     path('signup/', SignUpView.as_view(), name = 'signup'),
     path('profile/', ProfileUpdate.as_view(), name = 'profile'),
+    path('wallet/', views.wallet, name = 'wallet'),
     path('profile/admin/', views.update_profile_admin2, name = 'profile_admin'),
     path('profile/email/', EmailUpdate.as_view(), name = 'profile_email'),
     path('update-mnd/', views.update_mnd, name='update_mnd'),

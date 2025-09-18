@@ -12,14 +12,14 @@ def custom_upload_to(instance, filename):
 class Profile(models.Model):
     # Tipo de cliente
     COMPRADOR = 0
-    PRODUCTOR = 1
+    COMPRA_VENTA = 1
     DISTRIBUIDOR = 2
-    VENDEDOR = 3
+    CONSIGNACION = 3
 
-    CLIENT_TYPE = ((COMPRADOR,'Comprador'),
-                   (PRODUCTOR,'Productor'),
+    CLIENT_TYPE = ((COMPRADOR,'Comprador eventual'),
+                   (COMPRA_VENTA,'Comprador con contrato'),
                    (DISTRIBUIDOR,'Distribuidor'),
-                   (VENDEDOR, 'Vendedor'),
+                   (CONSIGNACION, 'Consignación'),
                    )
 
     # Moneda preferida
@@ -63,6 +63,8 @@ class Profile(models.Model):
                             verbose_name = "Número de contrato")
     prefered_store = models.ForeignKey(Store, on_delete = models.SET_NULL, null=True, blank = True, 
                             verbose_name = "Forma de entrega preferida")
+    estrellas = models.IntegerField(default=0)
+    fecha_actualizacion_estrellas = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         ordering = ['user']
@@ -70,11 +72,11 @@ class Profile(models.Model):
         verbose_name_plural = "Perfiles"
 
     def __str__(self):
-        return self.user.first_name
+        return f'{self.user.first_name} - {self.estrellas} estrellas'
 
     @property
     def name(self):
-        return self.user.first_name
+        return self.user.first_name + ' ' + self.user.last_name
     
     @property
     def get_avatar_url(self):

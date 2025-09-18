@@ -38,6 +38,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from .forms import CustomPasswordResetForm, MNDForm
 
+def wallet(request):
+    return render(request, "registration/wallet_form.html", {})
 
 class CustomPasswordResetView(PasswordResetView):
     form_class=CustomPasswordResetForm
@@ -139,7 +141,8 @@ class SignUpView(CreateView):
 @method_decorator(login_required, name='dispatch')
 class ProfileUpdate(UpdateView):
     form_class = ProfileForm
-    success_url = reverse_lazy('profile')
+    success_url = '/' #reverse_lazy('profile')
+    success_message = "Se ha actualizado correctamente el perfil."
     template_name = 'registration/profile_form.html'
 
     def get_object(self):

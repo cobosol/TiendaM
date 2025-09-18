@@ -14,25 +14,25 @@
 
         th,
         th {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: bold;
             word-wrap: break-word,
         }
 
         td {
-            font-size: 12px;
+            font-size: 10px;
             padding: 2px;
             word-wrap: break-word,
         }
 
         .first-td {
-            font-size: 14px;
+            font-size: 12px;
             padding: 1px;
             word-wrap: break-word,
         }
 
         .table-info-td {
-            font-size: 12px;
+            font-size: 10px;
             padding: 0.8px;
             word-wrap: break-word,
         }
@@ -45,7 +45,7 @@
         }
 
         #footer_content label{
-            font-size: 10px;
+            font-size: 9px;
         }
     </style>
 </head>
@@ -78,11 +78,15 @@
             </tr>
             <tr>
                 <td class="first-td"><strong>Nombre: </strong>{{data.first_name}} {{data.last_name}}</td>
-                <td class="first-td"><strong>email: </strong>{{data.email}}</td>
+                <td class="first-td"><strong>Carnet de identidad: </strong>{{data.user_CI}}</td>
                 <td class="first-td"><strong>Teléfono: </strong>{{data.phone}}</td>
             </tr>
             <tr>
-                <td class="first-td" colspan="3"><strong>Dirección:</strong>{{data.address}}</td>
+                <td class="first-td"><strong>Contrato: </strong> {% if data.contract %} {{data.contract}} {% endif %}</td>
+                <td colspan="2" class="first-td"><strong>Correo electrónico: </strong>{{data.email}}</td>
+            </tr>
+            <tr>
+                <td class="first-td" colspan="3"><strong>Dirección: </strong>{{data.address}}</td>
             </tr>
         </tbody>
     </table>
@@ -93,7 +97,10 @@
                 <td colspan="3" style="text-align: center;" class="first-td"><strong>DETALLES DEL PAGO</strong></td>
             </tr>
             <tr>
-                <td class="first-td" colspan="3"> {{ data.details }} </td>
+                <td class="first-td">  
+                    <strong> No. Cuenta MUHIA CUP: </strong> <br> 0528 0450 0004 0116 
+                </td>
+                <td class="first-td" colspan="2"> {% if data.details %} {{ data.details }} {% endif %} <br> <br> </td>
             </tr>
         </tbody>
     </table>
@@ -101,18 +108,18 @@
     <table border="1" style="border-collapse: collapse; text-align: center;">
         <tbody>
             <tr>
-                <td colspan="5" style="text-align: center;" class="first-td"><br><strong>DETALLES DE LA FACTURA</strong></td>
+                <td colspan="6" style="text-align: center;" class="first-td"><br><strong>DETALLES DE LA FACTURA</strong></td>
             </tr>
             <tr>
-                <td class="table-info-td" style="width: 350px;"><strong>Producto</strong></td>
-                <td class="table-info-td" style="width: 60px;"><strong>Precio</strong></td>
-                <td class="table-info-td" style="width: 1000px;"><strong>Cantidad</strong></td>
-                <td class="table-info-td" style="width: 100px;"><strong>Importe</strong></td>
+                <td colspan="3" class="table-info-td" ><strong>Producto</strong></td>
+                <td class="table-info-td" ><strong>Precio</strong></td>
+                <td class="table-info-td" ><strong>Cantidad</strong></td>
+                <td class="table-info-td" ><strong>Importe</strong></td>
             </tr>
             {% for item in orders %}
             <tr>
-                <td class="table-info-td" style="width: 150px;"> {{ item.name }} </td>
-                <td class="table-info-td" style="width: 180px;"> {{ item.price|currency }} </td>
+                <td colspan="3" class="table-info-td" style="width: 200px;"> {{ item.name }} </td>
+                <td class="table-info-td" style="width: 100px;"> {{ item.price|currency }} </td>
                 <td class="table-info-td" style="width: 70px;"> {{ item.quantity }} </td>
                 <td class="table-info-td" style="width: 100px;"> {{ item.total|currency }} {% if item.has_discount %} * {% endif %}</td>
             </tr>
@@ -130,9 +137,10 @@
     <table border="0" style="border-collapse: collapse;">
         <tbody>
             <tr>
-                <td class="first-td"><strong>ENVÍO {{data.delivery_price}} {% if data.currency == 'USD' %} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td>
+<!--                 <td class="first-td"><strong>ENVÍO {{data.delivery_price}} {% if data.currency == 'USD' %} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td> -->
+                <td class="first-td"><strong>Importe Base: {{data.importe|currency}} {{data.currency}}  </strong></td>
                 <td class="first-td"><strong>Cupón: {{data.coupon}} % </strong></td>
-                <td class="first-td"><strong>Descuento total: {{data.discount}} % </strong></td>
+                <td class="first-td"><strong>Por monedero: {{data.puntos|currency}} {{data.currency}} </strong></td>
             </tr>
         </tbody>
     </table>
@@ -143,7 +151,9 @@
     <table border="0" style="border-collapse: collapse;">
         <tbody>
             <tr>
-                <td class="first-td"><strong>IMPORTE TOTAL: {{data.importe}} {% if data.currency == 'USD'%} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td>
+                <td class="first-td"><strong>IMPORTE TOTAL: {{data.monto_final|currency}} {{data.currency}} {% if data.currency == 'USD'%} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td>
+                <td class="first-td"><strong> </strong></td>
+                <td class="first-td"><strong>Estado: {{data.status}} </strong></td>
             </tr>
         </tbody>
     </table>
@@ -153,15 +163,17 @@
             <tr>
                 <td class="first-td" colspan="2">
                     <strong>ENTREGADO POR</strong><br>
-                    Nombre y apellidos <br>
-                    Carnet de identidad<br>
-                    Fecha
+                    Nombre y apellidos: <br>
+                    Cargo: <br>
+                    Firma: 
                 </td>
+                <td class="first-td"><strong> </strong></td>
                 <td class="first-td" colspan="2">
                     <strong>RECIBIDO POR</strong><br>
-                    Nombre y apellidos <br>
-                    Carnet de identidad<br>
-                    Fecha
+                    Nombre y apellidos: <br>
+                    Carnet de identidad:<br>
+                    Cargo: <br>
+                    Firma:
                 </td>
             </tr>
         </tbody>
