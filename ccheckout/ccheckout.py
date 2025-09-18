@@ -22,7 +22,7 @@ from utils.models import Price
 from registration.models import Profile
 from cart.models import DeliveryInfo
 from .validators import CouponValidator
-
+from django.contrib import messages
 
 def loadSecret():
     try:
@@ -30,12 +30,10 @@ def loadSecret():
         creds = json.load(credsFile)
         return creds
     except Exception as e:
-            print("Error Leyendo el fichero secrets")
-            sys.exit("System error: " + str(e) )
+        sys.exit("Error leyendo los datos necesarios: " + str(e) )
 
 def createPaymentCardsJSON(request, order_number):
     creds = loadSecret()
-    print(creds)
     url = creds['URL_Payment'] 
 
     payloadDic = {
@@ -95,8 +93,6 @@ def createPaymentCardsJSON(request, order_number):
         } 
     
     headers['Authorization'] = 'Bearer ' + creds["token"]   
-    print(headers)
-    print(payload)
 
     response = requests.request("POST", url, headers=headers, data=payload)
     return response
@@ -123,7 +119,7 @@ def tPAccessToken():
         response = requests.request("POST", URL, headers = headers, data = payload)
         return response
     except Exception as e:
-        print( 'La Exception >> ' + type(e).__name__ )
+        #print( 'La Exception >> ' + type(e).__name__ )
         raise e
       
 def get_checkout_url(request):
@@ -199,8 +195,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
                     order = pagar_form.save(commit=False)
                     #request.session['wallet_discount'] = '' """
                 else:
-                    print(f'Errores: {pagar_form.errors}')
-                    raise Http404("Error en el formulario de pago")
+                    raise Http404(f"Error en el formulario de pago {pagar_form.errors}")
                 if MND == 'CUP': # Si el usuario tiene en su perfil moneda CUP
                     order.delivery_price = store.price_cup
                     order.currency = 'CUP'
@@ -371,7 +366,6 @@ def export_pdf(request, id_orden):
     qr_generado = '{"id_orden": ' + str(id_orden)
     order = Order.objects.filter(id=id_orden)[0]
     profile = request.user.profile
-    print(order.user.profile.client_type)
     #if profile.client_type == profile.COMPRADOR:
     #Generando reporte PDF
     if order.is_daily_summary:
@@ -415,7 +409,6 @@ def export_pdf(request, id_orden):
             data['seller'] = order.seller.first_name + ' ' + order.seller.last_name
             template_src = 'checkout/factura_resumen_diario.html' 
     elif order.user.profile.client_type == profile.COMPRA_VENTA or order.user.profile.client_type == profile.DISTRIBUIDOR: # Si la compra es de un cliente con contrato de compraventa ..... #order.transaction_id == '3': # Factura por contrato order.user.groups.filter(name__in=['comercial']):
-        print(profile.CLIENT_TYPE[profile.client_type][1])
         template_src = 'checkout/factura_por_contrato.html'
         data['first_name'] = profile.name #order.payment_name
         data['user_CI'] = profile.cid
@@ -435,7 +428,6 @@ def export_pdf(request, id_orden):
         data['importe'] = decimal.Decimal(round(order.base_total, 2))
         data['puntos'] = order.wallet_discount
     else: # Si es un cliente normal
-        print("Cliente normal")
         template_src = 'checkout/factura_venta_online.html'
         data['name'] = profile.name
         data['user_name'] = profile.user.username

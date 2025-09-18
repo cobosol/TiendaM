@@ -195,7 +195,7 @@
                                 <p>Disponible: <strong>${{ user.wallet.balance }}</strong></p>
                                 <p>Para esta compra: <strong>${{ wallet_to_apply }}</strong></p>                            
                                 <div id="apply-wallet-discount">
-                                    <input type="text" name="wallet_to_apply" value="{{wallet_to_apply}}" placeholder="puntos..." />
+                                    <input type="text" name="wallet_to_apply" {% if discount %} value="{{discountChange}}" {%else%} value="{{wallet_to_apply}}" {%endif%} placeholder="puntos..." />
                                     <input type="submit" class="btn btn-block btn-success my-2 py-2" name="submit" value="Usar puntos" alt="Checkout" />
                                 </div>
                             </div>

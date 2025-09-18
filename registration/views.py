@@ -103,10 +103,8 @@ def activar_cuenta(request, uidb64, token):
         usuario.is_active = True
         usuario.save()
         login(request, usuario)
-        print('activada')
         return redirect('cuenta_activada')
     else: 
-        print('No activada')
         return redirect('signup') #render(request, 'registration/activacion_invalida.html')        
 
 def confirmacion_envio(request):
@@ -190,7 +188,7 @@ def update_profile_admin2(request, template_name="registration/update_profile_ad
                     url = reverse('home')
                     return HttpResponseRedirect(url)
         except:
-            print("Error") 
+            messages.error(request, "Error")
     form = UpdateProfileAdminForm()
     return render(request, template_name, locals())
 

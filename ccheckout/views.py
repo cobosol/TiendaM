@@ -75,8 +75,8 @@ def payment_notification(request):
     status = response.get("status")
     
     try:
-        if response.get("status") == 'OK':
-            print("if")
+        """ if response.get("status") == 'OK':
+            print("if") """
         
         data = response["data"]
         signature = data["signaturev2"]
@@ -102,11 +102,11 @@ def payment_notification(request):
                 order.transaction_id = data["id"]
                 order.save()
             else:
-                print("Error al generar orden")
+                messages.error(request, "Error al generar orden")
         else:
-            print("No coinciden las firmas")
+            messages.error(request, "No coinciden las firmas")
     except OSError:
-        print("OSError --- status"+status)
+        messages.error(request, f"OSError --- status: {status}")
    
     return request
 
@@ -124,7 +124,7 @@ def hit(request):
             fail_url = reverse('checkout_fail')
             return HttpResponseRedirect(fail_url)
     else:
-        print("Error en el numero de la orden")
+        messages.error(request, f"OSError --- status:")
 
 # El view de la página de pago por Tropipay
 @login_required
@@ -156,7 +156,7 @@ def show_checkout(request, template_name='checkout/checkout.html'):
                         order.save()
                         return HttpResponseRedirect(url_pay)
                     except Exception as e:
-                        print(f"Error en: {e}")
+                        messages.error(request, f"Error en: {e}")
                         if dicto["error"]["code"] in ["EXPIRED_TOKEN", "INVALID_CREDENTIAL", "FORBIDDEN_ERROR"]:
                             response = tPAccessToken()
                             dicto = json.loads(response.content)
@@ -180,7 +180,7 @@ def show_checkout(request, template_name='checkout/checkout.html'):
                                 fail_url = reverse('checkout_fail')
                                 return HttpResponseRedirect(fail_url)
                         else:
-                            print(f'Error en AccessToken{dicto["error"]}')
+                            messages.error(f'Error en AccessToken{dicto["error"]}')
                             fail_url = reverse('checkout_fail')
                             return HttpResponseRedirect(fail_url)
             else:
@@ -315,7 +315,7 @@ def facturar(request, template_name='checkout/facturar.html'):
                     receipt_url = reverse('checkout_receipt')
                     return HttpResponseRedirect(receipt_url)
             else:
-                print("Error de validacion de la form")
+                messages.error(request, f"Error de validacion de la form: {form.errors}")
     else: # Si no es llamada post
         form = FacturarForm()
         #form.name = request.user.first_name + request.user.last_name
@@ -341,12 +341,9 @@ def pagar(request, template_name='checkout/pagar.html'):
     if request.method == 'POST': 
         postdata = request.POST.copy()
         if postdata['submit'] == 'Efectuar pago':
-            print("En efcetuar pago")
             postdata['wallet_discount'] = request.session.get('wallet_discount', 0.00)
             form = PagarForm(postdata)
-            print("A validar")
             if form.is_valid():
-                print("Validada la form")
                 user = request.user
                 profile = get_object_or_404(Profile, user = user)
                 MD = profile.MONEY_TYPE[profile.money_type][1]
@@ -364,7 +361,7 @@ def pagar(request, template_name='checkout/pagar.html'):
                     pagarTransfer = order.pay_url #reverse(order.pay_url)
                     return HttpResponseRedirect(pagarTransfer)
             else:
-                print(f"Error de validacion de la form {form.errors}")
+                messages.error(request, f"Error de validacion de la form {form.errors}")
     else:
         form = PagarForm()
         form.name = request.user.first_name + request.user.last_name
@@ -416,7 +413,8 @@ def reserve(request, template_name='checkout/reserve.html'):
                     receipt_url = order.get_paided_url() # Capturo elurl de detales de la orden
                     return HttpResponseRedirect(receipt_url) # redirijo a los detalles
             else:
-                messages.error(request, 'Error. Por favor contacte a los administradores del sitio')
+                messages.error(request, f'Error. Por favor contacte a los administradores del sitio: {form.errors}')
+                print(form.errors)
     else: #Si no es llamada post. Cargar la página normal
         if st_name == 'Envío Habana':
             form = ReserveForm() # construyo la form con datos de entrega

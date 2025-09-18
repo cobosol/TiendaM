@@ -68,7 +68,7 @@ def show_search(request, productSearch, template_name="catalog/search.html"):
                 url = '/catalogo/productos/' + productSearch + '/'
                 return HttpResponseRedirect(url) 
         except Exception:
-            print("Error al adicionar al carrito")
+            messages.error(request, "Error al adicionar al carrito")
     return render(request, template_name, locals())    
 
 def show_all_active(request, template_name="catalog/allActive.html"):
@@ -90,7 +90,7 @@ def show_all_active(request, template_name="catalog/allActive.html"):
                 url = '/catalogo/productos/' + productSearch + '/'
                 return HttpResponseRedirect(url) 
         except Exception:
-            print("Error al adicionar al carrito")
+            messages.error(request, "Error al adicionar al carrito")
     return render(request, template_name, locals())
 
 
@@ -118,7 +118,7 @@ def show_category(request, category_slug, template_name="catalog/category.html")
                 url = '/catalogo/productos/' + productSearch + '/'
                 return HttpResponseRedirect(url) 
         except Exception:
-            print("Error al adicionar al carrito")
+            messages.error(request, "Error al adicionar al carrito")
     request.session.set_test_cookie()
     return render(request, template_name, locals())
 
@@ -282,22 +282,18 @@ class eliminar_producto(SuccessMessageMixin, DeleteView):
 #---------- Gestión de productos en almacen----------------
 
 def gestion_productos_almacen(request, template_name="catalog/productos_almacen_admin.html"):
-    print('gestion producto almacen')
     form = ProductAlmacenFilterForm(request.GET or None)
     objetos = Product_Sales.objects.all().order_by('product')
     objetos2 = Product_Sales.objects.all().select_related('product', 'store')
     if request.method == 'POST':
-        print('En POST')
         postdata = request.POST.copy()
         if postdata['submit'] == 'Materias primas':
             objetos = Product_Sales.objects.filter(product__is_feedstock=True).order_by('product')
         elif postdata['submit'] == 'Productos terminados':
             objetos = Product_Sales.objects.filter(product__is_feedstock=False).order_by('product')
     elif form.is_valid():
-        print('En filtrar')
         # Filtrar por producto si se proporciona
         if form.cleaned_data.get('product'):
-            print(form.cleaned_data['product'])
             objetos = objetos2.filter(product=form.cleaned_data['product']).order_by('store')        
         # Filtrar por almacen si se proporciona
         if form.cleaned_data.get('store'):
@@ -312,7 +308,7 @@ def gestion_productos_almacen(request, template_name="catalog/productos_almacen_
                 Q(store__address__icontains=form.cleaned_data['store_texto'])
             )
     else:
-        print(form.errors)
+        messages.error(request, form.errors)
 
     return render(request, template_name, {
         'objetos': objetos,
@@ -347,7 +343,6 @@ def lista_productos_inventario(request):
     objetos2 = Product_Sales.objects.all().select_related('product', 'store')
     
     if form.is_valid():
-        print('formvalid')
         # Filtrar por producto si se proporciona
         if form.cleaned_data.get('product'):
             objetos = objetos2.filter(product=form.cleaned_data['product']).order_by('store')
@@ -373,7 +368,7 @@ def lista_productos_inventario(request):
                 Q(store__address__icontains=form.cleaned_data['store_texto'])
             )
     else:
-        print(form.errors)
+        messages.error(request, form.errors)
     
     return render(request, 'catalog/actualiza_inventario.html', {
         'objetos': objetos,

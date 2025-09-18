@@ -351,12 +351,9 @@ def apply_wallet_discount(request, cart_subtotal, wallet_discount):
     try:
             wallet = Wallet.objects.select_for_update().get(user=request.user)
             if (request.user.is_authenticated):
-                print('En user authenticated')
                 profile = get_object_or_404(Profile, user = request.user)
                 MND = profile.MONEY_TYPE[profile.money_type][1]
                 if decimal.Decimal(wallet_discount) <= wallet.balance:
-                    print(wallet_discount)
-                    print(wallet.balance)
                     if MND == 'CUP':           
                         # Calcular descuento aplicable
                         discount = min(decimal.Decimal(wallet_discount), cart_subtotal/2) #Usar hasta el 50% del monto de la cuenta
@@ -368,7 +365,6 @@ def apply_wallet_discount(request, cart_subtotal, wallet_discount):
                     messages.info(request, 'Revise el monto de puntos solicitado')
                     url = reverse('show_cart')
                     return HttpResponseRedirect(url)
-                print(discount)
                 if discount > 0:
                     wallet.balance -= discount
                     wallet.save()
@@ -378,11 +374,7 @@ def apply_wallet_discount(request, cart_subtotal, wallet_discount):
                         amount=-discount,
                         description="Descuento aplicado en compra"
                     )
-                    print("Voy a actualizar session discount")
                     request.session['wallet_discount'] = float(discount)
-                    print(request.session.get('wallet_discount', 0))
-
-                
                 
                     return JsonResponse({
                         'success': True,
@@ -397,15 +389,10 @@ def apply_wallet_discount(request, cart_subtotal, wallet_discount):
                 })
                 
     except Exception as e:
-            print(f'Error {e}')
             return JsonResponse({
                 'success': False,
                 'message': f'Error: {str(e)}'
             })
-    """     else:
-        print(f'En session discount')
-        dis = request.session['wallet_discount']
-        print(f'En session discount: {dis}') """
     
     return JsonResponse({
         'success': False,

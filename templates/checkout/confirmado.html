@@ -44,7 +44,9 @@
         <tr>
             <td colspan="4" class="right" style="height:30px;">
                 Envío: {{ order.delivery_price|currency }} <br>
-                Valor Total: {{ order.total|currency }} {{ order.currency }}
+                Total: {{ order.base_total|currency }} {{ order.currency }} <br>
+                Descuento por puntos: {{order.get_wallet_discount}} <br>
+                Importe final: {{order.end_total|currency}} {{order.currency}}
             </td>
         </tr>
     </tfoot>
