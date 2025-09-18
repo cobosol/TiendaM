@@ -77,12 +77,12 @@
                 <td colspan="3" style="text-align: center;" class="first-td"><strong>DATOS DEL CLIENTE</strong></td>
             </tr>
             <tr>
-                <td class="first-td"><strong>Nombre: </strong>{{data.first_name}} </td>
+                <td class="first-td"><strong>Nombre: </strong>{{data.name}} </td>
                 <td class="first-td"><strong>email: </strong>{{data.email}}</td>
                 <td class="first-td"><strong>Teléfono: </strong>{{data.phone}}</td>
             </tr>
             <tr>
-                <td class="first-td" colspan="3"><strong>Usuario registrado: </strong>{{data.last_name}}</td>
+                <td class="first-td" colspan="3"><strong>Usuario registrado: </strong>{{data.user_name}}</td>
             </tr>
         </tbody>
     </table>
@@ -93,9 +93,10 @@
                 <td colspan="3" style="text-align: center;" class="first-td"><strong>DATOS PARA LA ENTREGA</strong></td>
             </tr>
             <tr>
-                <td class="first-td"><strong>Nombre: </strong>{{data.delivery_name}}</td>
-                <td class="first-td"><strong>Carnet de identidad: </strong>{{data.CI}}</td>
-                <td class="first-td"><strong>Teléfono: </strong>{{data.delivery_phone}} {{data.delivery_ws}}</td>
+                <td class="first-td"><strong>Nombre: </strong> {% if data.delivery_name %} {{data.delivery_name}} {% else %} {{data.name}} {% endif %}</td>
+                <td class="first-td"><strong>Carnet de identidad: </strong> {% if data.CI %} {{data.CI}} {% endif %}</td>
+                <td class="first-td"><strong>Teléfonos: </strong> {% if data.delivery_phone %} {{data.delivery_phone}} {% endif %} 
+                    {% if data.delivery_ws %}, {{data.delivery_ws}} {% endif %}</td>
             </tr>
             <tr>
                 <td class="first-td" colspan="3"><strong>Dirección: </strong>{{data.delivery_add1}}</td>
@@ -122,20 +123,22 @@
         </tbody>
     </table>
 
+    <hr>
+
     <table border="1" style="border-collapse: collapse;">
         <tbody>
             <tr>
-                <td colspan="4" style="text-align: center;" class="first-td"><br><strong>DETALLES DE LA FACTURA</strong></td>
+                <td colspan="6" style="text-align: center;" class="first-td"><br><strong>DETALLES DE LA FACTURA</strong></td>
             </tr>
                 <tr>
-                    <td class="table-info-td" ><strong>Producto</strong></td>
+                    <td colspan="3" class="table-info-td" ><strong>Producto</strong></td>
                     <td class="table-info-td" ><strong>Precio</strong></td>
                     <td class="table-info-td" ><strong>Cantidad</strong></td>
                     <td class="table-info-td" ><strong>Importe</strong></td>
                 </tr>
                 {% for item in orders %}
                 <tr>
-                    <td class="table-info-td" > {{ item.name }} </td>
+                    <td colspan="3" class="table-info-td" > {{ item.name }} </td>
                     <td class="table-info-td" > {{ item.price|currency }} </td>
                     <td class="table-info-td" > {{ item.quantity }} </td>
                     <td class="table-info-td" > {{ item.total|currency }} {% if item.has_discount %} * {% endif %}</td>
@@ -154,9 +157,13 @@
     <table border="0" style="border-collapse: collapse;">
         <tbody>
             <tr>
-                <td class="first-td"><strong> ENVÍO {{data.delivery_price}} {% if data.currency == 'USD' %} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td>
-                <td class="first-td"><strong>Cupón: {{data.coupon}} % </strong></td>
-                <td class="first-td"><strong>Descuento total: {{data.discount}} % </strong></td>
+                <td class="first-td"><strong>Importe Base:</strong> {{data.importe|currency}} {{data.currency}}  </td>
+            </tr>
+            <tr>
+                <td class="first-td"><strong>Envío:</strong> {{data.delivery_price|currency}} {{data.currency}}</td>
+                <td class="first-td"><strong>Cupón:</strong> {{data.coupon}}% </td>
+                <td class="first-td"><strong>Por puntos:</strong> {{data.puntos|currency}} {{data.currency}}  </td>
+<!--                 <td class="first-td"><strong>Descuento total: {{data.discount}} % </strong></td> -->
             </tr>
         </tbody>
     </table>
@@ -167,7 +174,8 @@
     <table border="0" style="border-collapse: collapse;">
         <tbody>
             <tr>
-                <td class="first-td"><strong>IMPORTE TOTAL: {{data.importe}} {% if data.currency == 'USD'%} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td>
+                <td class="first-td"><strong>IMPORTE TOTAL: {{data.monto_final}} {% if data.currency == 'USD'%} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td>
+                <td class="first-td"><strong> </strong></td>
                 <td class="first-td"><strong>ESTADO: {{data.status}}</strong></td>
             </tr>
         </tbody>
@@ -178,17 +186,18 @@
             <tr>
                 <td class="first-td" colspan="2">
                     <strong>ENTREGADO POR</strong><br>
-                    Nombre y apellidos <br>
-                    Cargo <br>
-                    Fecha <br>
-                    Firma
+                    Nombre y apellidos: <br>
+                    Cargo: <br>
+                    Fecha: <br>
+                    Firma:
                 </td>
+                <td class="first-td"><strong> </strong></td>
                 <td class="first-td" colspan="2">
                     <strong>RECIBIDO POR</strong><br>
-                    Nombre y apellidos <br>
-                    Cargo<br>
-                    Fecha <br>
-                    Firma
+                    Nombre y apellidos: <br>
+                    Cargo: <br>
+                    Fecha: <br>
+                    Firma:
                 </td>
             </tr>
         </tbody>

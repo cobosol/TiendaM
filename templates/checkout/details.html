@@ -44,13 +44,17 @@
             </div>
             <div class="d-flex justify-content-between">
                     <h6 class="font-weight-medium" style="font-family: sans-serif;">{{ order.store_name }}: </h6>
-                    <h6 class="font-weight-medium" style="font-family: sans-serif;">{{ order.delivery_price|currency }}</h6>    
+                    <h6 class="font-weight-medium" style="font-family: sans-serif;">{{ order.delivery_price|currency }}</h6>
+            </div>
+            <div class="d-flex justify-content-between">
+                <h6 class="font-weight-medium" style="font-family: sans-serif;">Descuento monedero: </h6>
+                <h6 class="font-weight-medium" style="font-family: sans-serif;">{{ order.get_wallet_discount|currency }}</h6>
             </div>
         </div>
         <div class="card-footer border-secondary bg-transparent">
             <div class="d-flex justify-content-between mt-2">
                 <h6 class="font-weight-bold" style="font-family: sans-serif;">Total: </h5>
-                <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ order.total|currency }} {{ order.currency}}</h5>
+                <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ order.end_total|currency }} {{ order.currency}}</h5>
             </div>
 <!--             <form method="post" action="." class="Algo">
                 {% csrf_token %}
@@ -91,8 +95,10 @@
     <tfoot>
         <tr>
             <td colspan="4" class="right" style="height:30px;">
+                Total por los productos: {{ order.base_total|currency }} {{ order.currency }} <br>
                 Envío: {{ order.delivery_price|currency }} <br>
-                Valor Total: {{ order.total|currency }} {{ order.currency }} <br>
+                Descuento por monedero: {{ order.get_wallet_discount|currency }} <br>   
+                Valor Total: {{ order.end_total|currency }} {{ order.currency }} <br>
                 {% if amounth_discount == "True" %}
                     Se aplicó un descuento del {{mount}} % al monto total
                 {% endif %}

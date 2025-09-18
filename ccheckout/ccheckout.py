@@ -150,6 +150,8 @@ def create_order(request, transaction_id, usd = True, cach = False):
     profile = get_object_or_404(Profile, user = user) # Accedo a su perfil
     MND = profile.MONEY_TYPE[profile.money_type][1] # Saco el tipo de moneda del usuario
     results = {} # Crear variable para la respuesta
+    request.POST = request.POST.copy()
+    request.POST['wallet_discount'] = request.session.get('wallet_discount', 0)
     if transaction_id == 2: # Reservar
         checkout_form = PagarForm(request.POST, instance=order)
         order = checkout_form.save(commit=False)
@@ -193,7 +195,12 @@ def create_order(request, transaction_id, usd = True, cach = False):
                 order.delivery_price = deliveryInfo.calculate_deliveryHabana()
             else: # tarjetas nacionales
                 pagar_form = PagarForm(request.POST, instance=order)
-                order = pagar_form.save(commit=False)
+                if pagar_form.is_valid():
+                    order = pagar_form.save(commit=False)
+                    #request.session['wallet_discount'] = '' """
+                else:
+                    print(f'Errores: {pagar_form.errors}')
+                    raise Http404("Error en el formulario de pago")
                 if MND == 'CUP': # Si el usuario tiene en su perfil moneda CUP
                     order.delivery_price = store.price_cup
                     order.currency = 'CUP'
@@ -237,7 +244,12 @@ def create_order(request, transaction_id, usd = True, cach = False):
                 amounth_discount = "True"
                 mount = 100 - round((order.base_total / order.total_items * 100 ), 0)
                 order.others_discount = mount
-            order.end_total = order.base_total + decimal.Decimal(order.delivery_price)
+            order.wallet_discount = request.session.get('wallet_discount', 0)
+            request.session['wallet_discount'] = ''
+            if MND == "CUP":
+                order.end_total = order.base_total + decimal.Decimal(order.delivery_price) - decimal.Decimal(order.wallet_discount)
+            else:
+                order.end_total = order.base_total + decimal.Decimal(order.delivery_price) - decimal.Decimal(order.wallet_discount/120)
             try:
                 if request.session['active_coupon']:
                     coupon = CouponValidator.validate(request.session['active_coupon'],request.user)
@@ -357,7 +369,10 @@ def export_pdf(request, id_orden):
     current_factura = {}        
     #QR datos de transaccion
     qr_generado = '{"id_orden": ' + str(id_orden)
-    order = Order.objects.filter(id=id_orden)[0] 
+    order = Order.objects.filter(id=id_orden)[0]
+    profile = request.user.profile
+    print(order.user.profile.client_type)
+    #if profile.client_type == profile.COMPRADOR:
     #Generando reporte PDF
     if order.is_daily_summary:
         check = checkOrderSummary(id_order=id_orden)
@@ -399,28 +414,34 @@ def export_pdf(request, id_orden):
             data['importeCUP'] = decimal.Decimal(round(order.total_reported, 2))
             data['seller'] = order.seller.first_name + ' ' + order.seller.last_name
             template_src = 'checkout/factura_resumen_diario.html' 
-    elif order.transaction_id == '3': # Factura por contrato order.user.groups.filter(name__in=['comercial']):
+    elif order.user.profile.client_type == profile.COMPRA_VENTA or order.user.profile.client_type == profile.DISTRIBUIDOR: # Si la compra es de un cliente con contrato de compraventa ..... #order.transaction_id == '3': # Factura por contrato order.user.groups.filter(name__in=['comercial']):
+        print(profile.CLIENT_TYPE[profile.client_type][1])
         template_src = 'checkout/factura_por_contrato.html'
-        data['first_name'] = order.payment_name
-        data['email'] = order.payment_email
-        data['phone'] = order.payment_phone
-        data['address'] = order.payment_address
+        data['first_name'] = profile.name #order.payment_name
+        data['user_CI'] = profile.cid
+        data['email'] = profile.user.email #order.payment_email
+        data['phone'] = profile.phone # order.payment_phone
+        data['address'] = profile.address # order.payment_address
         data['details'] = order.payment_details
-        data['importe'] = decimal.Decimal(round(order.total, 2))
-    elif order.user.groups.filter(name__in=['vendedores']):
+        data['contract'] = profile.contract
+        data['status'] = order.statusS
+        data['importe'] = decimal.Decimal(round(order.base_total, 2)) # Verificar order.total??
+    elif order.user.groups.filter(name__in=['vendedores']): # Si la factura se generó por un vendedor de punto de venta
         template_src = 'checkout/factura_punto_de_venta.html'
         data['first_name'] = order.payment_name
         data['last_name'] = order.user.first_name + ' ' + order.user.last_name
         data['email'] = order.payment_email
         data['phone'] = order.payment_phone 
-        data['importe'] = decimal.Decimal(round(order.total, 2))
-    else:
+        data['importe'] = decimal.Decimal(round(order.base_total, 2))
+        data['puntos'] = order.wallet_discount
+    else: # Si es un cliente normal
+        print("Cliente normal")
         template_src = 'checkout/factura_venta_online.html'
-        data['first_name'] = order.payment_name
-        data['last_name'] = order.user.username + ': ' + order.user.first_name + ' ' + order.user.last_name
-        data['email'] = order.payment_email
-        data['phone'] = order.payment_phone
-        data['importe'] = decimal.Decimal(round(order.total, 2))
+        data['name'] = profile.name
+        data['user_name'] = profile.user.username
+        data['email'] = profile.user.email
+        data['phone'] = profile.phone
+        data['importe'] = decimal.Decimal(round(order.base_total, 2))
         data['status'] = order.statusS
     template = get_template(template_src)
     data['id_order'] = str(id_orden).zfill(6)
@@ -467,6 +488,8 @@ def export_pdf(request, id_orden):
     data['discount'] = '0'
     if order.others_discount:
         data['discount'] = order.others_discount 
+    data['puntos'] = order.get_wallet_discount
+    data['monto_final'] = data['importe'] - data['puntos']
     context = {'data': data, 'orders': orders, 'request': request,'qr':qr_generado}
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="factura.pdf"'

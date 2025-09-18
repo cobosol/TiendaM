@@ -117,8 +117,13 @@
     <table border="0" style="border-collapse: collapse;">
         <tbody>
             <tr>
+                <td class="first-td"><strong> SUBTOTAL {{data.importe}} {% if data.currency == 'USD' %} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td>
+            </tr>
+            <hr>
+            <tr>
                 <td class="first-td"><strong> ENVÍO {{data.delivery_price}} {% if data.currency == 'USD' %} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td>
                 <td class="first-td"><strong>Cupón: {{data.coupon}} % </strong></td>
+                <td class="first-td"><strong>Por puntos: ${{data.puntos}}  </strong></td>
                 <td class="first-td"><strong>Descuento total: {{data.discount}} % </strong></td>
             </tr>
         </tbody>
@@ -130,7 +135,7 @@
     <table border="0" style="border-collapse: collapse;">
         <tbody>
             <tr>
-                <td class="first-td"><strong>IMPORTE TOTAL: {{data.importe}} {% if data.currency == 'USD'%} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td>
+                <td class="first-td"><strong>IMPORTE TOTAL: {{data.monto_final}} {% if data.currency == 'USD'%} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td>
             </tr>
         </tbody>
     </table>

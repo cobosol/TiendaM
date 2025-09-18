@@ -27,6 +27,7 @@ def index_view(request, template_name="index.html"):
     if request.method == 'POST':
         try:
             postdata = request.POST.copy()
+            print(postdata)
             if postdata['submit'] == 'Comprar':
                 product_slug = postdata.get('product_slug','')
                 if not cart.add_to_cart(request, product_slug, quantity=postdata['quantity']):
@@ -35,6 +36,7 @@ def index_view(request, template_name="index.html"):
                 if request.session.test_cookie_worked():
                     request.session.delete_test_cookie()
             elif postdata['submit'] == 'Buscar':
+                print(postdata)
                 productSearch = postdata['producto']
                 url = '/catalogo/productos/' + productSearch + '/'
                 return HttpResponseRedirect(url)

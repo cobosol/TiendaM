@@ -28,6 +28,8 @@ class Offer(models.Model):
     main =  models.BooleanField(default=False, verbose_name = "Principal", help_text="Puede estar marcada una sola como principal")
     second =  models.BooleanField(default=False, verbose_name = "Secundaria", help_text="Puede estar marcada una sola como secundaria")
     image = models.ImageField(verbose_name="Imagen", upload_to="Offers")
+    newPrice = models.DecimalField(max_digits=9,decimal_places=2, blank=True, null=True, verbose_name="Nuevo precio", help_text="Precio en oferta")
+    oldPrice = models.DecimalField(max_digits=9,decimal_places=2, blank=True, null=True, verbose_name="Viejo precio", help_text="Precio viejo")
 
 
     class Meta:

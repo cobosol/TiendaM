@@ -177,39 +177,53 @@
                         <a href="{{st.get_absolute_url}}" class="text-dark font-weight-medium mb-0 mr-3" style="font-family: sans-serif;">{{ delivery_name }}</a>
                     </div>
                     {% endif %}
-                </div>
-                {% if envio%}
+                    {% if envio%}
                     <a href="{{st.get_absolute_url}}" class="text-dark font-weight-medium mb-0 mr-3" style="font-family: sans-serif;">{{ zone }}</a>
-                {% endif %}
-                <div class="card-footer border-secondary bg-transparent">
+                    {% endif %}
+                    <h6 class="font-weight" style="font-family: sans-serif; color: brown;">Descuento: ${{discount}}</h6><br>
                     <div class="d-flex justify-content-between mt-2">
                         <h6 class="font-weight-bold" style="font-family: sans-serif;">Total:</h6>
                         <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total|currency }}</h6>
                     </div>
+                </div>  
+
                     <form method="post" action="." class="cart">
                         {% csrf_token %}
-                        <input type="text" name="coupon" class="form-control form-control-sm bg-transparent text-center" placeholder="código del cupón">
-                        <input type="submit" class="btn btn-block btn-success my-2 py-2" name="submit" value="Aplicar cupón" alt="Checkout" />
-                        <br>
-                        {% if MND == 'MLC' or MND == 'CUP'%}
-                        <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Ir a pagar" alt="Checkout" />
-                        {% else %}
-                        <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Reservar" alt="Checkout" />
-                        {% endif %}
-                        {% if vendedor == 'True' or comercial == 'True' %}
-                            {% if MND == 'USD' or MND == 'CUP'%}
-                                <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Confirmar pago" alt="Efectivo" />
+                        <div class="card-footer border-secondary bg-transparent">
+                            <div class="wallet-info justify-content-center">
+                                <h5 class="font-weight-semi-bold text-primary">Aplicar puntos:</h5>
+                                <p>Disponible: <strong>${{ user.wallet.balance }}</strong></p>
+                                <p>Para esta compra: <strong>${{ wallet_to_apply }}</strong></p>                            
+                                <div id="apply-wallet-discount">
+                                    <input type="text" name="wallet_to_apply" value="{{wallet_to_apply}}" placeholder="puntos..." />
+                                    <input type="submit" class="btn btn-block btn-success my-2 py-2" name="submit" value="Usar puntos" alt="Checkout" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer border-secondary bg-transparent">
+                            <h5 class="font-weight-semi-bold text-primary">Aplicar cupón:</h5>
+                            <input type="text" name="coupon" class="form-control form-control-sm bg-transparent text-center" placeholder="código del cupón">
+                            <input type="submit" class="btn btn-block btn-success my-2 py-2" name="submit" value="Aplicar cupón" alt="Checkout" />
+                        </div>
+                        <div class="card-footer border-secondary bg-transparent">    
+                            {% if MND == 'MLC' or MND == 'CUP'%}
+                                <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Ir a pagar" alt="Checkout" />
+                            {% else %}
+                                <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Reservar" alt="Checkout" />
                             {% endif %}
-                            {% if MND == 'USD' %}
-                                <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Resumen" alt="Resumen" />
+                            {% if vendedor == 'True' or comercial == 'True' %}
+                                {% if MND == 'USD' or MND == 'CUP'%}
+                                    <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Confirmar pago" alt="Efectivo" />
+                                {% endif %}
+                                {% if MND == 'USD' %}
+                                    <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Resumen" alt="Resumen" />
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
-                        {% if comercial == 'True' %}
-                            <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Facturar" alt="Facturar" />
-                        {% endif %}
+                            {% if comercial == 'True' %}
+                                <input type="submit" class="btn btn-block btn-primary my-2 py-2" name="submit" value="Facturar" alt="Facturar" />
+                            {% endif %}
+                        </div>
                     </form>
-
-                </div>
             </div>
         </div>
 
@@ -224,4 +238,30 @@
         cant.value = cant.value.replace(/,/g,'.');
     });
 </script>
+
+<!-- <script>
+    function applyWalletDiscount() {
+        const orderTotal = {{ order.total_amount }}; // Ajusta según tu variable
+        fetch('/apply-wallet-discount/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: `order_total=${orderTotal}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(`Descuento aplicado: $${data.discount}`);
+                // Actualizar totales en la interfaz
+                document.getElementById('order-total').innerText = data.new_total;
+                document.getElementById('wallet-balance').innerText = data.new_balance;
+            } else {
+                alert(data.message);
+            }
+        });
+    }
+    </script> -->
+    
 {% endblock %}

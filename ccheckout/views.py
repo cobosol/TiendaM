@@ -126,7 +126,7 @@ def hit(request):
     else:
         print("Error en el numero de la orden")
 
-# El view de la página de pago
+# El view de la página de pago por Tropipay
 @login_required
 def show_checkout(request, template_name='checkout/checkout.html'):
     MND = 'USD'
@@ -221,7 +221,7 @@ def show_checkout(request, template_name='checkout/checkout.html'):
         cobra_efectivo = True
     return render(request, template_name, locals())
 
-#Pagar en efectivo
+#Pagar en efectivo, solo acceso a los vendedores
 @login_required
 def cach(request, template_name='checkout/cach.html'):
     MD = 'USD'
@@ -236,12 +236,13 @@ def cach(request, template_name='checkout/cach.html'):
                 user = request.user
                 profile = get_object_or_404(Profile, user = user)
                 MD = profile.MONEY_TYPE[profile.money_type][1]
+                #Prguntar si el usuario es vendedor
                 if MD == 'USD':
                     order_number = create_order(request, 1, True, True) # Crear la orden con tipo de transacción 1 usd en cach
                     if order_number['order_number'] == -1:
                         fail = reverse('show_cart')
                         return HttpResponseRedirect(fail)
-                else:
+                else: # Si es CUP
                     order_number = create_order(request, 3, False, True)
                     if order_number['order_number'] == -1:
                         fail = reverse('show_cart')
@@ -250,7 +251,7 @@ def cach(request, template_name='checkout/cach.html'):
                 if order_number:
                     request.session['order_number'] = order_number['order_number']
                     order = Order.objects.filter(id=order_number['order_number'])[0]
-                    order.transaction_id = 1 # 1 para pago en efectivo USD 
+                    order.transaction_id = 1 # 1 para pago en efectivo USD o CUP
                     order.save()
                     order.update_status(Order.PAIDED)
                     order.update_status(Order.DELIVERED)
@@ -298,7 +299,7 @@ def facturar(request, template_name='checkout/facturar.html'):
                     if order_number['order_number'] == -1:
                         fail = reverse('show_cart')
                         return HttpResponseRedirect(fail)
-                else:
+                else: # En MLC deprecated
                     order_number = create_order(request, 3, False, False)
                     if order_number['order_number'] == -1:
                         fail = reverse('show_cart')
@@ -340,8 +341,12 @@ def pagar(request, template_name='checkout/pagar.html'):
     if request.method == 'POST': 
         postdata = request.POST.copy()
         if postdata['submit'] == 'Efectuar pago':
+            print("En efcetuar pago")
+            postdata['wallet_discount'] = request.session.get('wallet_discount', 0.00)
             form = PagarForm(postdata)
+            print("A validar")
             if form.is_valid():
+                print("Validada la form")
                 user = request.user
                 profile = get_object_or_404(Profile, user = user)
                 MD = profile.MONEY_TYPE[profile.money_type][1]
@@ -358,6 +363,8 @@ def pagar(request, template_name='checkout/pagar.html'):
                     order.save()
                     pagarTransfer = order.pay_url #reverse(order.pay_url)
                     return HttpResponseRedirect(pagarTransfer)
+            else:
+                print(f"Error de validacion de la form {form.errors}")
     else:
         form = PagarForm()
         form.name = request.user.first_name + request.user.last_name
@@ -375,6 +382,7 @@ def pagar(request, template_name='checkout/pagar.html'):
         cobra_efectivo = True
     return render(request, template_name, locals())
 
+# Reservar producto. Variante para pagos en USD sin pasarela internacional
 @login_required
 def reserve(request, template_name='checkout/reserve.html'):
     # Reservar productos sin pagar
@@ -425,6 +433,7 @@ def reserve(request, template_name='checkout/reserve.html'):
         envio = True 
     return render(request, template_name, locals())
 
+# Pagina de pago por transfermovil
 @login_required
 def transfer(request, template_name='checkout/transfer.html', id=0):
     order = Order.objects.filter(id=id)[0]
@@ -444,6 +453,7 @@ def transfer(request, template_name='checkout/transfer.html', id=0):
             return HttpResponseRedirect(receipt_url)
     return render(request, template_name, locals())
 
+# Página para crear resumen de ventas diarias
 def create_daily_summary(request):
     MD = 'USD'
     if cart.is_empty(request):
@@ -479,6 +489,8 @@ def create_daily_summary(request):
                 formset.save()
                 #Verificar que reportado coincida con la suma de elementos 
                 order.total_reported = sum([form.cleaned_data['amount'] for form in formset])
+                if order.total_reported != order.base_total:
+                    messages.info(request, "No coincide el monto del listado de productos con lo reportado en el resumen")
                 order.save()
                 app_label = order._meta.app_label
                 model_name = order._meta.model_name
@@ -697,7 +709,8 @@ def fail(request, template_name='checkout/fail.html'):
 @login_required
 def details(request, order_id, template_name='checkout/details.html'):
     order = Order.objects.filter(id=order_id)[0]
-    subtotal = order.total - order.delivery_price    
+    subtotal = order.base_total - order.delivery_price    
+    #total = subtotal - order.wallet_discount
     order_items = OrderItem.objects.filter(order=order_id)
     discounts = "False"
     for item in order_items:

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Perfil{% endblock %}
+{% block content %}
+
+<!-- Page Header Start -->
+<div class="container-fluid bg-secondary mb-2">
+  <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
+      <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;"> Monedero MUHIA </h4>
+  </div>
+</div>
+<!-- Page Header End -->
+
+<main role="main">
+  <div class="container">
+      <!-- Datos del monedero -->
+      <div class="wallet-balance">
+        <h3><strong>Tu saldo: </strong> {{ request.user.wallet.balance }} CUP</h3>
+        <h4><strong>Historial de transacciones:</strong></h4>
+        <ul>
+        {% for transaction in request.user.wallet.transaction_set.all %}
+            <li>{{ transaction.created_at }}: {{ transaction.amount }} - {{ transaction.description }}</li>
+        {% endfor %}
+        </ul>
+      </div>
+  </div>
+</main>
+{% endblock %}

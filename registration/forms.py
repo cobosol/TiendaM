@@ -68,6 +68,7 @@ class ProfileForm(forms.ModelForm):
         super(ProfileForm, self).__init__(*args, **kwargs)
         # override default attributes
         self.fields['link'].widget.attrs['size'] = '100'
+        self.fields['address'].widget.attrs['size'] = '40'
 
     class Meta:
         model = Profile
@@ -79,7 +80,7 @@ class ProfileForm(forms.ModelForm):
             """ 'cid': forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Número de identidad', 'required': True}), """
             """ 'reeup': forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Código reeup'}),
             'nit': forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Código nit'}), """ 
-            'address': forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Dirección legal'}),
+            'address': forms.Textarea(attrs={'class':'form-control mt-3', 'rows':3, 'placeholder':'Dirección legal'}),
             """'agency': forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Agencia bancaria'}), """ 
             'contract': forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Número de contrato'}),
         }

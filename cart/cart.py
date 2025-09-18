@@ -2,7 +2,8 @@ from cart.models import CartItem
 from catalog.models import Product
 from stores.models import Store
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.http import HttpResponseRedirect, JsonResponse
 from cart import cart
 from cart.models import DeliveryInfo
 from stores.models import Product_Sales, Store
@@ -12,6 +13,10 @@ from django.contrib import messages
 from ccheckout.validators import CouponValidator
 from django import forms
 from utils.context_processors import active_mnd
+from wallet.models import Transaction, Wallet
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
+from django.db import transaction
 
 import decimal
 import random
@@ -337,3 +342,72 @@ def empty_cart(request):
     user_cart = get_cart_items(request)
     request.session[SESSION_DELIVERY] = ''    
     user_cart.delete()
+
+@login_required
+@csrf_protect
+@transaction.atomic
+def apply_wallet_discount(request, cart_subtotal, wallet_discount):
+    var = request.session.get('wallet_discount', 0)
+    try:
+            wallet = Wallet.objects.select_for_update().get(user=request.user)
+            if (request.user.is_authenticated):
+                print('En user authenticated')
+                profile = get_object_or_404(Profile, user = request.user)
+                MND = profile.MONEY_TYPE[profile.money_type][1]
+                if decimal.Decimal(wallet_discount) <= wallet.balance:
+                    print(wallet_discount)
+                    print(wallet.balance)
+                    if MND == 'CUP':           
+                        # Calcular descuento aplicable
+                        discount = min(decimal.Decimal(wallet_discount), cart_subtotal/2) #Usar hasta el 50% del monto de la cuenta
+                        new_total = cart_subtotal - discount
+                    else:
+                        discount = min(decimal.Decimal(wallet_discount), cart_subtotal*120/2)
+                        new_total = (cart_subtotal*120 - discount) / 120
+                else:
+                    messages.info(request, 'Revise el monto de puntos solicitado')
+                    url = reverse('show_cart')
+                    return HttpResponseRedirect(url)
+                print(discount)
+                if discount > 0:
+                    wallet.balance -= discount
+                    wallet.save()
+                
+                    Transaction.objects.create(
+                        wallet=wallet,
+                        amount=-discount,
+                        description="Descuento aplicado en compra"
+                    )
+                    print("Voy a actualizar session discount")
+                    request.session['wallet_discount'] = float(discount)
+                    print(request.session.get('wallet_discount', 0))
+
+                
+                
+                    return JsonResponse({
+                        'success': True,
+                        'discount': discount,
+                        'new_balance': float(wallet.balance),
+                        'new_total': new_total
+                    })
+            else:
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Saldo insuficiente en el monedero'
+                })
+                
+    except Exception as e:
+            print(f'Error {e}')
+            return JsonResponse({
+                'success': False,
+                'message': f'Error: {str(e)}'
+            })
+    """     else:
+        print(f'En session discount')
+        dis = request.session['wallet_discount']
+        print(f'En session discount: {dis}') """
+    
+    return JsonResponse({
+        'success': False,
+        'message': 'Método no permitido'
+    })
