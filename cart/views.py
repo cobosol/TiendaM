@@ -43,7 +43,6 @@ def show_cart(request, template_name="cart/cart.html"):
     try:
         if request.method == 'POST':
             postdata = request.POST.copy()
-            print(f'postdata {postdata}')
             if postdata['submit'] == 'X': # Eliminar producto del carrito
                 cart.remove_from_cart(request)
             elif postdata['submit'] == '': # Actualizar cantidades del carrito (disminuir)
@@ -65,7 +64,7 @@ def show_cart(request, template_name="cart/cart.html"):
                         text = "Cupón activado correctamente"
                         messages.info(request, text)
                     else:
-                        print(f"cupon falso {coupon}")
+                        messages.error(request, f"cupon falso {coupon}")
             elif postdata['submit'] == 'Usar puntos': # Aplicar puntos
                 try:
                     cart_subtotal = cart.cart_subtotal(request)
@@ -92,7 +91,7 @@ def show_cart(request, template_name="cart/cart.html"):
                     else:
                         messages.success(request, 'Puntos aplicados con éxito')
                 except Exception as e:
-                    print(e)
+                    messages.error(request, f'Error. {e}')
             elif postdata['submit'] == 'Reservar': # Reservar producto sin pagar
                 if request.user.is_authenticated:
                     if MND == 'USD':
@@ -153,6 +152,7 @@ def show_cart(request, template_name="cart/cart.html"):
     if delivery_name == 'Envío Habana':
         envio = True 
     discount = request.session.get('wallet_discount', 0)
+    discountChange = discount
     if discount:
         if MND == "CUP":
             cart_total = cart_subtotal + cart_delivery - decimal.Decimal(discount)
@@ -162,18 +162,19 @@ def show_cart(request, template_name="cart/cart.html"):
     else:
         cart_total = cart_subtotal + cart_delivery
         discount = 0.00
+    discount = round(discount,2)
     deliveryObj = get_object_or_404(DeliveryInfo, client=user)
     zone = deliveryObj.getDeliveryZone
     cart_subtotal = float(cart_subtotal)
     cart_delivery = float(cart_delivery)
     cart_total = float(cart_total)
     if MND == 'CUP':
-        wallet_to_apply = min((cart_subtotal/2),user.wallet.balance)
+        wallet_to_apply = round(min((cart_subtotal/2),user.wallet.balance),2)
     elif MND == 'USD':
-        wallet_to_apply = min((cart_subtotal*120/2),user.wallet.balance)
+        wallet_to_apply = round(min((cart_subtotal*120/2),user.wallet.balance),2)
     else:
         wallet_to_apply = 0.00
-    context = {'cart_total':cart_total, 'envio': envio, 
+    context = {'cart_total':cart_total, 'envio': envio, 'wallet_to_apply': wallet_to_apply, 'discountChange':discountChange, 
                'delivery_name': delivery_name, 'cart_delivery':cart_delivery, 'discount':discount, 
                'cart_subtotal':cart_subtotal, 'zone':zone, 'cart_items':cart_items, 'MND':MND}
-    return render(request, template_name, locals())
+    return render(request, template_name, context)

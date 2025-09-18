@@ -242,7 +242,7 @@ class PagarForm(forms.ModelForm):
         exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery',
                     'store_name', 'payment_city', 'delivery_state', 'currency', 'payment_postCode',
                     'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon', 'usd_total',
-                      'cup_total', 'mlc_total', 'total_reported' 
+                      'cup_total', 'mlc_total', 'total_reported', 'cup_oficial', 'wallet_discount' 
                     )
     def clean_phone(self):
         phone = self.cleaned_data['payment_phone']
@@ -271,10 +271,10 @@ class ReserveForm(forms.ModelForm):
     
     class Meta:
         model = Order
-        exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery', 'store_name', 'payment_city', 
-                   'delivery_state', 'currency', 'payment_postCode',
+        exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 
+                   'delivery', 'store_name', 'payment_city', 'delivery_state', 'currency', 'payment_postCode',
                      'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon', 'usd_total',
-                      'cup_total', 'mlc_total', 'total_reported')
+                      'cup_total', 'mlc_total', 'total_reported', 'cup_oficial', 'wallet_discount')
 
     def clean_phone(self):
         phone = self.cleaned_data['payment_phone']
@@ -298,7 +298,7 @@ class ReserveEForm(forms.ModelForm):
         exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery', 'store_name', 'payment_city', 
                    'delivery_state', 'currency', 'payment_postCode', 'delivery_street', 'delivery_apto',
                      'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon', 'usd_total',
-                      'cup_total', 'mlc_total', 'total_reported')
+                      'cup_total', 'mlc_total', 'total_reported', 'cup_oficial', 'wallet_discount')
 
     def clean_phone(self):
         phone = self.cleaned_data['payment_phone']
