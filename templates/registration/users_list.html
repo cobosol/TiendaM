@@ -74,7 +74,7 @@
                 <img width="50" height="50" src="{{perfil.get_avatar_url}}" alt="{{perfil.get_avatar_url}}">
                 {% endif %}
               </td>
-              <td>{{ perfil.user.username }}</td>
+              <td><a href="/accounts/profile/editar/{{perfil.id}}"> {{ perfil.user.username }} </a></td>
               <td>{{ perfil.user.first_name }} {{perfil.user.last_name}}</td>
               <td>{{ perfil.user.date_joined.date }}</td>
               <td>{% if perfil.user.last_login %} {{ perfil.user.last_login.date }} {% else %} {% endif %}</td>

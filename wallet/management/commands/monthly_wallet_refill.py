@@ -96,8 +96,6 @@ class Command(BaseCommand):
         first = today.replace(day=1)
         last_month = first - timedelta(days=1)
         last_month_first = last_month.replace(day=1)
-        print(last_month_first)
-        print(last_month)
 
         
         # Aplicar una vez para llenar el atributo cup_oficial
@@ -108,22 +106,23 @@ class Command(BaseCommand):
         # Obtener usuarios con compras en el mes
         users = User.objects.annotate(
             total_spent=Sum('order__cup_oficial', 
-                           filter=Q(order__date__gte=last_month_first))
+                           filter=Q(order__date__gte=last_month_first, order__status__in=['Pagada', 'Entregada']))
         ).exclude(total_spent=None) #, order__date__lte=last_month
         
         count = 0
         for user in users:
             estrella = False
-            if user.total_spent >= threshold5:
+            if user.groups.filter(name__in=['comercial']):
+                pass
+            elif user.total_spent >= threshold5:
                 estrella = True
                 bonus = user.total_spent * decimal.Decimal(percentage5)
-                user.estrellas = 5
+                user.profile.estrellas = 5
                 percentage = percentage5
             elif user.total_spent >= threshold4:
                 estrella = True
                 bonus = user.total_spent * decimal.Decimal(percentage4)
                 user.profile.estrellas = 4
-                print(user.profile.estrellas)
                 percentage = percentage4
             elif user.total_spent >= threshold3:
                 estrella = True
@@ -156,12 +155,10 @@ class Command(BaseCommand):
                     
                     count += 1
                     logger.info(f"Bonificación de ${bonus} aplicada al usuario {user.id}")
-                    print(f"Bonificación de ${bonus} aplicada al usuario {user.id}")
                     
                 except Exception as e:
                     logger.error(f"Error procesando usuario {user.id}: {str(e)}")
                     continue
-        
         
         self.stdout.write(
             self.style.SUCCESS(f'Bonificación aplicada a {count} usuarios')

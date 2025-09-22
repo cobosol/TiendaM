@@ -3,6 +3,7 @@ from catalog.models import Category
 from tienda import settings
 from registration.models import Profile
 from stores.models import Store
+from notification.models import Notification
 
 USD = 0
 CUP = 1
@@ -64,3 +65,13 @@ def tienda_generales(request):
 def active_mnd(request):
     profile = get_object_or_404(Profile, user = request.user)
     return profile.MONEY_TYPE[profile.money_type][1]
+
+def notifications(request):
+    if request.user.is_authenticated:
+        # Usar el modelo directamente para evitar problemas
+        unread_count = Notification.objects.filter(
+            user=request.user.profile,
+            read=False
+        ).count()
+        return {'unread_count': unread_count}
+    return {'unread_count': 0}

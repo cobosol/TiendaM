@@ -348,6 +348,11 @@ def empty_cart(request):
 @transaction.atomic
 def apply_wallet_discount(request, cart_subtotal, wallet_discount):
     var = request.session.get('wallet_discount', 0)
+    discount = 0
+    if var and var != 0:
+        wallet_discount = decimal.Decimal(wallet_discount) + decimal.Decimal(var)
+    else:
+        var = 0
     try:
             wallet = Wallet.objects.select_for_update().get(user=request.user)
             if (request.user.is_authenticated):
@@ -356,17 +361,33 @@ def apply_wallet_discount(request, cart_subtotal, wallet_discount):
                 if decimal.Decimal(wallet_discount) <= wallet.balance:
                     if MND == 'CUP':           
                         # Calcular descuento aplicable
-                        discount = min(decimal.Decimal(wallet_discount), cart_subtotal/2) #Usar hasta el 50% del monto de la cuenta
-                        new_total = cart_subtotal - discount
+                        if decimal.Decimal(wallet_discount) <= cart_subtotal/2:
+                            discount = decimal.Decimal(wallet_discount) # min(decimal.Decimal(wallet_discount), cart_subtotal/2) #Usar hasta el 50% del monto de la cuenta
+                            new_total = cart_subtotal - discount
+                        else:
+                            discount = cart_subtotal/2
+                            return JsonResponse({
+                                'success': False,
+                                'message': 'No puede sobrepasar el 50% del monto de la compra en puntos'
+                            })
                     else:
-                        discount = min(decimal.Decimal(wallet_discount), cart_subtotal*120/2)
-                        new_total = (cart_subtotal*120 - discount) / 120
+                        if decimal.Decimal(wallet_discount) <= cart_subtotal*120/2:
+                            discount = decimal.Decimal(wallet_discount) #min(decimal.Decimal(wallet_discount), cart_subtotal*120/2)
+                            new_total = (cart_subtotal*120 - discount) / 120
+                        else:
+                            discount = cart_subtotal*120/2
+                            return JsonResponse({
+                                'success': False,
+                                'message': 'No puede sobrepasar el 50% del monto de la compra en puntos'
+                            })
                 else:
-                    messages.info(request, 'Revise el monto de puntos solicitado')
-                    url = reverse('show_cart')
-                    return HttpResponseRedirect(url)
+                    return JsonResponse({
+                    'success': False,
+                    'message': 'No puede sobrepasar el 50% del monto de la compra en puntos'
+                })
+
                 if discount > 0:
-                    wallet.balance -= discount
+                    wallet.balance = wallet.balance - discount + decimal.Decimal(var)
                     wallet.save()
                 
                     Transaction.objects.create(
@@ -391,7 +412,7 @@ def apply_wallet_discount(request, cart_subtotal, wallet_discount):
     except Exception as e:
             return JsonResponse({
                 'success': False,
-                'message': f'Error: {str(e)}'
+                'message': f'Error: {str(e.errors)}'
             })
     
     return JsonResponse({

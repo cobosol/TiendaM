@@ -211,3 +211,13 @@ def update_mnd(request):
         return redirect(next_url)
     else:
         return redirect('/')
+
+class Actualizar_perfil_admin(SuccessMessageMixin, UpdateView):
+    model = Profile
+    #form = ProfileUpdateForm
+    fields = ('cid', 'client_type', 'phone', 'ws', 'reeup', 'nit', 'address', 
+              'agency', 'contract',)
+    success_message = "Se ha actualizado correctamente el perfil."
+
+    def get_success_url(self):
+        return reverse('users_list')

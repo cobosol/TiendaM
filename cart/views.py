@@ -86,7 +86,7 @@ def show_cart(request, template_name="cart/cart.html"):
                     response = cart.apply_wallet_discount(request, cart_subtotal, wallet_to_apply)
                     resp = json.loads(response.content)
                     if not resp.get('success'):
-                        text = response['message']
+                        text = resp['message']
                         messages.info(request, text)
                     else:
                         messages.success(request, 'Puntos aplicados con éxito')
