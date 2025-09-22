@@ -33,9 +33,7 @@ class Profile(models.Model):
                    )
     
     user = models.OneToOneField(User, on_delete = models.CASCADE, verbose_name = "Usuario")
-    cid = models.CharField(max_length=20, 
-                            help_text='Número de identificación', 
-                            verbose_name = "Número de identidad")
+    cid = models.CharField(max_length=20, verbose_name = "Número de identidad")
     avatar = models.ImageField(upload_to='profiles', null=True, blank=True, verbose_name = "Foto")
     bio = models.TextField(null=True, blank=True, verbose_name = "Biografía")
     client_type = models.IntegerField(choices=CLIENT_TYPE, default=COMPRADOR, help_text='Puede cambiarlo cuando desee en su perfil', verbose_name = "Tipo de cliente")
@@ -44,9 +42,7 @@ class Profile(models.Model):
     phone = models.CharField(max_length=15, null=True, blank = True,
                             help_text='', 
                             verbose_name = "Número de móvil")
-    ws = models.CharField(max_length=15, null=True, blank = True,
-                            help_text='Número de teléfono para WhatsApp', 
-                            verbose_name = "Número para WhatsApp")
+    ws = models.CharField(max_length=15, null=True, blank = True, verbose_name = "Número para WhatsApp")
     
     # Special User
     reeup = models.CharField(max_length=20, unique=True, null=True, blank = True,

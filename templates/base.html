@@ -80,6 +80,7 @@
         }
     </style>
 </head>
+
 <body>
     {% include 'messages.html' %}
 
@@ -180,6 +181,26 @@
                         </ul>
                     </li>
                 </ul>
+                
+                <div id="notifications-container" style="position: relative; display: inline-block;">
+                    <button id="notifications-bell" class="btn btn-light">
+                        <i class="fas fa-bell"></i>
+                        <span id="unread-count" class="badge bg-danger">
+                            {{ unread_count }}
+                        </span>
+                    </button>
+                
+                    <!-- Panel de notificaciones -->
+                    <div id="notifications-panel" style="display: none; position: absolute; right: 0; width: 350px; max-height: 500px; overflow-y: auto; z-index: 1000; background: white; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        <div class="d-flex justify-content-between p-2 border-bottom">
+                            <h6 class="m-0">Notificaciones</h6>
+                            <button id="mark-all-read" class="btn btn-sm btn-link">Marcar todas como leídas</button>
+                        </div>
+                        <div id="notifications-list" class="list-group list-group-flush">
+                            <!-- Las notificaciones se cargarán aquí dinámicamente -->
+                        </div>
+                    </div>
+                </div>
                 <div style="padding-left: 2ch;">                    
                     <form method="post" action="{% url 'update_mnd' %}">
                         {% csrf_token %}
@@ -221,7 +242,7 @@
                     </div>
                 </div>
                 <!-- Información general -->
-   <!--              <div class="card mb-4">
+   <!--         <div class="card mb-4">
                     <div class="card-body">
                         <h5 class="card-title">Información General</h5>
                         <p class="card-text">
@@ -464,8 +485,8 @@
             var _owa_s = document.getElementsByTagName('script')[0]; _owa_s.parentNode.insertBefore(_owa, _owa_s);
         }());
         //]]>
-        </script>
-        <!-- End Open Web Analytics Code -->
+    </script>
+    <!-- End Open Web Analytics Code -->
         
         <!-- Mensajes temporales -->
         <script>
@@ -480,6 +501,122 @@
         });
         </script>
         
+        <!-- Notificaciones -->
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const bell = document.getElementById('notifications-bell');
+                const panel = document.getElementById('notifications-panel');
+                const listContainer = document.getElementById('notifications-list');
+                const unreadCount = document.getElementById('unread-count');
+                const markAllBtn = document.getElementById('mark-all-read');
+                
+                // Alternar visibilidad del panel
+                bell.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+                    if (panel.style.display === 'block') {
+                        loadNotifications();
+                    }
+                });
+                
+                // Cerrar panel al hacer clic fuera
+                document.addEventListener('click', function(e) {
+                    if (!panel.contains(e.target) && e.target !== bell) {
+                        panel.style.display = 'none';
+                    }
+                });
+                
+                // Cargar notificaciones vía AJAX
+                function loadNotifications() {
+                    fetch("{% url 'unread_notifications' %}")
+                        .then(response => response.json())
+                        .then(data => {
+                            unreadCount.textContent = data.length;
+                            listContainer.innerHTML = '';
+                            
+                            if (data.length === 0) {
+                                listContainer.innerHTML = `<div class="p-3 text-center text-muted">No hay notificaciones nuevas</div>`;
+                                return;
+                            }
+                            
+                            data.forEach(notif => {
+                                const notifElement = document.createElement('a');
+                                notifElement.href = notif.link || '#';
+                                notifElement.className = `list-group-item list-group-item-action ${notif.read ? '' : 'list-group-item-primary'}`;
+                                notifElement.dataset.id = notif.id;
+                                
+                                notifElement.innerHTML = `
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <p class="mb-1">${notif.message}</p>
+                                        <button class="btn btn-sm mark-read" data-id="${notif.id}">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                    </div>
+                                    <small class="text-muted">${notif.created_at}</small>
+                                `;
+                                
+                                listContainer.appendChild(notifElement);
+                                
+                                // Evento para marcar como leído
+                                const markBtn = notifElement.querySelector('.mark-read');
+                                markBtn.addEventListener('click', function(e) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    markAsRead(notif.id);
+                                });
+                            });
+                        });
+                }
+                
+                // Función para marcar como leído
+                function markAsRead(notificationId) {
+                    fetch(`/utils/read/${notificationId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Actualizar UI
+                            const notificationElement = document.querySelector(`.list-group-item[data-id="${notificationId}"]`);
+                            if (notificationElement) {
+                                notificationElement.classList.remove('list-group-item-primary');
+                            }
+                            
+                            // Actualizar contador
+                            const currentCount = parseInt(unreadCount.textContent);
+                            unreadCount.textContent = currentCount - 1;
+                        }
+                    });
+                }
+                
+                // Marcar todas como leídas
+                markAllBtn.addEventListener('click', function() {
+                    fetch("{% url 'mark_all_read' %}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Actualizar UI
+                            document.querySelectorAll('.list-group-item-primary').forEach(el => {
+                                el.classList.remove('list-group-item-primary');
+                            });
+                            unreadCount.textContent = '0';
+                        }
+                    });
+                });
+            });
+        </script>
+
         {% include 'cookie_banner.html' %}
 </body>
 </html>

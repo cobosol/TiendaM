@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Mis Incentivos</h2>
+    
+    <div class="row">
+        {% for incentivo in incentivos %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ incentivo.incentivo.nombre }}</h5>
+                    <p class="card-text">
+                        Gasta ${{ incentivo.incentivo.monto_objetivo }} este mes y recibe 
+                        <strong>{{ incentivo.incentivo.producto_incentivo.name }}</strong> gratis!
+                    </p>
+                    
+                    <div class="progress mb-3">
+                        <div class="progress-bar" role="progressbar" 
+                             style="width: {{ incentivo.porcentaje_completado }}%;"
+                             aria-valuenow="{{ incentivo.porcentaje_completado }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            {{ incentivo.porcentaje_completado }}%
+                        </div>
+                    </div>
+                    
+                    <p>
+                        <small>
+                            Has gastado ${{ incentivo.monto_actual }} de ${{ incentivo.incentivo.monto_objetivo }}
+                        </small>
+                    </p>
+                    
+                    {% if incentivo.estado == 'notificado' %}
+                        <span class="badge badge-info">Ya casi. Aprovecha!!!</span>
+                    {% elif incentivo.estado == 'entregado' %}
+                        <span class="badge badge-success">Incentivo otorgado. Felicidades</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                No tienes incentivos activos en este momento.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+// JavaScript para manejar la reclamación de incentivos
+document.querySelectorAll('.btn-reclamar').forEach(button => {
+    button.addEventListener('click', function() {
+        const incentivoId = this.dataset.incentivoId;
+        
+        fetch(`/incentivos/reclamar/${incentivoId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                location.reload();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+</script>
+{% endblock %}

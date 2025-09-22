@@ -27,7 +27,6 @@ def index_view(request, template_name="index.html"):
     if request.method == 'POST':
         try:
             postdata = request.POST.copy()
-            print(postdata)
             if postdata['submit'] == 'Comprar':
                 product_slug = postdata.get('product_slug','')
                 if not cart.add_to_cart(request, product_slug, quantity=postdata['quantity']):

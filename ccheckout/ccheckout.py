@@ -240,7 +240,9 @@ def create_order(request, transaction_id, usd = True, cach = False):
                 mount = 100 - round((order.base_total / order.total_items * 100 ), 0)
                 order.others_discount = mount
             order.wallet_discount = request.session.get('wallet_discount', 0)
-            request.session['wallet_discount'] = ''
+            if not order.wallet_discount:
+                order.wallet_discount = 0
+            request.session['wallet_discount'] = 0
             if MND == "CUP":
                 order.end_total = order.base_total + decimal.Decimal(order.delivery_price) - decimal.Decimal(order.wallet_discount)
             else:

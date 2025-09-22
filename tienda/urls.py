@@ -22,6 +22,7 @@ urlpatterns = [
     path('promo/', include('promo.urls')),
     path('precio/', include('utils.urls')),
     path('servicios/', include('services.urls')),
+    path('notification/', include('notification.urls')),
     path('', index_view, name="home"),
 ]
 

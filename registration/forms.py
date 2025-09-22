@@ -89,6 +89,29 @@ class ProfileForm(forms.ModelForm):
             'link': 'Sitio personal:'
         }
 
+class ProfileUpdateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ProfileUpdateForm, self).__init__(*args, **kwargs)
+        # override default attributes
+        self.fields['address'].widget.attrs['size'] = '60'
+
+    class Meta:
+        model = Profile
+        fields = ['cid', 'client_type', 'phone', 'ws', 'reeup', 'nit', 'address', 'agency', 'contract']
+        widgets = {
+            'cid': forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Número de identidad', 'required': False}),
+            """ 'reeup': forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Código reeup'}),
+            'nit': forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Código nit'}), """ 
+            'address': forms.Textarea(attrs={'class':'form-control mt-3', 'rows':3, 'placeholder':'Dirección legal'}),
+            """'agency': forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Agencia bancaria'}), """ 
+            'contract': forms.TextInput(attrs={'class':'form-control mt-3', 'placeholder':'Número de contrato'}),
+        }
+
+        labels = {
+            'link': 'Sitio personal:'
+        }
+
+
 class EmailForm(forms.ModelForm):
     email = forms.EmailField(required=True, max_length=254, help_text="Requerido. 254 caracteres máximo y debe ser un email válido.")
 
