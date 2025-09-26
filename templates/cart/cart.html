@@ -156,6 +156,7 @@
         </div>
 
         <div id = "Total a pagar" class="col-lg-3">
+            <div class="clasificacion-cliente">
             <div class="card border-secondary mb-5">
                 <div class="card-header bg-primary border-0">
                     <h4 class="font-weight-semi-bold m-0 text-light" style="font-family: sans-serif;">A pagar</h4>
@@ -186,10 +187,11 @@
                         <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total|currency }}</h6>
                     </div>
                 </div>  
-
+            </div>
+            </div>
                     <form method="post" action="." class="cart">
                         {% csrf_token %}
-                        <div class="card-footer border-secondary bg-transparent">
+                        <div class="clasificacion-cliente border-secondary bg-transparent">
                             <div class="wallet-info justify-content-center">
                                 <h5 class="font-weight-semi-bold text-primary">Aplicar puntos:</h5>
                                 <p>Disponible: <strong>${{ user.wallet.balance }}</strong></p>
@@ -200,7 +202,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer border-secondary bg-transparent">
+                        <div class="clasificacion-cliente border-secondary bg-transparent">
                             <h5 class="font-weight-semi-bold text-primary">Aplicar cupón:</h5>
                             <input type="text" name="coupon" class="form-control form-control-sm bg-transparent text-center" placeholder="código del cupón">
                             <input type="submit" class="btn btn-block btn-success my-2 py-2" name="submit" value="Aplicar cupón" alt="Checkout" />
@@ -224,9 +226,7 @@
                             {% endif %}
                         </div>
                     </form>
-            </div>
         </div>
-
     </div>
 </div>
 
