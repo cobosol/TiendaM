@@ -17,7 +17,6 @@ from django.contrib import messages
 
 @receiver(post_save, sender=Order)
 def actualizar_incentivos_cliente(sender, instance, **kwargs):
-    print(f"En señal actualizar incentivo {instance.status}")
     if instance.status == 2 or instance.status == 5:  # Solo procesar órdenes pagadas o entregadas
         # Obtener el primer día del mes actual
         primer_dia_mes = timezone.now().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -29,7 +28,6 @@ def actualizar_incentivos_cliente(sender, instance, **kwargs):
             status__in=[2,5]
         ).aggregate(total=Sum('cup_oficial'))['total'] or 0
 
-        print(f'monto_mensual:{monto_mensual}')
         
         # Obtener todos los incentivos activos
         incentivos_activos = Incentivo.objects.filter(activo=True).order_by('-monto_objetivo')
@@ -37,13 +35,11 @@ def actualizar_incentivos_cliente(sender, instance, **kwargs):
         incentivado = False
         for incentivo in incentivos_activos:
             # Crear u obtener el registro de incentivo del cliente
-            print(f'incentivo:{incentivo.monto_objetivo}')
             if monto_mensual >= incentivo.umbral_notificacion and not incentivado:
                 cliente_incentivo, created = ClienteIncentivo.objects.get_or_create(
                     cliente=instance.user,
                     incentivo=incentivo
                 )
-                print(f'Estoy en umbral: {created}')         
                 Notification.objects.create(
                     user=instance.user.profile,
                     message=f"Ha recibido una oferta especial. No deje de consultarla",

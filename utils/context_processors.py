@@ -44,6 +44,7 @@ def tienda_generales(request):
     categories = Category.objects.filter(is_active=True)
     if not categories.exists():
         categories = None
+    notifi = notifications(request)
     return {
         'active_categories': categories,
         'stores': stores,
@@ -59,7 +60,8 @@ def tienda_generales(request):
         'meta_keywords': settings.META_KEYWORDS,
         'meta_description': settings.META_DESCRIPTION,
         'request': request,
-        'MONEY_TYPE': MONEY_TYPE
+        'MONEY_TYPE': MONEY_TYPE,
+        'unread_count': notifi['unread_count']
         }
 
 def active_mnd(request):

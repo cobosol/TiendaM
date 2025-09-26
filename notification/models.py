@@ -83,6 +83,7 @@ class ClienteIncentivo(models.Model):
             if not self.notificado and self.monto_actual >= self.incentivo.umbral_notificacion:
                 self.notificado = True
                 self.estado = 'notificado'
+                
             
             # Verificar si alcanzó el objetivo
             if self.monto_actual >= self.incentivo.monto_objetivo:

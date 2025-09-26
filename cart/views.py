@@ -69,6 +69,7 @@ def show_cart(request, template_name="cart/cart.html"):
                 try:
                     cart_subtotal = cart.cart_subtotal(request)
                     wallet_to_apply = request.POST.get('wallet_to_apply', '')
+                    wallet_to_apply = wallet_to_apply.replace(',','.')
                     if float(wallet_to_apply) > float(request.user.wallet.balance):
                         messages.info(request, 'No puede utilizar más puntos de los disponibles')
                         url = reverse('show_cart')
