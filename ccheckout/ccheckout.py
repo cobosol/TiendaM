@@ -156,6 +156,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
         cart_subtotal = cart.cart_subtotal(request)
         order.delivery_price = cart.cart_delivery_price(request, cart_subtotal, MND)
     elif transaction_id == 3: # Facturar por contrato
+        print("En factura por contrato")
         checkout_form = FacturarForm(request.POST, instance=order)
         order = checkout_form.save(commit=False)
         if usd: # Guardo el tipo de moneda en efectivo
@@ -370,6 +371,7 @@ def export_pdf(request, id_orden):
     profile = request.user.profile
     #if profile.client_type == profile.COMPRADOR:
     #Generando reporte PDF
+    print(order.transaction_id)
     if order.is_daily_summary:
         check = checkOrderSummary(id_order=id_orden)
         # Procesar métodos de pago con detalles
@@ -410,6 +412,17 @@ def export_pdf(request, id_orden):
             data['importeCUP'] = decimal.Decimal(round(order.total_reported, 2))
             data['seller'] = order.seller.first_name + ' ' + order.seller.last_name
             template_src = 'checkout/factura_resumen_diario.html' 
+    elif order.transaction_id == '3': # Si es una factura por contrato
+        print("Generar pdf contrato comercial")
+        template_src = 'checkout/factura_por_contrato.html'
+        data['first_name'] = order.payment_name
+        data['email'] = order.payment_email
+        data['user_CI'] = order.delivery_ci
+        data['phone'] = order.payment_phone 
+        data['address'] = profile.address # order.payment_address
+        data['importe'] = decimal.Decimal(round(order.base_total, 2))
+        data['status'] = order.statusS
+        data['details'] = order.payment_details
     elif order.user.profile.client_type == profile.COMPRA_VENTA or order.user.profile.client_type == profile.DISTRIBUIDOR: # Si la compra es de un cliente con contrato de compraventa ..... #order.transaction_id == '3': # Factura por contrato order.user.groups.filter(name__in=['comercial']):
         template_src = 'checkout/factura_por_contrato.html'
         data['first_name'] = profile.name #order.payment_name
@@ -430,6 +443,7 @@ def export_pdf(request, id_orden):
         data['importe'] = decimal.Decimal(round(order.base_total, 2))
         data['puntos'] = order.wallet_discount
     else: # Si es un cliente normal
+        print("En el else")
         template_src = 'checkout/factura_venta_online.html'
         data['name'] = profile.name
         data['user_name'] = profile.user.username

@@ -37,7 +37,7 @@ def mark_as_read(request, notification_id):
 @login_required
 @csrf_exempt
 def mark_all_read(request):
-    Notification.objects.filter(user=request.user, read=False).update(read=True)
+    Notification.objects.filter(user=request.user.profile, read=False).update(read=True)
     return JsonResponse({"status": "success"})
 
 @login_required

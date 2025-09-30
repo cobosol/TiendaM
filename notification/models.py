@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from catalog.models import Product
+import math
 
 class Notification(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='notification')
@@ -75,7 +76,6 @@ class ClienteIncentivo(models.Model):
     
     def actualizar_progreso(self, monto_gastado):
         # Solo actualizar si el incentivo está activo y no completado
-        print(f'Estoy en actualizar progreso')
         if self.estado in ['pendiente', 'notificado'] and self.incentivo.activo:
             self.monto_actual = monto_gastado
             
@@ -101,4 +101,4 @@ class ClienteIncentivo(models.Model):
         if self.incentivo.monto_objetivo == 0:
             return 0
         porcentaje = (self.monto_actual / self.incentivo.monto_objetivo) * 100
-        return min(100, round(porcentaje, 2))
+        return min(100, math.floor(porcentaje))

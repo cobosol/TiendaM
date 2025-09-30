@@ -309,8 +309,8 @@ def facturar(request, template_name='checkout/facturar.html'):
                     request.session['order_number'] = order_number['order_number']
                     order = Order.objects.filter(id=order_number['order_number'])[0] 
                     order.save()
-                    order.update_status(Order.PAIDED)
-                    order.update_status(Order.DELIVERED)
+                    """ order.update_status(Order.PAIDED)
+                    order.update_status(Order.DELIVERED) """
                     order.save()
                     receipt_url = reverse('checkout_receipt')
                     return HttpResponseRedirect(receipt_url)
@@ -969,7 +969,7 @@ def sales_total_summary(request):
     currency = request.GET.get('currency', 'USD')
 
     # Filtrar órdenes en el rango
-    orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED, Order.PAIDED])
+    orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED])
     
     """ for o in orders:
         o.save() """

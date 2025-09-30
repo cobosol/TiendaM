@@ -46,8 +46,10 @@ def show_cart(request, template_name="cart/cart.html"):
             if postdata['submit'] == 'X': # Eliminar producto del carrito
                 cart.remove_from_cart(request)
             elif postdata['submit'] == '': # Actualizar cantidades del carrito (disminuir)
+                print(postdata)
                 cart.update_cart(request)
             elif postdata['submit'] == '>': # Actualizar cantidades del carrito (aumentar)
+                print(postdata)
                 cart.update_cart(request)
             elif postdata['submit'] == 'Buscar': # Buscar producto
                 productSearch = postdata['producto']

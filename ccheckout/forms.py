@@ -197,7 +197,7 @@ class FacturarForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ['payment_name', 'payment_phone', 'payment_email', 'payment_address', 'payment_details']
+        fields = ['payment_name', 'payment_phone', 'delivery_ci', 'payment_email', 'payment_address', 'payment_details']
         widgets = {
             'payment_address': forms.Textarea(attrs={'width':'300px', 'rows':3}),
             'payment_details': forms.Textarea(attrs={'width':'600px', 'rows':4}),
