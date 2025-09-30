@@ -28,7 +28,7 @@
                     <tr>
                         <th>Producto</th>
                         <th>Precio</th>
-                        <th width="20%">Cantidad</th>
+                        <th width="25%">Cantidad</th>
                         <!-- <th>Cambiar cantidad</th> -->
 <!--                         <th>Entrega</th> -->
                         <th>Importe</th>
@@ -62,22 +62,25 @@
                             </form>
                         </td>
                         {% else %}
-                        <form method="post" action="." class="cart">
+                        <form id="quantity" method="post" action="." class="cart">
                         {% csrf_token %}
                         <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 120px;">
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="0" step="{% if elem.a_granel %}0.1{%else%}1{%endif%}" style="width: 100px">
+                            <button id="quantity" class="btn btn-sm btn-success btn-minus" name="submit">
+                                <i class="fa fa-check"></i>
+                            </button>
+<!--                             <div class="input-group quantity mx-auto" style="width: 120px;">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus" name="submit">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                    <input type="text" name="quantity" class="form-control form-control-sm bg-secondary text-center" value="{{ item.int_quantity }}">
+
+                                </div> -->
+
+<!--                                     <input type="text" name="quantity" class="form-control form-control-sm bg-secondary text-center" value="{{ item.int_quantity }}"> -->
 <!--                                 <input type="text" name="quantity" value="{{ item.quantity }}" id="quantity" size="2" class="quantity" maxlength="5" /> -->
-                                <div class="input-group-btn">
+<!--                                 <div class="input-group-btn">
                                     <button class="btn btn-sm btn-primary btn-plus" name="submit" >
                                         <i class="fa fa-plus"></i>
                                     </button>
-                                </div>
+                                </div> -->
                             </div>
                             <input type="hidden" name="item_id" value="{{ item.id }}" />
                         </td>

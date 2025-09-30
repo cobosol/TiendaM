@@ -131,7 +131,7 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                             <i class="fas fa-cog me-1"></i> Admin
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
+                        <ul class="dropdown-menu">
                             {% if comercial == 'True' or request.user.is_staff %}
                                 <li> <a href="{% url 'admin_orders_list' %}" style="font-family: sans-serif;"><i class="dropdown-item">Seguir órdenes de compra</i></a></li>
                                 <li> <a href="{% url 'gestion_solicitudes' %}" style="font-family: sans-serif;"><i class="dropdown-item">Servicios</i></a></li>
@@ -233,6 +233,7 @@
                 <!-- Estrellas -->
                 <div class="clasificacion-cliente">
                     <h6>Bienvenido {% if user.is_authenticated %} {{user}} {% endif %}</h6>
+                    <a href="/pagina/4/">
                     <div class="estrellas">
                         {% if user.is_authenticated %}
                             {% mostrar_estrellas user %}
@@ -240,6 +241,7 @@
                             ☆☆☆☆☆
                         {% endif %}
                     </div>
+                    </a>
                 </div>
                 <!-- Información general -->
    <!--         <div class="card mb-4">
@@ -571,7 +573,7 @@
                 
                 // Función para marcar como leído
                 function markAsRead(notificationId) {
-                    fetch(`/utils/read/${notificationId}/`, {
+                    fetch(`/notification/read/${notificationId}/`, {
                         method: 'POST',
                         headers: {
                             'X-CSRFToken': '{{ csrf_token }}',

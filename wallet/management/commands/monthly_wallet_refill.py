@@ -106,7 +106,7 @@ class Command(BaseCommand):
         # Obtener usuarios con compras en el mes
         users = User.objects.annotate(
             total_spent=Sum('order__cup_oficial', 
-                           filter=Q(order__date__gte=last_month_first, order__status__in=['Pagada', 'Entregada']))
+                           filter=Q(order__date__gte=last_month_first, order__status__in=[2, 3, 5, 7]))
         ).exclude(total_spent=None) #, order__date__lte=last_month
         
         count = 0
@@ -114,7 +114,7 @@ class Command(BaseCommand):
             estrella = False
             if user.groups.filter(name__in=['comercial']):
                 pass
-            elif user.total_spent >= threshold5:
+            if user.total_spent >= threshold5:
                 estrella = True
                 bonus = user.total_spent * decimal.Decimal(percentage5)
                 user.profile.estrellas = 5
