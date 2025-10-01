@@ -86,43 +86,43 @@
     </table>
     </form>
     </div>
+
     <div id = "Total a pagar" class="col-lg-3">
-    <div class="card border-secondary mb-5">
-        <div class="card-header bg-primary border-0">
-            <h4 class="font-weight-semi-bold m-0 text-light" style="font-family: sans-serif;">A pagar</h4>
-        </div>
-        <div class="card-body">
-            <div class="d-flex justify-content-between mb-3 pt-1">
-                <h6 class="font-weight-medium" style="font-family: sans-serif;">Subtotal:{{ cart_item_count }}</h6>
-                <h6 class="font-weight-medium" style="font-family: sans-serif;">{{ cart_subtotal|currency }}</h6>
-            </div>
-            <div class="d-flex justify-content-between">
-                {% if envio %}
-                    <h6 class="font-weight-medium" style="font-family: sans-serif;">Envío</h6>
-                    <h6 class="font-weight-medium" style="font-family: sans-serif;">$ {{ cart_delivery }}</h6>
-                {% else %}
-                    <h6 class="font-weight-medium" style="font-family: sans-serif;">Recogida en</h6>
-                    <h6 class="font-weight-medium" style="font-family: sans-serif;">$ {{ cart_delivery }}</h6>
-            </div>
-            <div class="d-flex justify-content-between mb-3 pt-1">
-                <a href="{{st.get_absolute_url}}" class="text-dark font-weight-medium mb-0 mr-3" style="font-family: sans-serif;">{{ st_name }}:</a>
-                <!-- <h6 class="font-weight-medium" style="font-family: roboto;">{{ delivery_name }}</h6> -->
-            </div>
-            {% endif %}
-        </div>
-        <div class="card-footer border-secondary bg-transparent">
-            <div class="d-flex justify-content-between mt-2">
-                <h6 class="font-weight-bold" style="font-family: sans-serif;">Total: </h6>
-                <br>
-                {% if MND == 'CUP' %} 
-                    <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total|currency }} CUP</h6>
-                {% elif MND == 'USD' %} 
-                    <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total|currency }} USD</h6>
-                {% else %}
-                    <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total|currency }} MLC</h6>
-                {% endif %}
+        <div class="clasificacion-cliente">
+            <div class="card border-secondary mb-5">
+                <div class="card-header bg-primary border-0">
+                    <h4 class="font-weight-semi-bold m-0 text-light" style="font-family: sans-serif;">A pagar</h4>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3 pt-1">
+                        <h6 class="font-weight-medium" style="font-family: sans-serif;">Subtotal:{{ cart_item_count }}</h6>
+                        <h6 class="font-weight-medium" style="font-family: sans-serif;"> {{ cart_subtotal|currency }}</h6>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        {% if envio %}
+                            <h6 class="font-weight-medium" style="font-family: sans-serif;">Envío: </h6>
+                            <h6 class="font-weight-medium" style="font-family: sans-serif;"> {{ cart_delivery|currency }}</h6>
+                        {% else %}
+                            <h6 class="font-weight-medium" style="font-family: sans-serif;">Recogida en</h6>
+                            <h6 class="font-weight-medium" style="font-family: sans-serif;">{{ cart_delivery|currency }}</h6>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3 pt-1">
+                        <a href="{{st.get_absolute_url}}" class="text-dark font-weight-medium mb-0 mr-3" style="font-family: sans-serif;">{{ delivery_name }}</a>
+                    </div>
+                    {% endif %}
+                    {% if envio%}
+                    <a href="{{st.get_absolute_url}}" class="text-dark font-weight-medium mb-0 mr-3" style="font-family: sans-serif;">{{ zone }}</a>
+                    {% endif %}
+                    <h6 class="font-weight" style="font-family: sans-serif; color: brown;">Descuento: ${{discount}}</h6><br>
+                    <div class="d-flex justify-content-between mt-2">
+                        <h6 class="font-weight-bold" style="font-family: sans-serif;">Total:</h6>
+                        <h6 class="font-weight-bold" style="font-family: sans-serif;">{{ cart_total|currency }}</h6>
+                    </div>
+                </div>  
             </div>
         </div>
+    
+<!--  -->
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
             <a href="/carrito/carrito/" style="font-family: sans-serif;"><i class="fas fa-shopping-cart text-secondary mr-1"></i>Volver al carrito</a>
             <h4 class="text-secondary  bg-primary mb-2" style="font-family: sans-serif;"></h4>

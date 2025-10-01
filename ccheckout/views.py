@@ -133,6 +133,9 @@ def show_checkout(request, template_name='checkout/checkout.html'):
     if cart.is_empty(request):
         cart_url = reverse('show_cart')
         return HttpResponseRedirect(cart_url)
+    user = request.user
+    profile = get_object_or_404(Profile, user = user)
+    MD = profile.MONEY_TYPE[profile.money_type][1]
     if request.method == 'POST': 
         postdata = request.POST.copy()
         if postdata['submit'] == ' ':
@@ -338,15 +341,15 @@ def pagar(request, template_name='checkout/pagar.html'):
     if cart.is_empty(request):
         cart_url = reverse('show_cart')
         return HttpResponseRedirect(cart_url)
+    user = request.user
+    profile = get_object_or_404(Profile, user = user)
+    MD = profile.MONEY_TYPE[profile.money_type][1]
     if request.method == 'POST': 
         postdata = request.POST.copy()
         if postdata['submit'] == 'Efectuar pago':
             postdata['wallet_discount'] = request.session.get('wallet_discount', 0.00)
             form = PagarForm(postdata)
             if form.is_valid():
-                user = request.user
-                profile = get_object_or_404(Profile, user = user)
-                MD = profile.MONEY_TYPE[profile.money_type][1]
                 order_number = create_order(request, 1, False, False) # Crear la orden con tipo de transacción 1 usd en cach
                 if order_number['order_number'] == -1:
                     fail = reverse('show_cart')
@@ -367,7 +370,7 @@ def pagar(request, template_name='checkout/pagar.html'):
         form.name = request.user.first_name + request.user.last_name
     page_title = 'Transfermovil'
     cobra_efectivo = False
-    cart_subtotal = round(cart.cart_subtotal(request), 2)
+    """ cart_subtotal = round(cart.cart_subtotal(request), 2)
     cart_delivery = cart.cart_delivery_price(request, cart_subtotal, MD)
     cart_total = cart_subtotal + cart_delivery
     st_name = cart.delivery_Store(request).name
@@ -376,7 +379,30 @@ def pagar(request, template_name='checkout/pagar.html'):
     if deli == '3':
         envio = True 
     if (request.user.groups.filter(name = 'vendedores').exists() or request.user.groups.filter(name = 'comercial').exists() or request.user.is_staff):
-        cobra_efectivo = True
+        cobra_efectivo = True """
+    cart_subtotal = cart.cart_subtotal(request)
+    cart_delivery = cart.cart_delivery_price(request, cart_subtotal, MD)
+    delivery_name = str(cart.delivery_name(request))
+    envio = False
+    if delivery_name == 'Envío Habana':
+        envio = True 
+    discount = request.session.get('wallet_discount', 0)
+    discountChange = discount
+    if discount:
+        if MD == "CUP":
+            cart_total = cart_subtotal + cart_delivery - decimal.Decimal(discount)
+        else:
+            discount = discount/120
+            cart_total = cart_subtotal + cart_delivery - decimal.Decimal(discount)
+    else:
+        cart_total = cart_subtotal + cart_delivery
+        discount = 0.00
+    discount = round(discount,2)
+    deliveryObj = get_object_or_404(DeliveryInfo, client=request.user)
+    zone = deliveryObj.getDeliveryZone
+    cart_subtotal = float(cart_subtotal)
+    cart_delivery = float(cart_delivery)
+    cart_total = float(cart_total)
     return render(request, template_name, locals())
 
 # Reservar producto. Variante para pagos en USD sin pasarela internacional
@@ -384,6 +410,9 @@ def pagar(request, template_name='checkout/pagar.html'):
 def reserve(request, template_name='checkout/reserve.html'):
     # Reservar productos sin pagar
     MD = 'USD'
+    user = request.user
+    profile = get_object_or_404(Profile, user = user)
+    MD = profile.MONEY_TYPE[profile.money_type][1]
     st_name = cart.delivery_Store(request).name # Nombre del tipo de entrega
     if cart.is_empty(request): #Si el carrito está vacío
         cart_url = reverse('show_cart')
@@ -422,13 +451,36 @@ def reserve(request, template_name='checkout/reserve.html'):
             form = ReserveEForm() #Construyo la form sin datos de entrega  
     page_title = 'Reservar'
     #cobra_efectivo = False
-    cart_subtotal = round(cart.cart_subtotal(request), 2) # Capturo suma de productos 
+    """ cart_subtotal = round(cart.cart_subtotal(request), 2) # Capturo suma de productos 
     cart_delivery = cart.cart_delivery_price(request, cart_subtotal, MD) # Capturo precio de entrega
     cart_total = cart_subtotal + cart_delivery # Total: Productos + entrega
     envio = False
     deli = cart.get_delivery(request) # Capturo el id del tipo de entrega
     if deli == '3': # Si es 3 (Envío habana). ##### Esto hay que hacerlo genérico  
+        envio = True  """
+    cart_subtotal = cart.cart_subtotal(request)
+    cart_delivery = cart.cart_delivery_price(request, cart_subtotal, MD)
+    delivery_name = str(cart.delivery_name(request))
+    envio = False
+    if delivery_name == 'Envío Habana':
         envio = True 
+    discount = request.session.get('wallet_discount', 0)
+    discountChange = discount
+    if discount:
+        if MD == "CUP":
+            cart_total = cart_subtotal + cart_delivery - decimal.Decimal(discount)
+        else:
+            discount = discount/120
+            cart_total = cart_subtotal + cart_delivery - decimal.Decimal(discount)
+    else:
+        cart_total = cart_subtotal + cart_delivery
+        discount = 0.00
+    discount = round(discount,2)
+    deliveryObj = get_object_or_404(DeliveryInfo, client=request.user)
+    zone = deliveryObj.getDeliveryZone
+    cart_subtotal = float(cart_subtotal)
+    cart_delivery = float(cart_delivery)
+    cart_total = float(cart_total)
     return render(request, template_name, locals())
 
 # Pagina de pago por transfermovil

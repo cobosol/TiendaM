@@ -30,7 +30,6 @@ from .tokens import token_activacion
 from tienda.settings import EMAIL_HOST_USER
 from django.contrib.auth.views import PasswordResetView
 
-
 # Instanciamos las vistas genéricas de Django 
 #from django.views import View
 from django.views.generic import ListView, DetailView 
@@ -205,6 +204,7 @@ def update_mnd(request):
         profile = get_object_or_404(Profile, user = request.user)
         profile.money_type =  form.cleaned_data['mnd']
         profile.save()
+        request.session['wallet_discount'] = float(0)
     # Redirige a la misma página desde donde se envió el formulario
     next_url = request.POST.get('next', '/')  # Valor por defecto si no hay 'next'
     if url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
