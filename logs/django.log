@@ -125,3 +125,117 @@ INFO 2025-10-01 11:29:54,829 basehttp 9927 140430020683520 "GET /admin/jsi18n/ H
 INFO 2025-10-01 11:29:54,882 basehttp 9927 140430054254336 "GET /static/admin/css/widgets.css HTTP/1.1" 200 11097
 INFO 2025-10-01 11:29:55,114 basehttp 9927 140430020683520 "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
 INFO 2025-10-01 11:29:55,139 basehttp 9927 140430054254336 "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-10-01 11:43:55,200 autoreload 9927 140430619338560 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/catalog/actualiza_inventario.html changed, reloading.
+INFO 2025-10-01 11:44:08,945 autoreload 11060 139913419360064 Watching for file changes with StatReloader
+INFO 2025-10-01 11:44:46,082 basehttp 11060 139913249908480 "GET / HTTP/1.1" 200 66365
+INFO 2025-10-01 11:44:50,128 basehttp 11060 139913206228736 "GET /catalogo/gestion/ HTTP/1.1" 200 44203
+INFO 2025-10-01 11:44:52,263 basehttp 11060 139913206228736 "GET /catalogo/productos_almacen/inventario HTTP/1.1" 200 99393
+INFO 2025-10-01 12:06:54,561 autoreload 11060 139913419360064 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/checkout.html changed, reloading.
+INFO 2025-10-01 12:07:12,175 autoreload 12525 139986841929536 Watching for file changes with StatReloader
+INFO 2025-10-01 12:07:54,220 basehttp 12525 139986672547584 "GET / HTTP/1.1" 200 66365
+INFO 2025-10-01 12:11:16,477 basehttp 12525 139986662438656 "GET /catalogo/categoria/higiene-personal/ HTTP/1.1" 200 57385
+INFO 2025-10-01 12:11:16,879 basehttp 12525 139986654045952 "GET /static/img/prod_Default.webp HTTP/1.1" 200 24102
+WARNING 2025-10-01 12:11:17,319 log 12525 139986662438656 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-01 12:11:17,320 basehttp 12525 139986662438656 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-01 12:11:20,031 basehttp 12525 139986662438656 "POST /catalogo/categoria/higiene-personal/ HTTP/1.1" 200 57860
+WARNING 2025-10-01 12:11:20,147 log 12525 139986654045952 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-01 12:11:20,147 basehttp 12525 139986654045952 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-01 12:11:23,539 basehttp 12525 139986662438656 "GET /carrito/carrito/ HTTP/1.1" 200 55595
+INFO 2025-10-01 12:11:30,298 basehttp 12525 139986662438656 "POST /carrito/carrito/ HTTP/1.1" 200 56111
+INFO 2025-10-01 12:11:44,481 basehttp 12525 139986662438656 "POST /carrito/carrito/ HTTP/1.1" 200 55597
+INFO 2025-10-01 12:11:57,660 basehttp 12525 139986662438656 "POST /carrito/carrito/ HTTP/1.1" 200 56170
+INFO 2025-10-01 12:12:13,542 basehttp 12525 139986662438656 "POST /carrito/carrito/ HTTP/1.1" 200 56113
+INFO 2025-10-01 12:12:26,926 basehttp 12525 139986662438656 "POST /carrito/carrito/ HTTP/1.1" 200 56112
+INFO 2025-10-01 12:12:39,040 basehttp 12525 139986662438656 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-01 12:12:40,146 basehttp 12525 139986662438656 "GET /compra/reservar/ HTTP/1.1" 200 50079
+INFO 2025-10-01 12:12:59,895 basehttp 12525 139986662438656 "GET /carrito/carrito/ HTTP/1.1" 200 55597
+INFO 2025-10-01 12:13:03,994 basehttp 12525 139986662438656 "POST /accounts/update-mnd/ HTTP/1.1" 302 0
+INFO 2025-10-01 12:13:04,667 basehttp 12525 139986662438656 "GET /carrito/carrito/ HTTP/1.1" 200 55435
+INFO 2025-10-01 12:14:01,607 basehttp 12525 139986662438656 "POST /carrito/carrito/ HTTP/1.1" 200 56008
+INFO 2025-10-01 12:14:13,644 basehttp 12525 139986662438656 "POST /carrito/carrito/ HTTP/1.1" 200 55952
+INFO 2025-10-01 12:14:25,798 basehttp 12525 139986662438656 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-01 12:14:26,987 basehttp 12525 139986662438656 "GET /compra/pagar/ HTTP/1.1" 200 50046
+INFO 2025-10-01 12:15:15,313 autoreload 12525 139986841929536 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/pagar.html changed, reloading.
+INFO 2025-10-01 12:15:26,025 autoreload 13561 140089701336896 Watching for file changes with StatReloader
+INFO 2025-10-01 12:15:42,016 basehttp 13561 140089533224704 "GET /compra/pagar/ HTTP/1.1" 200 51666
+INFO 2025-10-01 12:16:13,789 autoreload 13561 140089701336896 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/pagar.html changed, reloading.
+INFO 2025-10-01 12:16:15,331 autoreload 13727 139882691123008 Watching for file changes with StatReloader
+INFO 2025-10-01 12:16:19,664 basehttp 13727 139882521425664 "GET /compra/pagar/ HTTP/1.1" 200 51763
+INFO 2025-10-01 12:16:45,988 basehttp 13727 139882521425664 "GET /carrito/carrito/ HTTP/1.1" 200 55437
+INFO 2025-10-01 12:16:46,171 basehttp 13727 139882521425664 "GET /media/Productos/Acond240ml.webp HTTP/1.1" 200 22936
+INFO 2025-10-01 12:22:09,617 autoreload 13727 139882691123008 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-01 12:22:11,460 autoreload 14093 139989365614400 Watching for file changes with StatReloader
+INFO 2025-10-01 12:22:24,665 basehttp 14093 139989196674816 "POST /carrito/carrito/ HTTP/1.1" 302 0
+ERROR 2025-10-01 12:22:26,259 log 14093 139989196674816 Internal Server Error: /compra/pagar/
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py", line 398, in pagar
+    deliveryObj = get_object_or_404(DeliveryInfo, client=user)
+UnboundLocalError: local variable 'user' referenced before assignment
+ERROR 2025-10-01 12:22:26,264 basehttp 14093 139989196674816 "GET /compra/pagar/ HTTP/1.1" 500 97628
+WARNING 2025-10-01 12:22:26,496 log 14093 139989196674816 Not Found: /favicon.ico
+INFO 2025-10-01 12:22:58,881 autoreload 14093 139989365614400 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-01 12:23:00,330 autoreload 14231 140456271976256 Watching for file changes with StatReloader
+INFO 2025-10-01 12:23:04,931 basehttp 14231 140456100886272 "GET /compra/pagar/ HTTP/1.1" 200 51787
+INFO 2025-10-01 12:23:18,000 basehttp 14231 140456100886272 "GET /carrito/carrito/ HTTP/1.1" 200 55437
+INFO 2025-10-01 12:25:05,991 autoreload 14231 140456271976256 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-01 12:25:07,673 autoreload 14401 140687877654336 Watching for file changes with StatReloader
+INFO 2025-10-01 12:25:13,202 basehttp 14401 140687709021952 "GET /carrito/carrito/ HTTP/1.1" 200 55437
+INFO 2025-10-01 12:25:17,911 basehttp 14401 140687709021952 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-01 12:25:18,834 basehttp 14401 140687709021952 "GET /compra/pagar/ HTTP/1.1" 200 51789
+INFO 2025-10-01 12:27:08,426 autoreload 14401 140687877654336 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/pagar.html changed, reloading.
+INFO 2025-10-01 12:27:09,883 autoreload 14581 140113985169216 Watching for file changes with StatReloader
+INFO 2025-10-01 12:27:14,565 basehttp 14581 140113816786688 "GET /compra/pagar/ HTTP/1.1" 200 50232
+INFO 2025-10-01 12:27:41,804 basehttp 14581 140113816786688 "POST /compra/pagar/ HTTP/1.1" 302 0
+INFO 2025-10-01 12:27:41,910 basehttp 14581 140113816786688 "GET /compra/transfer/580/ HTTP/1.1" 200 46051
+INFO 2025-10-01 12:27:49,334 basehttp 14581 140113816786688 "GET /compra/gestion/ HTTP/1.1" 200 386499
+INFO 2025-10-01 12:27:57,732 basehttp 14581 140113816786688 "GET /compra/compras/580/ HTTP/1.1" 200 48819
+INFO 2025-10-01 14:15:23,102 basehttp 14581 140113816786688 "GET / HTTP/1.1" 200 66053
+INFO 2025-10-01 14:15:23,932 basehttp 14581 140113816786688 "GET /static/css/style.css HTTP/1.1" 200 176726
+INFO 2025-10-01 14:15:24,677 basehttp 14581 140113803532032 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 200 45040
+INFO 2025-10-01 14:15:24,677 basehttp 14581 140113795139328 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 200 43160
+INFO 2025-10-01 14:15:33,994 basehttp 14581 140113816786688 "GET /wallet/transactions/ HTTP/1.1" 200 90173
+INFO 2025-10-01 14:15:42,195 basehttp 14581 140113816786688 "GET /accounts/users_list/ HTTP/1.1" 200 50931
+INFO 2025-10-01 14:17:57,432 basehttp 14581 140113816786688 "GET /carrito/carrito/ HTTP/1.1" 200 49646
+INFO 2025-10-01 14:17:59,826 basehttp 14581 140113816786688 "GET /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 69489
+INFO 2025-10-01 14:18:03,909 basehttp 14581 140113803532032 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 69964
+INFO 2025-10-01 14:18:06,311 basehttp 14581 140113803532032 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 69964
+INFO 2025-10-01 14:18:09,698 basehttp 14581 140113803532032 "GET /carrito/carrito/ HTTP/1.1" 200 58829
+INFO 2025-10-01 14:18:26,732 basehttp 14581 140113803532032 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-01 14:18:27,589 basehttp 14581 140113803532032 "GET /compra/pagar/ HTTP/1.1" 200 50229
+INFO 2025-10-01 14:18:38,005 basehttp 14581 140113803532032 "GET /carrito/carrito/ HTTP/1.1" 200 58829
+INFO 2025-10-01 14:18:45,057 basehttp 14581 140113803532032 "POST /carrito/carrito/ HTTP/1.1" 200 59344
+INFO 2025-10-01 14:18:51,988 basehttp 14581 140113803532032 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-01 14:18:52,809 basehttp 14581 140113803532032 "GET /compra/pagar/ HTTP/1.1" 200 50229
+INFO 2025-10-01 14:19:01,698 basehttp 14581 140113803532032 "GET /carrito/carrito/ HTTP/1.1" 200 58829
+INFO 2025-10-01 14:19:11,529 basehttp 14581 140113803532032 "POST /accounts/update-mnd/ HTTP/1.1" 302 0
+INFO 2025-10-01 14:19:12,186 basehttp 14581 140113803532032 "GET /carrito/carrito/ HTTP/1.1" 200 58994
+INFO 2025-10-01 14:26:13,765 autoreload 14581 140113985169216 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-01 14:26:54,770 autoreload 21431 139998526637888 Watching for file changes with StatReloader
+INFO 2025-10-01 14:27:23,904 basehttp 21431 139998351324928 "GET /carrito/carrito/ HTTP/1.1" 200 58994
+INFO 2025-10-01 14:27:46,715 basehttp 21431 139998351324928 "POST /accounts/update-mnd/ HTTP/1.1" 302 0
+INFO 2025-10-01 14:27:47,431 basehttp 21431 139998351324928 "GET /carrito/carrito/ HTTP/1.1" 200 58829
+INFO 2025-10-01 14:28:00,441 basehttp 21431 139998351324928 "POST /carrito/carrito/ HTTP/1.1" 200 59344
+INFO 2025-10-01 14:28:08,179 basehttp 21431 139998351324928 "POST /accounts/update-mnd/ HTTP/1.1" 302 0
+INFO 2025-10-01 14:28:08,923 basehttp 21431 139998351324928 "GET /carrito/carrito/ HTTP/1.1" 200 58992
+INFO 2025-10-01 14:28:44,727 basehttp 21431 139998351324928 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-01 14:28:46,721 basehttp 21431 139998351324928 "GET /compra/reservar/ HTTP/1.1" 200 50079
+INFO 2025-10-01 14:33:38,912 autoreload 21431 139998526637888 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-01 14:33:54,484 autoreload 22104 140694727112512 Watching for file changes with StatReloader
+INFO 2025-10-01 14:34:20,628 basehttp 22104 140694558226176 "GET /compra/reservar/ HTTP/1.1" 200 49922
+INFO 2025-10-01 14:35:15,123 autoreload 22104 140694727112512 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/reserve.html changed, reloading.
+INFO 2025-10-01 14:35:16,610 autoreload 22362 140667375712064 Watching for file changes with StatReloader
+INFO 2025-10-01 14:35:22,502 basehttp 22362 140667207112448 "GET /compra/reservar/ HTTP/1.1" 200 50304
+INFO 2025-10-01 14:35:34,649 basehttp 22362 140667207112448 "GET /carrito/carrito/ HTTP/1.1" 200 58992
+INFO 2025-10-01 14:35:57,707 basehttp 22362 140667207112448 "POST /carrito/carrito/ HTTP/1.1" 200 59507
+INFO 2025-10-01 14:36:05,604 basehttp 22362 140667207112448 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-01 14:36:06,638 basehttp 22362 140667207112448 "GET /compra/reservar/ HTTP/1.1" 200 50304
+INFO 2025-10-01 14:37:31,265 basehttp 22362 140667207112448 "POST /compra/reservar/ HTTP/1.1" 302 0
+INFO 2025-10-01 14:37:32,898 basehttp 22362 140667207112448 "GET /compra/procesado/581/ HTTP/1.1" 200 44986
+INFO 2025-10-01 14:38:49,156 basehttp 22362 140667207112448 "GET /compra/gestion/ HTTP/1.1" 200 388102
+INFO 2025-10-01 14:38:55,114 basehttp 22362 140667207112448 "POST /compra/gestion/ HTTP/1.1" 200 382335
