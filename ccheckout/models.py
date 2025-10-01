@@ -155,17 +155,17 @@ class Order(models.Model):
             self.total_reported = self.end_total
         if self.price:
             if self.currency == 'USD':
-                self.usd_total = self.base_total   #No voy a incluir el envío
-                self.cup_total = (self.base_total) * self.price.change_usd_cup 
-                self.mlc_total = (self.base_total) * self.price.change_usd_mlc
+                self.usd_total = self.end_total   #No voy a incluir el envío
+                self.cup_total = (self.end_total) * self.price.change_usd_cup 
+                self.mlc_total = (self.end_total) * self.price.change_usd_mlc
             elif self.currency == 'CUP':
-                self.usd_total = (self.base_total) / self.price.change_usd_cup
-                self.cup_total = self.base_total
-                self.mlc_total = (self.base_total) / self.price.change_usd_cup * self.price.change_usd_mlc
+                self.usd_total = (self.end_total) / self.price.change_usd_cup
+                self.cup_total = self.end_total
+                self.mlc_total = (self.end_total) / self.price.change_usd_cup * self.price.change_usd_mlc
             else:
-                self.usd_total = (self.base_total) / self.price.change_usd_mlc
-                self.cup_total = (self.base_total) / self.price.change_usd_mlc * self.price.change_usd_cup
-                self.mlc_total = self.base_total
+                self.usd_total = (self.end_total) / self.price.change_usd_mlc
+                self.cup_total = (self.end_total) / self.price.change_usd_mlc * self.price.change_usd_cup
+                self.mlc_total = self.end_total
         super().save(*args, **kwargs)
 
     @property

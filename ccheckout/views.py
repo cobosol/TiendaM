@@ -657,13 +657,29 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
     #orders = Order.objects.filter(date__range=[start, end]).order_by('-date')
     orders = Order.objects.all().order_by('-date')
     
+    #Esto es para actualiar valores
+    """
+    ordersp = Order.objects.filter(status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], is_daily_summary=False) 
+    for o in ordersp:
+        o.save() """
+
+    start_date = request.GET.get('start_date', '2025-01-01')
+    end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
+    
+    # Convertir a objetos datetime
+    start = datetime.strptime(start_date, '%Y-%m-%d')
+    end = datetime.strptime(end_date, '%Y-%m-%d')
+    end = end + timedelta(days=1) 
+
+    # Filtrar órdenes en el rango
+    orders = Order.objects.filter(date__range=[start, end]).order_by('-date')
+    
     filter = FiltroOrderAdmin
 
     status = request.GET.get('status')
-    store_name = request.GET.get('store_name')
+    #store_name = request.GET.get('store_name')
     currency = request.GET.get('currency')
     user = request.GET.get('user')
-
 
     if user:
         if user != '':
@@ -673,14 +689,41 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
         if status!='':
             orders = orders.filter(status__icontains = status).order_by('-date')
 
-    if store_name:
+    """ if store_name:
         if store_name!='':
-            orders = orders.filter(store_name__icontains = store_name).order_by('-date')
+            orders = orders.filter(store_name__icontains = store_name).order_by('-date') """
 
     if currency:
         if currency!='':
             orders = orders.filter(currency__icontains=currency).order_by('-date')
     
+
+    if request.method == 'POST':
+        postdata = request.POST.copy()
+        if postdata['submit'] == 'Factura':
+            order_number = postdata['order_id']
+            return export_pdf(request, order_number)
+        if postdata['submit'] == 'Detalles':
+            order_id = postdata['order_id']
+            template = 'checkout/details.html'
+            return redirect(reverse('details'))
+        return HttpResponseRedirect(receipt)
+    user_name = ""
+    return render(request, template_name, locals())
+
+def clients_orders_list(request, template_name='checkout/clients_orders_list.html'):
+
+    start_date = request.GET.get('start_date', '2025-01-01')
+    end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
+    
+    # Convertir a objetos datetime
+    start = datetime.strptime(start_date, '%Y-%m-%d')
+    end = datetime.strptime(end_date, '%Y-%m-%d')
+    end = end + timedelta(days=1)
+    
+    # Filtrar órdenes válidas en el rango
+    orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], is_daily_summary=False).order_by('-date')
+
 
     if request.method == 'POST':
         postdata = request.POST.copy()

@@ -6,13 +6,13 @@ from django_ckeditor_5.widgets import CKEditor5Widget
 from stores.models import Store 
 
 class ProductAlmacenFilterForm(forms.Form):
-    """ product = forms.ModelChoiceField(
+    product = forms.ModelChoiceField(
         queryset=Product_Sales.objects.all(),
         required=False,
         label='Filtrar por producto',
         empty_label="Todos los producto",
         widget=forms.Select(attrs={'class': 'select2'})
-    ) """
+    )
     store = forms.ModelChoiceField(
         queryset=Store.objects.all(),
         required=False,
@@ -25,11 +25,11 @@ class ProductAlmacenFilterForm(forms.Form):
         label='Buscar en producto:',
         widget=forms.TextInput(attrs={'placeholder': 'Buscar por nombre...'})
     )
-    """ store_texto = forms.CharField(
+    store_texto = forms.CharField(
         required=False,
         label='Buscar en almacén',
         widget=forms.TextInput(attrs={'placeholder': 'Buscar por almacén...'})
-    ) """
+    )
 
 
     

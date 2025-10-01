@@ -33,6 +33,7 @@ def actualizar_incentivos_cliente(sender, instance, **kwargs):
         incentivos_activos = Incentivo.objects.filter(activo=True).order_by('-monto_objetivo')
 
         incentivado = False
+        
         for incentivo in incentivos_activos:
             # Crear u obtener el registro de incentivo del cliente
             if monto_mensual >= incentivo.umbral_notificacion and not incentivado:

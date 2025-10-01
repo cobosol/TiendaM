@@ -17,7 +17,7 @@ class Command(BaseCommand):
         parser.add_argument(
             '--threshold1',
             type=float,
-            default=3000.0,
+            default=4000.0,
             help='Umbral mínimo de compras para recibir bonificación de 1 estrella'
         )
         parser.add_argument(
@@ -114,7 +114,7 @@ class Command(BaseCommand):
             estrella = False
             if user.groups.filter(name__in=['comercial']):
                 pass
-            if user.total_spent >= threshold5:
+            elif user.total_spent >= threshold5:
                 estrella = True
                 bonus = user.total_spent * decimal.Decimal(percentage5)
                 user.profile.estrellas = 5

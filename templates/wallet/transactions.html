@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Transacciones de monederos{% endblock %}
+{% block content %}
+
+<!-- Page Header Start -->
+<div class="container-fluid bg-secondary mb-2">
+  <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
+      <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;"> Monedero MUHIA </h4>
+  </div>
+</div>
+<!-- Page Header End -->
+
+<main role="main">
+  <div class="container">
+      <!-- Datos del monedero -->
+      <div class="wallet-balance">
+      <h4><strong>Transacciones:</strong></h4>
+      {% for transaction in transactions %}
+        <ul>
+            <li> <strong>Cliente: </strong> {{ transaction.wallet.user }} </li>
+            <li> <strong>Fecha: </strong> {{ transaction.created_at }}</li>
+            <li> <strong>Monto: </strong> {{ transaction.amount }} - {{ transaction.description }}</li>
+        </ul>
+      {% endfor %}
+      </div>
+  </div>
+</main>
+{% endblock %}
