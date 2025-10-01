@@ -49,12 +49,13 @@
             </p>
                       <!-- Datos del monedero -->
           <div class="wallet-balance">
-            <h5> Accede a <a href="{% url 'wallet' %}" style="font-family: sans-serif; text-primary">Tu Monedero MUHIA</a> </h5>
-            <h6>Tu saldo: {{ request.user.wallet.balance }} CUP</h6>
+            <h5 style="font-family: sans-serif; text-primary"> <strong> Mi Monedero MUHIA </strong></h5>
+            <a href="{% url 'wallet' %}" style="font-family: sans-serif; text-primary"> Saldo actual: <i class="fas fa-dollar me-2"></i>{{ request.user.wallet.balance }} Puntos</a>
           </div>
+          <br>
           <div class="Incentivos">
-            <h5>Mi página de incentivos:</h5>
-            <a href="{% url 'mis_incentivos' %}"><i class="fas fa-user-plus me-2"></i>Incentivos</a>
+            <h5 style="font-family: sans-serif; text-primary"> <strong> Mi página de incentivos: </strong></h5>
+            <a href="{% url 'mis_incentivos' %}"><i class="fas fa-shopping-basket me-2"></i>Incentivos</a>
           </div>
           </div>         
           <div id="datos" class="col col-md-7 mx-auto mb-5 col-lg-7 pb-1">

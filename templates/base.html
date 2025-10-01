@@ -134,7 +134,9 @@
                         <ul class="dropdown-menu">
                             {% if comercial == 'True' or request.user.is_staff %}
                                 <li> <a href="{% url 'admin_orders_list' %}" style="font-family: sans-serif;"><i class="dropdown-item">Seguir órdenes de compra</i></a></li>
+                                <li> <a href="{% url 'clients_orders_list' %}" style="font-family: sans-serif;"><i class="dropdown-item">Resumen de compras clientes</i></a></li>
                                 <li> <a href="{% url 'gestion_solicitudes' %}" style="font-family: sans-serif;"><i class="dropdown-item">Servicios</i></a></li>
+                                <li> <a href="{% url 'transactions' %}" style="font-family: sans-serif;"><i class="dropdown-item">Transacciones</i></a></li>
                             {% endif %}
                             {% if request.user.is_staff %}
                                 <li> <a href="{% url 'precios' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar precio</i></a></li>

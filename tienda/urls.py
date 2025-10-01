@@ -23,6 +23,7 @@ urlpatterns = [
     path('precio/', include('utils.urls')),
     path('servicios/', include('services.urls')),
     path('notification/', include('notification.urls')),
+    path('wallet/', include('wallet.urls')),
     path('', index_view, name="home"),
 ]
 

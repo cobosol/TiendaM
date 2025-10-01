@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from wallet.models import Wallet
 
+
 class Command(BaseCommand):
     help = 'Crea wallets para todos los usuarios que no tengan uno'
 
