@@ -320,12 +320,8 @@ class CouponForm(forms.ModelForm):
     class Meta:
         model = Coupon
         fields = '__all__'
-        """ widgets = {
-            'nombre': forms.TextInput(attrs={
+        widgets = {
+            'expiration_date': forms.DateInput(attrs={
                 'size': '50'
             }),
-            'creditos': forms.NumberInput(attrs={
-                'size': 2,
-                'style': 'width: 80px'
-            }),
-        } """
+        }

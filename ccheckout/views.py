@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.db.models.query import QuerySet
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from .forms import * 
@@ -39,8 +39,8 @@ from datetime import datetime, timedelta
 from django.db.models.functions import TruncDate, TruncWeek, TruncMonth
 from django.utils import timezone
 from django.views.generic import CreateView, UpdateView, ListView, DeleteView
-
-
+from utils.mixins import ComercialGroupRequiredMixin
+from django.contrib.auth.models import Group
 
 @require_POST
 @login_required
@@ -709,7 +709,7 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
     #orders = Order.objects.filter(date__range=[start, end]).order_by('-date')
     orders = Order.objects.all().order_by('-date')
     
-    #Esto es para actualiar valores
+    #Esto es para actualizar valores
     """
     ordersp = Order.objects.filter(status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], is_daily_summary=False) 
     for o in ordersp:
@@ -764,18 +764,80 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
     return render(request, template_name, locals())
 
 def clients_orders_list(request, template_name='checkout/clients_orders_list.html'):
-
     start_date = request.GET.get('start_date', '2025-01-01')
     end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
-    
     # Convertir a objetos datetime
     start = datetime.strptime(start_date, '%Y-%m-%d')
     end = datetime.strptime(end_date, '%Y-%m-%d')
     end = end + timedelta(days=1)
-    
-    # Filtrar órdenes válidas en el rango
-    orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], is_daily_summary=False).order_by('-date')
 
+    sum_daily_amount = 0
+    sum_client_amount = 0
+    sum_comercial_amount = 0
+
+    gcomerciales = Group.objects.filter(name='comercial').first()
+    if gcomerciales:
+        comerciales = gcomerciales.user_set.all()
+        comercial_orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], user__in=comerciales, is_daily_summary=False).order_by('-date')
+        com_count = comercial_orders.count()
+    
+
+    # Filtrar órdenes válidas en el rango
+    sin_g = User.objects.filter(groups__isnull=True)
+    client_orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], user__in=sin_g).order_by('-date')
+
+    co_count = client_orders.count()
+
+    summary_orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED], is_daily_summary=True).order_by('-date')
+    so_count = summary_orders.count()
+
+    sum_daily_amount = summary_orders.aggregate(sum=Sum('cup_total'))['sum'] or 0
+    sum_daily_amount = float(sum_daily_amount)
+
+    sum_client_amount = client_orders.aggregate(sum=Sum('cup_total'))['sum'] or 0
+    sum_client_amount = float(sum_client_amount)
+    client_orders_cup = client_orders.filter(currency='CUP')
+    client_orders_usd = client_orders.filter(currency='USD')
+    sum_client_amount_cup = client_orders_cup.aggregate(sum=Sum('cup_total'))['sum'] or 0
+    sum_client_amount_cup = float(sum_client_amount_cup)
+    sum_client_amount_usd = client_orders_usd.aggregate(sum=Sum('end_total'))['sum'] or 0
+    sum_client_amount_usd = float(sum_client_amount_usd)
+
+    if comercial_orders:
+        sum_comercial_amount = comercial_orders.aggregate(sum=Sum('cup_total'))['sum'] or 0
+        sum_comercial_amount = float(sum_comercial_amount)
+        comercial_orders_cup = comercial_orders.filter(currency='CUP')
+        comercial_orders_usd = comercial_orders.filter(currency='USD')
+        sum_comercial_amount_cup = comercial_orders_cup.aggregate(sum=Sum('cup_total'))['sum'] or 0
+        sum_comercial_amount_cup = float(sum_comercial_amount_cup)
+        sum_comercial_amount_usd = comercial_orders_usd.aggregate(sum=Sum('end_total'))['sum'] or 0
+        sum_comercial_amount_usd = float(sum_comercial_amount_usd)
+
+    sum_total = 0
+
+    if sum_client_amount:
+        sum_total += sum_client_amount
+
+    if sum_comercial_amount:
+        sum_total = sum_total + sum_comercial_amount
+
+    if sum_daily_amount:
+        sum_total += sum_daily_amount
+
+    orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED]).order_by('-date')
+    
+    s = request.GET.get('summary')
+    if s == 'on':
+        orders = orders.filter(is_daily_summary=True).order_by('-date')
+
+    
+    comercial = request.GET.get('comercial')    
+    if comercial == 'on':
+        orders = orders.filter(user__in=comerciales, is_daily_summary=False).order_by('-date')
+
+    clientes = request.GET.get('clientes')    
+    if clientes == 'on':
+        orders = orders.filter(user__in=sin_g).order_by('-date')
 
     if request.method == 'POST':
         postdata = request.POST.copy()
@@ -857,6 +919,18 @@ def transfer_pay(request, order_id, template_name='checkout/transfer.html'):
 def sales_manages(request):
     context = {}
     return render(request, 'checkout/resumenes_gaficos.html', locals())
+
+def ordenes(request):
+    context = {}
+    return render(request, 'checkout/ordenes.html', locals())
+
+def configurations(request):
+    context = {}
+    return render(request, 'checkout/configuraciones.html', locals())
+
+def marketing(request):
+    context = {}
+    return render(request, 'checkout/marketing.html', locals())
 
 def sales_products(request):
     # Obtener fechas del request
@@ -1139,7 +1213,7 @@ def sales_total_summary(request):
 
 """ Gestión de cupones """
 @method_decorator(login_required, name='dispatch')    
-class Gestion_cupones(ListView):
+class Gestion_cupones(ComercialGroupRequiredMixin, ListView):
     model = Coupon
     template_name = 'checkout/cupones/cupons_list.html'
     context_object_name = 'cupones'
@@ -1167,7 +1241,7 @@ class Gestion_cupones(ListView):
         return contexto
 
 @method_decorator(login_required, name='dispatch')
-class Crear_cupones(CreateView):
+class Crear_cupones(ComercialGroupRequiredMixin, CreateView):
     model = Coupon
     form_class = CouponForm
     success_message = "Se ha creado correctamente el cupón."
@@ -1176,10 +1250,15 @@ class Crear_cupones(CreateView):
         return reverse_lazy('cupones')
     
 @method_decorator(login_required, name='dispatch')
-class Update_cupones(UpdateView):
+class Update_cupones(ComercialGroupRequiredMixin, UpdateView):
     model = Coupon
     form_class = CouponForm
     success_message = "Se ha actualizado correctamente el cupón."
+    slug_field = 'code'
+    slug_url_kwarg = 'code'
+
+    """ def get_queryset(self):
+        return Coupon.objects.filter(used=False) """
 
     def get_success_url(self):
         return reverse('cupones')

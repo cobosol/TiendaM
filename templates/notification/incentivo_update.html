@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  Actualizar cupón
+<title>Actualizar incentivo</title>
 {% endblock %}
 
 {% block content %}
@@ -11,23 +11,14 @@
   <div class="container">
     <section class="content-header">
       <div class="content-header x_panel x_title">
-          <h3 class="mt-3" style="color:#036481; font-family: Lora, serif;">Actualice los datos del cupón</h3>
+          <h3 class="mt-3" style="color:#036481; font-family: Lora, serif;">Actualice los datos del incentivo</h3>
       </div>
     </section>
     <div class="d-fle row">
       <form enctype="multipart/form-data" method="POST" class="container mt-4">
         {% csrf_token %}
         <div class="row g-3">
-
-          {{ form.as_p }}
-
-            {% if form.errors %}
-            <div class="alert alert-danger mt-1 p-2">
-              {% for error in field.errors %}
-              <small> {{error}} </small>
-              {% endfor %}
-            </div>
-            {% endif %}       
+          {{ form.as_p }}         
         </div>
         <br>
         <br>

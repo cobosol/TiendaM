@@ -346,13 +346,13 @@ def empty_cart(request):
 @login_required
 @csrf_protect
 @transaction.atomic
-def apply_wallet_discount(request, cart_subtotal, wallet_discount):
-    var = request.session.get('wallet_discount', 0)
+def wallet_discount(request, cart_subtotal, wallet_discount):
+    """ var = request.session.get('wallet_discount', 0)
     discount = 0
     if var and var != 0:
         wallet_discount = decimal.Decimal(wallet_discount) + decimal.Decimal(var)
     else:
-        var = 0
+        var = 0 """
     try:
             wallet = Wallet.objects.select_for_update().get(user=request.user)
             if (request.user.is_authenticated):
@@ -387,20 +387,19 @@ def apply_wallet_discount(request, cart_subtotal, wallet_discount):
                 })
 
                 if discount > 0:
-                    wallet.balance = wallet.balance - discount + decimal.Decimal(var)
+                    """ wallet.balance = wallet.balance - discount + decimal.Decimal(var)
                     wallet.save()
                 
                     Transaction.objects.create(
                         wallet=wallet,
                         amount=-discount,
                         description="Descuento aplicado en compra"
-                    )
+                    ) """
                     request.session['wallet_discount'] = float(discount)
                 
                     return JsonResponse({
                         'success': True,
                         'discount': discount,
-                        'new_balance': float(wallet.balance),
                         'new_total': new_total
                     })
             else:
@@ -419,3 +418,21 @@ def apply_wallet_discount(request, cart_subtotal, wallet_discount):
         'success': False,
         'message': 'Método no permitido'
     })
+
+@login_required
+@csrf_protect
+@transaction.atomic
+def apply_wallet_discount(request):
+    discount = request.session.get('wallet_discount', 0)
+    if discount > 0:
+        wallet = Wallet.objects.select_for_update().get(user=request.user)
+        wallet.balance = wallet.balance - decimal.Decimal(discount)
+        wallet.save()
+                
+        Transaction.objects.create(wallet=wallet, amount=-discount, description="Descuento aplicado en compra")
+                
+        return JsonResponse({
+                        'success': True,
+                        'discount': discount,
+                        'new_balance': wallet.balance
+                    })

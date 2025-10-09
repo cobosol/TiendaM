@@ -127,33 +127,28 @@
                             <li><a class="dropdown-item" href="/compra/compras/"><i class="fas fa-box me-2"></i>Compras</a></li>
                         </ul>
                     </li>   
+                    {% if request.user.is_staff %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                             <i class="fas fa-cog me-1"></i> Admin
                         </a>
                         <ul class="dropdown-menu">
                             {% if comercial == 'True' or request.user.is_staff %}
-                                <li> <a href="{% url 'admin_orders_list' %}" style="font-family: sans-serif;"><i class="dropdown-item">Seguir órdenes de compra</i></a></li>
-                                <li> <a href="{% url 'clients_orders_list' %}" style="font-family: sans-serif;"><i class="dropdown-item">Resumen de compras clientes</i></a></li>
-                                <li> <a href="{% url 'gestion_solicitudes' %}" style="font-family: sans-serif;"><i class="dropdown-item">Servicios</i></a></li>
-                                <li> <a href="{% url 'transactions' %}" style="font-family: sans-serif;"><i class="dropdown-item">Transacciones</i></a></li>
+                            <li> <a href="{% url 'ordenes' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-shopping-cart me-2"></i>Órdenes de compra</i></a></li>                               
                             {% endif %}
                             {% if request.user.is_staff %}
-                                <li> <a href="{% url 'precios' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar precio</i></a></li>
-                                <li> <a href="{% url 'ventas' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Resúmenes de ventas</i></a></li>
+                                <li> <a href="{% url 'ventas' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-chart-bar me-2"></i>Reportes</i></a></li>
                             {% endif %}
                             {% if vendedor == 'True' or request.user.is_staff or comercial == 'True'%}
-                                <li> <a href="{% url 'gestion' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar productos</i></a></li>
-                                <li> <a href="/accounts/profile/admin/" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Cambiar moneda</i></a></li>
-                                <li> <a href="{% url 'vendedor_orders_list' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Listar órdenes a entregar</i></a></li>                                        
+                                <li> <a href="{% url 'gestion' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-boxes me-2"></i>Gestionar inventarios</i></a></li>
+                                <li> <a href="{% url 'configuraciones' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-cog me-2"></i>Configuraciones</i></a></li>
                             {% endif %}
                             {% if marketing == 'True' or request.user.is_staff %}
-                                <li> <a href="{% url 'banners' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar banners</i></a></li>
-                                <li> <a href="{% url 'offers' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Gestionar ofertas</i></a></li>
-                                <li> <a href="{% url 'users_list' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item">Listar usuarios</i></a></li>
+                                <li> <a href="{% url 'marketing' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-bullhorn me-2"></i>Marketing</i></a></li>
                             {% endif %}
                         </ul>
                     </li>
+                    {% endif %}
                 </ul>
                 
         
@@ -175,11 +170,9 @@
                             <li><a class="dropdown-item" href="{% url 'login' %}?next={{ request.path }}"><i class="fas fa-sign-in-alt me-2"></i>Entrar</a></li>
                             <li><a class="dropdown-item" href="{% url 'registro' %}"><i class="fas fa-user-plus me-2"></i>Registrarse</a></li>
                             {% else %}
-                            <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-sign-in-alt me-2"></i>Perfil</a></li>
-                            <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-user-plus me-2"></i>Salir</a></li>                            
+                            <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-user me-2"></i>Perfil</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Salir</a></li>                            
                             {% endif %}
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Configuración</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -299,7 +292,7 @@
                     <p class="small">Lunes a Viernes: 9:00 - 18:00<br>Sábados: 10:00 - 14:00</p> -->
                     
                     <h6>Contacto</h6>
-                    <p class="small">Tel: (+53) +53 5 988 0466 <br>Email: muhia@produccionesmuhia.ca</p>
+                    <p class="small">Tel: +53 5 988 0466 <br>Email: muhia@produccionesmuhia.ca</p>
                 </div>
             </div>
             

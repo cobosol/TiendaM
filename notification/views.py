@@ -1,13 +1,18 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from.models import Notification
 import requests
+from django.urls import reverse, reverse_lazy
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
-from .models import Notification
+from django.utils.decorators import method_decorator
+from .models import Notification, Incentivo
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from .models import ClienteIncentivo, Incentivo
+from utils.mixins import ComercialGroupRequiredMixin
+from django.shortcuts import render,  get_object_or_404
+from django.http import HttpResponse, Http404, JsonResponse
+from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 
 # Create your views here.
 @login_required
@@ -82,3 +87,35 @@ def reclamar_incentivo(request, incentivo_id):
         'success': False,
         'message': 'No puedes reclamar este incentivo en este momento'
     })
+
+""" Gestión de incentivos """
+@method_decorator(login_required, name='dispatch')    
+class Gestion_incentivos(ComercialGroupRequiredMixin, ListView):
+    model = Incentivo
+    template_name = 'notification/incentivos/incentivos_list.html'
+    context_object_name = 'incentivos'
+
+@method_decorator(login_required, name='dispatch')
+class Crear_incentivos(ComercialGroupRequiredMixin, CreateView):
+    model = Incentivo
+    fields = '__all__'
+    success_message = "Se ha creado correctamente el incentivo."
+
+    def get_success_url(self):
+        return reverse_lazy('incentivos')
+    
+@method_decorator(login_required, name='dispatch')
+class Update_incentivos(ComercialGroupRequiredMixin, UpdateView):
+    model = Incentivo
+    fields = '__all__'
+    success_message = "Se ha actualizado correctamente el incentivo."
+
+    def get_success_url(self):
+        return reverse('incentivos')
+
+def eliminar_incentivo(request, pk):
+    incentivo = get_object_or_404(Incentivo, pk=pk)
+    incentivo.activo = False
+    incentivo.save()
+
+    return redirect('incentivos')
