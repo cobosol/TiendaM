@@ -239,3 +239,1413 @@ INFO 2025-10-01 14:37:31,265 basehttp 22362 140667207112448 "POST /compra/reserv
 INFO 2025-10-01 14:37:32,898 basehttp 22362 140667207112448 "GET /compra/procesado/581/ HTTP/1.1" 200 44986
 INFO 2025-10-01 14:38:49,156 basehttp 22362 140667207112448 "GET /compra/gestion/ HTTP/1.1" 200 388102
 INFO 2025-10-01 14:38:55,114 basehttp 22362 140667207112448 "POST /compra/gestion/ HTTP/1.1" 200 382335
+INFO 2025-10-02 08:53:11,894 autoreload 4214 139722027632448 Watching for file changes with StatReloader
+INFO 2025-10-02 10:58:40,614 basehttp 4214 139721858086656 "GET / HTTP/1.1" 200 66365
+INFO 2025-10-02 10:58:50,397 basehttp 4214 139721839728384 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 200 45040
+INFO 2025-10-02 10:58:50,398 basehttp 4214 139721831335680 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 200 43160
+INFO 2025-10-02 11:00:48,160 basehttp 4214 139721839728384 "GET /compra/gestion/ HTTP/1.1" 200 388102
+INFO 2025-10-02 11:14:54,139 autoreload 4214 139722027632448 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/clients_orders_list.html changed, reloading.
+INFO 2025-10-02 11:15:24,215 autoreload 12824 140333362169664 Watching for file changes with StatReloader
+INFO 2025-10-02 11:17:57,628 basehttp 12824 140333192779520 "GET /compra/gestion/ HTTP/1.1" 200 388102
+INFO 2025-10-02 11:18:29,111 basehttp 12824 140333192779520 "GET /compra/compras-clientes/ HTTP/1.1" 200 45020
+INFO 2025-10-02 11:21:11,516 autoreload 12824 140333362169664 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-02 11:21:26,379 autoreload 13341 140150455273280 Watching for file changes with StatReloader
+INFO 2025-10-02 11:22:55,485 basehttp 13341 140150285793024 "GET /compra/compras-clientes/ HTTP/1.1" 200 188261
+INFO 2025-10-02 11:23:17,977 basehttp 13341 140150285793024 "GET /compra/compras-clientes/?csrfmiddlewaretoken=fJUtUfi5y4zSblrARDsZ2etNY6b7YWQ1MpmuCBeIuV5InRMzK6OKxhpw8WNlYgMT&start_date=2025-09-01&end_date=2025-10-02 HTTP/1.1" 200 88775
+INFO 2025-10-02 11:23:45,571 autoreload 13341 140150455273280 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/clients_orders_list.html changed, reloading.
+INFO 2025-10-02 11:23:51,435 autoreload 13690 140000924690240 Watching for file changes with StatReloader
+INFO 2025-10-02 11:27:06,958 autoreload 13690 140000924690240 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-02 11:27:23,095 autoreload 13883 140158449391424 Watching for file changes with StatReloader
+INFO 2025-10-02 11:27:51,341 basehttp 13883 140158348699392 "GET /compra/compras-clientes/?csrfmiddlewaretoken=fJUtUfi5y4zSblrARDsZ2etNY6b7YWQ1MpmuCBeIuV5InRMzK6OKxhpw8WNlYgMT&start_date=2025-09-01&end_date=2025-10-02 HTTP/1.1" 200 88865
+INFO 2025-10-02 11:28:00,145 basehttp 13883 140158348699392 "GET /compra/compras-clientes/?csrfmiddlewaretoken=xJD2vHwYz5HRP7D2X7GO4OkO1niYew4W4p53d3sBvWdH1DY1QA2zzRgxbdUceQ0O&start_date=2025-09-01&end_date=2025-10-02&summary=on HTTP/1.1" 200 88865
+INFO 2025-10-02 11:31:24,520 autoreload 13883 140158449391424 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-02 11:31:31,761 autoreload 14183 139940863072064 Watching for file changes with StatReloader
+INFO 2025-10-02 11:32:05,498 basehttp 14183 139940693628672 "GET /compra/compras-clientes/?csrfmiddlewaretoken=xJD2vHwYz5HRP7D2X7GO4OkO1niYew4W4p53d3sBvWdH1DY1QA2zzRgxbdUceQ0O&start_date=2025-09-01&end_date=2025-10-02&summary=on HTTP/1.1" 200 47296
+INFO 2025-10-02 11:32:24,101 basehttp 14183 139940693628672 "GET /compra/compras-clientes/?csrfmiddlewaretoken=i2lmYqPlpqCfhwdUOypMov1QPNJhtCS3PINnGMLYlh85t2yTH1LxTyXzZDlvtWOV&start_date=2025-09-01&end_date=2025-10-02&summary=on HTTP/1.1" 200 47296
+INFO 2025-10-02 11:32:31,674 basehttp 14183 139940693628672 "GET /compra/compras-clientes/?csrfmiddlewaretoken=gLgiuXQjWvCQNSAn7oLGJny1aZnXhBvhNrIjcjMWSm8GZoVm0R7requKkPZbhVr9&start_date=2025-09-01&end_date=2025-10-02 HTTP/1.1" 200 86493
+INFO 2025-10-02 11:33:19,207 basehttp 14183 139940693628672 "GET /catalogo/catalogo/ HTTP/1.1" 200 61902
+WARNING 2025-10-02 11:33:23,968 log 14183 139940648113920 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-02 11:33:24,010 basehttp 14183 139940648113920 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-02 11:34:15,420 basehttp 14183 139940648113920 "GET /compra/compras-clientes/ HTTP/1.1" 200 166997
+INFO 2025-10-02 11:51:44,270 basehttp 14183 139940648113920 "GET /compra/compras-clientes/?csrfmiddlewaretoken=TMzjn4Go41SAuWRXTMvA5OANw7ToqMgoqs1k5qC10SoqGscWMfRlARwwGXvCq6cg&start_date=2025-01-01&end_date=2025-10-02&summary=on HTTP/1.1" 200 66284
+INFO 2025-10-02 11:52:08,262 basehttp 14183 139940648113920 "GET /compra/compras-clientes/?csrfmiddlewaretoken=1uBFV0cs3e5R9tDlPqlcyDbKT1x9ITlTya3GDm85Z5BHlZYkITHX3G7t3R9nIdhL&start_date=2025-01-01&end_date=2025-10-02 HTTP/1.1" 200 166997
+INFO 2025-10-02 11:52:40,336 basehttp 14183 139940648113920 "GET /compra/compras-clientes/?csrfmiddlewaretoken=UXclyvWPkMXMpPQ1M3pSKOMkTJD9s9XUrDEmgRSsgDtCBlb0FwLDfRI33zfnstTM&start_date=2025-09-01&end_date=2025-10-02&summary=on HTTP/1.1" 200 47296
+INFO 2025-10-02 11:52:49,257 basehttp 14183 139940648113920 "GET /compra/compras-clientes/?csrfmiddlewaretoken=htcWws69cHsukHCLZQ3knsCrcDsmhFAnO9EXeO2M8yYkwdXKSjp5Svyamt4AhZwf&start_date=2025-09-01&end_date=2025-10-02 HTTP/1.1" 200 86493
+INFO 2025-10-05 22:35:02,141 autoreload 7647 140212894689088 Watching for file changes with StatReloader
+INFO 2025-10-05 22:35:52,138 basehttp 7647 140212725257984 "GET / HTTP/1.1" 200 66365
+INFO 2025-10-05 22:36:10,151 basehttp 7647 140212725257984 "GET /static/css/style.css HTTP/1.1" 200 176726
+INFO 2025-10-05 22:36:12,063 basehttp 7647 140212487317248 "GET /media/Banners/Principal2_XVD8K4r.webp HTTP/1.1" 304 0
+INFO 2025-10-05 22:36:12,063 basehttp 7647 140212706232064 "GET /media/Banners/Comercializamos2.webp HTTP/1.1" 304 0
+INFO 2025-10-05 22:36:12,064 basehttp 7647 140212714624768 "GET /media/Banners/Asesoramos2.webp HTTP/1.1" 304 0
+INFO 2025-10-05 22:36:12,064 basehttp 7647 140212495709952 "GET /media/Banners/Fabricamos2.webp HTTP/1.1" 304 0
+INFO 2025-10-05 22:36:12,215 basehttp 7647 140212478924544 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 200 43160
+INFO 2025-10-05 22:36:12,217 basehttp 7647 140212725257984 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 200 45040
+INFO 2025-10-06 07:56:28,799 autoreload 2865 140565966464832 Watching for file changes with StatReloader
+INFO 2025-10-06 07:58:22,576 basehttp 2865 140565797082880 "GET / HTTP/1.1" 200 66365
+INFO 2025-10-06 07:58:23,189 basehttp 2865 140565797082880 "GET /static/css/style.css HTTP/1.1" 200 176726
+INFO 2025-10-06 07:58:23,614 basehttp 2865 140565786711808 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 200 45040
+INFO 2025-10-06 07:58:23,921 basehttp 2865 140565769926400 "GET /media/Productos/Acond240ml.webp HTTP/1.1" 200 22936
+INFO 2025-10-06 07:58:23,922 basehttp 2865 140565778319104 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 200 43160
+INFO 2025-10-06 07:58:24,599 basehttp 2865 140565555443456 "GET /media/Productos/Aroma1L.webp HTTP/1.1" 200 29670
+INFO 2025-10-06 07:59:34,681 basehttp 2865 140565778319104 "GET /catalogo/categoria/higiene-personal/ HTTP/1.1" 200 57385
+WARNING 2025-10-06 07:59:36,117 log 2865 140565778319104 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 07:59:36,117 basehttp 2865 140565778319104 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 07:59:36,362 basehttp 2865 140565778319104 "GET /static/img/Favicon.ico HTTP/1.1" 200 1414
+INFO 2025-10-06 08:00:04,507 basehttp 2865 140565778319104 "POST /catalogo/categoria/higiene-personal/ HTTP/1.1" 200 57860
+WARNING 2025-10-06 08:00:04,640 log 2865 140565778319104 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 08:00:04,651 basehttp 2865 140565778319104 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 08:00:13,772 basehttp 2865 140565778319104 "POST /catalogo/categoria/higiene-personal/ HTTP/1.1" 200 57860
+WARNING 2025-10-06 08:00:13,918 log 2865 140565778319104 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 08:00:13,924 basehttp 2865 140565778319104 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 08:00:15,995 basehttp 2865 140565778319104 "GET /carrito/carrito/ HTTP/1.1" 200 58963
+WARNING 2025-10-06 08:00:16,151 log 2865 140565778319104 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 08:00:16,155 basehttp 2865 140565778319104 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 08:00:23,613 basehttp 2865 140565778319104 "POST /carrito/carrito/ HTTP/1.1" 200 58961
+WARNING 2025-10-06 08:00:23,769 log 2865 140565778319104 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 08:00:23,774 basehttp 2865 140565778319104 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 08:00:57,980 basehttp 2865 140565778319104 "GET /catalogo/categoria/combos/ HTTP/1.1" 200 44964
+INFO 2025-10-06 08:01:00,389 basehttp 2865 140565778319104 "GET /catalogo/catalogo/ HTTP/1.1" 200 61902
+INFO 2025-10-06 08:01:00,694 basehttp 2865 140565778319104 "GET /media/Productos/Aroma1L.webp HTTP/1.1" 200 29670
+INFO 2025-10-06 08:01:00,696 basehttp 2865 140565769926400 "GET /media/Productos/AutoEscudo240ml.webp HTTP/1.1" 200 29034
+INFO 2025-10-06 08:01:00,843 basehttp 2865 140565786711808 "GET /media/Productos/DetBlanqueador1L.webp HTTP/1.1" 200 19464
+INFO 2025-10-06 08:01:00,844 basehttp 2865 140565555443456 "GET /static/img/prod_Default.webp HTTP/1.1" 200 24102
+WARNING 2025-10-06 08:01:00,888 log 2865 140565547050752 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 08:01:00,892 basehttp 2865 140565547050752 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 08:01:01,048 basehttp 2865 140565778319104 "GET /media/Productos/p_LiquidoDeFreno_500ml.jpg HTTP/1.1" 304 0
+INFO 2025-10-06 08:01:22,266 basehttp 2865 140565778319104 "POST /catalogo/catalogo/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:01:22,402 basehttp 2865 140565778319104 "GET /catalogo/catalogo/ HTTP/1.1" 200 62234
+WARNING 2025-10-06 08:01:22,537 log 2865 140565778319104 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 08:01:22,544 basehttp 2865 140565778319104 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 08:01:37,531 basehttp 2865 140565778319104 "POST /catalogo/catalogo/ HTTP/1.1" 200 62221
+WARNING 2025-10-06 08:01:37,695 log 2865 140565778319104 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 08:01:37,710 basehttp 2865 140565778319104 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 08:01:45,645 basehttp 2865 140565778319104 "GET /carrito/carrito/ HTTP/1.1" 200 61172
+WARNING 2025-10-06 08:01:45,803 log 2865 140565778319104 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 08:01:45,804 basehttp 2865 140565778319104 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 08:01:52,755 basehttp 2865 140565778319104 "POST /carrito/carrito/ HTTP/1.1" 200 61170
+WARNING 2025-10-06 08:01:52,891 log 2865 140565778319104 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 08:01:52,898 basehttp 2865 140565778319104 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 08:02:24,784 basehttp 2865 140565778319104 "POST /carrito/carrito/ HTTP/1.1" 200 61685
+WARNING 2025-10-06 08:02:24,941 log 2865 140565778319104 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 08:02:24,948 basehttp 2865 140565778319104 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 08:02:37,837 basehttp 2865 140565778319104 "POST /accounts/update-mnd/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:02:38,801 basehttp 2865 140565778319104 "GET /carrito/carrito/ HTTP/1.1" 200 59361
+WARNING 2025-10-06 08:02:38,965 log 2865 140565778319104 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 08:02:38,968 basehttp 2865 140565778319104 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 08:07:04,142 autoreload 2865 140565966464832 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-06 08:07:16,303 autoreload 4142 140650087110464 Watching for file changes with StatReloader
+INFO 2025-10-06 08:07:35,493 basehttp 4142 140649911285504 "GET / HTTP/1.1" 200 66259
+INFO 2025-10-06 08:07:41,489 basehttp 4142 140649902892800 "GET /compra/cupones/ HTTP/1.1" 200 49701
+INFO 2025-10-06 08:07:53,971 basehttp 4142 140649902892800 "GET /compra/cupones/crear HTTP/1.1" 200 45524
+INFO 2025-10-06 08:08:39,516 basehttp 4142 140649902892800 "POST /compra/cupones/crear HTTP/1.1" 302 0
+INFO 2025-10-06 08:08:39,619 basehttp 4142 140649902892800 "GET /compra/cupones/ HTTP/1.1" 200 50978
+INFO 2025-10-06 08:09:59,922 autoreload 4142 140650087110464 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 08:10:01,526 autoreload 4548 139843320997696 Watching for file changes with StatReloader
+INFO 2025-10-06 08:10:17,529 basehttp 4548 139843151611648 "GET /compra/cupones/ HTTP/1.1" 200 50977
+INFO 2025-10-06 08:10:40,676 autoreload 4548 139843320997696 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 08:10:42,213 autoreload 4637 140180501182272 Watching for file changes with StatReloader
+INFO 2025-10-06 08:11:21,067 autoreload 4637 140180501182272 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 08:11:22,519 autoreload 4701 140001435653952 Watching for file changes with StatReloader
+INFO 2025-10-06 08:11:26,734 basehttp 4701 140001267586816 "GET /compra/cupones/ HTTP/1.1" 200 50975
+INFO 2025-10-06 08:12:02,347 autoreload 4701 140001435653952 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 08:12:03,903 autoreload 4816 140311228131136 Watching for file changes with StatReloader
+INFO 2025-10-06 08:12:07,825 basehttp 4816 140311060027136 "GET /compra/cupones/ HTTP/1.1" 200 50982
+INFO 2025-10-06 08:12:30,820 autoreload 4816 140311228131136 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 08:12:32,386 autoreload 4897 140046589622080 Watching for file changes with StatReloader
+INFO 2025-10-06 08:12:36,539 basehttp 4897 140046421497600 "GET /compra/cupones/ HTTP/1.1" 200 50975
+INFO 2025-10-06 08:13:31,381 basehttp 4897 140046421497600 "GET /catalogo/catalogo/ HTTP/1.1" 200 60487
+WARNING 2025-10-06 08:13:31,633 log 4897 140046410221312 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 08:13:31,639 basehttp 4897 140046410221312 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 08:13:45,800 basehttp 4897 140046410221312 "GET /compra/cupones/ HTTP/1.1" 200 50975
+INFO 2025-10-06 08:14:07,952 basehttp 4897 140046410221312 "GET /catalogo/catalogo/ HTTP/1.1" 200 60487
+WARNING 2025-10-06 08:14:08,210 log 4897 140046410221312 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 08:14:08,221 basehttp 4897 140046410221312 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 08:15:01,777 basehttp 4897 140046410221312 "GET /compra/cupones/ HTTP/1.1" 200 50975
+INFO 2025-10-06 08:15:47,479 autoreload 4897 140046589622080 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 08:15:49,046 autoreload 5314 140268853401408 Watching for file changes with StatReloader
+INFO 2025-10-06 08:15:54,736 basehttp 5314 140268684744448 "GET /compra/cupones/ HTTP/1.1" 200 51080
+INFO 2025-10-06 08:16:48,882 autoreload 5314 140268853401408 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 08:16:50,316 autoreload 5429 140495371450176 Watching for file changes with StatReloader
+INFO 2025-10-06 08:16:56,066 basehttp 5429 140495203604224 "GET /compra/cupones/ HTTP/1.1" 200 51137
+INFO 2025-10-06 08:17:22,185 autoreload 5429 140495371450176 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 08:17:23,679 autoreload 5510 140179210078016 Watching for file changes with StatReloader
+INFO 2025-10-06 08:17:34,178 basehttp 5510 140179040651008 "GET /compra/cupones/ HTTP/1.1" 200 51124
+INFO 2025-10-06 08:17:48,305 autoreload 5510 140179210078016 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 08:17:49,781 autoreload 5607 139856459585344 Watching for file changes with StatReloader
+INFO 2025-10-06 08:17:53,601 basehttp 5607 139856358893312 "GET /compra/cupones/ HTTP/1.1" 200 51205
+INFO 2025-10-06 08:18:18,580 autoreload 5607 139856459585344 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 08:18:20,084 autoreload 5717 140131734447936 Watching for file changes with StatReloader
+INFO 2025-10-06 08:18:24,561 basehttp 5717 140131562419968 "GET /compra/cupones/ HTTP/1.1" 200 51205
+INFO 2025-10-06 08:19:26,725 autoreload 5717 140131734447936 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 08:19:28,436 autoreload 5818 140209200006976 Watching for file changes with StatReloader
+INFO 2025-10-06 08:19:48,977 autoreload 5818 140209200006976 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 08:19:50,523 autoreload 5870 139738826651456 Watching for file changes with StatReloader
+INFO 2025-10-06 08:19:54,164 basehttp 5870 139738658809600 "GET /compra/cupones/ HTTP/1.1" 200 51179
+INFO 2025-10-06 08:20:02,828 basehttp 5870 139738658809600 "GET /compra/cupones/crear HTTP/1.1" 200 45524
+INFO 2025-10-06 08:23:24,197 autoreload 5870 139738826651456 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_create.html changed, reloading.
+INFO 2025-10-06 08:23:26,087 autoreload 6178 140360157488960 Watching for file changes with StatReloader
+INFO 2025-10-06 08:23:30,169 basehttp 6178 140359989421824 "GET /compra/cupones/crear HTTP/1.1" 200 45575
+INFO 2025-10-06 08:23:56,093 autoreload 6178 140360157488960 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_create.html changed, reloading.
+INFO 2025-10-06 08:23:57,527 autoreload 6293 140246881998656 Watching for file changes with StatReloader
+INFO 2025-10-06 08:24:00,670 basehttp 6293 140246714197760 "GET /compra/cupones/crear HTTP/1.1" 200 45596
+INFO 2025-10-06 08:24:18,991 basehttp 6293 140246714197760 "GET /wallet/transactions/ HTTP/1.1" 200 91367
+INFO 2025-10-06 08:24:23,141 basehttp 6293 140246714197760 "GET /compra/compras-clientes/ HTTP/1.1" 200 167203
+INFO 2025-10-06 08:30:07,102 autoreload 6293 140246881998656 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/forms.py changed, reloading.
+INFO 2025-10-06 08:30:08,779 autoreload 6648 140301061433152 Watching for file changes with StatReloader
+INFO 2025-10-06 08:30:16,557 basehttp 6648 140300893087488 "GET /compra/cupones/ HTTP/1.1" 200 51179
+INFO 2025-10-06 08:30:19,045 basehttp 6648 140300893087488 "GET /compra/cupones/crear HTTP/1.1" 200 45597
+INFO 2025-10-06 08:32:21,957 autoreload 6648 140301061433152 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_create.html changed, reloading.
+INFO 2025-10-06 08:32:23,402 autoreload 6867 140156772247360 Watching for file changes with StatReloader
+INFO 2025-10-06 08:32:57,209 basehttp 6867 140156669982464 "GET /accounts/logout/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:32:57,672 basehttp 6867 140156669982464 "GET / HTTP/1.1" 200 64207
+INFO 2025-10-06 08:33:04,882 basehttp 6867 140156567013120 "GET /compra/cupones/crear HTTP/1.1" 302 0
+INFO 2025-10-06 08:33:04,992 basehttp 6867 140156584322816 "GET /accounts/login/?next=/compra/cupones/crear HTTP/1.1" 200 42357
+INFO 2025-10-06 08:33:19,940 basehttp 6867 140156584322816 "POST /accounts/login/?next=/compra/cupones/crear HTTP/1.1" 302 0
+INFO 2025-10-06 08:33:20,141 basehttp 6867 140156584322816 "GET /compra/cupones/crear HTTP/1.1" 200 43237
+INFO 2025-10-06 08:33:32,172 basehttp 6867 140156584322816 "GET /compra/cupones/crear HTTP/1.1" 200 43237
+INFO 2025-10-06 08:33:46,950 basehttp 6867 140156584322816 "POST /compra/cupones/crear HTTP/1.1" 302 0
+INFO 2025-10-06 08:33:47,137 basehttp 6867 140156584322816 "GET /compra/cupones/ HTTP/1.1" 200 50120
+INFO 2025-10-06 08:53:57,681 basehttp 6867 140156584322816 "GET /accounts/logout/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:53:59,126 basehttp 6867 140156584322816 "GET / HTTP/1.1" 200 64207
+INFO 2025-10-06 08:54:03,059 basehttp 6867 140156558358272 "GET /accounts/login/?next=/ HTTP/1.1" 200 42337
+INFO 2025-10-06 08:54:22,525 autoreload 6867 140156772247360 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/tienda/settings.py changed, reloading.
+INFO 2025-10-06 08:54:40,675 autoreload 8582 139628229904192 Watching for file changes with StatReloader
+INFO 2025-10-06 08:55:44,060 autoreload 8582 139628229904192 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_create.html changed, reloading.
+INFO 2025-10-06 08:55:45,723 autoreload 8729 140264539088704 Watching for file changes with StatReloader
+INFO 2025-10-06 08:56:23,857 basehttp 8729 140264369551104 "GET /accounts/profile/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:56:24,193 basehttp 8729 140264369551104 "GET /accounts/login/?next=/accounts/profile/ HTTP/1.1" 200 42354
+WARNING 2025-10-06 08:56:48,517 log 8729 140264369551104 Not Found: /cu
+WARNING 2025-10-06 08:56:48,518 basehttp 8729 140264369551104 "GET /cu HTTP/1.1" 404 4366
+WARNING 2025-10-06 08:56:48,603 log 8729 140264369551104 Not Found: /favicon.ico
+WARNING 2025-10-06 08:56:48,604 basehttp 8729 140264369551104 "GET /favicon.ico HTTP/1.1" 404 4393
+INFO 2025-10-06 08:57:22,316 basehttp 8729 140264369551104 "GET / HTTP/1.1" 200 64207
+INFO 2025-10-06 08:57:25,423 basehttp 8729 140264359061248 "GET /accounts/login/?next=/ HTTP/1.1" 200 42337
+INFO 2025-10-06 08:57:33,901 basehttp 8729 140264359061248 "POST /accounts/login/?next=/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:57:34,245 basehttp 8729 140264359061248 "GET / HTTP/1.1" 200 66259
+INFO 2025-10-06 08:57:41,552 basehttp 8729 140264359061248 "GET /compra/cupones/ HTTP/1.1" 200 52460
+INFO 2025-10-06 08:57:53,300 basehttp 8729 140264359061248 "GET /accounts/logout/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:57:53,710 basehttp 8729 140264359061248 "GET / HTTP/1.1" 200 64207
+INFO 2025-10-06 08:58:03,094 basehttp 8729 140264359061248 "GET /compra/cupones/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:58:03,210 basehttp 8729 140264359061248 "GET /accounts/login/?next=/compra/cupones/ HTTP/1.1" 200 42352
+INFO 2025-10-06 08:58:11,390 basehttp 8729 140264359061248 "POST /accounts/login/?next=/compra/cupones/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:58:11,484 basehttp 8729 140264359061248 "GET /compra/cupones/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:58:11,724 basehttp 8729 140264359061248 "GET / HTTP/1.1" 200 63919
+INFO 2025-10-06 08:58:21,286 basehttp 8729 140264359061248 "GET /compra/cupones/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:58:21,431 basehttp 8729 140264359061248 "GET / HTTP/1.1" 200 63919
+INFO 2025-10-06 08:58:31,286 basehttp 8729 140264359061248 "GET /compra/cupones/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:58:31,424 basehttp 8729 140264359061248 "GET / HTTP/1.1" 200 63919
+INFO 2025-10-06 08:58:37,430 basehttp 8729 140264359061248 "GET /accounts/logout/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:58:37,836 basehttp 8729 140264359061248 "GET / HTTP/1.1" 200 64207
+INFO 2025-10-06 08:58:41,023 basehttp 8729 140264359061248 "GET /accounts/login/?next=/ HTTP/1.1" 200 42337
+INFO 2025-10-06 08:58:48,147 basehttp 8729 140264359061248 "POST /accounts/login/?next=/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:58:48,308 basehttp 8729 140264359061248 "GET / HTTP/1.1" 200 66259
+INFO 2025-10-06 08:58:53,637 basehttp 8729 140264359061248 "GET /compra/cupones/ HTTP/1.1" 200 52460
+INFO 2025-10-06 08:59:17,666 basehttp 8729 140264359061248 "GET /accounts/profile/ HTTP/1.1" 200 50345
+INFO 2025-10-06 08:59:35,492 basehttp 8729 140264359061248 "GET /accounts/users_list/ HTTP/1.1" 200 51134
+INFO 2025-10-06 08:59:41,259 basehttp 8729 140264359061248 "GET /accounts/profile/editar/25 HTTP/1.1" 200 45414
+INFO 2025-10-06 08:59:53,298 basehttp 8729 140264359061248 "GET /accounts/logout/ HTTP/1.1" 302 0
+INFO 2025-10-06 08:59:53,821 basehttp 8729 140264359061248 "GET / HTTP/1.1" 200 64207
+INFO 2025-10-06 08:59:56,544 basehttp 8729 140264369551104 "GET /accounts/login/?next=/ HTTP/1.1" 200 42337
+INFO 2025-10-06 09:00:11,472 basehttp 8729 140264369551104 "GET /accounts/profile/editar/25 HTTP/1.1" 200 43076
+INFO 2025-10-06 09:00:43,795 basehttp 8729 140264369551104 "GET /accounts/profile/editar/22 HTTP/1.1" 200 43073
+INFO 2025-10-06 09:01:46,879 basehttp 8729 140264369551104 "GET /accounts/login/?next=/accounts/profile/editar/22 HTTP/1.1" 200 42363
+INFO 2025-10-06 09:01:54,325 basehttp 8729 140264369551104 "POST /accounts/login/?next=/accounts/profile/editar/22 HTTP/1.1" 302 0
+INFO 2025-10-06 09:01:54,522 basehttp 8729 140264369551104 "GET /accounts/profile/editar/22 HTTP/1.1" 200 45411
+INFO 2025-10-06 09:25:01,965 autoreload 8729 140264539088704 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/notification changed, reloading.
+INFO 2025-10-06 09:25:06,267 autoreload 10974 140690765190976 Watching for file changes with StatReloader
+INFO 2025-10-06 09:25:18,602 autoreload 10974 140690765190976 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/notification changed, reloading.
+INFO 2025-10-06 09:25:20,464 autoreload 11071 139772579682112 Watching for file changes with StatReloader
+INFO 2025-10-06 09:33:49,587 autoreload 11071 139772579682112 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/notification/urls.py changed, reloading.
+INFO 2025-10-06 09:33:51,339 autoreload 11602 140372194346816 Watching for file changes with StatReloader
+INFO 2025-10-06 09:34:41,533 basehttp 11602 140372024702720 "GET / HTTP/1.1" 200 66477
+INFO 2025-10-06 09:34:41,844 basehttp 11602 140371946370816 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 200 43160
+INFO 2025-10-06 09:34:41,845 basehttp 11602 140371929585408 "GET /media/Productos/Aroma1L.webp HTTP/1.1" 200 29670
+INFO 2025-10-06 09:34:41,847 basehttp 11602 140372024702720 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 200 45040
+INFO 2025-10-06 09:34:41,872 basehttp 11602 140371937978112 "GET /media/Productos/Acond240ml.webp HTTP/1.1" 200 22936
+INFO 2025-10-06 09:34:41,884 basehttp 11602 140371921192704 "GET /media/Productos/AutoEscudo240ml.webp HTTP/1.1" 200 29034
+INFO 2025-10-06 09:34:46,420 basehttp 11602 140372024702720 "GET /notification/incentivos/ HTTP/1.1" 200 48220
+WARNING 2025-10-06 09:34:58,055 log 11602 140372024702720 Not Found: /notification/incentivos/editar/
+WARNING 2025-10-06 09:34:58,055 basehttp 11602 140372024702720 "GET /notification/incentivos/editar/ HTTP/1.1" 404 6187
+WARNING 2025-10-06 09:34:58,199 log 11602 140371929585408 Not Found: /favicon.ico
+WARNING 2025-10-06 09:34:58,200 basehttp 11602 140371929585408 "GET /favicon.ico HTTP/1.1" 404 4393
+INFO 2025-10-06 09:35:50,924 autoreload 11602 140372194346816 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/notification/urls.py changed, reloading.
+INFO 2025-10-06 09:35:52,752 autoreload 11839 140139952891712 Watching for file changes with StatReloader
+WARNING 2025-10-06 09:35:56,514 log 11839 140139784771328 Not Found: /notification/incentivos/editar/
+WARNING 2025-10-06 09:35:56,516 basehttp 11839 140139784771328 "GET /notification/incentivos/editar/ HTTP/1.1" 404 6188
+WARNING 2025-10-06 09:36:00,177 log 11839 140139784771328 Not Found: /notification/incentivos/editar/
+WARNING 2025-10-06 09:36:00,178 basehttp 11839 140139784771328 "GET /notification/incentivos/editar/ HTTP/1.1" 404 6188
+INFO 2025-10-06 09:36:05,493 basehttp 11839 140139784771328 "GET /notification/incentivos/ HTTP/1.1" 200 48220
+WARNING 2025-10-06 09:36:08,394 log 11839 140139784771328 Not Found: /notification/incentivos/editar/
+WARNING 2025-10-06 09:36:08,395 basehttp 11839 140139784771328 "GET /notification/incentivos/editar/ HTTP/1.1" 404 6188
+ERROR 2025-10-06 09:36:41,516 log 11839 140139784771328 Internal Server Error: /notification/incentivos/editar/03
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/utils/decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/mixins.py", line 128, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 98, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 190, in get
+    return super().get(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 133, in get
+    return self.render_to_response(self.get_context_data())
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 66, in get_context_data
+    kwargs['form'] = self.get_form()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 32, in get_form
+    form_class = self.get_form_class()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 96, in get_form_class
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: Using ModelFormMixin (base class of Update_incentivos) without the 'fields' attribute is prohibited.
+ERROR 2025-10-06 09:36:41,524 basehttp 11839 140139784771328 "GET /notification/incentivos/editar/03 HTTP/1.1" 500 132767
+INFO 2025-10-06 09:37:55,598 autoreload 11839 140139952891712 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/notification/views.py changed, reloading.
+INFO 2025-10-06 09:37:57,093 autoreload 12085 139648930068288 Watching for file changes with StatReloader
+INFO 2025-10-06 09:38:02,309 basehttp 12085 139648761419520 "GET /notification/incentivos/editar/03 HTTP/1.1" 200 46230
+INFO 2025-10-06 09:38:35,038 basehttp 12085 139648761419520 "POST /notification/incentivos/editar/03 HTTP/1.1" 302 0
+INFO 2025-10-06 09:38:35,135 basehttp 12085 139648761419520 "GET /notification/incentivos/ HTTP/1.1" 200 48222
+WARNING 2025-10-06 09:38:42,221 log 12085 139648761419520 Not Found: /notification/incentivos/editar/
+WARNING 2025-10-06 09:38:42,223 basehttp 12085 139648761419520 "GET /notification/incentivos/editar/ HTTP/1.1" 404 6188
+INFO 2025-10-06 09:39:20,273 autoreload 12085 139648930068288 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/notification/incentivo_list.html changed, reloading.
+INFO 2025-10-06 09:39:21,776 autoreload 12336 140383403915072 Watching for file changes with StatReloader
+INFO 2025-10-06 09:39:26,427 basehttp 12336 140383235319552 "GET /notification/incentivos/ HTTP/1.1" 200 48228
+INFO 2025-10-06 09:39:30,123 basehttp 12336 140383235319552 "GET /notification/incentivos/editar/2 HTTP/1.1" 200 46232
+INFO 2025-10-06 09:39:34,839 basehttp 12336 140383235319552 "GET /notification/incentivos/ HTTP/1.1" 200 48228
+INFO 2025-10-06 09:39:37,609 basehttp 12336 140383235319552 "GET /notification/incentivos/editar/2 HTTP/1.1" 200 46232
+INFO 2025-10-06 09:39:41,088 basehttp 12336 140383235319552 "POST /notification/incentivos/editar/2 HTTP/1.1" 302 0
+INFO 2025-10-06 09:39:41,166 basehttp 12336 140383235319552 "GET /notification/incentivos/ HTTP/1.1" 200 48229
+ERROR 2025-10-06 09:39:54,902 log 12336 140383235319552 Internal Server Error: /notification/incentivos/crear
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/utils/decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/mixins.py", line 128, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 98, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 168, in get
+    return super().get(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 133, in get
+    return self.render_to_response(self.get_context_data())
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 66, in get_context_data
+    kwargs['form'] = self.get_form()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 32, in get_form
+    form_class = self.get_form_class()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 96, in get_form_class
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: Using ModelFormMixin (base class of Crear_incentivos) without the 'fields' attribute is prohibited.
+ERROR 2025-10-06 09:39:54,908 basehttp 12336 140383235319552 "GET /notification/incentivos/crear HTTP/1.1" 500 132701
+INFO 2025-10-06 09:40:35,686 autoreload 12336 140383403915072 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/notification/views.py changed, reloading.
+INFO 2025-10-06 09:40:37,168 autoreload 12583 140091421001536 Watching for file changes with StatReloader
+INFO 2025-10-06 09:40:47,066 basehttp 12583 140091251349248 "GET /notification/incentivos/ HTTP/1.1" 200 48229
+INFO 2025-10-06 09:40:49,952 basehttp 12583 140091251349248 "GET /notification/incentivos/crear HTTP/1.1" 200 46610
+INFO 2025-10-06 09:41:17,999 basehttp 12583 140091251349248 "POST /notification/incentivos/crear HTTP/1.1" 302 0
+INFO 2025-10-06 09:41:18,087 basehttp 12583 140091251349248 "GET /notification/incentivos/ HTTP/1.1" 200 49421
+INFO 2025-10-06 09:42:23,215 basehttp 12583 140091251349248 "GET /compra/cupones/ HTTP/1.1" 200 52678
+INFO 2025-10-06 09:42:26,332 basehttp 12583 140091251349248 "GET /compra/cupones/crear HTTP/1.1" 200 45801
+INFO 2025-10-06 09:42:29,884 basehttp 12583 140091251349248 "GET /compra/cupones/ HTTP/1.1" 200 52678
+WARNING 2025-10-06 09:42:31,751 log 12583 140091251349248 Not Found: /compra/cupones/editar/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a
+WARNING 2025-10-06 09:42:31,753 basehttp 12583 140091251349248 "GET /compra/cupones/editar/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a HTTP/1.1" 404 9899
+WARNING 2025-10-06 09:42:31,910 log 12583 140091251349248 Not Found: /favicon.ico
+INFO 2025-10-06 09:43:33,562 basehttp 12583 140091251349248 "GET /compra/cupones/ HTTP/1.1" 200 52678
+WARNING 2025-10-06 09:43:45,181 log 12583 140091251349248 Not Found: /compra/cupones/eliminar/c74e6484-17e6-4696-b985-55fb5dab75ca
+WARNING 2025-10-06 09:43:45,182 basehttp 12583 140091251349248 "POST /compra/cupones/eliminar/c74e6484-17e6-4696-b985-55fb5dab75ca HTTP/1.1" 404 9906
+INFO 2025-10-06 09:44:44,207 autoreload 12583 140091421001536 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/urls.py changed, reloading.
+INFO 2025-10-06 09:44:46,505 autoreload 13076 139757279147840 Watching for file changes with StatReloader
+INFO 2025-10-06 09:44:52,501 basehttp 13076 139757110511360 "GET /compra/cupones/ HTTP/1.1" 200 52678
+WARNING 2025-10-06 09:44:56,864 log 13076 139757110511360 Not Found: /compra/cupones/eliminar/c74e6484-17e6-4696-b985-55fb5dab75ca
+WARNING 2025-10-06 09:44:56,865 basehttp 13076 139757110511360 "POST /compra/cupones/eliminar/c74e6484-17e6-4696-b985-55fb5dab75ca HTTP/1.1" 404 9910
+INFO 2025-10-06 09:45:06,528 basehttp 13076 139757110511360 "GET /compra/cupones/ HTTP/1.1" 200 52678
+WARNING 2025-10-06 09:45:09,592 log 13076 139757110511360 Not Found: /compra/cupones/editar/00fdd77c-3e85-43ba-aa89-b089b77421a1
+WARNING 2025-10-06 09:45:09,598 basehttp 13076 139757110511360 "GET /compra/cupones/editar/00fdd77c-3e85-43ba-aa89-b089b77421a1 HTTP/1.1" 404 9903
+WARNING 2025-10-06 09:46:05,103 log 13076 139757110511360 Not Found: /compra/cupones/editar/00fdd77c-3e85-43ba-aa89-b089b77421a1/
+WARNING 2025-10-06 09:46:05,104 basehttp 13076 139757110511360 "GET /compra/cupones/editar/00fdd77c-3e85-43ba-aa89-b089b77421a1/ HTTP/1.1" 404 9906
+ERROR 2025-10-06 09:46:12,583 log 13076 139757110511360 Internal Server Error: /compra/cupones/editar/1
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/utils/decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/mixins.py", line 128, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 98, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 189, in get
+    self.object = self.get_object()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/detail.py", line 45, in get_object
+    raise AttributeError(
+AttributeError: Generic detail view Update_cupones must be called with either an object pk or a slug in the URLconf.
+ERROR 2025-10-06 09:46:12,590 basehttp 13076 139757110511360 "GET /compra/cupones/editar/1 HTTP/1.1" 500 120037
+ERROR 2025-10-06 09:46:38,958 log 13076 139757110511360 Internal Server Error: /compra/cupones/editar/01
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/utils/decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/mixins.py", line 128, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 98, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 189, in get
+    self.object = self.get_object()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/detail.py", line 45, in get_object
+    raise AttributeError(
+AttributeError: Generic detail view Update_cupones must be called with either an object pk or a slug in the URLconf.
+ERROR 2025-10-06 09:46:38,961 basehttp 13076 139757110511360 "GET /compra/cupones/editar/01 HTTP/1.1" 500 120052
+INFO 2025-10-06 09:47:00,772 autoreload 13076 139757279147840 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/urls.py changed, reloading.
+INFO 2025-10-06 09:47:02,323 autoreload 13433 140551573169984 Watching for file changes with StatReloader
+WARNING 2025-10-06 09:47:07,662 log 13433 140551471953664 Not Found: /compra/cupones/editar/01
+WARNING 2025-10-06 09:47:07,662 basehttp 13433 140551471953664 "GET /compra/cupones/editar/01 HTTP/1.1" 404 7939
+INFO 2025-10-06 09:47:14,813 basehttp 13433 140551471953664 "GET /compra/cupones/ HTTP/1.1" 200 52678
+INFO 2025-10-06 09:47:19,266 basehttp 13433 140551471953664 "GET /compra/cupones/crear HTTP/1.1" 200 45801
+INFO 2025-10-06 09:47:29,390 basehttp 13433 140551471953664 "GET /compra/cupones/ HTTP/1.1" 200 52678
+WARNING 2025-10-06 09:47:42,123 log 13433 140551471953664 Not Found: /compra/cupones/editar/a52528d3-e275-42b1-a6aa-e579fa2ba107
+WARNING 2025-10-06 09:47:42,124 basehttp 13433 140551471953664 "GET /compra/cupones/editar/a52528d3-e275-42b1-a6aa-e579fa2ba107 HTTP/1.1" 404 9901
+WARNING 2025-10-06 09:47:48,361 log 13433 140551471953664 Not Found: /compra/cupones/editar/01
+WARNING 2025-10-06 09:47:48,362 basehttp 13433 140551471953664 "GET /compra/cupones/editar/01 HTTP/1.1" 404 7939
+WARNING 2025-10-06 09:47:52,575 log 13433 140551471953664 Not Found: /compra/cupones/editar/1
+WARNING 2025-10-06 09:47:52,576 basehttp 13433 140551471953664 "GET /compra/cupones/editar/1 HTTP/1.1" 404 7936
+INFO 2025-10-06 09:49:40,736 autoreload 13433 140551573169984 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/urls.py changed, reloading.
+INFO 2025-10-06 09:49:42,453 autoreload 13805 140013857789760 Watching for file changes with StatReloader
+INFO 2025-10-06 09:49:51,766 basehttp 13805 140013688137472 "GET / HTTP/1.1" 200 66477
+INFO 2025-10-06 09:49:57,757 basehttp 13805 140013688137472 "GET /compra/cupones/ HTTP/1.1" 200 52678
+WARNING 2025-10-06 09:50:07,538 log 13805 140013688137472 Not Found: /compra/cupones/editar/c99bddc7-ccfe-44a7-aa3f-8f5481b66a89
+WARNING 2025-10-06 09:50:07,538 basehttp 13805 140013688137472 "GET /compra/cupones/editar/c99bddc7-ccfe-44a7-aa3f-8f5481b66a89 HTTP/1.1" 404 9903
+INFO 2025-10-06 09:51:17,202 autoreload 13805 140013857789760 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/urls.py changed, reloading.
+INFO 2025-10-06 09:51:18,623 autoreload 14017 139637389883200 Watching for file changes with StatReloader
+ERROR 2025-10-06 09:51:24,979 log 14017 139637220972288 Internal Server Error: /compra/cupones/editar/c99bddc7-ccfe-44a7-aa3f-8f5481b66a89
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/utils/decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/mixins.py", line 128, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 98, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 189, in get
+    self.object = self.get_object()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/detail.py", line 45, in get_object
+    raise AttributeError(
+AttributeError: Generic detail view Update_cupones must be called with either an object pk or a slug in the URLconf.
+ERROR 2025-10-06 09:51:24,984 basehttp 14017 139637220972288 "GET /compra/cupones/editar/c99bddc7-ccfe-44a7-aa3f-8f5481b66a89 HTTP/1.1" 500 121099
+INFO 2025-10-06 09:59:52,109 autoreload 14017 139637389883200 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/urls.py changed, reloading.
+INFO 2025-10-06 09:59:54,056 autoreload 14515 140282072438592 Watching for file changes with StatReloader
+WARNING 2025-10-06 10:01:08,761 log 14515 140281902786304 Not Found: /compra/cupones/editar
+WARNING 2025-10-06 10:01:08,763 basehttp 14515 140281902786304 "GET /compra/cupones/editar HTTP/1.1" 404 9791
+INFO 2025-10-06 10:01:13,501 basehttp 14515 140281902786304 "GET / HTTP/1.1" 200 66477
+INFO 2025-10-06 10:01:43,135 autoreload 14515 140282072438592 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 10:01:45,165 autoreload 14716 139852715222848 Watching for file changes with StatReloader
+INFO 2025-10-06 10:01:53,483 basehttp 14716 139852546615040 "GET /compra/cupones/ HTTP/1.1" 200 52678
+WARNING 2025-10-06 10:01:56,313 log 14716 139852546615040 Not Found: /compra/cupones/editar/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a
+WARNING 2025-10-06 10:01:56,314 basehttp 14716 139852546615040 "GET /compra/cupones/editar/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a HTTP/1.1" 404 9902
+INFO 2025-10-06 10:02:12,429 autoreload 14716 139852715222848 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 10:02:13,951 autoreload 14820 140328443156288 Watching for file changes with StatReloader
+INFO 2025-10-06 10:02:19,778 basehttp 14820 140328274548480 "GET /compra/cupones/ HTTP/1.1" 200 52498
+WARNING 2025-10-06 10:02:22,558 log 14820 140328274548480 Not Found: /compra/cupones/editar/
+WARNING 2025-10-06 10:02:22,559 basehttp 14820 140328274548480 "GET /compra/cupones/editar/ HTTP/1.1" 404 9794
+INFO 2025-10-06 10:04:55,075 autoreload 14820 140328443156288 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/urls.py changed, reloading.
+INFO 2025-10-06 10:04:56,996 autoreload 15015 140077872457536 Watching for file changes with StatReloader
+INFO 2025-10-06 10:05:03,545 basehttp 15015 140077703534336 "GET / HTTP/1.1" 200 66477
+INFO 2025-10-06 10:05:08,019 basehttp 15015 140077703534336 "GET /compra/cupones/ HTTP/1.1" 200 52678
+WARNING 2025-10-06 10:05:11,010 log 15015 140077703534336 Not Found: /compra/cupones/editar/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a
+WARNING 2025-10-06 10:05:11,011 basehttp 15015 140077703534336 "GET /compra/cupones/editar/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a HTTP/1.1" 404 9903
+WARNING 2025-10-06 10:05:24,910 log 15015 140077703534336 Not Found: /compra/cupones/editar/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a/
+WARNING 2025-10-06 10:05:24,911 basehttp 15015 140077703534336 "GET /compra/cupones/editar/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a/ HTTP/1.1" 404 9906
+INFO 2025-10-06 10:05:58,561 basehttp 15015 140077703534336 "GET /compra/cupones/ HTTP/1.1" 200 52678
+INFO 2025-10-06 10:06:06,123 basehttp 15015 140077703534336 "POST /compra/cupones/eliminar/c74e6484-17e6-4696-b985-55fb5dab75ca HTTP/1.1" 302 0
+INFO 2025-10-06 10:06:06,300 basehttp 15015 140077703534336 "GET /compra/cupones/ HTTP/1.1" 200 52677
+INFO 2025-10-06 10:06:23,379 basehttp 15015 140077703534336 "POST /compra/cupones/eliminar/c74e6484-17e6-4696-b985-55fb5dab75ca HTTP/1.1" 302 0
+INFO 2025-10-06 10:06:23,530 basehttp 15015 140077703534336 "GET /compra/cupones/ HTTP/1.1" 200 52677
+INFO 2025-10-06 10:06:30,906 basehttp 15015 140077703534336 "GET /compra/cupones/ HTTP/1.1" 200 52677
+INFO 2025-10-06 10:06:37,247 basehttp 15015 140077703534336 "POST /compra/cupones/eliminar/c74e6484-17e6-4696-b985-55fb5dab75ca HTTP/1.1" 302 0
+INFO 2025-10-06 10:06:37,399 basehttp 15015 140077703534336 "GET /compra/cupones/ HTTP/1.1" 200 52677
+INFO 2025-10-06 10:08:35,102 autoreload 15015 140077872457536 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/urls.py changed, reloading.
+INFO 2025-10-06 10:08:36,980 autoreload 15489 140260073649984 Watching for file changes with StatReloader
+ERROR 2025-10-06 10:08:50,315 log 15489 140259903944448 Internal Server Error: /compra/cupones/editar/c74e6484-17e6-4696-b985-55fb5dab75ca
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/utils/decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/mixins.py", line 128, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 98, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 189, in get
+    self.object = self.get_object()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/detail.py", line 45, in get_object
+    raise AttributeError(
+AttributeError: Generic detail view Update_cupones must be called with either an object pk or a slug in the URLconf.
+ERROR 2025-10-06 10:08:50,321 basehttp 15489 140259903944448 "GET /compra/cupones/editar/c74e6484-17e6-4696-b985-55fb5dab75ca HTTP/1.1" 500 121099
+INFO 2025-10-06 10:11:56,374 autoreload 15489 140260073649984 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/notification/urls.py changed, reloading.
+INFO 2025-10-06 10:11:57,853 autoreload 15815 140181880436544 Watching for file changes with StatReloader
+INFO 2025-10-06 10:12:07,991 basehttp 15815 140181710796544 "GET /compra/cupones/ HTTP/1.1" 200 52677
+ERROR 2025-10-06 10:12:10,299 log 15815 140181710796544 Internal Server Error: /compra/cupones/editar/c99bddc7-ccfe-44a7-aa3f-8f5481b66a89
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/utils/decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/mixins.py", line 128, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 98, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 189, in get
+    self.object = self.get_object()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/detail.py", line 45, in get_object
+    raise AttributeError(
+AttributeError: Generic detail view Update_cupones must be called with either an object pk or a slug in the URLconf.
+ERROR 2025-10-06 10:12:10,316 basehttp 15815 140181710796544 "GET /compra/cupones/editar/c99bddc7-ccfe-44a7-aa3f-8f5481b66a89 HTTP/1.1" 500 121099
+INFO 2025-10-06 10:12:32,407 basehttp 15815 140181710796544 "GET /compra/cupones/ HTTP/1.1" 200 52677
+INFO 2025-10-06 10:12:35,212 basehttp 15815 140181710796544 "GET /compra/cupones/ HTTP/1.1" 200 52677
+ERROR 2025-10-06 10:12:38,202 log 15815 140181710796544 Internal Server Error: /compra/cupones/editar/00fdd77c-3e85-43ba-aa89-b089b77421a1
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/utils/decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/mixins.py", line 128, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 98, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 189, in get
+    self.object = self.get_object()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/detail.py", line 45, in get_object
+    raise AttributeError(
+AttributeError: Generic detail view Update_cupones must be called with either an object pk or a slug in the URLconf.
+ERROR 2025-10-06 10:12:38,212 basehttp 15815 140181710796544 "GET /compra/cupones/editar/00fdd77c-3e85-43ba-aa89-b089b77421a1 HTTP/1.1" 500 121099
+INFO 2025-10-06 10:12:55,308 autoreload 15815 140181880436544 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/notification/urls.py changed, reloading.
+INFO 2025-10-06 10:12:57,832 autoreload 16022 140617061500736 Watching for file changes with StatReloader
+INFO 2025-10-06 10:13:11,526 autoreload 16022 140617061500736 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/urls.py changed, reloading.
+INFO 2025-10-06 10:13:12,991 autoreload 16096 139971952904000 Watching for file changes with StatReloader
+INFO 2025-10-06 10:13:37,237 autoreload 16096 139971952904000 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 10:13:38,795 autoreload 16160 139929624659776 Watching for file changes with StatReloader
+INFO 2025-10-06 10:13:45,645 basehttp 16160 139929455785728 "GET / HTTP/1.1" 200 66477
+INFO 2025-10-06 10:13:50,049 basehttp 16160 139929445676800 "GET /compra/cupones/ HTTP/1.1" 200 52677
+INFO 2025-10-06 10:13:52,095 basehttp 16160 139929445676800 "GET /compra/cupones/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a/editar HTTP/1.1" 301 0
+ERROR 2025-10-06 10:13:52,246 log 16160 139929445676800 Internal Server Error: /compra/cupones/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a/editar/
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 70, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/utils/decorators.py", line 43, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/mixins.py", line 128, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/base.py", line 98, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/edit.py", line 189, in get
+    self.object = self.get_object()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/views/generic/detail.py", line 45, in get_object
+    raise AttributeError(
+AttributeError: Generic detail view Update_cupones must be called with either an object pk or a slug in the URLconf.
+ERROR 2025-10-06 10:13:52,251 basehttp 16160 139929445676800 "GET /compra/cupones/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a/editar/ HTTP/1.1" 500 121114
+INFO 2025-10-06 10:18:23,728 autoreload 16160 139929624659776 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-06 10:18:25,577 autoreload 16515 140374754383680 Watching for file changes with StatReloader
+INFO 2025-10-06 10:18:51,214 basehttp 16515 140374584735488 "GET / HTTP/1.1" 200 66477
+ERROR 2025-10-06 10:18:56,932 log 16515 140374584735488 Internal Server Error: /compra/cupones/
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 204, in _get_response
+    response = response.render()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/response.py", line 105, in render
+    self.content = self.rendered_content
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/response.py", line 83, in rendered_content
+    return template.render(context, self._request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/defaulttags.py", line 211, in render
+    nodelist.append(node.render_annotated(context))
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/defaulttags.py", line 446, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/urls/base.py", line 86, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/urls/resolvers.py", line 694, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'coupon_update' not found. 'coupon_update' is not a valid view function or pattern name.
+ERROR 2025-10-06 10:18:56,943 basehttp 16515 140374584735488 "GET /compra/cupones/ HTTP/1.1" 500 217494
+INFO 2025-10-06 10:19:30,863 autoreload 16515 140374754383680 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 10:19:32,289 autoreload 16657 140517853812544 Watching for file changes with StatReloader
+INFO 2025-10-06 10:19:37,482 basehttp 16657 140517685155584 "GET /compra/cupones/ HTTP/1.1" 200 52762
+INFO 2025-10-06 10:19:49,562 basehttp 16657 140517685155584 "GET /compra/cupones/a52528d3-e275-42b1-a6aa-e579fa2ba107/editar/ HTTP/1.1" 200 45012
+INFO 2025-10-06 10:20:02,844 basehttp 16657 140517685155584 "GET /notification/incentivos/ HTTP/1.1" 200 49421
+INFO 2025-10-06 10:20:04,686 basehttp 16657 140517685155584 "GET /notification/incentivos/editar/2 HTTP/1.1" 200 46224
+INFO 2025-10-06 10:20:19,247 basehttp 16657 140517685155584 "GET /compra/cupones/ HTTP/1.1" 200 52762
+INFO 2025-10-06 10:20:26,207 basehttp 16657 140517685155584 "GET /compra/cupones/c99bddc7-ccfe-44a7-aa3f-8f5481b66a89/editar/ HTTP/1.1" 200 45012
+INFO 2025-10-06 10:20:29,242 basehttp 16657 140517685155584 "GET /compra/cupones/ HTTP/1.1" 200 52762
+WARNING 2025-10-06 10:27:35,112 log 16657 140517685155584 Not Found: /compra/cupones/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a/editar/
+WARNING 2025-10-06 10:27:35,113 basehttp 16657 140517685155584 "GET /compra/cupones/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a/editar/ HTTP/1.1" 404 8048
+WARNING 2025-10-06 10:27:35,287 log 16657 140517685155584 Not Found: /favicon.ico
+INFO 2025-10-06 10:28:05,907 autoreload 16657 140517853812544 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_list.html changed, reloading.
+INFO 2025-10-06 10:28:07,655 autoreload 17401 140158085592896 Watching for file changes with StatReloader
+WARNING 2025-10-06 10:28:17,033 log 17401 140157915846400 Not Found: /compra/cupones/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a/editar/
+WARNING 2025-10-06 10:28:17,034 basehttp 17401 140157915846400 "GET /compra/cupones/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a/editar/ HTTP/1.1" 404 8048
+INFO 2025-10-06 10:28:23,313 basehttp 17401 140157915846400 "GET / HTTP/1.1" 200 66477
+INFO 2025-10-06 10:28:27,900 basehttp 17401 140157897082624 "GET /compra/cupones/ HTTP/1.1" 200 52747
+WARNING 2025-10-06 10:28:32,015 log 17401 140157897082624 Not Found: /compra/cupones/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a/editar/
+WARNING 2025-10-06 10:28:32,016 basehttp 17401 140157897082624 "GET /compra/cupones/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a/editar/ HTTP/1.1" 404 8048
+WARNING 2025-10-06 10:30:33,791 log 17401 140157897082624 Not Found: /compra/cupones/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a/editar/
+WARNING 2025-10-06 10:30:33,793 basehttp 17401 140157897082624 "GET /compra/cupones/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a/editar/ HTTP/1.1" 404 8048
+INFO 2025-10-06 10:30:55,852 autoreload 17759 140354506880832 Watching for file changes with StatReloader
+INFO 2025-10-06 10:31:46,320 basehttp 17759 140354337232640 "GET / HTTP/1.1" 200 66477
+INFO 2025-10-06 10:31:51,082 basehttp 17759 140354337232640 "GET /compra/cupones/ HTTP/1.1" 200 52747
+INFO 2025-10-06 10:32:04,210 basehttp 17759 140354337232640 "POST /compra/cupones/eliminar/00fdd77c-3e85-43ba-aa89-b089b77421a1 HTTP/1.1" 302 0
+INFO 2025-10-06 10:32:04,358 basehttp 17759 140354337232640 "GET /compra/cupones/ HTTP/1.1" 200 52746
+WARNING 2025-10-06 10:32:09,825 log 17759 140354337232640 Not Found: /compra/cupones/00fdd77c-3e85-43ba-aa89-b089b77421a1/editar/
+WARNING 2025-10-06 10:32:09,825 basehttp 17759 140354337232640 "GET /compra/cupones/00fdd77c-3e85-43ba-aa89-b089b77421a1/editar/ HTTP/1.1" 404 8048
+WARNING 2025-10-06 10:32:09,943 log 17759 140354337232640 Not Found: /favicon.ico
+INFO 2025-10-06 10:32:16,947 basehttp 17759 140354337232640 "GET /compra/cupones/ HTTP/1.1" 200 52746
+INFO 2025-10-06 10:32:20,279 basehttp 17759 140354337232640 "GET /compra/cupones/c99bddc7-ccfe-44a7-aa3f-8f5481b66a89/editar/ HTTP/1.1" 200 45012
+INFO 2025-10-06 10:32:23,380 basehttp 17759 140354337232640 "GET /compra/cupones/ HTTP/1.1" 200 52746
+INFO 2025-10-06 10:32:45,728 basehttp 17759 140354337232640 "GET /compra/cupones/a52528d3-e275-42b1-a6aa-e579fa2ba107/editar/ HTTP/1.1" 200 45012
+INFO 2025-10-06 10:32:48,376 basehttp 17759 140354337232640 "GET /compra/cupones/ HTTP/1.1" 200 52746
+INFO 2025-10-06 10:33:22,565 autoreload 17759 140354506880832 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-06 10:33:24,052 autoreload 18107 140104563689280 Watching for file changes with StatReloader
+INFO 2025-10-06 10:33:28,976 basehttp 18107 140104395601664 "GET /compra/cupones/ HTTP/1.1" 200 52746
+INFO 2025-10-06 10:33:32,318 basehttp 18107 140104395601664 "GET /compra/cupones/c74e6484-17e6-4696-b985-55fb5dab75ca/editar/ HTTP/1.1" 200 45012
+INFO 2025-10-06 10:35:06,373 autoreload 18107 140104563689280 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/cupon_update.html changed, reloading.
+INFO 2025-10-06 10:35:07,856 autoreload 18237 139815309997888 Watching for file changes with StatReloader
+INFO 2025-10-06 10:35:11,742 basehttp 18237 139815142029056 "GET /compra/cupones/c74e6484-17e6-4696-b985-55fb5dab75ca/editar/ HTTP/1.1" 200 60127
+INFO 2025-10-06 10:36:32,580 basehttp 18237 139815142029056 "GET /compra/cupones/ HTTP/1.1" 200 52746
+INFO 2025-10-06 10:36:40,826 basehttp 18237 139815142029056 "GET /compra/cupones/c74e6484-17e6-4696-b985-55fb5dab75ca/editar/ HTTP/1.1" 200 60127
+INFO 2025-10-06 10:36:45,513 basehttp 18237 139815142029056 "POST /compra/cupones/c74e6484-17e6-4696-b985-55fb5dab75ca/editar/ HTTP/1.1" 302 0
+INFO 2025-10-06 10:36:45,609 basehttp 18237 139815142029056 "GET /compra/cupones/ HTTP/1.1" 200 52747
+INFO 2025-10-06 10:36:54,624 basehttp 18237 139815142029056 "GET /compra/cupones/00fdd77c-3e85-43ba-aa89-b089b77421a1/editar/ HTTP/1.1" 200 60126
+INFO 2025-10-06 10:36:58,858 basehttp 18237 139815142029056 "POST /compra/cupones/00fdd77c-3e85-43ba-aa89-b089b77421a1/editar/ HTTP/1.1" 302 0
+INFO 2025-10-06 10:36:58,977 basehttp 18237 139815142029056 "GET /compra/cupones/ HTTP/1.1" 200 52749
+INFO 2025-10-06 10:37:08,448 basehttp 18237 139815142029056 "GET /compra/cupones/1fdf012c-05ad-43d4-8fdf-dfdfd117a78a/editar/ HTTP/1.1" 200 60127
+INFO 2025-10-06 10:37:53,705 basehttp 18237 139815142029056 "GET /notification/incentivos/ HTTP/1.1" 200 49421
+INFO 2025-10-06 10:37:57,809 basehttp 18237 139815142029056 "GET /notification/incentivos/editar/1 HTTP/1.1" 200 46226
+INFO 2025-10-06 10:38:20,423 basehttp 18237 139815142029056 "GET /notification/incentivos/ HTTP/1.1" 200 49421
+INFO 2025-10-06 10:39:54,508 basehttp 18237 139815142029056 "GET /servicios/gestion/ HTTP/1.1" 200 47055
+INFO 2025-10-06 10:42:27,339 basehttp 18237 139815142029056 "GET /precio/ HTTP/1.1" 200 49023
+INFO 2025-10-06 10:45:27,833 basehttp 18237 139815142029056 "GET /compra/gestion/ HTTP/1.1" 200 388526
+INFO 2025-10-06 10:45:45,104 basehttp 18237 139815142029056 "GET /compra/compras-clientes/ HTTP/1.1" 200 167421
+INFO 2025-10-06 10:46:29,507 basehttp 18237 139815142029056 "GET /servicios/gestion/ HTTP/1.1" 200 47055
+INFO 2025-10-06 10:46:36,864 basehttp 18237 139815142029056 "GET /wallet/transactions/ HTTP/1.1" 200 91585
+INFO 2025-10-06 10:46:46,850 basehttp 18237 139815142029056 "GET /precio/ HTTP/1.1" 200 49023
+INFO 2025-10-06 10:47:00,708 basehttp 18237 139815142029056 "GET /compra/ventas/ HTTP/1.1" 200 44636
+INFO 2025-10-06 10:54:34,647 autoreload 18237 139815309997888 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-10-06 10:54:42,705 autoreload 19657 140288992413504 Watching for file changes with StatReloader
+INFO 2025-10-06 10:54:58,877 basehttp 19657 140288823801600 "GET / HTTP/1.1" 200 66003
+INFO 2025-10-06 10:55:04,473 basehttp 19657 140288706201344 "GET /compra/ventas/ HTTP/1.1" 200 44650
+INFO 2025-10-06 10:55:16,033 basehttp 19657 140288706201344 "GET /compra/venta-productos/ HTTP/1.1" 200 53809
+INFO 2025-10-06 10:55:18,707 basehttp 19657 140288706201344 "GET /compra/ventas/ HTTP/1.1" 200 44650
+INFO 2025-10-06 10:55:21,665 basehttp 19657 140288706201344 "GET /compra/venta-clientes/ HTTP/1.1" 200 46546
+INFO 2025-10-06 10:55:25,500 basehttp 19657 140288706201344 "GET /compra/ventas/ HTTP/1.1" 200 44650
+INFO 2025-10-06 10:55:27,513 basehttp 19657 140288706201344 "GET /compra/venta-resumen/ HTTP/1.1" 200 48479
+INFO 2025-10-06 10:55:30,135 basehttp 19657 140288706201344 "GET /compra/ventas/ HTTP/1.1" 200 44650
+INFO 2025-10-06 10:55:32,095 basehttp 19657 140288706201344 "GET /compra/ventas-totales-resumen/ HTTP/1.1" 200 48629
+INFO 2025-10-06 10:55:34,911 basehttp 19657 140288706201344 "GET /compra/ventas/ HTTP/1.1" 200 44650
+INFO 2025-10-06 10:55:37,452 basehttp 19657 140288706201344 "GET /compra/compras-clientes/ HTTP/1.1" 200 166947
+INFO 2025-10-06 10:55:52,496 basehttp 19657 140288706201344 "GET /compra/ventas/ HTTP/1.1" 200 44650
+INFO 2025-10-06 10:55:55,251 basehttp 19657 140288706201344 "GET /servicios/gestion/ HTTP/1.1" 200 46581
+INFO 2025-10-06 10:55:57,716 basehttp 19657 140288706201344 "GET /compra/ventas/ HTTP/1.1" 200 44650
+INFO 2025-10-06 10:56:00,603 basehttp 19657 140288706201344 "GET /wallet/transactions/ HTTP/1.1" 200 91111
+INFO 2025-10-06 10:56:06,852 basehttp 19657 140288706201344 "GET /compra/ventas/ HTTP/1.1" 200 44650
+INFO 2025-10-06 10:59:27,751 autoreload 19657 140288992413504 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout changed, reloading.
+INFO 2025-10-06 10:59:34,279 autoreload 20237 140091487622976 Watching for file changes with StatReloader
+INFO 2025-10-06 11:08:11,781 autoreload 20237 140091487622976 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/urls.py changed, reloading.
+INFO 2025-10-06 11:08:13,428 autoreload 20718 139949096605504 Watching for file changes with StatReloader
+INFO 2025-10-06 11:08:19,086 basehttp 20718 139948927948544 "GET / HTTP/1.1" 200 65456
+INFO 2025-10-06 11:08:19,526 basehttp 20718 139948927948544 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 200 45040
+INFO 2025-10-06 11:08:28,450 basehttp 20718 139948927948544 "GET /compra/configuraciones/ HTTP/1.1" 200 43548
+INFO 2025-10-06 11:08:32,825 basehttp 20718 139948927948544 "GET /precio/ HTTP/1.1" 200 48002
+INFO 2025-10-06 11:08:38,733 basehttp 20718 139948927948544 "GET /compra/configuraciones/ HTTP/1.1" 200 43548
+INFO 2025-10-06 11:08:41,407 basehttp 20718 139948927948544 "GET /compra/cupones/ HTTP/1.1" 200 51728
+INFO 2025-10-06 11:08:47,660 basehttp 20718 139948927948544 "GET /compra/configuraciones/ HTTP/1.1" 200 43548
+INFO 2025-10-06 11:08:49,709 basehttp 20718 139948927948544 "GET /notification/incentivos/ HTTP/1.1" 200 48400
+INFO 2025-10-06 11:08:55,524 basehttp 20718 139948927948544 "GET /compra/configuraciones/ HTTP/1.1" 200 43548
+INFO 2025-10-06 11:10:17,968 autoreload 20718 139949096605504 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/configuraciones.html changed, reloading.
+INFO 2025-10-06 11:10:19,616 autoreload 21074 140119757051712 Watching for file changes with StatReloader
+INFO 2025-10-06 11:10:23,744 basehttp 21074 140119588673280 "GET /compra/configuraciones/ HTTP/1.1" 200 43568
+INFO 2025-10-06 11:10:31,934 autoreload 21074 140119757051712 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout changed, reloading.
+INFO 2025-10-06 11:10:33,637 autoreload 21154 140311160846144 Watching for file changes with StatReloader
+INFO 2025-10-06 11:10:41,675 autoreload 21154 140311160846144 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout changed, reloading.
+INFO 2025-10-06 11:10:43,796 autoreload 21205 139704516859712 Watching for file changes with StatReloader
+INFO 2025-10-06 11:18:07,296 autoreload 21205 139704516859712 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/urls.py changed, reloading.
+INFO 2025-10-06 11:18:08,804 autoreload 21593 140034464929600 Watching for file changes with StatReloader
+INFO 2025-10-06 11:18:13,846 basehttp 21593 140034296325888 "GET / HTTP/1.1" 200 65120
+INFO 2025-10-06 11:18:26,042 basehttp 21593 140034296325888 "GET /compra/gestion/ HTTP/1.1" 200 387169
+INFO 2025-10-06 11:18:32,470 basehttp 21593 140034296325888 "GET /compra/ventas/ HTTP/1.1" 200 43767
+INFO 2025-10-06 11:18:38,654 basehttp 21593 140034296325888 "GET /catalogo/gestion/ HTTP/1.1" 200 43270
+INFO 2025-10-06 11:18:48,721 basehttp 21593 140034296325888 "GET /compra/configuraciones/ HTTP/1.1" 200 43232
+INFO 2025-10-06 11:18:56,479 basehttp 21593 140034296325888 "GET /compra/marketing/ HTTP/1.1" 200 43098
+INFO 2025-10-06 11:18:58,736 basehttp 21593 140034296325888 "GET /promo/banners HTTP/1.1" 200 48876
+INFO 2025-10-06 11:19:01,444 basehttp 21593 140034296325888 "GET /compra/marketing/ HTTP/1.1" 200 43098
+INFO 2025-10-06 11:19:03,252 basehttp 21593 140034296325888 "GET /promo/offers HTTP/1.1" 200 46373
+INFO 2025-10-06 11:19:06,569 basehttp 21593 140034296325888 "GET /compra/marketing/ HTTP/1.1" 200 43098
+INFO 2025-10-06 11:19:08,577 basehttp 21593 140034296325888 "GET /accounts/users_list/ HTTP/1.1" 200 49995
+INFO 2025-10-06 11:19:34,492 basehttp 21593 140034296325888 "GET /accounts/profile/editar/25 HTTP/1.1" 200 44275
+INFO 2025-10-06 11:19:50,383 basehttp 21593 140034296325888 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231454
+INFO 2025-10-06 11:20:37,232 basehttp 21593 140034296325888 "GET /compra/gestion/ HTTP/1.1" 200 387169
+INFO 2025-10-06 11:20:43,293 basehttp 21593 140034296325888 "GET /compra/compras/ HTTP/1.1" 200 292165
+INFO 2025-10-06 11:21:03,882 basehttp 21593 140034296325888 "GET /compra/gestion/ HTTP/1.1" 200 387169
+INFO 2025-10-06 11:21:25,075 basehttp 21593 140034296325888 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231454
+INFO 2025-10-06 11:21:30,621 basehttp 21593 140034296325888 "GET /compra/ventas/ HTTP/1.1" 200 43767
+INFO 2025-10-06 11:21:35,828 basehttp 21593 140034296325888 "GET /compra/compras-clientes/ HTTP/1.1" 200 166064
+INFO 2025-10-06 11:21:49,571 basehttp 21593 140034296325888 "GET /compra/compras/579/ HTTP/1.1" 200 47860
+INFO 2025-10-06 11:22:05,146 basehttp 21593 140034296325888 "GET /compra/compras-clientes/ HTTP/1.1" 200 166064
+INFO 2025-10-06 11:22:46,122 autoreload 21593 140034464929600 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout changed, reloading.
+INFO 2025-10-06 11:22:47,814 autoreload 22280 139708809582400 Watching for file changes with StatReloader
+INFO 2025-10-06 11:22:59,062 autoreload 22280 139708809582400 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout changed, reloading.
+INFO 2025-10-06 11:23:01,026 autoreload 22333 140207792559936 Watching for file changes with StatReloader
+INFO 2025-10-06 11:30:15,709 autoreload 22333 140207792559936 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-06 11:30:17,310 autoreload 22784 140332304492352 Watching for file changes with StatReloader
+INFO 2025-10-06 11:30:23,225 basehttp 22784 140332135880448 "GET / HTTP/1.1" 200 64970
+INFO 2025-10-06 11:30:31,431 basehttp 22784 140332135880448 "GET /compra/ordenes/ HTTP/1.1" 200 42910
+INFO 2025-10-06 11:30:40,924 basehttp 22784 140332135880448 "GET /compra/gestion/ HTTP/1.1" 200 387019
+INFO 2025-10-06 11:30:59,290 basehttp 22784 140332135880448 "GET /compra/ordenes/ HTTP/1.1" 200 42910
+INFO 2025-10-06 11:31:02,307 basehttp 22784 140332135880448 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231304
+INFO 2025-10-06 11:32:31,623 autoreload 22784 140332304492352 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/vendedor_orders_list.html changed, reloading.
+INFO 2025-10-06 11:32:33,259 autoreload 23051 139658542671680 Watching for file changes with StatReloader
+INFO 2025-10-06 11:32:38,863 basehttp 23051 139658374067968 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231304
+INFO 2025-10-06 11:33:37,267 autoreload 23051 139658542671680 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-10-06 11:33:38,831 autoreload 23156 140119343765312 Watching for file changes with StatReloader
+INFO 2025-10-06 11:33:43,047 basehttp 23156 140119175694080 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231338
+INFO 2025-10-06 11:35:24,814 autoreload 23156 140119343765312 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-10-06 11:35:26,249 autoreload 23421 139999588861760 Watching for file changes with StatReloader
+INFO 2025-10-06 11:35:33,533 basehttp 23421 139999420266240 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231345
+INFO 2025-10-06 11:47:00,348 autoreload 23421 139999588861760 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-10-06 11:47:15,830 autoreload 24432 140042397001536 Watching for file changes with StatReloader
+INFO 2025-10-06 11:47:36,554 basehttp 24432 140042228553472 "GET / HTTP/1.1" 200 64919
+INFO 2025-10-06 11:48:03,748 basehttp 24432 140042184611584 "GET /catalogo/catalogo/ HTTP/1.1" 200 59147
+INFO 2025-10-06 11:48:04,083 basehttp 24432 140042228553472 "GET /media/Productos/IMG_9515.jpg HTTP/1.1" 304 0
+INFO 2025-10-06 11:48:04,083 basehttp 24432 140042218182400 "GET /media/Productos/IMG_9512.jpg HTTP/1.1" 304 0
+INFO 2025-10-06 11:48:04,084 basehttp 24432 140042201396992 "GET /media/Productos/prod_Default.jpg HTTP/1.1" 304 0
+WARNING 2025-10-06 11:48:04,545 log 24432 140042193004288 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 11:48:04,553 basehttp 24432 140042193004288 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 11:48:19,912 basehttp 24432 140042193004288 "GET /compra/ventas/ HTTP/1.1" 200 43566
+INFO 2025-10-06 11:48:25,891 basehttp 24432 140042193004288 "GET /catalogo/gestion/ HTTP/1.1" 200 43069
+INFO 2025-10-06 11:48:30,181 basehttp 24432 140042193004288 "GET /compra/configuraciones/ HTTP/1.1" 200 43031
+INFO 2025-10-06 11:48:36,203 basehttp 24432 140042193004288 "GET /compra/marketing/ HTTP/1.1" 200 42897
+INFO 2025-10-06 11:51:05,088 autoreload 24432 140042397001536 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-10-06 11:51:06,552 autoreload 24865 140710320637760 Watching for file changes with StatReloader
+INFO 2025-10-06 11:51:12,517 basehttp 24865 140710152509184 "GET /compra/marketing/ HTTP/1.1" 200 42893
+INFO 2025-10-06 11:51:29,692 basehttp 24865 140710152509184 "GET /accounts/logout/ HTTP/1.1" 302 0
+INFO 2025-10-06 11:51:30,316 basehttp 24865 140710152509184 "GET / HTTP/1.1" 200 63561
+INFO 2025-10-06 11:51:38,319 basehttp 24865 140710152509184 "GET /accounts/login/?next=/ HTTP/1.1" 200 41691
+INFO 2025-10-06 11:51:48,654 basehttp 24865 140710152509184 "POST /accounts/login/?next=/ HTTP/1.1" 302 0
+INFO 2025-10-06 11:51:48,852 basehttp 24865 140710152509184 "GET / HTTP/1.1" 200 64915
+INFO 2025-10-06 11:51:56,002 basehttp 24865 140710152509184 "GET /accounts/profile/ HTTP/1.1" 200 49001
+INFO 2025-10-06 11:52:15,712 basehttp 24865 140710152509184 "GET /compra/ventas/ HTTP/1.1" 200 43562
+INFO 2025-10-06 11:52:19,214 basehttp 24865 140710152509184 "GET /compra/venta-resumen/ HTTP/1.1" 200 47391
+INFO 2025-10-06 11:52:23,450 basehttp 24865 140710152509184 "GET /compra/ventas/ HTTP/1.1" 200 43562
+INFO 2025-10-06 11:52:25,962 basehttp 24865 140710152509184 "GET /compra/ventas-totales-resumen/ HTTP/1.1" 200 47541
+INFO 2025-10-06 11:53:01,037 basehttp 24865 140710152509184 "GET /compra/ventas-totales-resumen/ HTTP/1.1" 200 47541
+INFO 2025-10-06 11:53:32,856 basehttp 24865 140710152509184 "GET /accounts/logout/ HTTP/1.1" 302 0
+INFO 2025-10-06 11:53:33,285 basehttp 24865 140710152509184 "GET / HTTP/1.1" 200 63561
+INFO 2025-10-06 11:54:00,148 basehttp 24865 140710152509184 "GET /catalogo/catalogo/ HTTP/1.1" 200 59116
+WARNING 2025-10-06 11:54:00,311 log 24865 140710152509184 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 11:54:00,314 basehttp 24865 140710152509184 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 11:54:10,135 basehttp 24865 140710152509184 "POST /catalogo/catalogo/ HTTP/1.1" 302 0
+INFO 2025-10-06 11:54:10,222 basehttp 24865 140710152509184 "GET /catalogo/catalogo/ HTTP/1.1" 200 59448
+WARNING 2025-10-06 11:54:10,355 log 24865 140710152509184 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 11:54:10,358 basehttp 24865 140710152509184 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 11:54:27,358 basehttp 24865 140710152509184 "GET /accounts/login/?next=/catalogo/catalogo/ HTTP/1.1" 200 41709
+INFO 2025-10-06 11:54:33,281 basehttp 24865 140710152509184 "POST /accounts/login/?next=/catalogo/catalogo/ HTTP/1.1" 302 0
+INFO 2025-10-06 11:54:33,553 basehttp 24865 140710152509184 "GET /catalogo/catalogo/ HTTP/1.1" 200 59143
+WARNING 2025-10-06 11:54:33,699 log 24865 140710152509184 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 11:54:33,708 basehttp 24865 140710152509184 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 11:57:44,487 autoreload 24865 140710320637760 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-10-06 11:57:47,909 autoreload 25711 139664974866240 Watching for file changes with StatReloader
+INFO 2025-10-06 11:59:22,541 basehttp 25711 139664805156608 "GET /carrito/carrito/ HTTP/1.1" 200 48502
+INFO 2025-10-06 11:59:25,766 basehttp 25711 139664805156608 "GET /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 68345
+INFO 2025-10-06 11:59:29,230 basehttp 25711 139664805156608 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 68820
+INFO 2025-10-06 11:59:32,776 basehttp 25711 139664805156608 "GET /carrito/carrito/ HTTP/1.1" 200 54296
+INFO 2025-10-06 12:13:35,007 basehttp 25711 139664805156608 "POST /carrito/carrito/ HTTP/1.1" 200 54813
+INFO 2025-10-06 12:13:48,417 basehttp 25711 139664805156608 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-06 12:13:49,303 basehttp 25711 139664805156608 "GET /compra/pagar/ HTTP/1.1" 200 49079
+INFO 2025-10-06 12:13:58,594 basehttp 25711 139664805156608 "GET /carrito/carrito/ HTTP/1.1" 200 54298
+INFO 2025-10-06 12:14:02,167 basehttp 25711 139664805156608 "POST /carrito/carrito/ HTTP/1.1" 200 48502
+INFO 2025-10-06 12:14:16,089 basehttp 25711 139664805156608 "GET /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 68345
+INFO 2025-10-06 12:14:19,814 basehttp 25711 139664795309824 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 68820
+INFO 2025-10-06 12:14:24,890 basehttp 25711 139664795309824 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 68820
+INFO 2025-10-06 12:14:27,863 basehttp 25711 139664795309824 "GET /carrito/carrito/ HTTP/1.1" 200 57685
+INFO 2025-10-06 12:14:36,226 basehttp 25711 139664795309824 "POST /carrito/carrito/ HTTP/1.1" 200 58200
+INFO 2025-10-06 12:14:45,260 basehttp 25711 139664795309824 "POST /carrito/carrito/ HTTP/1.1" 200 54285
+INFO 2025-10-06 12:15:53,236 basehttp 25711 139664795309824 "POST /carrito/carrito/ HTTP/1.1" 200 48502
+INFO 2025-10-06 13:39:52,383 autoreload 25711 139664974866240 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/wallet/admin.py changed, reloading.
+INFO 2025-10-06 13:40:12,318 autoreload 32406 139712529262400 Watching for file changes with StatReloader
+INFO 2025-10-06 13:41:24,757 autoreload 32406 139712529262400 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/wallet/admin.py changed, reloading.
+INFO 2025-10-06 13:41:26,262 autoreload 32568 139960695519040 Watching for file changes with StatReloader
+INFO 2025-10-06 13:41:36,126 basehttp 32568 139960527181568 "GET / HTTP/1.1" 200 64909
+INFO 2025-10-06 13:41:42,337 basehttp 32568 139960527181568 "GET /admin/ HTTP/1.1" 200 17091
+INFO 2025-10-06 13:41:42,606 basehttp 32568 139960418031360 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2025-10-06 13:41:42,628 basehttp 32568 139960527181568 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2271
+INFO 2025-10-06 13:41:42,629 basehttp 32568 139960426424064 "GET /static/admin/css/dashboard.css HTTP/1.1" 200 380
+INFO 2025-10-06 13:41:42,631 basehttp 32568 139960434816768 "GET /static/admin/css/base.css HTTP/1.1" 200 19513
+INFO 2025-10-06 13:41:42,696 basehttp 32568 139960516167424 "GET /static/admin/css/responsive.css HTTP/1.1" 200 18545
+INFO 2025-10-06 13:41:42,700 basehttp 32568 139960434816768 "GET /static/admin/css/fonts.css HTTP/1.1" 200 423
+INFO 2025-10-06 13:41:42,821 basehttp 32568 139960426424064 "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-10-06 13:41:42,822 basehttp 32568 139960516167424 "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-10-06 13:41:42,822 basehttp 32568 139960418031360 "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+INFO 2025-10-06 13:41:42,981 basehttp 32568 139960516167424 "GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 200 85876
+WARNING 2025-10-06 13:41:43,268 log 32568 139960527181568 Not Found: /favicon.ico
+INFO 2025-10-06 13:41:50,288 basehttp 32568 139960516167424 "GET /admin/wallet/wallet/ HTTP/1.1" 200 17094
+INFO 2025-10-06 13:41:50,445 basehttp 32568 139960516167424 "GET /static/admin/css/changelists.css HTTP/1.1" 200 6874
+INFO 2025-10-06 13:41:50,528 basehttp 32568 139960426424064 "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2025-10-06 13:41:50,680 basehttp 32568 139960527181568 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:41:50,915 basehttp 32568 139960516167424 "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 304 0
+INFO 2025-10-06 13:41:50,915 basehttp 32568 139960434816768 "GET /static/admin/js/actions.js HTTP/1.1" 304 0
+INFO 2025-10-06 13:41:50,916 basehttp 32568 139960426424064 "GET /static/admin/js/core.js HTTP/1.1" 304 0
+INFO 2025-10-06 13:41:50,916 basehttp 32568 139960418031360 "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+INFO 2025-10-06 13:41:50,940 basehttp 32568 139960527181568 "GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+INFO 2025-10-06 13:41:50,986 basehttp 32568 139960409638656 "GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+INFO 2025-10-06 13:41:50,995 basehttp 32568 139960516167424 "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 304 0
+INFO 2025-10-06 13:41:51,282 basehttp 32568 139960516167424 "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-10-06 13:45:28,540 autoreload 32568 139960695519040 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/wallet/models.py changed, reloading.
+INFO 2025-10-06 13:45:30,588 autoreload 32970 140390019831616 Watching for file changes with StatReloader
+INFO 2025-10-06 13:45:39,728 basehttp 32970 140389850633984 "GET /admin/wallet/wallet/ HTTP/1.1" 200 17111
+INFO 2025-10-06 13:45:39,810 basehttp 32970 140389850633984 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:46:51,439 autoreload 33231 140102906574656 Watching for file changes with StatReloader
+INFO 2025-10-06 13:46:57,264 basehttp 33231 140102737970944 "GET /admin/wallet/wallet/ HTTP/1.1" 200 17111
+INFO 2025-10-06 13:46:57,336 basehttp 33231 140102737970944 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:49:01,092 basehttp 33231 140102737970944 "GET /admin/wallet/transaction/ HTTP/1.1" 200 37116
+INFO 2025-10-06 13:49:01,175 basehttp 33231 140102737970944 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:50:54,795 autoreload 33231 140102906574656 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/wallet/models.py changed, reloading.
+INFO 2025-10-06 13:50:56,831 autoreload 33589 140515278636864 Watching for file changes with StatReloader
+INFO 2025-10-06 13:51:03,229 basehttp 33589 140515110541056 "GET /admin/wallet/transaction/ HTTP/1.1" 200 38115
+INFO 2025-10-06 13:51:03,325 basehttp 33589 140515110541056 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:51:14,922 basehttp 33589 140515110541056 "GET /admin/wallet/transaction/2/change/ HTTP/1.1" 200 16130
+INFO 2025-10-06 13:51:15,027 basehttp 33589 140515110541056 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:51:15,090 basehttp 33589 140515022468864 "GET /static/admin/css/forms.css HTTP/1.1" 200 8804
+INFO 2025-10-06 13:51:34,877 autoreload 33589 140515278636864 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/wallet/models.py changed, reloading.
+INFO 2025-10-06 13:51:36,382 autoreload 33754 140014788794176 Watching for file changes with StatReloader
+INFO 2025-10-06 13:51:42,138 basehttp 33754 140014620153600 "GET /admin/wallet/transaction/2/change/ HTTP/1.1" 200 16208
+INFO 2025-10-06 13:51:42,369 basehttp 33754 140014620153600 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+WARNING 2025-10-06 13:51:42,578 log 33754 140014620153600 Not Found: /favicon.ico
+INFO 2025-10-06 13:51:44,976 basehttp 33754 140014601008896 "GET /admin/wallet/transaction/ HTTP/1.1" 200 40558
+INFO 2025-10-06 13:52:04,546 autoreload 33754 140014788794176 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/wallet/models.py changed, reloading.
+INFO 2025-10-06 13:52:06,203 autoreload 33866 140167339370304 Watching for file changes with StatReloader
+INFO 2025-10-06 13:52:45,083 autoreload 33866 140167339370304 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/wallet/models.py changed, reloading.
+INFO 2025-10-06 13:52:46,519 autoreload 33933 140012352554816 Watching for file changes with StatReloader
+INFO 2025-10-06 13:52:52,309 basehttp 33933 140012175750912 "GET /admin/wallet/transaction/ HTTP/1.1" 200 43258
+INFO 2025-10-06 13:52:52,400 basehttp 33933 140012175750912 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:53:23,691 autoreload 33933 140012352554816 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/wallet/models.py changed, reloading.
+INFO 2025-10-06 13:53:25,498 autoreload 34065 140163385149248 Watching for file changes with StatReloader
+INFO 2025-10-06 13:53:31,839 basehttp 34065 140163217057536 "GET /admin/wallet/transaction/ HTTP/1.1" 200 39058
+INFO 2025-10-06 13:53:31,995 basehttp 34065 140163217057536 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:53:45,709 basehttp 34065 140163217057536 "GET /admin/wallet/wallet/ HTTP/1.1" 200 17122
+INFO 2025-10-06 13:53:45,816 basehttp 34065 140163217057536 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:53:55,515 basehttp 34065 140163217057536 "GET /admin/wallet/wallet/1/change/ HTTP/1.1" 200 15296
+INFO 2025-10-06 13:53:55,648 basehttp 34065 140163217057536 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:53:59,090 basehttp 34065 140163217057536 "GET /admin/wallet/wallet/ HTTP/1.1" 200 17122
+INFO 2025-10-06 13:54:02,719 basehttp 34065 140163217057536 "GET /admin/wallet/wallet/3/change/ HTTP/1.1" 200 15301
+INFO 2025-10-06 13:54:02,852 basehttp 34065 140163217057536 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:54:21,626 autoreload 34065 140163385149248 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/wallet/models.py changed, reloading.
+INFO 2025-10-06 13:54:23,047 autoreload 34273 140686000641856 Watching for file changes with StatReloader
+INFO 2025-10-06 13:54:26,937 basehttp 34273 140685832529664 "GET /admin/wallet/wallet/3/change/ HTTP/1.1" 200 15292
+INFO 2025-10-06 13:54:27,037 basehttp 34273 140685832529664 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:54:28,933 basehttp 34273 140685832529664 "GET /admin/wallet/wallet/ HTTP/1.1" 200 17118
+INFO 2025-10-06 13:54:32,698 basehttp 34273 140685832529664 "GET /admin/wallet/wallet/3/change/ HTTP/1.1" 200 15292
+INFO 2025-10-06 13:54:32,790 basehttp 34273 140685832529664 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:54:41,710 basehttp 34273 140685832529664 "GET /admin/wallet/wallet/ HTTP/1.1" 200 17118
+INFO 2025-10-06 13:54:47,903 basehttp 34273 140685832529664 "GET /admin/wallet/wallet/1/change/ HTTP/1.1" 200 15290
+INFO 2025-10-06 13:54:48,021 basehttp 34273 140685832529664 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:54:51,946 basehttp 34273 140685832529664 "GET /admin/wallet/wallet/ HTTP/1.1" 200 17118
+INFO 2025-10-06 13:55:02,651 basehttp 34273 140685832529664 "GET /admin/wallet/transaction/ HTTP/1.1" 200 39058
+INFO 2025-10-06 13:55:02,747 basehttp 34273 140685832529664 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:55:23,838 basehttp 34273 140685832529664 "POST /admin/wallet/transaction/ HTTP/1.1" 200 12822
+INFO 2025-10-06 13:55:23,973 basehttp 34273 140685832529664 "GET /static/admin/js/cancel.js HTTP/1.1" 200 884
+INFO 2025-10-06 13:55:28,290 basehttp 34273 140685832529664 "POST /admin/wallet/transaction/ HTTP/1.1" 302 0
+INFO 2025-10-06 13:55:29,276 basehttp 34273 140685832529664 "GET /admin/wallet/transaction/ HTTP/1.1" 200 39213
+INFO 2025-10-06 13:55:29,572 basehttp 34273 140685832529664 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:55:29,725 basehttp 34273 140685747418880 "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2025-10-06 13:55:47,446 basehttp 34273 140685832529664 "GET /admin/wallet/wallet/ HTTP/1.1" 200 17118
+INFO 2025-10-06 13:55:47,546 basehttp 34273 140685747418880 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 13:55:54,237 basehttp 34273 140685832529664 "GET /admin/wallet/wallet/15/change/ HTTP/1.1" 200 15292
+INFO 2025-10-06 13:55:54,341 basehttp 34273 140685747418880 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-06 14:00:02,204 basehttp 34273 140685747418880 "GET / HTTP/1.1" 200 64909
+INFO 2025-10-06 14:00:12,784 basehttp 34273 140685747418880 "GET /catalogo/categoria/humectantes/ HTTP/1.1" 200 46113
+INFO 2025-10-06 14:00:16,929 basehttp 34273 140685747418880 "GET /catalogo/categoria/higiene-personal/ HTTP/1.1" 200 56115
+WARNING 2025-10-06 14:00:17,028 log 34273 140685747418880 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 14:00:17,028 basehttp 34273 140685747418880 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 14:00:20,673 basehttp 34273 140685747418880 "POST /catalogo/categoria/higiene-personal/ HTTP/1.1" 200 56590
+WARNING 2025-10-06 14:00:20,888 log 34273 140685747418880 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 14:00:20,890 basehttp 34273 140685747418880 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 14:00:23,986 basehttp 34273 140685747418880 "GET /carrito/carrito/ HTTP/1.1" 200 54266
+WARNING 2025-10-06 14:00:24,085 log 34273 140685713848064 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 14:00:24,087 basehttp 34273 140685713848064 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 14:00:33,253 basehttp 34273 140685747418880 "POST /carrito/carrito/ HTTP/1.1" 200 54783
+WARNING 2025-10-06 14:00:33,382 log 34273 140685713848064 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 14:00:33,388 basehttp 34273 140685713848064 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 14:00:44,640 basehttp 34273 140685747418880 "POST /carrito/carrito/ HTTP/1.1" 200 54275
+WARNING 2025-10-06 14:00:44,719 log 34273 140685713848064 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 14:00:44,722 basehttp 34273 140685713848064 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 14:00:53,399 basehttp 34273 140685747418880 "POST /carrito/carrito/ HTTP/1.1" 200 54790
+WARNING 2025-10-06 14:00:53,607 log 34273 140685713848064 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-06 14:00:53,611 basehttp 34273 140685713848064 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-06 14:01:01,532 basehttp 34273 140685747418880 "POST /carrito/carrito/ HTTP/1.1" 200 48502
+INFO 2025-10-06 14:01:07,826 basehttp 34273 140685747418880 "GET /accounts/profile/ HTTP/1.1" 200 48995
+INFO 2025-10-06 14:01:16,060 basehttp 34273 140685747418880 "GET /compra/ventas/ HTTP/1.1" 200 43556
+INFO 2025-10-06 14:01:20,864 basehttp 34273 140685747418880 "GET /wallet/transactions/ HTTP/1.1" 200 90729
+INFO 2025-10-08 14:43:55,305 autoreload 2736 140037091727168 Watching for file changes with StatReloader
+INFO 2025-10-08 14:46:29,612 basehttp 2736 140036921972480 "GET / HTTP/1.1" 200 64909
+INFO 2025-10-08 14:46:30,403 basehttp 2736 140036921972480 "GET /static/css/style.css HTTP/1.1" 200 176726
+INFO 2025-10-08 14:46:30,748 basehttp 2736 140036894816000 "GET /media/Productos/Acond240ml.webp HTTP/1.1" 200 22936
+INFO 2025-10-08 14:46:30,866 basehttp 2736 140036911863552 "GET /media/Productos/AutoEscudo240ml.webp HTTP/1.1" 200 29034
+INFO 2025-10-08 14:46:30,866 basehttp 2736 140036921972480 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 200 45040
+INFO 2025-10-08 14:46:31,299 basehttp 2736 140036536268544 "GET /static/img/LogoStrech.png HTTP/1.1" 200 254597
+INFO 2025-10-08 14:46:31,299 basehttp 2736 140036886423296 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 200 43160
+INFO 2025-10-08 14:46:31,301 basehttp 2736 140036903470848 "GET /media/Productos/Aroma1L.webp HTTP/1.1" 200 29670
+INFO 2025-10-08 14:46:31,355 basehttp 2736 140036911863552 "GET /media/Banners/Principal2_XVD8K4r.webp HTTP/1.1" 304 0
+INFO 2025-10-08 14:46:53,120 basehttp 2736 140036921972480 "GET /compra/ordenes/ HTTP/1.1" 200 42849
+INFO 2025-10-08 14:46:59,328 basehttp 2736 140036921972480 "GET /compra/gestion/ HTTP/1.1" 200 386958
+INFO 2025-10-08 14:47:15,596 basehttp 2736 140036921972480 "GET /compra/ventas/ HTTP/1.1" 200 43556
+INFO 2025-10-08 14:47:21,660 basehttp 2736 140036921972480 "GET /compra/compras-clientes/ HTTP/1.1" 200 165853
+INFO 2025-10-08 14:54:14,361 autoreload 2736 140037091727168 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 14:54:17,119 autoreload 3315 140709015258944 Watching for file changes with StatReloader
+INFO 2025-10-08 14:54:35,834 basehttp 3315 140708845618944 "GET /compra/compras-clientes/ HTTP/1.1" 200 165918
+INFO 2025-10-08 14:54:49,121 autoreload 3315 140709015258944 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/clients_orders_list.html changed, reloading.
+INFO 2025-10-08 14:54:50,795 autoreload 3421 140030047504192 Watching for file changes with StatReloader
+INFO 2025-10-08 14:54:54,790 basehttp 3421 140029879392000 "GET /compra/compras-clientes/ HTTP/1.1" 200 165928
+INFO 2025-10-08 14:55:11,660 basehttp 3421 140029879392000 "GET /compra/compras-clientes/?csrfmiddlewaretoken=2Lq5cIWqwv6y8U1ahIpUAAgGsWJdwKvZFrpSj06m41SR2ehF5elvPZCpHkdhpftF&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 44014
+INFO 2025-10-08 14:55:20,966 basehttp 3421 140029879392000 "GET /compra/compras-clientes/?csrfmiddlewaretoken=Sq3XnehxGF7SVl1b4TBieMQRgSD0P7Fxv62KuwrtebTbPFhGSpxTtbcAvg74ICDd&start_date=2025-09-01&end_date=2025-10-08 HTTP/1.1" 200 85421
+INFO 2025-10-08 15:01:13,395 autoreload 3421 140030047504192 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 15:01:14,912 autoreload 3790 140017329039168 Watching for file changes with StatReloader
+ERROR 2025-10-08 15:01:21,248 log 3790 140017160439552 Internal Server Error: /compra/compras-clientes/
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py", line 797, in clients_orders_list
+    sum_client_amount_usd = client_orders_usd.aggregate(sum=Sum('total'))['sum'] or 0
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/db/models/query.py", line 388, in aggregate
+    query.add_annotation(aggregate_expr, alias, is_summary=True)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1042, in add_annotation
+    annotation = annotation.resolve_expression(self, allow_joins=True, reuse=None,
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/db/models/aggregates.py", line 47, in resolve_expression
+    c = super().resolve_expression(query, allow_joins, reuse, summarize)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/db/models/expressions.py", line 679, in resolve_expression
+    c.source_expressions[pos] = arg.resolve_expression(query, allow_joins, reuse, summarize, for_save)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/db/models/expressions.py", line 579, in resolve_expression
+    return query.resolve_ref(self.name, allow_joins, reuse, summarize)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1759, in resolve_ref
+    join_info = self.setup_joins(field_list, self.get_meta(), self.get_initial_alias(), can_reuse=reuse)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1628, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1542, in names_to_path
+    raise FieldError("Cannot resolve keyword '%s' into field. "
+django.core.exceptions.FieldError: Cannot resolve keyword 'total' into field. Choices are: applied_coupon, base_total, coupon, coupon_first, coupon_id, coupon_percent, cup_oficial, cup_total, currency, date, delivery, delivery_address_2, delivery_apto, delivery_between, delivery_ci, delivery_id, delivery_name, delivery_phone, delivery_price, delivery_state, delivery_street, delivery_substate, delivery_ws, end_total, id, ip_address, is_daily_summary, items, last_updated, mlc_total, others_discount, pay_url, payment_address, payment_city, payment_details, payment_email, payment_methods, payment_name, payment_phone, payment_postCode, price, price_id, seller, seller_id, status, store_name, total_reported, transaction_id, usd_total, user, user_id, vale_salida, wallet_discount
+ERROR 2025-10-08 15:01:21,262 basehttp 3790 140017160439552 "GET /compra/compras-clientes/?csrfmiddlewaretoken=Sq3XnehxGF7SVl1b4TBieMQRgSD0P7Fxv62KuwrtebTbPFhGSpxTtbcAvg74ICDd&start_date=2025-09-01&end_date=2025-10-08 HTTP/1.1" 500 144204
+WARNING 2025-10-08 15:01:21,545 log 3790 140017160439552 Not Found: /favicon.ico
+INFO 2025-10-08 15:01:32,714 autoreload 3790 140017329039168 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 15:01:34,483 autoreload 3874 140264055863104 Watching for file changes with StatReloader
+INFO 2025-10-08 15:01:38,559 basehttp 3874 140263887738624 "GET /compra/compras-clientes/?csrfmiddlewaretoken=Sq3XnehxGF7SVl1b4TBieMQRgSD0P7Fxv62KuwrtebTbPFhGSpxTtbcAvg74ICDd&start_date=2025-09-01&end_date=2025-10-08 HTTP/1.1" 200 85419
+INFO 2025-10-08 15:02:03,571 basehttp 3874 140263887738624 "GET /compra/configuraciones/ HTTP/1.1" 200 43021
+INFO 2025-10-08 15:02:06,202 basehttp 3874 140263887738624 "GET /precio/ HTTP/1.1" 200 47455
+INFO 2025-10-08 15:02:15,132 basehttp 3874 140263887738624 "GET /compra/configuraciones/ HTTP/1.1" 200 43021
+INFO 2025-10-08 15:02:16,373 basehttp 3874 140263887738624 "GET /compra/compras-clientes/?csrfmiddlewaretoken=Sq3XnehxGF7SVl1b4TBieMQRgSD0P7Fxv62KuwrtebTbPFhGSpxTtbcAvg74ICDd&start_date=2025-09-01&end_date=2025-10-08 HTTP/1.1" 200 85419
+INFO 2025-10-08 15:03:59,808 basehttp 3874 140263887738624 "GET /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 68345
+INFO 2025-10-08 15:04:03,337 basehttp 3874 140263875532544 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 68820
+INFO 2025-10-08 15:04:05,722 basehttp 3874 140263875532544 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 68820
+INFO 2025-10-08 15:04:09,563 basehttp 3874 140263875532544 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 68820
+INFO 2025-10-08 15:04:11,832 basehttp 3874 140263875532544 "GET /carrito/carrito/ HTTP/1.1" 200 61068
+INFO 2025-10-08 15:04:16,256 basehttp 3874 140263875532544 "POST /carrito/carrito/ HTTP/1.1" 200 61072
+INFO 2025-10-08 15:04:24,839 basehttp 3874 140263875532544 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-08 15:04:25,605 basehttp 3874 140263875532544 "GET /compra/pagar/ HTTP/1.1" 200 49081
+INFO 2025-10-08 15:04:56,596 basehttp 3874 140263875532544 "POST /compra/pagar/ HTTP/1.1" 302 0
+INFO 2025-10-08 15:04:56,724 basehttp 3874 140263875532544 "GET /compra/transfer/582/ HTTP/1.1" 200 44907
+INFO 2025-10-08 15:04:56,875 basehttp 3874 140263875532544 "GET /static/img/QR_CUP.png HTTP/1.1" 200 81141
+INFO 2025-10-08 15:05:15,442 basehttp 3874 140263875532544 "POST /compra/transfer/582/ HTTP/1.1" 302 0
+INFO 2025-10-08 15:05:16,852 basehttp 3874 140263875532544 "GET /compra/procesado/582/ HTTP/1.1" 200 44223
+INFO 2025-10-08 15:05:33,850 basehttp 3874 140263875532544 "GET /catalogo/categoria/linea-automotriz/ HTTP/1.1" 200 54433
+INFO 2025-10-08 15:05:42,001 basehttp 3874 140263875532544 "POST /catalogo/categoria/linea-automotriz/ HTTP/1.1" 200 54908
+INFO 2025-10-08 15:05:48,110 basehttp 3874 140263875532544 "POST /catalogo/categoria/linea-automotriz/ HTTP/1.1" 200 54908
+INFO 2025-10-08 15:05:53,311 basehttp 3874 140263875532544 "POST /accounts/update-mnd/ HTTP/1.1" 302 0
+INFO 2025-10-08 15:05:53,723 basehttp 3874 140263875532544 "GET /catalogo/categoria/linea-automotriz/ HTTP/1.1" 200 54481
+INFO 2025-10-08 15:05:56,314 basehttp 3874 140263875532544 "GET /carrito/carrito/ HTTP/1.1" 200 57846
+INFO 2025-10-08 15:06:05,085 basehttp 3874 140263875532544 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-08 15:06:06,236 basehttp 3874 140263875532544 "GET /compra/reservar/ HTTP/1.1" 200 49160
+INFO 2025-10-08 15:06:39,597 basehttp 3874 140263875532544 "POST /compra/reservar/ HTTP/1.1" 302 0
+INFO 2025-10-08 15:06:41,176 basehttp 3874 140263875532544 "GET /compra/procesado/583/ HTTP/1.1" 200 43835
+INFO 2025-10-08 15:06:58,831 basehttp 3874 140263875532544 "GET /catalogo/categoria/linea-automotriz/ HTTP/1.1" 200 54481
+INFO 2025-10-08 15:07:01,980 basehttp 3874 140263875532544 "POST /catalogo/categoria/linea-automotriz/ HTTP/1.1" 200 54956
+INFO 2025-10-08 15:07:03,244 basehttp 3874 140263875532544 "GET /catalogo/categoria/higiene-personal/ HTTP/1.1" 200 56241
+WARNING 2025-10-08 15:07:03,413 log 3874 140263887738624 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-08 15:07:03,414 basehttp 3874 140263887738624 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-08 15:07:09,768 basehttp 3874 140263887738624 "POST /catalogo/categoria/higiene-personal/ HTTP/1.1" 200 56716
+WARNING 2025-10-08 15:07:09,952 log 3874 140263887738624 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-08 15:07:09,959 basehttp 3874 140263887738624 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-08 15:07:15,492 basehttp 3874 140263887738624 "POST /catalogo/categoria/higiene-personal/ HTTP/1.1" 200 56716
+WARNING 2025-10-08 15:07:15,644 log 3874 140263887738624 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-08 15:07:15,645 basehttp 3874 140263887738624 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-08 15:07:20,952 basehttp 3874 140263887738624 "GET /catalogo/categoria/linea-automotriz/ HTTP/1.1" 200 54481
+INFO 2025-10-08 15:07:31,942 basehttp 3874 140263887738624 "GET /carrito/carrito/ HTTP/1.1" 200 61196
+WARNING 2025-10-08 15:07:32,092 log 3874 140263887738624 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-08 15:07:32,095 basehttp 3874 140263887738624 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-08 15:07:41,951 basehttp 3874 140263887738624 "POST /carrito/carrito/ HTTP/1.1" 200 61803
+WARNING 2025-10-08 15:07:42,155 log 3874 140263887738624 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-08 15:07:42,164 basehttp 3874 140263887738624 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-08 15:09:20,912 autoreload 3874 140264055863104 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/cart/cart.py changed, reloading.
+INFO 2025-10-08 15:09:23,948 autoreload 5451 139801801094976 Watching for file changes with StatReloader
+INFO 2025-10-08 15:09:31,937 basehttp 5451 139801632970496 "POST /carrito/carrito/ HTTP/1.1" 200 61710
+WARNING 2025-10-08 15:09:32,117 log 5451 139801632970496 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-08 15:09:32,118 basehttp 5451 139801632970496 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-08 15:09:37,171 basehttp 5451 139801632970496 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-08 15:09:38,196 basehttp 5451 139801632970496 "GET /compra/reservar/ HTTP/1.1" 200 49161
+INFO 2025-10-08 15:10:33,150 basehttp 5451 139801632970496 "POST /compra/reservar/ HTTP/1.1" 302 0
+INFO 2025-10-08 15:10:34,506 basehttp 5451 139801632970496 "GET /compra/procesado/584/ HTTP/1.1" 200 44009
+INFO 2025-10-08 15:10:48,466 basehttp 5451 139801632970496 "GET /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 71165
+INFO 2025-10-08 15:10:48,616 basehttp 5451 139801632970496 "GET /media/Productos/p_GelAnticalcareo_1l.jpg HTTP/1.1" 304 0
+INFO 2025-10-08 15:11:14,651 basehttp 5451 139801632970496 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 71640
+INFO 2025-10-08 15:11:17,484 basehttp 5451 139801632970496 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 71640
+INFO 2025-10-08 15:11:22,133 basehttp 5451 139801632970496 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 71640
+INFO 2025-10-08 15:11:27,003 basehttp 5451 139801632970496 "GET /carrito/carrito/ HTTP/1.1" 200 61213
+INFO 2025-10-08 15:11:28,500 basehttp 5451 139801632970496 "GET /carrito/carrito/ HTTP/1.1" 200 61213
+INFO 2025-10-08 15:11:32,237 basehttp 5451 139801632970496 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-08 15:11:32,705 basehttp 5451 139801632970496 "GET /compra/resumen_diario/ HTTP/1.1" 200 55506
+INFO 2025-10-08 15:13:09,748 basehttp 5451 139801632970496 "POST /compra/resumen_diario/ HTTP/1.1" 302 0
+INFO 2025-10-08 15:13:10,284 basehttp 5451 139801632970496 "GET /compra/compras/585/ HTTP/1.1" 200 48622
+INFO 2025-10-08 15:13:29,122 basehttp 5451 139801632970496 "POST /compra/compras/585/ HTTP/1.1" 200 382904
+INFO 2025-10-08 15:15:16,806 basehttp 5451 139801632970496 "GET /compra/ventas/ HTTP/1.1" 200 43556
+INFO 2025-10-08 15:16:05,797 basehttp 5451 139801632970496 "GET /compra/compras-clientes/ HTTP/1.1" 200 167113
+INFO 2025-10-08 15:16:20,084 basehttp 5451 139801632970496 "GET /compra/compras-clientes/?csrfmiddlewaretoken=LxJHm8O4oJEZCVUaYm2zBadViOWsDGvoodIutqY0WfqiwfaFMSYaQzzExcqwwbt4&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 45029
+INFO 2025-10-08 15:16:31,636 basehttp 5451 139801632970496 "GET /compra/compras-clientes/?csrfmiddlewaretoken=DZYv9tlbrTp6zEOxtoEYGxbHFeeQywscgFXigLv7ZpbptY42hUAzVWxqUCIUr1qS&start_date=2025-10-01&end_date=2025-10-09 HTTP/1.1" 200 45029
+INFO 2025-10-08 15:16:53,926 basehttp 5451 139801632970496 "GET /compra/ordenes/ HTTP/1.1" 200 42849
+INFO 2025-10-08 15:16:56,958 basehttp 5451 139801632970496 "GET /compra/gestion/ HTTP/1.1" 200 393372
+INFO 2025-10-08 15:17:40,588 basehttp 5451 139801632970496 "GET /compra/ordenes/ HTTP/1.1" 200 42849
+INFO 2025-10-08 15:17:42,582 basehttp 5451 139801632970496 "GET /compra/actualiza_orden/ HTTP/1.1" 200 237071
+INFO 2025-10-08 15:18:07,248 basehttp 5451 139801632970496 "POST /compra/actualiza_orden/ HTTP/1.1" 200 235135
+INFO 2025-10-08 15:18:16,849 basehttp 5451 139801632970496 "POST /compra/actualiza_orden/ HTTP/1.1" 200 235121
+INFO 2025-10-08 15:18:25,218 basehttp 5451 139801632970496 "POST /compra/actualiza_orden/ HTTP/1.1" 200 233189
+INFO 2025-10-08 15:18:29,825 basehttp 5451 139801632970496 "POST /compra/actualiza_orden/ HTTP/1.1" 200 233175
+INFO 2025-10-08 15:18:34,992 basehttp 5451 139801632970496 "POST /compra/actualiza_orden/ HTTP/1.1" 200 231243
+INFO 2025-10-08 15:18:46,216 basehttp 5451 139801632970496 "GET /compra/ventas/ HTTP/1.1" 200 43556
+INFO 2025-10-08 15:18:48,840 basehttp 5451 139801632970496 "GET /compra/compras-clientes/ HTTP/1.1" 200 169486
+INFO 2025-10-08 15:19:04,303 basehttp 5451 139801632970496 "GET /compra/compras-clientes/?csrfmiddlewaretoken=O9POlP9V4yInxlhMBwaJLKOzYxTdotW5rPOBs7jRC4uGrFxhp26k09aidVnhhYUL&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 47404
+INFO 2025-10-08 15:20:49,805 basehttp 5451 139801632970496 "GET /compra/compras-clientes/?csrfmiddlewaretoken=r6ZKjN5BgzK89QhzeHkQCwYBQion2a884MYxq5fxO5wr3ax42dgrRVkk5GSrVF6O&start_date=2025-10-01&end_date=2025-10-08&summary=on HTTP/1.1" 200 45031
+INFO 2025-10-08 15:20:59,640 basehttp 5451 139801632970496 "GET /compra/compras-clientes/?csrfmiddlewaretoken=CRjVF9YB65baAJF9XAMrrdgpWBRFPhWUfxiIMr8xEBXtu3VEL6I2GCC8bZlJIMUA&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 47404
+INFO 2025-10-08 15:21:09,497 basehttp 5451 139801632970496 "GET /compra/compras-clientes/?csrfmiddlewaretoken=Jxiebz8lPqZEALxKlRMcFxyjxibVAf3Zmdh1iRihnWLXu5Nf9nINUWU2MGFZtK1F&start_date=2025-10-01&end_date=2025-10-08&summary=on HTTP/1.1" 200 45031
+INFO 2025-10-08 15:21:30,408 basehttp 5451 139801632970496 "GET /compra/compras-clientes/?csrfmiddlewaretoken=jeHT1cqZtpq8hOREJtviHHMHCpQs8991WUGG8uAV1Vcrb879xZrTW68qRNkw1E7H&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 47404
+INFO 2025-10-08 15:23:24,564 basehttp 5451 139801632970496 "GET /compra/compras/584/ HTTP/1.1" 200 47980
+INFO 2025-10-08 15:23:38,088 basehttp 5451 139801632970496 "GET /compra/compras-clientes/?csrfmiddlewaretoken=jeHT1cqZtpq8hOREJtviHHMHCpQs8991WUGG8uAV1Vcrb879xZrTW68qRNkw1E7H&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 47404
+INFO 2025-10-08 15:27:19,876 autoreload 5451 139801801094976 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 15:27:25,506 autoreload 7482 140088939493184 Watching for file changes with StatReloader
+INFO 2025-10-08 15:27:33,886 basehttp 7482 140088770324224 "GET /compra/compras-clientes/?csrfmiddlewaretoken=jeHT1cqZtpq8hOREJtviHHMHCpQs8991WUGG8uAV1Vcrb879xZrTW68qRNkw1E7H&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 47404
+INFO 2025-10-08 15:29:50,296 autoreload 7482 140088939493184 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/clients_orders_list.html changed, reloading.
+INFO 2025-10-08 15:29:51,871 autoreload 7643 140569024026432 Watching for file changes with StatReloader
+ERROR 2025-10-08 15:29:56,049 log 7643 140568855942912 Internal Server Error: /compra/compras-clientes/
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py", line 811, in clients_orders_list
+    return render(request, template_name, locals())
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/backends/django.py", line 34, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/engine.py", line 143, in get_template
+    template, origin = self.find_template(template_name)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/engine.py", line 125, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loaders/base.py", line 29, in get_template
+    return Template(
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 155, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 193, in compile_nodelist
+    return parser.parse()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 478, in parse
+    raise self.error(token, e)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 476, in parse
+    compiled_result = compile_func(self, token)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader_tags.py", line 278, in do_extends
+    nodelist = parser.parse()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 478, in parse
+    raise self.error(token, e)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 476, in parse
+    compiled_result = compile_func(self, token)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader_tags.py", line 216, in do_block
+    nodelist = parser.parse(('endblock',))
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 449, in parse
+    raise self.error(token, e)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 447, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 563, in compile_filter
+    return FilterExpression(token, self)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 662, in __init__
+    raise TemplateSyntaxError("Could not parse the remainder: '%s' "
+django.template.exceptions.TemplateSyntaxError: Could not parse the remainder: ' + sum_daily_amount' from 'sum_client_amount + sum_daily_amount'
+ERROR 2025-10-08 15:29:56,057 basehttp 7643 140568855942912 "GET /compra/compras-clientes/?csrfmiddlewaretoken=jeHT1cqZtpq8hOREJtviHHMHCpQs8991WUGG8uAV1Vcrb879xZrTW68qRNkw1E7H&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 500 213643
+WARNING 2025-10-08 15:29:56,311 log 7643 140568855942912 Not Found: /favicon.ico
+INFO 2025-10-08 15:30:38,749 autoreload 7643 140569024026432 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/clients_orders_list.html changed, reloading.
+INFO 2025-10-08 15:30:40,218 autoreload 7730 139779699238720 Watching for file changes with StatReloader
+INFO 2025-10-08 15:30:43,930 basehttp 7730 139779531118336 "GET /compra/compras-clientes/?csrfmiddlewaretoken=jeHT1cqZtpq8hOREJtviHHMHCpQs8991WUGG8uAV1Vcrb879xZrTW68qRNkw1E7H&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 47445
+INFO 2025-10-08 15:31:09,499 autoreload 7730 139779699238720 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 15:31:11,194 autoreload 7820 140302511331136 Watching for file changes with StatReloader
+INFO 2025-10-08 15:31:14,958 basehttp 7820 140302343214848 "GET /compra/compras-clientes/?csrfmiddlewaretoken=jeHT1cqZtpq8hOREJtviHHMHCpQs8991WUGG8uAV1Vcrb879xZrTW68qRNkw1E7H&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 47452
+INFO 2025-10-08 15:42:57,715 autoreload 7820 140302511331136 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/clients_orders_list.html changed, reloading.
+INFO 2025-10-08 15:42:59,926 autoreload 8227 139772398528320 Watching for file changes with StatReloader
+INFO 2025-10-08 16:06:41,909 basehttp 8227 139772228871936 "GET /compra/compras-clientes/?csrfmiddlewaretoken=jeHT1cqZtpq8hOREJtviHHMHCpQs8991WUGG8uAV1Vcrb879xZrTW68qRNkw1E7H&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 47716
+INFO 2025-10-08 16:06:57,537 basehttp 8227 139772228871936 "GET /compra/compras-clientes/?csrfmiddlewaretoken=otHDRjiOZ2G3aobYYQ0VwH6DmCip27ek19GqYBsKxysm4IrtMmWwL6smB0MtVCc0&start_date=2025-10-01&end_date=2025-10-08&summary=on HTTP/1.1" 200 45343
+INFO 2025-10-08 16:37:58,030 autoreload 8227 139772398528320 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 16:38:05,751 autoreload 9689 140717518280512 Watching for file changes with StatReloader
+ERROR 2025-10-08 16:38:42,690 log 9689 140717348398848 Internal Server Error: /compra/compras-clientes/
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py", line 802, in clients_orders_list
+    sum_comercial_amount = comercial_orders.aggregate(sum=Sum('cup_total'))['sum'] or 0
+UnboundLocalError: local variable 'comercial_orders' referenced before assignment
+ERROR 2025-10-08 16:38:42,692 basehttp 9689 140717348398848 "GET /compra/compras-clientes/?csrfmiddlewaretoken=otHDRjiOZ2G3aobYYQ0VwH6DmCip27ek19GqYBsKxysm4IrtMmWwL6smB0MtVCc0&start_date=2025-10-01&end_date=2025-10-08&summary=on HTTP/1.1" 500 95348
+INFO 2025-10-08 16:39:44,593 autoreload 9689 140717518280512 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 16:39:46,231 autoreload 9929 140686173120320 Watching for file changes with StatReloader
+ERROR 2025-10-08 16:39:50,284 log 9929 140686004934400 Internal Server Error: /compra/compras-clientes/
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py", line 803, in clients_orders_list
+    sum_comercial_amount = comercial_orders.aggregate(sum=Sum('cup_total'))['sum'] or 0
+AttributeError: 'NoneType' object has no attribute 'aggregate'
+ERROR 2025-10-08 16:39:50,290 basehttp 9929 140686004934400 "GET /compra/compras-clientes/?csrfmiddlewaretoken=otHDRjiOZ2G3aobYYQ0VwH6DmCip27ek19GqYBsKxysm4IrtMmWwL6smB0MtVCc0&start_date=2025-10-01&end_date=2025-10-08&summary=on HTTP/1.1" 500 95474
+INFO 2025-10-08 16:51:33,421 autoreload 9929 140686173120320 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 16:51:35,072 autoreload 10297 139911492147008 Watching for file changes with StatReloader
+ERROR 2025-10-08 16:51:41,726 log 10297 139911323293440 Internal Server Error: /compra/compras-clientes/
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py", line 822, in clients_orders_list
+    sum_total = sum_client_amount + sum_daily_amount + sum_comercial_amount
+UnboundLocalError: local variable 'sum_comercial_amount' referenced before assignment
+ERROR 2025-10-08 16:51:41,743 basehttp 10297 139911323293440 "GET /compra/compras-clientes/?csrfmiddlewaretoken=otHDRjiOZ2G3aobYYQ0VwH6DmCip27ek19GqYBsKxysm4IrtMmWwL6smB0MtVCc0&start_date=2025-10-01&end_date=2025-10-08&summary=on HTTP/1.1" 500 96903
+INFO 2025-10-08 16:53:50,710 autoreload 10297 139911492147008 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 16:53:52,313 autoreload 10415 139635457554240 Watching for file changes with StatReloader
+ERROR 2025-10-08 16:53:55,729 log 10415 139635289487104 Internal Server Error: /compra/compras-clientes/
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py", line 826, in clients_orders_list
+    if sum_comercial_amount:
+UnboundLocalError: local variable 'sum_comercial_amount' referenced before assignment
+ERROR 2025-10-08 16:53:55,732 basehttp 10415 139635289487104 "GET /compra/compras-clientes/?csrfmiddlewaretoken=otHDRjiOZ2G3aobYYQ0VwH6DmCip27ek19GqYBsKxysm4IrtMmWwL6smB0MtVCc0&start_date=2025-10-01&end_date=2025-10-08&summary=on HTTP/1.1" 500 96611
+INFO 2025-10-08 16:54:44,854 autoreload 10415 139635457554240 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 16:54:46,361 autoreload 10506 140267294734144 Watching for file changes with StatReloader
+INFO 2025-10-08 16:54:49,981 basehttp 10506 140267122325248 "GET /compra/compras-clientes/?csrfmiddlewaretoken=otHDRjiOZ2G3aobYYQ0VwH6DmCip27ek19GqYBsKxysm4IrtMmWwL6smB0MtVCc0&start_date=2025-10-01&end_date=2025-10-08&summary=on HTTP/1.1" 200 45345
+INFO 2025-10-08 17:01:19,415 autoreload 10506 140267294734144 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 17:01:20,922 autoreload 10750 140545908410176 Watching for file changes with StatReloader
+INFO 2025-10-08 17:01:26,768 basehttp 10750 140545739806464 "GET /compra/compras-clientes/?csrfmiddlewaretoken=otHDRjiOZ2G3aobYYQ0VwH6DmCip27ek19GqYBsKxysm4IrtMmWwL6smB0MtVCc0&start_date=2025-10-01&end_date=2025-10-08&summary=on HTTP/1.1" 200 45336
+INFO 2025-10-08 17:01:59,092 basehttp 10750 140545739806464 "GET /compra/compras-clientes/?csrfmiddlewaretoken=NsiI8m5JspUWK3j2XIwLd3N2kQ6eTYQ5q8hvfEfF0VGfEnzxLesmss9LzeAiMtOL&start_date=2025-10-01&end_date=2025-10-08&comercial=on HTTP/1.1" 200 47726
+INFO 2025-10-08 17:02:06,884 basehttp 10750 140545739806464 "GET /compra/compras-clientes/?csrfmiddlewaretoken=Vq83CWeJn6Ui9eNrKtYAO0IYeYuWaFBDy67QJeoFVCGB3y3WyZUb3p4HtmY03azj&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 47726
+INFO 2025-10-08 17:02:19,858 basehttp 10750 140545739806464 "GET /admin/ HTTP/1.1" 200 17055
+INFO 2025-10-08 17:02:20,151 basehttp 10750 140545719469824 "GET /static/admin/css/fonts.css HTTP/1.1" 200 423
+INFO 2025-10-08 17:02:20,228 basehttp 10750 140545719469824 "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-10-08 17:02:20,230 basehttp 10750 140545727862528 "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-10-08 17:02:20,230 basehttp 10750 140545711077120 "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+INFO 2025-10-08 17:02:20,407 basehttp 10750 140545727862528 "GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 200 86184
+INFO 2025-10-08 17:02:20,408 basehttp 10750 140545711077120 "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 85692
+INFO 2025-10-08 17:02:23,012 basehttp 10750 140545727862528 "GET /admin/auth/user/ HTTP/1.1" 200 23047
+INFO 2025-10-08 17:02:23,173 basehttp 10750 140545711077120 "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2025-10-08 17:02:23,254 basehttp 10750 140545727862528 "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2025-10-08 17:02:23,261 basehttp 10750 140545355675392 "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2025-10-08 17:02:23,264 basehttp 10750 140545719469824 "GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+INFO 2025-10-08 17:02:23,393 basehttp 10750 140545739806464 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-08 17:02:23,746 basehttp 10750 140545711077120 "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2025-10-08 17:02:23,747 basehttp 10750 140545727862528 "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-10-08 17:02:29,674 basehttp 10750 140545727862528 "GET /admin/auth/user/8/change/ HTTP/1.1" 200 31561
+INFO 2025-10-08 17:02:29,789 basehttp 10750 140545727862528 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-08 17:02:29,819 basehttp 10750 140545719469824 "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 492
+INFO 2025-10-08 17:02:29,819 basehttp 10750 140545739806464 "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+INFO 2025-10-08 17:02:29,823 basehttp 10750 140545727862528 "GET /static/admin/js/calendar.js HTTP/1.1" 304 0
+INFO 2025-10-08 17:02:29,837 basehttp 10750 140545355675392 "GET /static/admin/css/widgets.css HTTP/1.1" 200 11097
+INFO 2025-10-08 17:02:29,842 basehttp 10750 140545739806464 "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 304 0
+INFO 2025-10-08 17:02:29,864 basehttp 10750 140545355675392 "GET /static/admin/js/SelectBox.js HTTP/1.1" 304 0
+INFO 2025-10-08 17:02:29,873 basehttp 10750 140545719469824 "GET /static/admin/js/SelectFilter2.js HTTP/1.1" 304 0
+INFO 2025-10-08 17:02:30,153 basehttp 10750 140545727862528 "GET /static/admin/img/icon-unknown.svg HTTP/1.1" 200 655
+INFO 2025-10-08 17:02:30,211 basehttp 10750 140545739806464 "GET /static/admin/img/icon-unknown-alt.svg HTTP/1.1" 200 655
+INFO 2025-10-08 17:02:30,211 basehttp 10750 140545355675392 "GET /static/admin/img/selector-icons.svg HTTP/1.1" 200 3291
+INFO 2025-10-08 17:02:30,253 basehttp 10750 140545719469824 "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+INFO 2025-10-08 17:02:30,265 basehttp 10750 140545711077120 "GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677
+INFO 2025-10-08 17:03:11,485 autoreload 10750 140545908410176 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 17:03:13,024 autoreload 11090 140160701970240 Watching for file changes with StatReloader
+INFO 2025-10-08 17:03:17,066 basehttp 11090 140160533878528 "GET /admin/auth/user/8/change/ HTTP/1.1" 200 31561
+INFO 2025-10-08 17:03:17,152 basehttp 11090 140160533878528 "GET /admin/jsi18n/ HTTP/1.1" 200 7711
+INFO 2025-10-08 17:03:23,985 basehttp 11090 140160533878528 "GET /admin/auth/user/ HTTP/1.1" 200 23047
+INFO 2025-10-08 17:03:24,982 basehttp 11090 140160533878528 "GET /admin/ HTTP/1.1" 200 17055
+INFO 2025-10-08 17:03:27,525 basehttp 11090 140160533878528 "GET /compra/compras-clientes/?csrfmiddlewaretoken=Vq83CWeJn6Ui9eNrKtYAO0IYeYuWaFBDy67QJeoFVCGB3y3WyZUb3p4HtmY03azj&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 47726
+INFO 2025-10-08 17:03:53,850 basehttp 11090 140160533878528 "GET /compra/compras-clientes/?csrfmiddlewaretoken=K0RRRkOgAmQd2F592o7gc3ylFu8UKSdJnGQEYCYc8SCwWZlEQU3RrsU4USCYDnbp&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 47726
+INFO 2025-10-08 18:00:57,592 autoreload 2390 139931561224000 Watching for file changes with StatReloader
+INFO 2025-10-08 18:02:06,768 basehttp 2390 139931392096000 "GET / HTTP/1.1" 200 65221
+INFO 2025-10-08 18:02:10,819 basehttp 2390 139931392096000 "GET /static/css/style.css HTTP/1.1" 200 176726
+INFO 2025-10-08 18:02:13,234 basehttp 2390 139931275998976 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 200 43160
+INFO 2025-10-08 18:02:21,033 basehttp 2390 139931275998976 "GET /catalogo/gestion/ HTTP/1.1" 200 43059
+INFO 2025-10-08 18:02:23,190 basehttp 2390 139931275998976 "GET /catalogo/productos_almacen/inventario HTTP/1.1" 200 98249
+INFO 2025-10-08 18:03:21,299 autoreload 2390 139931561224000 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/catalog/actualiza_inventario.html changed, reloading.
+INFO 2025-10-08 18:03:23,792 autoreload 3108 140343106647872 Watching for file changes with StatReloader
+INFO 2025-10-08 18:03:42,170 basehttp 3108 140342938048256 "GET /catalogo/productos_almacen/inventario HTTP/1.1" 200 98561
+INFO 2025-10-08 18:03:44,606 basehttp 3108 140342938048256 "GET /catalogo/productos_almacen/crear HTTP/1.1" 200 44828
+INFO 2025-10-08 20:07:08,506 autoreload 2805 139956639618880 Watching for file changes with StatReloader
+INFO 2025-10-08 20:07:38,879 basehttp 2805 139956470150912 "GET / HTTP/1.1" 200 65221
+INFO 2025-10-08 20:07:39,217 basehttp 2805 139956470150912 "GET /static/css/style.css HTTP/1.1" 200 176726
+INFO 2025-10-08 20:07:53,378 basehttp 2805 139956451387136 "GET /accounts/logout/ HTTP/1.1" 302 0
+INFO 2025-10-08 20:07:54,168 basehttp 2805 139956451387136 "GET / HTTP/1.1" 200 63555
+INFO 2025-10-08 20:08:03,055 basehttp 2805 139956451387136 "GET /accounts/login/?next=/ HTTP/1.1" 200 41685
+INFO 2025-10-08 20:08:13,191 basehttp 2805 139956451387136 "POST /accounts/login/?next=/ HTTP/1.1" 302 0
+INFO 2025-10-08 20:08:13,454 basehttp 2805 139956451387136 "GET / HTTP/1.1" 200 63263
+INFO 2025-10-08 20:08:19,820 basehttp 2805 139956451387136 "GET /catalogo/categoria/fragancias/ HTTP/1.1" 200 41774
+INFO 2025-10-08 20:08:23,298 basehttp 2805 139956451387136 "GET /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 66699
+INFO 2025-10-08 20:08:23,696 basehttp 2805 139956451387136 "GET /media/Productos/DetBlanqueador1L.webp HTTP/1.1" 200 19464
+INFO 2025-10-08 20:08:29,648 basehttp 2805 139956451387136 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 67174
+INFO 2025-10-08 20:08:39,035 basehttp 2805 139956451387136 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 67174
+INFO 2025-10-08 20:08:40,837 basehttp 2805 139956451387136 "GET /carrito/carrito/ HTTP/1.1" 200 55545
+INFO 2025-10-08 20:08:58,554 basehttp 2805 139956451387136 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-08 20:08:59,516 basehttp 2805 139956451387136 "GET /compra/pagar/ HTTP/1.1" 200 47435
+INFO 2025-10-08 20:09:14,214 basehttp 2805 139956451387136 "POST /compra/pagar/ HTTP/1.1" 302 0
+INFO 2025-10-08 20:09:14,384 basehttp 2805 139956451387136 "GET /compra/transfer/586/ HTTP/1.1" 200 43261
+INFO 2025-10-08 20:09:32,167 basehttp 2805 139956451387136 "POST /compra/transfer/586/ HTTP/1.1" 302 0
+INFO 2025-10-08 20:09:33,592 basehttp 2805 139956451387136 "GET /compra/procesado/586/ HTTP/1.1" 200 42202
+INFO 2025-10-08 20:10:32,917 basehttp 2805 139956451387136 "GET /accounts/logout/ HTTP/1.1" 302 0
+INFO 2025-10-08 20:10:33,261 basehttp 2805 139956451387136 "GET / HTTP/1.1" 200 63555
+INFO 2025-10-08 20:10:37,459 basehttp 2805 139956451387136 "GET /accounts/login/?next=/ HTTP/1.1" 200 41685
+INFO 2025-10-08 20:11:24,385 basehttp 2805 139956451387136 "POST /accounts/login/?next=/ HTTP/1.1" 302 0
+INFO 2025-10-08 20:11:24,584 basehttp 2805 139956451387136 "GET / HTTP/1.1" 200 65221
+INFO 2025-10-08 20:11:29,289 basehttp 2805 139956451387136 "GET /compra/ventas/ HTTP/1.1" 200 43556
+INFO 2025-10-08 20:11:32,800 basehttp 2805 139956451387136 "GET /compra/compras-clientes/ HTTP/1.1" 200 171012
+INFO 2025-10-08 20:11:52,948 basehttp 2805 139956451387136 "GET /compra/compras-clientes/?csrfmiddlewaretoken=w0M6CpLmwaWmliJkHSjhDn9ZgNneCxEOyO62Glf6NCfoKFgpx82OPqd6bC5mcJHg&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 48920
+INFO 2025-10-08 20:15:22,100 autoreload 2805 139956639618880 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 20:15:25,303 autoreload 4004 139664001169216 Watching for file changes with StatReloader
+INFO 2025-10-08 20:15:31,700 basehttp 4004 139663832553216 "GET /catalogo/catalogo/ HTTP/1.1" 200 60758
+WARNING 2025-10-08 20:15:32,603 log 4004 139663822587648 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-10-08 20:15:32,607 basehttp 4004 139663822587648 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4158
+INFO 2025-10-08 20:15:35,272 basehttp 4004 139663822587648 "GET /compra/ventas/ HTTP/1.1" 200 43556
+INFO 2025-10-08 20:15:38,759 basehttp 4004 139663822587648 "GET /compra/compras-clientes/ HTTP/1.1" 200 66695
+INFO 2025-10-08 20:16:59,237 autoreload 4004 139664001169216 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 20:17:00,798 autoreload 4174 139868437890880 Watching for file changes with StatReloader
+INFO 2025-10-08 20:17:08,378 basehttp 4174 139868269041408 "GET /compra/compras-clientes/ HTTP/1.1" 200 66695
+INFO 2025-10-08 20:19:53,821 basehttp 4174 139868269041408 "GET /compra/compras-clientes/?csrfmiddlewaretoken=cxyy1iDJwwDkui6449eOFBxVhM8uRT1CelSu5e7tNYWmTFD9UpXlREB2cBQCr544&start_date=2025-01-01&end_date=2025-10-08&comercial=on HTTP/1.1" 200 44335
+INFO 2025-10-08 20:42:45,258 basehttp 4174 139868269041408 "GET /compra/compras-clientes/?csrfmiddlewaretoken=cxyy1iDJwwDkui6449eOFBxVhM8uRT1CelSu5e7tNYWmTFD9UpXlREB2cBQCr544&start_date=2025-01-01&end_date=2025-10-08&comercial=on HTTP/1.1" 200 44335
+INFO 2025-10-08 20:47:24,939 autoreload 4174 139868437890880 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 20:47:26,580 autoreload 4956 139770706405184 Watching for file changes with StatReloader
+INFO 2025-10-08 20:47:31,512 basehttp 4956 139770538006272 "GET /compra/compras-clientes/?csrfmiddlewaretoken=cxyy1iDJwwDkui6449eOFBxVhM8uRT1CelSu5e7tNYWmTFD9UpXlREB2cBQCr544&start_date=2025-01-01&end_date=2025-10-08&comercial=on HTTP/1.1" 200 156788
+INFO 2025-10-08 20:48:04,819 basehttp 4956 139770538006272 "GET /compra/compras-clientes/?csrfmiddlewaretoken=09ZmqA2OfR4Ob6dq6Dcpe2b8yjAongmH2XjiuwwywjnQAtKvWTVWq5fft8iwXsp9&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 45359
+INFO 2025-10-08 20:48:20,598 basehttp 4956 139770538006272 "GET /compra/compras-clientes/?csrfmiddlewaretoken=0xJgr7Q6aeIxLNNVPnFGIB7PLu8flhmA2l3cv3kQrG1zaak0FDodUEbWGjQnVtp2&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 45359
+INFO 2025-10-08 20:49:58,701 autoreload 4956 139770706405184 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 20:50:00,186 autoreload 5215 140588176316224 Watching for file changes with StatReloader
+INFO 2025-10-08 20:50:05,000 basehttp 5215 140588007675648 "GET /compra/compras-clientes/?csrfmiddlewaretoken=0xJgr7Q6aeIxLNNVPnFGIB7PLu8flhmA2l3cv3kQrG1zaak0FDodUEbWGjQnVtp2&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 48920
+INFO 2025-10-08 20:50:35,250 autoreload 5215 140588176316224 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/catalog/actualiza_inventario.html changed, reloading.
+INFO 2025-10-08 20:50:38,828 autoreload 5332 140553281472320 Watching for file changes with StatReloader
+INFO 2025-10-08 20:51:12,810 autoreload 5332 140553281472320 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/clients_orders_list.html changed, reloading.
+INFO 2025-10-08 20:51:14,354 autoreload 5423 140225679931200 Watching for file changes with StatReloader
+INFO 2025-10-08 20:51:20,661 basehttp 5423 140225511339776 "GET /compra/compras-clientes/?csrfmiddlewaretoken=0xJgr7Q6aeIxLNNVPnFGIB7PLu8flhmA2l3cv3kQrG1zaak0FDodUEbWGjQnVtp2&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 48931
+INFO 2025-10-08 20:51:35,095 basehttp 5423 140225511339776 "GET /compra/ventas/ HTTP/1.1" 200 43556
+INFO 2025-10-08 20:51:37,597 basehttp 5423 140225511339776 "GET /compra/compras-clientes/ HTTP/1.1" 200 171023
+INFO 2025-10-08 20:52:00,007 basehttp 5423 140225511339776 "GET /compra/compras-clientes/?csrfmiddlewaretoken=e0kf08Oz2NjYEVvEGn9mumwfJkMur1JzgOEb44ijjfC03i2JwDSTGpAmE9uC1dM1&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 48931
+INFO 2025-10-08 21:01:29,853 autoreload 5423 140225679931200 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 21:01:31,557 autoreload 5855 140541640853312 Watching for file changes with StatReloader
+INFO 2025-10-08 21:01:40,502 basehttp 5855 140541463361280 "GET /compra/compras-clientes/?csrfmiddlewaretoken=e0kf08Oz2NjYEVvEGn9mumwfJkMur1JzgOEb44ijjfC03i2JwDSTGpAmE9uC1dM1&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 48931
+INFO 2025-10-08 21:02:00,605 basehttp 5855 140541463361280 "GET /compra/compras-clientes/?csrfmiddlewaretoken=98haBvS7KwGcPD8DkpITsvavJ9hlGLFVbWB6FrmR1YZee0FIaFrqEyeCEYZtgXIn&start_date=2025-10-01&end_date=2025-10-08&summary=on HTTP/1.1" 200 45370
+INFO 2025-10-08 21:02:10,352 basehttp 5855 140541463361280 "GET /compra/compras-clientes/?csrfmiddlewaretoken=uzmdiXUbdK8cnLAFO6JIjMVhHH1ZcdhdwnG9mToVucreM87KEmsfvPZoCwJ7MpkF&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 48931
+INFO 2025-10-08 21:02:27,657 basehttp 5855 140541463361280 "GET /compra/compras-clientes/?csrfmiddlewaretoken=gWm0jjfNUEDUcCl7aTIOh4ZQDVjVMom7iKGWnfJxb6WWBZSc09rlt73XyK13mApz&start_date=2025-10-01&end_date=2025-10-08&comercial=on HTTP/1.1" 200 47743
+INFO 2025-10-08 21:03:05,998 autoreload 5855 140541640853312 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 21:03:07,635 autoreload 6196 139812693391168 Watching for file changes with StatReloader
+INFO 2025-10-08 21:03:15,322 basehttp 6196 139812524783360 "GET /compra/ventas/ HTTP/1.1" 200 43556
+INFO 2025-10-08 21:03:18,463 basehttp 6196 139812524783360 "GET /compra/compras-clientes/ HTTP/1.1" 200 193563
+INFO 2025-10-08 21:03:29,577 basehttp 6196 139812524783360 "GET /compra/compras-clientes/?csrfmiddlewaretoken=fUz29DhIKVwvSVyv7Vw7n6LXqMzU921dhITYdzLs1nPxhi5AXbfEz9P4lBh2Je4F&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 50117
+INFO 2025-10-08 21:03:49,215 basehttp 6196 139812524783360 "GET /compra/compras-clientes/?csrfmiddlewaretoken=VO0pd4mFb3fsEMnt1btoWxl1r5tWIvhtXCklh0Qpsvyu39UyRrcV8Ap8mUb4iHkV&start_date=2025-10-01&end_date=2025-10-08&summary=on HTTP/1.1" 200 45370
+INFO 2025-10-08 21:03:57,988 basehttp 6196 139812524783360 "GET /compra/compras-clientes/?csrfmiddlewaretoken=iqJLXvVSoAcVGYuIcgBYns4uPSyDdYIpke3H1rpCF2vX5l1N2wkvzv8BKHgLNaLR&start_date=2025-10-01&end_date=2025-10-08&comercial=on HTTP/1.1" 200 47743
+INFO 2025-10-08 21:06:40,508 autoreload 6196 139812693391168 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-08 21:06:42,012 autoreload 6583 139931323914048 Watching for file changes with StatReloader
+INFO 2025-10-08 21:06:49,942 autoreload 6583 139931323914048 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/clients_orders_list.html changed, reloading.
+INFO 2025-10-08 21:06:51,413 autoreload 6625 140337947739968 Watching for file changes with StatReloader
+INFO 2025-10-08 21:06:56,650 basehttp 6625 140337779615488 "GET /compra/compras-clientes/?csrfmiddlewaretoken=iqJLXvVSoAcVGYuIcgBYns4uPSyDdYIpke3H1rpCF2vX5l1N2wkvzv8BKHgLNaLR&start_date=2025-10-01&end_date=2025-10-08&comercial=on HTTP/1.1" 200 47816
+INFO 2025-10-08 21:07:04,710 basehttp 6625 140337779615488 "GET /compra/compras-clientes/?csrfmiddlewaretoken=QHJKBpOCTnERpQWhugVShEA9mTRfqPZ8Sv3GFlimaPXTOdtmkwEptHEghIzn012A&start_date=2025-10-01&end_date=2025-10-08 HTTP/1.1" 200 50190
+INFO 2025-10-08 21:07:14,004 basehttp 6625 140337779615488 "GET /compra/compras-clientes/?csrfmiddlewaretoken=F8tKJ3FCdQ8WqcpnJfV6RCGBms7o8XRwHWNGNZ9muirYPzWszvED3FKIhhPwI9UY&start_date=2025-10-01&end_date=2025-10-08&clientes=on HTTP/1.1" 200 45445
+INFO 2025-10-08 21:27:03,045 autoreload 2595 140072515491648 Watching for file changes with StatReloader
+INFO 2025-10-08 21:32:22,067 basehttp 2595 140072345786112 "GET / HTTP/1.1" 200 65221
+INFO 2025-10-08 22:06:22,614 autoreload 2595 140072515491648 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/cart/cart.py changed, reloading.
+INFO 2025-10-08 22:06:46,274 autoreload 4867 140201026475840 Watching for file changes with StatReloader
+INFO 2025-10-08 22:07:55,063 basehttp 4867 140200856721152 "GET / HTTP/1.1" 200 65221
+INFO 2025-10-08 22:08:01,507 basehttp 4867 140200856721152 "GET /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 71165
+INFO 2025-10-08 22:08:07,190 basehttp 4867 140200846087936 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 71640
+INFO 2025-10-08 22:08:10,922 basehttp 4867 140200846087936 "GET /carrito/carrito/ HTTP/1.1" 200 54470
+INFO 2025-10-08 22:08:21,560 basehttp 4867 140200846087936 "POST /carrito/carrito/ HTTP/1.1" 200 54984
+INFO 2025-10-08 22:08:42,905 basehttp 4867 140200846087936 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-08 22:08:44,124 basehttp 4867 140200846087936 "GET /compra/efectivo/ HTTP/1.1" 200 45236
+INFO 2025-10-08 22:09:01,423 basehttp 4867 140200846087936 "GET /carrito/carrito/ HTTP/1.1" 200 54469
+INFO 2025-10-08 22:09:12,285 basehttp 4867 140200846087936 "POST /accounts/update-mnd/ HTTP/1.1" 302 0
+INFO 2025-10-08 22:09:13,383 basehttp 4867 140200846087936 "GET /carrito/carrito/ HTTP/1.1" 200 54304
+INFO 2025-10-08 22:09:25,181 basehttp 4867 140200846087936 "GET /accounts/profile/ HTTP/1.1" 200 48995
+INFO 2025-10-08 22:09:25,330 basehttp 4867 140200846087936 "GET /media/profiles/Coca_Bx0bswY.jpg HTTP/1.1" 200 22210
+INFO 2025-10-08 22:09:35,912 basehttp 4867 140200846087936 "GET /accounts/wallet/ HTTP/1.1" 200 57776
+INFO 2025-10-08 22:09:52,702 basehttp 4867 140200846087936 "GET /carrito/carrito/ HTTP/1.1" 200 54304
+INFO 2025-10-08 22:10:00,135 basehttp 4867 140200846087936 "POST /carrito/carrito/ HTTP/1.1" 200 54822
+INFO 2025-10-08 22:10:16,931 basehttp 4867 140200846087936 "POST /carrito/carrito/ HTTP/1.1" 200 54311
+INFO 2025-10-08 22:10:29,914 basehttp 4867 140200846087936 "POST /carrito/carrito/ HTTP/1.1" 200 54884
+INFO 2025-10-08 22:12:26,604 autoreload 4867 140201026475840 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/cart/cart.py changed, reloading.
+INFO 2025-10-08 22:12:38,600 autoreload 5673 140597099841344 Watching for file changes with StatReloader
+INFO 2025-10-08 22:12:57,034 basehttp 5673 140596931139328 "POST /carrito/carrito/ HTTP/1.1" 200 54826
+INFO 2025-10-08 22:13:10,955 basehttp 5673 140596931139328 "POST /carrito/carrito/ HTTP/1.1" 200 54826
+INFO 2025-10-08 22:13:23,601 basehttp 5673 140596931139328 "POST /carrito/carrito/ HTTP/1.1" 200 48502
+INFO 2025-10-08 22:13:29,835 basehttp 5673 140596931139328 "GET /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 68345
+INFO 2025-10-08 22:13:35,844 basehttp 5673 140596931139328 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 68820
+INFO 2025-10-08 22:13:38,992 basehttp 5673 140596931139328 "GET /carrito/carrito/ HTTP/1.1" 200 54289
+INFO 2025-10-08 22:13:44,557 basehttp 5673 140596931139328 "POST /carrito/carrito/ HTTP/1.1" 200 54804
+INFO 2025-10-08 22:13:58,162 basehttp 5673 140596931139328 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-08 22:13:58,893 basehttp 5673 140596931139328 "GET /carrito/carrito/ HTTP/1.1" 200 54850
+INFO 2025-10-08 22:14:11,490 basehttp 5673 140596931139328 "POST /carrito/carrito/ HTTP/1.1" 200 48502
+INFO 2025-10-08 22:14:13,800 basehttp 5673 140596931139328 "GET /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 68345
+INFO 2025-10-08 22:14:17,702 basehttp 5673 140596931139328 "POST /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 68820
+INFO 2025-10-08 22:14:21,013 basehttp 5673 140596931139328 "GET /carrito/carrito/ HTTP/1.1" 200 54283
+INFO 2025-10-08 22:14:30,126 basehttp 5673 140596931139328 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-08 22:14:30,861 basehttp 5673 140596931139328 "GET /carrito/carrito/ HTTP/1.1" 200 54844
+INFO 2025-10-08 22:14:43,872 basehttp 5673 140596931139328 "POST /carrito/carrito/ HTTP/1.1" 200 54800
+INFO 2025-10-08 22:14:50,402 basehttp 5673 140596931139328 "POST /accounts/update-mnd/ HTTP/1.1" 302 0
+INFO 2025-10-08 22:14:51,076 basehttp 5673 140596931139328 "GET /carrito/carrito/ HTTP/1.1" 200 54454
+INFO 2025-10-08 22:14:57,146 basehttp 5673 140596931139328 "POST /carrito/carrito/ HTTP/1.1" 200 54969
+INFO 2025-10-08 22:15:15,274 basehttp 5673 140596931139328 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-10-08 22:15:16,301 basehttp 5673 140596931139328 "GET /compra/reservar/ HTTP/1.1" 200 49160
+ERROR 2025-10-08 22:15:45,342 log 5673 140596931139328 Internal Server Error: /compra/reservar/
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py", line 431, in reserve
+    order_number = create_order(request, 2, True, True) # Crear la orden con tipo de transacción 2(Reservar) usd y cach (Aunque no es cach)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/ccheckout.py", line 248, in create_order
+    cart.apply_wallet_discount(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/utils/decorators.py", line 130, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python3.9/contextlib.py", line 79, in inner
+    return func(*args, **kwds)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/cart/cart.py", line 429, in apply_wallet_discount
+    wallet.balance = wallet.balance - discount
+TypeError: unsupported operand type(s) for -: 'decimal.Decimal' and 'float'
+ERROR 2025-10-08 22:15:45,347 basehttp 5673 140596931139328 "POST /compra/reservar/ HTTP/1.1" 500 126533
+WARNING 2025-10-08 22:15:45,690 log 5673 140596931139328 Not Found: /favicon.ico
+INFO 2025-10-08 22:16:12,254 autoreload 5673 140597099841344 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/cart/cart.py changed, reloading.
+INFO 2025-10-08 22:16:13,809 autoreload 6361 139843888944960 Watching for file changes with StatReloader
+ERROR 2025-10-08 22:16:24,207 log 6361 139843719223040 Internal Server Error: /compra/reservar/
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py", line 431, in reserve
+    order_number = create_order(request, 2, True, True) # Crear la orden con tipo de transacción 2(Reservar) usd y cach (Aunque no es cach)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/ccheckout.py", line 248, in create_order
+    cart.apply_wallet_discount(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/contrib/auth/decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/utils/decorators.py", line 130, in _wrapped_view
+    response = view_func(request, *args, **kwargs)
+  File "/usr/lib/python3.9/contextlib.py", line 79, in inner
+    return func(*args, **kwds)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/cart/cart.py", line 429, in apply_wallet_discount
+    wallet.balance = wallet.balance - float(discount)
+TypeError: unsupported operand type(s) for -: 'decimal.Decimal' and 'float'
+ERROR 2025-10-08 22:16:24,213 basehttp 6361 139843719223040 "POST /compra/reservar/ HTTP/1.1" 500 126547
+INFO 2025-10-08 22:17:38,609 autoreload 6361 139843888944960 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/cart/cart.py changed, reloading.
+INFO 2025-10-08 22:17:40,267 autoreload 6505 140674945386304 Watching for file changes with StatReloader
+INFO 2025-10-08 22:17:56,888 basehttp 6505 140674776770304 "POST /compra/reservar/ HTTP/1.1" 302 0
+INFO 2025-10-08 22:17:58,500 basehttp 6505 140674776770304 "GET /compra/procesado/589/ HTTP/1.1" 200 43656
+INFO 2025-10-08 22:18:08,442 basehttp 6505 140674776770304 "GET /accounts/profile/ HTTP/1.1" 200 48995
+INFO 2025-10-08 22:18:14,092 basehttp 6505 140674776770304 "GET /accounts/wallet/ HTTP/1.1" 200 57871
+INFO 2025-10-08 22:19:05,651 autoreload 6505 140674945386304 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/wallet/views.py changed, reloading.
+INFO 2025-10-08 22:19:08,077 autoreload 6686 140503477323584 Watching for file changes with StatReloader
+INFO 2025-10-08 22:19:13,155 basehttp 6686 140503308736256 "GET /accounts/wallet/ HTTP/1.1" 200 57871
+INFO 2025-10-08 22:19:21,749 basehttp 6686 140503308736256 "GET /accounts/profile/ HTTP/1.1" 200 48995
+INFO 2025-10-08 22:19:25,467 basehttp 6686 140503308736256 "GET /accounts/wallet/ HTTP/1.1" 200 57871
+INFO 2025-10-08 22:20:05,890 autoreload 6686 140503477323584 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/wallet/views.py changed, reloading.
+INFO 2025-10-08 22:20:07,414 autoreload 6828 140230890354496 Watching for file changes with StatReloader

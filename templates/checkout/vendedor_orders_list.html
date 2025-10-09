@@ -20,7 +20,7 @@
         {% load widget_tweaks %}
         <div class="row">
             {% for field in filter.form %}
-            <div class="mb-1 col-md-4">
+            <div class="mb-1 col-md-6">
                 <label for="{{field.id_for_label}}"> {{ field.label }} </label>
                 {{ field|add_class:"form-control" }}
             </div>  

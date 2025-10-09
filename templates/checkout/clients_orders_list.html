@@ -18,6 +18,9 @@
         {% load widget_tweaks %}
             <label>Desde: <input type="date" name="start_date" value="{{ start_date }}"></label>
             <label>Hasta: <input type="date" name="end_date" value="{{ end_date }}"></label>
+            <label>Resumen diario: <input type="checkbox" name="summary"></label>
+            <label>Ventas comercial: <input type="checkbox" name="comercial"></label>
+            <label>Ventas clientes: <input type="checkbox" name="clientes"></label>
         <div class="row">
             {% for field in filter.form %}
             <div class="mb-1 col-md-4">
@@ -31,7 +34,22 @@
         </form>
         <br>
     </div>
-    
+
+    <h4> Totales</h4>
+    Total de registros de venta diaria: {{ so_count }} <br>
+    Monto por resumen de ventas diarias: {{ sum_daily_amount }} CUP <br>
+    <br>
+    Total compras directas por clientes: {{ co_count }} <br>
+    Monto parcial USD: ${{ sum_client_amount_usd }} USD <br>
+    Monto parcial CUP: ${{ sum_client_amount_cup }} CUP <br>
+    Monto Total en CUP: ${{ sum_client_amount }} CUP <br>
+    <br>
+    Total de ventas del comercial: {{ com_count }} <br>
+    Monto parcial USD: ${{ sum_comercial_amount_usd }} USD <br>
+    Monto parcial CUP: ${{ sum_comercial_amount_cup }} CUP <br>
+    Monto Total en CUP: ${{ sum_comercial_amount }} CUP <br>
+    <br>
+    Total en el periodo: ${{ sum_total }} CUP <br>
 
 <div class="container-fluid pt-6">
     <div class="row px-xl-6">

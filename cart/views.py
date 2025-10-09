@@ -86,7 +86,7 @@ def show_cart(request, template_name="cart/cart.html"):
                             messages.info(request, 'No puede utilizar en la compra más del 50% en puntos')
                             url = reverse('show_cart')
                             return HttpResponseRedirect(url)
-                    response = cart.apply_wallet_discount(request, cart_subtotal, wallet_to_apply)
+                    response = cart.wallet_discount(request, cart_subtotal, wallet_to_apply)
                     resp = json.loads(response.content)
                     if not resp.get('success'):
                         text = resp['message']
