@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+{% load catalog_filters %}
+
+{% block content %}
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-2">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
+            <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: roboto;">Resumen de ventas</h4>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <div class="mb-1">
+        <form enctype="multipart/form-data" method="GET" style="display: inline-block;">
+        {% csrf_token %}
+        {% load widget_tweaks %}
+            <label>Desde: <input type="date" name="start_date" value="{{ start_date }}"></label>
+            <label>Hasta: <input type="date" name="end_date" value="{{ end_date }}"></label>
+            <label>Resumen diario: <input type="checkbox" name="summary"></label>
+            <label>Ventas comercial: <input type="checkbox" name="comercial"></label>
+            <label>Ventas clientes: <input type="checkbox" name="clientes"></label>
+        <div class="row">
+            {% for field in filter.form %}
+            <div class="mb-1 col-md-4">
+                <label for="{{field.id_for_label}}"> {{ field.label }} </label>
+                {{ field|add_class:"form-control" }}
+            </div>  
+            {% endfor %}
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary"> <i class="fas fa-search text-secondary mr-0"> </i> Filtrar</button>
+        </form>
+        <br>
+    </div>
+
+    <!-- Botón de exportación -->
+    <div style="margin-bottom: 20px;">
+        <a href="?{{ request.GET.urlencode }}&export=pdf" class="export-btn">
+            📄 Exportar a PDF
+        </a>
+    </div>
+
+    <h4> Totales</h4>
+    <div class="stats-cards">
+        <div class="stat-card">
+            <div class="stat-value">{{ total_orders }}</div>
+            <div class="stat-label">Total Órdenes</div>
+        </div>
+    </div>
+    Total de registros de venta diaria: {{ so_count }} <br>
+    Monto por resumen de ventas diarias: {{ sum_daily_amount }} CUP <br>
+    <br>
+    Total compras directas por clientes: {{ co_count }} <br>
+    Monto Total en CUP: ${{ sum_client_amount }} CUP <br>
+    <br>
+    Total de ventas del comercial: {{ com_count }} <br>
+    Monto Total en CUP: ${{ sum_comercial_amount }} CUP <br>
+    <br>
+    Monto total en el periodo: ${{ sum_total }} CUP <br>
+
+<div class="container-fluid pt-6">
+    <div class="row px-xl-6">
+        <div class="col-lg-12 table-responsive mb-5">
+            <table class="table table-bordered text-center mb-0">
+                <thead class="bg-primary text-light">
+                    <tr>
+                        <th>No. orden</th>
+                        <th>Cliente</th>
+                        <th>Fecha</th>
+                        <th>Importe</th>
+                        <th>Estado</th>
+                        <!-- <th>XXXXXXXX</th> -->
+                    </tr>
+                </thead>
+                <tbody class="align-middle text-primary">
+                    {% if orders %}
+                    {% for order in orders %}
+                    <tr>
+                        <td class="align-middle">
+                                {{ order.id }}
+                        </td>
+                        <td class="align-middle">
+                            {{ order.user.first_name }} {{order.user.last_name}}
+                        </td>
+                        <td class="align-middle">
+                            {{ order.date|date:"d/m/y" }}
+                        </td>
+                        <td class="align-middle">
+                            {{ order.cup_oficial|currency }} CUP     
+                        </td>
+                        <td class="align-middle">
+                            {{ order.statusS }}
+                        </td>
+<!--                         <td>
+                            <form action="." method="post">
+                                {% csrf_token %}
+                                <a href="{{ order.get_absolute_url }}" class="cart">Detalles</a>
+                            </form>
+                        </td> -->
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="6" style="height:30px;">
+                            No tiene productos comprados.
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-5">
+  
+</div>
+<!-- Cart End -->
+
+{% endblock %}

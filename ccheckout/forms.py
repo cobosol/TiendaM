@@ -95,7 +95,6 @@ class PaymentMethodForm(forms.ModelForm):
                     if not parsed:
                         self.add_error('details_text', "Debe ingresar al menos una transferencia válida")
                     if not self.instance.set_details(details_text, amount):
-                        print('Not set_details')
                         self.add_error('details_text', 'Deben coincidir los montos de los detalles con el monto total declarado')
                 except ValidationError as e:
                     self.add_error('details_text', str(e))
