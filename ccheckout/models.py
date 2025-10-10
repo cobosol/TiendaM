@@ -15,6 +15,9 @@ import datetime
 # El municipio con los precios (diccionario), descuentos por monto...
 
 class Order(models.Model):
+
+    DOLLAR_CHANGE_OFFICIAL = 120
+
     # each individual status
     SUBMITTED = 0
     PROCESSED = 1
@@ -145,11 +148,10 @@ class Order(models.Model):
             self.end_total = self.base_total + decimal.Decimal(self.delivery_price)
             if self.wallet_discount:
                 self.end_total = self.end_total - self.wallet_discount 
-        if self.cup_oficial is None or self.cup_oficial == 0:
-            if self.currency == 'CUP':
-                    self.cup_oficial = self.base_total 
-            else:
-                self.cup_oficial = self.base_total * 120 # Crear una variable cambio oficial en Price
+        if self.currency == 'CUP':
+            self.cup_oficial = self.end_total 
+        else:
+            self.cup_oficial = self.end_total * self.DOLLAR_CHANGE_OFFICIAL # Crear una variable cambio oficial en Price
 
         if self.total_reported == 0.00:
             self.total_reported = self.end_total

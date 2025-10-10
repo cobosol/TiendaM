@@ -374,7 +374,6 @@ def export_pdf(request, id_orden):
     profile = request.user.profile
     #if profile.client_type == profile.COMPRADOR:
     #Generando reporte PDF
-    print(order.transaction_id)
     if order.is_daily_summary:
         check = checkOrderSummary(id_order=id_orden)
         # Procesar métodos de pago con detalles
@@ -416,7 +415,6 @@ def export_pdf(request, id_orden):
             data['seller'] = order.seller.first_name + ' ' + order.seller.last_name
             template_src = 'checkout/factura_resumen_diario.html' 
     elif order.transaction_id == '3': # Si es una factura por contrato
-        print("Generar pdf contrato comercial")
         template_src = 'checkout/factura_por_contrato.html'
         data['first_name'] = order.payment_name
         data['email'] = order.payment_email
@@ -501,6 +499,7 @@ def export_pdf(request, id_orden):
         data['discount'] = order.others_discount 
     data['puntos'] = order.get_wallet_discount
     data['monto_final'] = data['importe'] - data['puntos']
+    data['cup_oficial'] = order.cup_oficial
     context = {'data': data, 'orders': orders, 'request': request,'qr':qr_generado}
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="factura.pdf"'
@@ -511,4 +510,21 @@ def export_pdf(request, id_orden):
     # if error then show some funny view
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+def generate_pdf_response(context, filename):
+    """Genera y devuelve un PDF como respuesta HTTP"""
+    # Renderizar HTML
+    template_src = 'checkout/pdf_resumen_ventas.html'
+    template = get_template(template_src)
+    
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="factura.pdf"'
+    html = template.render(context)
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response, link_callback=link_callback)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('Tuvimos algún error al geerar el pdf <pre>' + html + '</pre>')
     return response

@@ -26,6 +26,7 @@ urlpatterns = [
     path('venta-clientes/', views.sales_client, name='venta_clientes'),
     path('venta-resumen/', views.sales_summary, name='venta_resumen'),
     path('ventas-totales-resumen/', views.sales_total_summary, name='ventas_totales_resumen'),
+    path('resumen_oficial/', views.summary_oficial_sales, name='sales_oficial_summary'),
     path('ventas/', views.sales_manages, name='ventas'),
     path('ordenes/', views.ordenes, name='ordenes'),
     path('configuraciones/', views.configurations, name='configuraciones'),

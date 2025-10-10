@@ -136,6 +136,9 @@
         <tbody>
             <tr>
                 <td class="first-td"><strong>IMPORTE TOTAL: {{data.monto_final}} {% if data.currency == 'USD'%} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td>
+                {% if data.currency == 'USD'%}
+                <td class="first-td"><strong>IMPORTE CUP: {{data.cup_oficial|currency}} CUP </strong></td>
+                {% endif %}
             </tr>
         </tbody>
     </table>
