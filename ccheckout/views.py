@@ -926,8 +926,8 @@ def summary_oficial_sales(request, template_name='checkout/resumen_ventas_oficia
     export = request.GET.get('export', '')
     if export == 'pdf':
         context = {
-            'start_date': start_date,
-            'end_date': end_date,
+            'start_date': start,
+            'end_date': end,
             'com_count': com_count,
             'co_count': co_count,
             'so_count': so_count,
