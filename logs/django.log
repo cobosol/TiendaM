@@ -2009,3 +2009,15 @@ INFO 2025-10-10 08:44:27,427 basehttp 5643 140317735687936 "GET /compra/resumen_
 INFO 2025-10-10 08:48:08,815 basehttp 5643 140317735687936 "GET /compra/ordenes/ HTTP/1.1" 200 42849
 INFO 2025-10-10 08:48:12,487 basehttp 5643 140317735687936 "GET /compra/gestion/ HTTP/1.1" 200 412621
 INFO 2025-10-10 08:48:21,911 basehttp 5643 140317735687936 "GET /compra/compras/594/ HTTP/1.1" 200 47819
+INFO 2025-10-10 08:53:32,723 basehttp 5643 140317735687936 "GET /compra/ventas/ HTTP/1.1" 200 43751
+INFO 2025-10-10 08:53:36,765 basehttp 5643 140317735687936 "GET /compra/resumen_oficial/ HTTP/1.1" 200 188682
+INFO 2025-10-10 08:55:43,307 basehttp 5643 140317735687936 "GET /compra/resumen_oficial/?&export=pdf HTTP/1.1" 200 23590
+INFO 2025-10-10 08:57:22,435 autoreload 5643 140317924943680 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/resumen_ventas_oficial.html changed, reloading.
+INFO 2025-10-10 08:57:32,338 autoreload 6933 140648092677952 Watching for file changes with StatReloader
+INFO 2025-10-10 08:59:11,339 autoreload 6933 140648092677952 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-10-10 08:59:13,265 autoreload 7172 140251107768128 Watching for file changes with StatReloader
+INFO 2025-10-10 08:59:22,090 basehttp 7172 140250918237952 "GET /compra/resumen_oficial/ HTTP/1.1" 200 188685
+INFO 2025-10-10 09:00:04,703 autoreload 7172 140251107768128 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/checkout/resumen_ventas_oficial.html changed, reloading.
+INFO 2025-10-10 09:00:06,209 autoreload 7366 140379379935040 Watching for file changes with StatReloader
+INFO 2025-10-10 09:00:11,604 basehttp 7366 140379191465728 "GET /compra/resumen_oficial/ HTTP/1.1" 200 188644
+INFO 2025-10-10 09:00:23,271 basehttp 7366 140379191465728 "GET /compra/resumen_oficial/?&export=pdf HTTP/1.1" 200 23600
