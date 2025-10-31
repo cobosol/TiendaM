@@ -65,7 +65,7 @@
                         <form id="quantity" method="post" action="." class="cart">
                         {% csrf_token %}
                         <td class="align-middle">
-                            <input type="number" name="quantity" value="{{ item.quantity }}" min="0" step="{% if elem.a_granel %}0.1{%else%}1{%endif%}" style="width: 100px">
+                            <input type="number" name="quantity" value="{{ item.quantity|floatformat:0 }}" min="0" step="1" style="width: 100px">
                             <button id="quantity" class="btn btn-sm btn-success btn-minus" name="submit">
                                 <i class="fa fa-check"></i>
                             </button>

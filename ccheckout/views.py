@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from .forms import * 
 from django.urls import reverse, reverse_lazy
 from .models import Order, OrderItem, Coupon
-from ccheckout.ccheckout import generate_daily_summary_pdf, process2, export_pdf, createPaymentCardsJSON, tPAccessToken, loadSecret, create_order, generate_pdf_response
+from ccheckout.ccheckout import generate_daily_summary_pdf, process2, export_pdf, createPaymentCardsJSON, tPAccessToken, loadSecret, create_order, generate_pdf_response, checkOrderSummary
 from cart import cart
 from cart.models import DeliveryInfo
 from django.contrib import messages
@@ -14,7 +14,6 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.template.loader import render_to_string
 from django.contrib.auth.models import Group
-from weasyprint import HTML
 import tempfile
 from io import BytesIO
 from re import escape, split
@@ -714,8 +713,18 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
     orders = Order.objects.all().order_by('-date')
     
     #Esto es para actualizar valores
-    """ ordersp = Order.objects.filter(status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], is_daily_summary=False) 
+    """ ordersp = Order.objects.filter(status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], is_daily_summary=True)     
     for o in ordersp:
+        o.end_total = 0
+        check = checkOrderSummary(id_order=o.pk)
+        print(o.id)
+        if check > 0:
+            o.cup_oficial = decimal.Decimal(round(o.total_items, 2))*Order.DOLLAR_CHANGE_OFFICIAL
+            print(f'check: {round(o.total_items, 2)}')
+        else:
+            o.cup_oficial = decimal.Decimal(round(o.total_reported, 2))
+            print(round(o.total_reported, 2))
+        print(f'cup_oficial: {o.cup_oficial}')
         o.save() """
 
     start_date = request.GET.get('start_date', '2025-01-01')
@@ -884,7 +893,7 @@ def summary_oficial_sales(request, template_name='checkout/resumen_ventas_oficia
     summary_orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED], is_daily_summary=True).order_by('-date')
     so_count = summary_orders.count()
 
-    sum_daily_amount = summary_orders.aggregate(sum=Sum('cup_total'))['sum'] or 0
+    sum_daily_amount = summary_orders.aggregate(sum=Sum('cup_oficial'))['sum'] or 0
     sum_daily_amount = float(sum_daily_amount)
 
     sum_client_amount = client_orders.aggregate(sum=Sum('cup_oficial'))['sum'] or 0
@@ -910,7 +919,6 @@ def summary_oficial_sales(request, template_name='checkout/resumen_ventas_oficia
     if s == 'on':
         orders = orders.filter(is_daily_summary=True).order_by('-date')
 
-    
     comercial = request.GET.get('comercial')    
     if comercial == 'on':
         orders = orders.filter(user__in=comerciales, is_daily_summary=False).order_by('-date')

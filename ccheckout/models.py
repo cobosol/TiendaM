@@ -75,6 +75,7 @@ class Order(models.Model):
     
 
     # order info
+    consecutivo = models.IntegerField(verbose_name="consecutivo", default=0)
     date = models.DateTimeField(auto_now_add=True, verbose_name = "Fecha de facturación")
     status = models.IntegerField(choices=ORDER_STATUSES, default=SUBMITTED, verbose_name = "Estado")
     ip_address = models.GenericIPAddressField(verbose_name = "Dirección ip")
@@ -141,6 +142,12 @@ class Order(models.Model):
     def __unicode__(self):
         return 'Orden #' + str(self.id)
 
+    def set_consecutivo(self):
+        if self.currency == 'USD':
+            self.consecutivo = Order.objects.filter(currency = 'USD').last().consecutivo + 1
+        else:
+            self.consecutivo = self.id
+
     def save(self, *args, **kwargs):
         if self.base_total is None or self.base_total == 0:
             self.base_total = self.total_items
@@ -150,9 +157,9 @@ class Order(models.Model):
                 self.end_total = self.end_total - self.wallet_discount 
         if self.currency == 'CUP':
             self.cup_oficial = self.end_total 
-        else:
+        elif not self.is_daily_summary:
             self.cup_oficial = self.end_total * self.DOLLAR_CHANGE_OFFICIAL # Crear una variable cambio oficial en Price
-
+        #En los resumenes diarios e CUP oficial se llena en 
         if self.total_reported == 0.00:
             self.total_reported = self.end_total
         if self.price:
@@ -175,7 +182,7 @@ class Order(models.Model):
         if self.currency == 'CUP':
             return self.wallet_discount  
         else:
-            return self.wallet_discount/120
+            return self.wallet_discount/self.DOLLAR_CHANGE_OFFICIAL
 
     @property
     def total_items(self):
