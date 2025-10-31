@@ -114,7 +114,7 @@ class Product(models.Model):
     prod_datasheet = models.FileField(blank=True, null=True, upload_to=generate_path, validators=[valid_extension],
                                       verbose_name="Ficha técnica")
     """ Otra información de interés """
-    description = CKEditor5Field('Descripción', config_name='extends')
+    description = CKEditor5Field('Descripción', config_name='default')
     meta_keywords = models.CharField(max_length=255, help_text='Palabras clave para el SEO')
     meta_description = models.CharField(max_length=255, help_text='Contenido clave para el SEO')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -132,6 +132,7 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
+        self.price = Price.objects.filter(is_active=True)[0]
         super(Product, self).save(*args, **kwargs)
         
     @property

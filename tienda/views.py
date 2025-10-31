@@ -35,7 +35,6 @@ def index_view(request, template_name="index.html"):
                 if request.session.test_cookie_worked():
                     request.session.delete_test_cookie()
             elif postdata['submit'] == 'Buscar':
-                print(postdata)
                 productSearch = postdata['producto']
                 url = '/catalogo/productos/' + productSearch + '/'
                 return HttpResponseRedirect(url)

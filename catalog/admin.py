@@ -1,6 +1,7 @@
 from django.contrib import admin
 from catalog.models import Product, Category
 from catalog.forms import ProductAdminForm
+from django_ckeditor_5.fields import CKEditor5Field
 
 class ProductAdmin(admin.ModelAdmin):
     form = ProductAdminForm
@@ -13,6 +14,11 @@ class ProductAdmin(admin.ModelAdmin):
     exclude = ('created_at', 'updated_at','is_summary_product',)
     # sets up slug to be generated from product name
     prepopulated_fields = {'slug' : ('name',)}
+
+    # Campos que usarán CKEditor 5
+    """ formfield_overrides = {
+        CKEditor5Field: {'widget': CKEditor5Field},
+    } """
     
 # registers your product model with the admin site
 admin.site.register(Product, ProductAdmin)

@@ -127,13 +127,13 @@
                             <li><a class="dropdown-item" href="/compra/compras/"><i class="fas fa-box me-2"></i>Compras</a></li>
                         </ul>
                     </li>   
-                    {% if request.user.is_staff %}
+                    {% if request.user.is_staff or comercial == 'True' or marketing == 'True'%}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                             <i class="fas fa-cog me-1"></i> Admin
                         </a>
                         <ul class="dropdown-menu">
-                            {% if comercial == 'True' or request.user.is_staff %}
+                            {% if comercial == 'True' or request.user.is_staff or vendedor == 'True' %}
                             <li> <a href="{% url 'ordenes' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-shopping-cart me-2"></i>Órdenes de compra</i></a></li>                               
                             {% endif %}
                             {% if request.user.is_staff %}
@@ -141,6 +141,8 @@
                             {% endif %}
                             {% if vendedor == 'True' or request.user.is_staff or comercial == 'True'%}
                                 <li> <a href="{% url 'gestion' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-boxes me-2"></i>Gestionar inventarios</i></a></li>
+                            {% endif %}
+                            {% if request.user.is_staff %}
                                 <li> <a href="{% url 'configuraciones' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-cog me-2"></i>Configuraciones</i></a></li>
                             {% endif %}
                             {% if marketing == 'True' or request.user.is_staff %}

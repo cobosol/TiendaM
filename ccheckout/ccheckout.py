@@ -13,6 +13,8 @@ import os, sys
 import requests
 import json
 import decimal
+from django.utils import timezone
+from datetime import timedelta
 
 from cart import cart
 from .models import Order, OrderItem
@@ -156,7 +158,6 @@ def create_order(request, transaction_id, usd = True, cach = False):
         cart_subtotal = cart.cart_subtotal(request)
         order.delivery_price = cart.cart_delivery_price(request, cart_subtotal, MND)
     elif transaction_id == 3: # Facturar por contrato
-        print("En factura por contrato")
         checkout_form = FacturarForm(request.POST, instance=order)
         order = checkout_form.save(commit=False)
         if usd: # Guardo el tipo de moneda en efectivo
@@ -260,8 +261,17 @@ def create_order(request, transaction_id, usd = True, cach = False):
                     coupon.applied_to_order = order
                     coupon.save()
             except:
-                pass                
+                pass
+        else:
+            check = checkOrderSummary(id_order=order.id)
+            if check > 0:
+                order.cup_oficial = decimal.Decimal(round(order.total_items, 2))*Order.DOLLAR_CHANGE_OFFICIAL
+            else:
+                order.cup_oficial = decimal.Decimal(round(order.total_reported, 2))                
         order.save()
+        order.set_consecutivo()
+        order.save()
+
         # all set, empty cart
         cart.empty_cart(request)
     # return the new order object
@@ -361,8 +371,8 @@ def checkOrderSummary(id_order):
                 transfer_amount = transfer_amount + payment.amount
             elif payment.method == "CARD":
                 cards_amount = cards_amount + payment.amount
-        efectivo = (order.total_items * 120) - transfer_amount - cards_amount
-        return (order.total_items * 120) - transfer_amount - cards_amount
+        efectivo = (order.total_items * Order.DOLLAR_CHANGE_OFFICIAL) - transfer_amount - cards_amount
+        return (order.total_items * Order.DOLLAR_CHANGE_OFFICIAL) - transfer_amount - cards_amount
 
 def export_pdf(request, id_orden):
     data = {}
@@ -405,7 +415,7 @@ def export_pdf(request, id_orden):
         data['total_general'] = total_general
         if check > 0:
             data['importe'] = decimal.Decimal(round(order.total_items, 2))
-            data['importeCUP'] = decimal.Decimal(round(order.total_items, 2))*120
+            data['importeCUP'] = decimal.Decimal(round(order.total_items, 2))*Order.DOLLAR_CHANGE_OFFICIAL
             data['efectivo'] = data['importeCUP'] - transfer_sum
             data['seller'] = order.seller.first_name + ' ' + order.seller.last_name
             template_src = 'checkout/factura_resumen_diario_USD.html'
@@ -413,7 +423,8 @@ def export_pdf(request, id_orden):
             data['importe'] = decimal.Decimal(round(order.total_items, 2))
             data['importeCUP'] = decimal.Decimal(round(order.total_reported, 2))
             data['seller'] = order.seller.first_name + ' ' + order.seller.last_name
-            template_src = 'checkout/factura_resumen_diario.html' 
+            template_src = 'checkout/factura_resumen_diario.html'
+        order.save() 
     elif order.transaction_id == '3': # Si es una factura por contrato
         template_src = 'checkout/factura_por_contrato.html'
         data['first_name'] = order.payment_name
@@ -426,13 +437,13 @@ def export_pdf(request, id_orden):
         data['details'] = order.payment_details
     elif order.user.profile.client_type == profile.COMPRA_VENTA or order.user.profile.client_type == profile.DISTRIBUIDOR: # Si la compra es de un cliente con contrato de compraventa ..... #order.transaction_id == '3': # Factura por contrato order.user.groups.filter(name__in=['comercial']):
         template_src = 'checkout/factura_por_contrato.html'
-        data['first_name'] = profile.name #order.payment_name
-        data['user_CI'] = profile.cid
-        data['email'] = profile.user.email #order.payment_email
-        data['phone'] = profile.phone # order.payment_phone
-        data['address'] = profile.address # order.payment_address
+        data['first_name'] = order.user.profile.name #order.payment_name
+        data['user_CI'] = order.user.profile.cid
+        data['email'] = order.user.profile.user.email #order.payment_email
+        data['phone'] = order.user.profile.phone # order.payment_phone
+        data['address'] = order.user.profile.address # order.payment_address
         data['details'] = order.payment_details
-        data['contract'] = profile.contract
+        data['contract'] = order.user.profile.contract
         data['status'] = order.statusS
         data['importe'] = decimal.Decimal(round(order.base_total, 2)) # Verificar order.total??
     elif order.user.groups.filter(name__in=['vendedores']): # Si la factura se generó por un vendedor de punto de venta
@@ -444,16 +455,20 @@ def export_pdf(request, id_orden):
         data['importe'] = decimal.Decimal(round(order.base_total, 2))
         data['puntos'] = order.wallet_discount
     else: # Si es un cliente normal
-        print("En el else")
         template_src = 'checkout/factura_venta_online.html'
-        data['name'] = profile.name
-        data['user_name'] = profile.user.username
-        data['email'] = profile.user.email
-        data['phone'] = profile.phone
+        data['name'] = order.user.profile.name
+        data['user_name'] = order.user.username
+        data['email'] = order.user.email
+        data['phone'] = order.user.profile.phone
         data['importe'] = decimal.Decimal(round(order.base_total, 2))
         data['status'] = order.statusS
     template = get_template(template_src)
-    data['id_order'] = str(id_orden).zfill(6)
+    today = timezone.now()
+    begin = today.replace(day=1, month=11, year=2025)
+    if today > begin:
+        data['id_order'] = str(order.consecutivo).zfill(6) # str(id_orden).zfill(6)
+    else:
+        data['id_order'] = str(id_orden).zfill(6)
     orders = OrderItem.objects.filter(order=id_orden).order_by('product')
     discount = False
     for item in orders:
