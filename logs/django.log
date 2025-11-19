@@ -2692,3 +2692,7 @@ INFO 2025-10-30 22:52:36,548 basehttp 9142 140003873216256 "GET /compra/compras/
 INFO 2025-10-30 22:53:04,027 basehttp 9142 140003873216256 "POST /compra/compras/ HTTP/1.1" 200 382158
 INFO 2025-10-30 22:55:16,499 autoreload 9142 140004041295680 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/ccheckout.py changed, reloading.
 INFO 2025-10-30 22:55:46,905 autoreload 9740 139688414758720 Watching for file changes with StatReloader
+INFO 2025-11-19 12:05:18,376 autoreload 25664 22124 Watching for file changes with StatReloader
+INFO 2025-11-19 12:06:57,262 autoreload 25664 22124 D:\Works\Python\cobosis\TiendaM\templates\promo\offer_admin.html changed, reloading.
+INFO 2025-11-19 12:06:59,052 autoreload 14976 24728 Watching for file changes with StatReloader
+INFO 2025-11-19 12:18:20,029 autoreload 20900 20912 Watching for file changes with StatReloader
