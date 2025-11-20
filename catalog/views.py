@@ -16,7 +16,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 #from django.views import View
 from django.views.generic import ListView, DetailView 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.response import Response
+
 
 # Habilitamos los formularios en Django
 from django import forms
@@ -30,20 +32,39 @@ from stores.models import Store, Product_Sales
 from catalog.models import *
 from pages.models import *
 from .forms import ProductAdminForm, ProductForm, ProductAlmacenForm
-from .serializers import ProductsGipproSerializer
+from .serializers import ProductsGipproSerializer, ProductsCoboChatSerializer, ProductAgrupedSerializer
 
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from .forms import ProductAlmacenFilterForm
 
-
+class ProductCoboChatListView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductsCoboChatSerializer
 
 class ProductGipproListView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductsGipproSerializer
 
-
+class ProductoAgrupadoAPIView(generics.ListAPIView):
+    serializer_class = ProductAgrupedSerializer
+    
+    def get(self, request, *args, **kwargs):
+        # Obtener los productos
+        queryset = self.get_queryset()
+        
+        # Definir los campos por los que agrupar (puedes hacerlos configurables)
+        campos_agrupacion = ['name', 'gname', 'categories']
+        
+        # Usar el método del serializador para agrupar
+        datos_agrupados = ProductAgrupedSerializer.agrupar_por_atributos(queryset, campos_agrupacion)
+        
+        return Response(datos_agrupados)
+    
+    def get_queryset(self):
+        return Product.objects.all()
+    
 def index(request, template_name="index.html"):
     context = {'name':'Tienda Virtual MUHIA'}
     return render(request, template_name, context)

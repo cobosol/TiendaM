@@ -76,6 +76,7 @@ class Order(models.Model):
 
     # order info
     consecutivo = models.IntegerField(verbose_name="consecutivo", default=0)
+    is_cons_usd = models.BooleanField(default=False, verbose_name="Consecutivo USD")
     date = models.DateTimeField(auto_now_add=True, verbose_name = "Fecha de facturación")
     status = models.IntegerField(choices=ORDER_STATUSES, default=SUBMITTED, verbose_name = "Estado")
     ip_address = models.GenericIPAddressField(verbose_name = "Dirección ip")
@@ -101,6 +102,7 @@ class Order(models.Model):
     coupon_percent = models.PositiveIntegerField(default=0, verbose_name="Porciento de descuento de cupón")
     others_discount = models.PositiveIntegerField(default=0, verbose_name="Porciento de otros descuentos")
     wallet_discount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name="descuento del monedero")
+    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name="Descuento por ajuste de contrato")
 
     # Configuración de monedas, sus cambios y de los descuentos
     currency = models.CharField(max_length=3, default="USD", verbose_name = "Tipo de moneda")
@@ -146,7 +148,11 @@ class Order(models.Model):
         if self.currency == 'USD':
             self.consecutivo = Order.objects.filter(currency = 'USD').last().consecutivo + 1
         else:
-            self.consecutivo = self.id
+            consecutivo = Order.objects.filter(currency = 'CUP').last().consecutivo
+            if consecutivo == 0:
+                self.consecutivo = self.id
+            else:
+                self.consecutivo = consecutivo 
 
     def save(self, *args, **kwargs):
         if self.base_total is None or self.base_total == 0:

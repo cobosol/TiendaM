@@ -29,7 +29,7 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ('delivery_email', 'delivery_ci', 'delivery_name', 'id','transaction_id')
     inlines = [OrderItemInline,PaymentMethodInline]
     fieldsets = (
-                ('Generales', {'fields': ('consecutivo', 'base_total','end_total','usd_total','cup_total','cup_oficial','mlc_total','total_reported','coupon_percent', 'others_discount', 'currency')}),
+                ('Generales', {'fields': ('consecutivo', 'base_total','end_total','usd_total','cup_total','cup_oficial','mlc_total','total_reported','coupon_percent', 'others_discount', 'discount', 'currency')}),
                 ('Comprador', {'fields': ('user','status','payment_email','payment_phone', 'pay_url')}),
                 ('Entrega', {'fields':('delivery_name','delivery_address_2','delivery_state', 'delivery_price')})
                 )

@@ -315,8 +315,7 @@ def facturar(request, template_name='checkout/facturar.html'):
                     request.session['order_number'] = order_number['order_number']
                     order = Order.objects.filter(id=order_number['order_number'])[0] 
                     order.save()
-                    """ order.update_status(Order.PAIDED)
-                    order.update_status(Order.DELIVERED) """
+                    order.update_status(Order.PROCESSED)
                     order.save()
                     receipt_url = reverse('checkout_receipt')
                     return HttpResponseRedirect(receipt_url)
@@ -544,6 +543,20 @@ def create_daily_summary(request):
                 order.total_reported = sum([form.cleaned_data['amount'] for form in formset])
                 if order.total_reported != order.base_total:
                     messages.info(request, "No coincide el monto del listado de productos con lo reportado en el resumen")
+                check = checkOrderSummary(id_order=order.id)
+                if check > 0:
+                    print('Entro a check')
+                    order.cup_oficial = decimal.Decimal(round(order.total_items, 2))*Order.DOLLAR_CHANGE_OFFICIAL
+                else:
+                    print('No check')
+                    o = Order.objects.filter(is_cons_usd = False).order_by('-pk').first()
+                    if o.consecutivo == 0:
+                        order.consecutivo = o.id + 1
+                        order.is_cons_usd = False
+                    else:
+                        order.consecutivo = o.consecutivo + 1
+                        order.is_cons_usd = False
+                    order.cup_oficial = decimal.Decimal(round(order.total_reported, 2))                
                 order.save()
                 app_label = order._meta.app_label
                 model_name = order._meta.model_name
@@ -713,19 +726,13 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
     orders = Order.objects.all().order_by('-date')
     
     #Esto es para actualizar valores
-    """ ordersp = Order.objects.filter(status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], is_daily_summary=True)     
-    for o in ordersp:
-        o.end_total = 0
-        check = checkOrderSummary(id_order=o.pk)
-        print(o.id)
-        if check > 0:
-            o.cup_oficial = decimal.Decimal(round(o.total_items, 2))*Order.DOLLAR_CHANGE_OFFICIAL
-            print(f'check: {round(o.total_items, 2)}')
-        else:
-            o.cup_oficial = decimal.Decimal(round(o.total_reported, 2))
-            print(round(o.total_reported, 2))
-        print(f'cup_oficial: {o.cup_oficial}')
-        o.save() """
+    """ ordersp = Order.objects.all() #filter(status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], is_daily_summary=True)     
+    today = timezone.now()
+    corte = today.replace(day=1, month=11, year=2025)
+    for o in ordersp:        
+        if o.date < corte:
+            o.consecutivo = o.pk 
+        o.save() """ 
 
     start_date = request.GET.get('start_date', '2025-01-01')
     end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
