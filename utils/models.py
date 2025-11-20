@@ -20,6 +20,7 @@ class Price(models.Model):
     amunt_discount = models.IntegerField(default = 10, verbose_name="Porciento de descuento para ventas mayoristas. (Monto de la compra)")
     min_quantity_amount = models.IntegerField(default = 4200, verbose_name="Monto mínimo para descuento mayorista (En USD)")
     min_delivery_free = models.IntegerField(default = 250, verbose_name="Monto mínimo para envío gratis.")
+    discount_amount_by_litre = models.IntegerField(default = 0, verbose_name="Monto (CUP) de descuento por litro comprado")
     is_active = models.BooleanField(default=False, verbose_name = "Actual")
     updated = models.DateTimeField(auto_now=True)
     

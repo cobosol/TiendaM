@@ -154,6 +154,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
         checkout_form = PagarForm(request.POST, instance=order)
         order = checkout_form.save(commit=False)
         order.currency = 'USD'
+        order.is_cons_usd = True
         deliveryInfo = get_object_or_404(DeliveryInfo, client=request.user)
         cart_subtotal = cart.cart_subtotal(request)
         order.delivery_price = cart.cart_delivery_price(request, cart_subtotal, MND)
@@ -162,6 +163,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
         order = checkout_form.save(commit=False)
         if usd: # Guardo el tipo de moneda en efectivo
             order.currency = 'USD'
+            order.is_cons_usd = True
         elif cach:
             order.currency = 'CUP'
         else:
@@ -173,6 +175,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
             order.is_daily_summary = True
             if usd: # Guardo el tipo de moneda en efectivo
                 order.currency = 'USD'
+                order.is_cons_usd = True
             elif cach:
                 order.currency = 'CUP'
     else:
@@ -181,6 +184,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
             order = checkout_form.save(commit=False)
             if usd: # Guardo el tipo de moneda en efectivo
                 order.currency = 'USD'
+                order.is_cons_usd = True
             else:
                 order.currency = 'CUP'
                 order.delivery_price = store.price_cup
@@ -189,6 +193,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
                 checkout_form = CheckoutForm(request.POST, instance=order)
                 order = checkout_form.save(commit=False)
                 order.currency = 'USD'
+                order.is_cons_usd = True
                 deliveryInfo = get_object_or_404(DeliveryInfo, client=request.user)
                 order.delivery_price = deliveryInfo.calculate_deliveryHabana()
             else: # tarjetas nacionales
@@ -249,9 +254,9 @@ def create_order(request, transaction_id, usd = True, cach = False):
                 cart.apply_wallet_discount(request)
             request.session['wallet_discount'] = 0
             if MND == "CUP":
-                order.end_total = order.base_total + decimal.Decimal(order.delivery_price) - decimal.Decimal(order.wallet_discount)
+                order.end_total = order.base_total + decimal.Decimal(order.delivery_price) - decimal.Decimal(order.wallet_discount) - decimal.Decimal(order.discount)
             else:
-                order.end_total = order.base_total + decimal.Decimal(order.delivery_price) - decimal.Decimal(order.wallet_discount/120)
+                order.end_total = order.base_total + decimal.Decimal(order.delivery_price) - decimal.Decimal(order.wallet_discount/120) - decimal.Decimal(order.discount)
             try:
                 if request.session['active_coupon']:
                     coupon = CouponValidator.validate(request.session['active_coupon'],request.user)
@@ -267,9 +272,9 @@ def create_order(request, transaction_id, usd = True, cach = False):
             if check > 0:
                 order.cup_oficial = decimal.Decimal(round(order.total_items, 2))*Order.DOLLAR_CHANGE_OFFICIAL
             else:
+                order.consecutivo = Order.objects.filter(is_cons_usd = False).order_by('-pk').first().consecutivo + 1
+                order.is_cons_usd = False
                 order.cup_oficial = decimal.Decimal(round(order.total_reported, 2))                
-        order.save()
-        order.set_consecutivo()
         order.save()
 
         # all set, empty cart
@@ -372,6 +377,10 @@ def checkOrderSummary(id_order):
             elif payment.method == "CARD":
                 cards_amount = cards_amount + payment.amount
         efectivo = (order.total_items * Order.DOLLAR_CHANGE_OFFICIAL) - transfer_amount - cards_amount
+        print(f'transfer_amount {transfer_amount}')
+        print(f'cards_amount {cards_amount}')
+        t = order.total_items * Order.DOLLAR_CHANGE_OFFICIAL
+        print(f'total:  {t}')
         return (order.total_items * Order.DOLLAR_CHANGE_OFFICIAL) - transfer_amount - cards_amount
 
 def export_pdf(request, id_orden):
@@ -465,7 +474,7 @@ def export_pdf(request, id_orden):
     template = get_template(template_src)
     today = timezone.now()
     begin = today.replace(day=1, month=11, year=2025)
-    if today > begin:
+    if order.date > begin:
         data['id_order'] = str(order.consecutivo).zfill(6) # str(id_orden).zfill(6)
     else:
         data['id_order'] = str(id_orden).zfill(6)
@@ -511,9 +520,11 @@ def export_pdf(request, id_orden):
         data['coupon'] = order.coupon_percent 
     data['discount'] = '0'
     if order.others_discount:
-        data['discount'] = order.others_discount 
+        data['discount'] = order.others_discount
+    if order.discount != 0:
+        data['discount'] = order.discount 
     data['puntos'] = order.get_wallet_discount
-    data['monto_final'] = data['importe'] - data['puntos']
+    data['monto_final'] = data['importe'] - decimal.Decimal(data['puntos']) - decimal.Decimal(data['discount'])
     data['cup_oficial'] = order.cup_oficial
     context = {'data': data, 'orders': orders, 'request': request,'qr':qr_generado}
     response = HttpResponse(content_type='application/pdf')

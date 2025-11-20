@@ -162,6 +162,23 @@ class Product(models.Model):
         return self.price_base * price_actual.change_usd_mlc
     
     @property
+    def litres_units(self):
+        cap = ''
+        if 'granel' in self.presentation.lower():
+            return 1
+        for i in self.presentation:
+            try:
+                if int(i) or i == '0':
+                    cap += i
+            except:
+                break
+        print(f'capacidad: {cap}')
+        if cap.__len__() <= 2:
+            return int(cap)
+        else:
+            return int(cap)/1000
+    
+    @property
     def get_file_url(self):
         if self.prod_datasheet and hasattr(self.prod_datasheet, 'url'):
             return self.prod_datasheet.url

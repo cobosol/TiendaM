@@ -252,12 +252,14 @@ def remove_from_cart(request):
 
 # gets the total cost for the current cart
 def cart_subtotal(request, standard=True, mCUP=False):
+    print("Car subtotal")
     cart_total = decimal.Decimal('0.00')
     price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
     cart_products = get_cart_items(request)
     user = request.user
     MND = 'USD'
     TU = 'Comprador'
+    discount_by_litre = 0
     if (user.is_authenticated):
         profile = get_object_or_404(Profile, user = user)
         if mCUP:
@@ -269,11 +271,13 @@ def cart_subtotal(request, standard=True, mCUP=False):
         for cart_item in cart_products:
             cart_total += cart_item.total_USD()
         min_quantity_amount = price.min_quantity_amount
+        discount_by_litre = price.discount_amount_by_litre / price.change_usd_cup
     elif MND == 'CUP':
         for cart_item in cart_products:
             cart_total += cart_item.total_CUP()
         min_quantity_amount = price.min_quantity_amount*price.change_usd_cup
-    else:
+        discount_by_litre = price.discount_amount_by_litre
+    else: # MLC deprecated
         for cart_item in cart_products:
             cart_total += cart_item.total_MLC()
         min_quantity_amount = price.min_quantity_amount*price.change_usd_mlc
