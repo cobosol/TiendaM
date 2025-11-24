@@ -1,0 +1,58 @@
+{% load static %}
+{% load estrellas_tags %}
+
+<div class="col-lg-2 sidebar bg-light p-3">
+    <div class="d-inline-flex justify-content-center">
+        <img class="flex-grow-2 text-center" id="logo" src={% static "img/LogoNavidad1.jpeg" %} width="70%" href="https://produccionesmuhia.ca"></a>
+    </div>
+    <div class="clasificacion-cliente">
+        <h6>Bienvenido {% if user.is_authenticated %} {{user}} {% endif %}</h6>
+        <a href="/pagina/4/">
+        <div class="estrellas">
+            {% if user.is_authenticated %}
+                {% mostrar_estrellas user %}
+            {% else %}
+                ☆☆☆☆☆
+            {% endif %}
+        </div>
+        </a>
+    </div>
+    <div class="accordion" id="sidebarMenu">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#categoriesCollapse">
+                    <i class="fas fa-list me-2"></i> Categorías
+                </button>
+            </h2>
+            <div id="categoriesCollapse" class="accordion-collapse collapse show">
+                <div class="accordion-body p-0">
+                    <div class="list-group list-group-flush">
+                        <h6 class="list-group-item list-group-item-action bg-primary text-light"> <strong>Productos </strong></h6>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for c in active_categories %}
+                            {% if not c.is_feedstock %}
+                                <a href="{{c.get_absolute_url}}" class="list-group-item list-group-item-action">{{c.name}}</a> 
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <h6 class="list-group-item list-group-item-action bg-primary text-light"> <strong>Materias primas </strong></h6>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% for c in active_categories %}
+                            {% if c.is_feedstock %}
+                                <a href="{{c.get_absolute_url}}" class="list-group-item list-group-item-action">{{c.name}}</a> 
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <h6>Contacto</h6>
+        <p class="small">Tel: +53 5 988 0466 <br>Email: muhia@produccionesmuhia.ca</p>
+    </div>
+</div>
