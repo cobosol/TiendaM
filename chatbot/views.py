@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 import json
+import logging
 
 @csrf_exempt  # Solo si necesitas deshabilitar CSRF para esta vista
 @require_POST
@@ -47,8 +48,9 @@ def chat_query(request):
             status=400
         )
     except Exception as e:
+        logging.exception("Unhandled exception in chat_query")
         return JsonResponse(
-            {'error': f'Error del servidor: {str(e)}'}, 
+            {'error': 'Error interno del servidor'}, 
             status=500
         )
 # Create your views here.

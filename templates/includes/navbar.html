@@ -1,0 +1,125 @@
+{% load static %}
+{% load catalog_tags %}
+
+<nav class="navbar navbar-expand-lg navbar-ligth bg-secondary sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <i class="fas fa-store me-2"></i>Tienda MUHIA
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="fas fa-bars"></span>
+        </button>
+        
+        <button class="btn btn-outline-dark sidebar-toggle ms-2 d-lg-none" type="button">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <form class="d-flex me-auto my-2 my-lg-0 ms-lg-3" method="post" action=".">
+                {% csrf_token %}
+                <input class="form-control me-2" type="search" name="producto" placeholder="Buscar productos..." aria-label="Search">
+                <button class="btn btn-outline-ligth" type="submit" name="submit" value="Buscar"><i class="fas fa-search"></i></button>
+            </form>
+            
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'catalogo_productos'%}"><i class="fas fa-briefcase me-1"></i> Catálogo </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://produccionesmuhia.ca"><i class="fas fa-home me-1"></i> Nosotros </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-shopping-basket me-1"></i> Compras
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="/carrito/carrito/"><i class="fas fa-shopping-cart me-2"></i>Carrito</a></li>
+                        <li><a class="dropdown-item" href="/compra/compras/"><i class="fas fa-box me-2"></i>Compras</a></li>
+                    </ul>
+                </li>   
+                {% if request.user.is_staff or comercial == 'True' or marketing == 'True'%}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-cog me-1"></i> Admin
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% if comercial == 'True' or request.user.is_staff or vendedor == 'True' %}
+                        <li> <a href="{% url 'ordenes' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-shopping-cart me-2"></i>Órdenes de compra</i></a></li>                               
+                        {% endif %}
+                        {% if request.user.is_staff %}
+                            <li> <a href="{% url 'ventas' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-chart-bar me-2"></i>Reportes</i></a></li>
+                        {% endif %}
+                        {% if vendedor == 'True' or request.user.is_staff or comercial == 'True'%}
+                            <li> <a href="{% url 'gestion' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-boxes me-2"></i>Gestionar inventarios</i></a></li>
+                        {% endif %}
+                        {% if request.user.is_staff %}
+                            <li> <a href="{% url 'configuraciones' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-cog me-2"></i>Configuraciones</i></a></li>
+                        {% endif %}
+                        {% if marketing == 'True' or request.user.is_staff %}
+                            <li> <a href="{% url 'marketing' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-bullhorn me-2"></i>Marketing</i></a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+            
+    
+
+            <ul class="navbar-nav">
+                <li class="nav-item me-2">
+                    <a class="nav-link position-relative" href="/carrito/carrito/">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count"> {% cart_box request %}</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user me-1"></i> Cuenta
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        {% if not request.user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'login' %}?next={{ request.path }}"><i class="fas fa-sign-in-alt me-2"></i>Entrar</a></li>
+                        <li><a class="dropdown-item" href="{% url 'registro' %}"><i class="fas fa-user-plus me-2"></i>Registrarse</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-user me-2"></i>Perfil</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Salir</a></li>                            
+                        {% endif %}
+                    </ul>
+                </li>
+            </ul>
+            
+            <div id="notifications-container" style="position: relative; display: inline-block;">
+                <button id="notifications-bell" class="btn btn-light">
+                    <i class="fas fa-bell"></i>
+                    <span id="unread-count" class="badge bg-danger">
+                        {{ unread_count }}
+                    </span>
+                </button>
+            
+                <div id="notifications-panel" style="display: none; position: absolute; right: 0; width: 350px; max-height: 500px; overflow-y: auto; z-index: 1000; background: white; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                    <div class="d-flex justify-content-between p-2 border-bottom">
+                        <h6 class="m-0">Notificaciones</h6>
+                        <button id="mark-all-read" class="btn btn-sm btn-link">Marcar todas como leídas</button>
+                    </div>
+                    <div id="notifications-list" class="list-group list-group-flush">
+                        </div>
+                </div>
+            </div>
+            <div style="padding-left: 2ch;">                    
+                <form method="post" action="{% url 'update_mnd' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <select name="mnd" onchange="this.form.submit()">
+                    {% for value, label in MONEY_TYPE %}
+                        <option value="{{ value }}" 
+                            {% if MND == label %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>

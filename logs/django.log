@@ -3887,3 +3887,427 @@ WARNING 2025-11-20 00:01:35,287 log 10381 139656320927488 Not Found: /media/Prod
 WARNING 2025-11-20 00:01:35,289 basehttp 10381 139656320927488 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
 INFO 2025-11-20 00:01:39,773 basehttp 10381 139656320927488 "GET /carrito/carrito/ HTTP/1.1" 200 53200
 INFO 2025-11-20 00:02:24,572 basehttp 10381 139656320927488 "POST /carrito/carrito/ HTTP/1.1" 200 53200
+INFO 2025-11-20 00:17:11,907 basehttp 10381 139656320927488 "POST /carrito/carrito/ HTTP/1.1" 200 53200
+INFO 2025-11-20 00:17:54,336 basehttp 10381 139656320927488 "GET /catalogo/categoria/higiene-personal/ HTTP/1.1" 200 59931
+WARNING 2025-11-20 00:17:54,596 log 10381 139656320927488 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-11-20 00:17:54,597 basehttp 10381 139656320927488 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-11-20 00:18:04,205 basehttp 10381 139656320927488 "GET /catalogo/categoria/higiene_hogar/ HTTP/1.1" 200 68403
+INFO 2025-11-20 00:18:04,479 basehttp 10381 139656230336256 "GET /media/Productos/DetBlanqueador1L.webp HTTP/1.1" 200 19464
+INFO 2025-11-20 00:18:10,795 basehttp 10381 139656221943552 "GET /catalogo/categoria/tensoactivos/ HTTP/1.1" 200 46151
+INFO 2025-11-20 08:29:20,236 autoreload 3579 140472092034880 Watching for file changes with StatReloader
+INFO 2025-11-20 08:32:17,944 basehttp 3579 140471922071296 "GET / HTTP/1.1" 200 64967
+INFO 2025-11-20 08:32:18,306 basehttp 3579 140471922071296 "GET /static/css/style.css HTTP/1.1" 200 176726
+INFO 2025-11-20 08:32:18,540 basehttp 3579 140471911700224 "GET /media/Productos/AutoEscudo240ml.webp HTTP/1.1" 200 29034
+INFO 2025-11-20 08:32:18,540 basehttp 3579 140471922071296 "GET /media/Productos/Aroma1L.webp HTTP/1.1" 200 29670
+INFO 2025-11-20 08:32:18,598 basehttp 3579 140471886522112 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 200 43160
+INFO 2025-11-20 08:32:18,626 basehttp 3579 140471903307520 "GET /static/img/LogoStrech.png HTTP/1.1" 200 254597
+INFO 2025-11-20 08:32:18,627 basehttp 3579 140471894914816 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 200 45040
+INFO 2025-11-20 08:32:18,709 basehttp 3579 140471535924992 "GET /media/Productos/Acond240ml.webp HTTP/1.1" 200 22936
+INFO 2025-11-20 08:36:08,154 autoreload 4468 140469039245120 Watching for file changes with StatReloader
+INFO 2025-11-20 08:36:21,683 basehttp 4468 140468869867264 "GET / HTTP/1.1" 200 64967
+INFO 2025-11-20 08:36:38,525 basehttp 4468 140468869867264 "GET / HTTP/1.1" 200 64967
+INFO 2025-11-20 08:38:08,916 basehttp 4468 140468869867264 "GET / HTTP/1.1" 200 64967
+INFO 2025-11-20 08:38:12,229 basehttp 4468 140468869867264 "GET /catalogo/catalogo/ HTTP/1.1" 200 60052
+WARNING 2025-11-20 08:38:13,090 log 4468 140468776068864 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-11-20 08:38:13,092 basehttp 4468 140468776068864 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-11-20 08:38:30,182 basehttp 4468 140468869867264 "GET /catalogo/catalogo/ HTTP/1.1" 200 59966
+INFO 2025-11-20 08:41:26,585 autoreload 4468 140469039245120 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/tienda/settings.py changed, reloading.
+INFO 2025-11-20 08:41:28,755 autoreload 5072 140276132185920 Watching for file changes with StatReloader
+INFO 2025-11-20 08:41:36,640 autoreload 5072 140276132185920 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-11-20 08:41:38,066 autoreload 5125 140518194120512 Watching for file changes with StatReloader
+INFO 2025-11-20 08:41:49,970 basehttp 5125 140518024107776 "GET / HTTP/1.1" 200 69681
+INFO 2025-11-20 08:41:50,710 basehttp 5125 140518005606144 "GET /static/js/chatbot_http.js HTTP/1.1" 200 18053
+INFO 2025-11-20 08:41:50,712 basehttp 5125 140518013998848 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 200 43160
+INFO 2025-11-20 08:41:50,712 basehttp 5125 140518024107776 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 200 45040
+WARNING 2025-11-20 08:42:19,497 log 5125 140518024107776 Not Found: /chatbot/api/chatbot/
+WARNING 2025-11-20 08:42:19,499 basehttp 5125 140518024107776 "POST /chatbot/api/chatbot/ HTTP/1.1" 404 3908
+INFO 2025-11-20 08:43:42,876 autoreload 5125 140518194120512 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-11-20 08:43:44,695 autoreload 5352 139643139082048 Watching for file changes with StatReloader
+INFO 2025-11-20 08:43:51,123 basehttp 5352 139642970740480 "GET / HTTP/1.1" 200 69687
+INFO 2025-11-20 08:43:51,254 basehttp 5352 139642970740480 "GET /static/js/chatbot_http.js HTTP/1.1" 304 0
+INFO 2025-11-20 08:49:09,614 autoreload 5352 139643139082048 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-11-20 08:49:12,078 autoreload 5675 140280962123584 Watching for file changes with StatReloader
+INFO 2025-11-20 08:49:18,350 basehttp 5675 140280793487104 "GET / HTTP/1.1" 200 76058
+INFO 2025-11-20 08:49:18,451 basehttp 5675 140280793487104 "GET /static/js/chatbot_http.js HTTP/1.1" 304 0
+WARNING 2025-11-20 08:49:41,420 log 5675 140280793487104 Not Found: /chatbot/api/chatbot/
+WARNING 2025-11-20 08:49:41,421 basehttp 5675 140280793487104 "POST /chatbot/api/chatbot/ HTTP/1.1" 404 3908
+INFO 2025-11-20 08:51:04,504 autoreload 5675 140280962123584 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-11-20 08:51:06,579 autoreload 5864 140302541064000 Watching for file changes with StatReloader
+INFO 2025-11-20 08:51:11,509 basehttp 5864 140302372738816 "GET / HTTP/1.1" 200 76070
+INFO 2025-11-20 08:51:11,627 basehttp 5864 140302372738816 "GET /static/js/chatbot_http.js HTTP/1.1" 304 0
+INFO 2025-11-20 08:51:39,843 autoreload 6034 140622796425024 Watching for file changes with StatReloader
+INFO 2025-11-20 08:51:46,690 basehttp 6034 140622627247872 "GET / HTTP/1.1" 200 76070
+INFO 2025-11-20 16:24:57,096 autoreload 2772 140444076107584 Watching for file changes with StatReloader
+INFO 2025-11-20 16:26:10,676 basehttp 2772 140443906164480 "GET / HTTP/1.1" 200 76070
+INFO 2025-11-20 16:26:12,256 basehttp 2772 140443906164480 "GET /static/css/style.css HTTP/1.1" 200 176726
+INFO 2025-11-20 16:26:12,257 basehttp 2772 140443896198912 "GET /static/js/chatbot_http.js HTTP/1.1" 200 18053
+INFO 2025-11-20 16:26:12,918 basehttp 2772 140443896198912 "GET /media/Productos/Acond240ml.webp HTTP/1.1" 200 22936
+INFO 2025-11-20 16:26:13,564 basehttp 2772 140443906164480 "GET /media/Productos/Aroma1L.webp HTTP/1.1" 200 29670
+INFO 2025-11-20 16:26:13,642 basehttp 2772 140443811571456 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 200 45040
+INFO 2025-11-20 16:26:13,835 basehttp 2772 140443819964160 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 200 43160
+INFO 2025-11-20 16:26:13,837 basehttp 2772 140443794786048 "GET /media/Productos/AutoEscudo240ml.webp HTTP/1.1" 200 29034
+INFO 2025-11-20 16:29:20,867 autoreload 2772 140444076107584 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-11-20 16:29:23,104 autoreload 3459 139848367798080 Watching for file changes with StatReloader
+INFO 2025-11-20 16:29:31,390 basehttp 3459 139848198592256 "GET / HTTP/1.1" 200 76495
+WARNING 2025-11-20 16:30:06,952 log 3459 139848198592256 Not Found: /chatbot/api/chatbot/
+WARNING 2025-11-20 16:30:06,954 basehttp 3459 139848198592256 "POST /chatbot/api/chatbot/ HTTP/1.1" 404 3908
+INFO 2025-11-20 16:31:20,575 basehttp 3459 139848198592256 "GET /catalogo/catalogo/ HTTP/1.1" 200 71580
+WARNING 2025-11-20 16:31:20,857 log 3459 139848198592256 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-11-20 16:31:20,858 basehttp 3459 139848198592256 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+WARNING 2025-11-20 16:31:21,008 log 3459 139848198592256 Not Found: /catalogo/catalogo/assets/favicon.ico
+WARNING 2025-11-20 16:31:21,021 basehttp 3459 139848198592256 "GET /catalogo/catalogo/assets/favicon.ico HTTP/1.1" 404 8163
+INFO 2025-11-20 16:32:25,014 autoreload 3459 139848367798080 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-11-20 16:32:26,829 autoreload 3787 139626578155328 Watching for file changes with StatReloader
+INFO 2025-11-20 16:33:01,150 basehttp 3787 139626408253184 "GET /catalogo/catalogo/ HTTP/1.1" 200 71580
+WARNING 2025-11-20 16:33:01,297 log 3787 139626391467776 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-11-20 16:33:01,302 basehttp 3787 139626391467776 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-11-20 16:33:28,569 basehttp 3787 139626408253184 "GET /catalogo/categoria/higiene-personal/ HTTP/1.1" 200 71459
+WARNING 2025-11-20 16:33:28,682 log 3787 139626391467776 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-11-20 16:33:28,686 basehttp 3787 139626391467776 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+WARNING 2025-11-20 16:33:28,804 log 3787 139626391467776 Not Found: /catalogo/categoria/higiene-personal/assets/favicon.ico
+WARNING 2025-11-20 16:33:28,805 basehttp 3787 139626391467776 "GET /catalogo/categoria/higiene-personal/assets/favicon.ico HTTP/1.1" 404 8217
+INFO 2025-11-20 16:33:37,660 basehttp 3787 139626408253184 "GET / HTTP/1.1" 200 76495
+INFO 2025-11-20 16:42:00,756 basehttp 3787 139626408253184 "GET /catalogo/gestion/ HTTP/1.1" 200 54645
+WARNING 2025-11-20 16:42:00,955 log 3787 139626408253184 Not Found: /catalogo/gestion/assets/favicon.ico
+WARNING 2025-11-20 16:42:00,956 basehttp 3787 139626408253184 "GET /catalogo/gestion/assets/favicon.ico HTTP/1.1" 404 8160
+INFO 2025-11-20 16:42:27,570 basehttp 3787 139626408253184 "GET /carrito/carrito/ HTTP/1.1" 200 64728
+WARNING 2025-11-20 16:42:28,143 log 3787 139626408253184 Not Found: /carrito/carrito/assets/favicon.ico
+WARNING 2025-11-20 16:42:28,150 basehttp 3787 139626408253184 "GET /carrito/carrito/assets/favicon.ico HTTP/1.1" 404 4022
+INFO 2025-11-20 16:51:44,647 autoreload 3787 139626578155328 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-11-20 16:51:53,460 autoreload 4563 140623172802368 Watching for file changes with StatReloader
+INFO 2025-11-20 16:52:06,230 basehttp 4563 140623000631040 "GET / HTTP/1.1" 200 76475
+WARNING 2025-11-20 16:52:06,551 log 4563 140623000631040 Not Found: /assets/favicon.ico
+INFO 2025-11-20 17:01:18,626 autoreload 4563 140623172802368 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-11-20 17:01:20,541 autoreload 4880 139906150831936 Watching for file changes with StatReloader
+INFO 2025-11-20 17:01:25,528 basehttp 4880 139905981945600 "GET / HTTP/1.1" 200 76481
+INFO 2025-11-20 17:04:13,381 basehttp 4880 139905981945600 "GET / HTTP/1.1" 200 76481
+INFO 2025-11-20 17:05:03,112 autoreload 5101 140485959288640 Watching for file changes with StatReloader
+INFO 2025-11-20 17:05:10,052 basehttp 5101 140485790439168 "GET / HTTP/1.1" 200 76481
+INFO 2025-11-20 17:05:59,568 autoreload 5101 140485959288640 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-11-20 17:06:01,066 autoreload 5202 140118102894400 Watching for file changes with StatReloader
+INFO 2025-11-20 17:06:11,255 basehttp 5202 140117932992256 "GET / HTTP/1.1" 200 76487
+INFO 2025-11-20 17:07:15,777 autoreload 5202 140118102894400 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-11-20 17:07:17,568 autoreload 5301 140533875107648 Watching for file changes with StatReloader
+INFO 2025-11-20 17:08:36,084 basehttp 5301 140533705201408 "GET /notification/unread/ HTTP/1.1" 200 2
+INFO 2025-11-20 17:08:50,511 basehttp 5301 140533705201408 "GET /carrito/carrito/ HTTP/1.1" 200 64738
+INFO 2025-11-20 17:10:46,041 basehttp 5301 140533694830336 "GET /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-11-20 17:10:46,408 basehttp 5301 140533694830336 "GET /accounts/login/ HTTP/1.1" 200 53222
+INFO 2025-11-20 17:11:50,155 basehttp 5301 140533705201408 "GET /compra/ventas/ HTTP/1.1" 200 55347
+WARNING 2025-11-20 17:11:50,453 log 5301 140533705201408 Not Found: /compra/ventas/assets/favicon.ico
+WARNING 2025-11-20 17:11:50,454 basehttp 5301 140533705201408 "GET /compra/ventas/assets/favicon.ico HTTP/1.1" 404 10069
+INFO 2025-11-20 17:11:56,186 basehttp 5301 140533705201408 "GET /compra/compras/ HTTP/1.1" 200 361428
+WARNING 2025-11-20 17:11:56,452 log 5301 140533705201408 Not Found: /compra/compras/assets/favicon.ico
+WARNING 2025-11-20 17:11:56,460 basehttp 5301 140533705201408 "GET /compra/compras/assets/favicon.ico HTTP/1.1" 404 10072
+INFO 2025-11-20 17:12:08,993 basehttp 5301 140533705201408 "GET /compra/compras/?csrfmiddlewaretoken=9uTQfzqvXj4tI4ipSEW9KjdfSVRzUytsA1Rqxacrw9oCQli11OlWqOnDxcAaWWoQ&status=&store_name=&currency= HTTP/1.1" 200 361428
+INFO 2025-11-20 17:12:18,020 basehttp 5301 140533705201408 "GET /notification/unread/ HTTP/1.1" 200 2
+INFO 2025-11-21 09:42:17,806 autoreload 3205 140638229485376 Watching for file changes with StatReloader
+INFO 2025-11-21 11:45:31,235 basehttp 3205 140638059509504 "GET / HTTP/1.1" 200 76505
+INFO 2025-11-21 11:45:34,614 basehttp 3205 140638041413376 "GET /static/js/chatbot_http.js HTTP/1.1" 304 0
+WARNING 2025-11-21 11:45:37,097 log 3205 140638041413376 Not Found: /assets/favicon.ico
+INFO 2025-11-21 11:47:36,893 basehttp 3205 140638041413376 "GET / HTTP/1.1" 200 76505
+INFO 2025-11-21 11:48:17,611 basehttp 3205 140638059509504 "GET /carrito/carrito/ HTTP/1.1" 200 64738
+INFO 2025-11-21 11:51:02,211 basehttp 3205 140638049806080 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-11-21 11:51:03,609 basehttp 3205 140638041413376 "GET /compra/facturar/ HTTP/1.1" 200 58741
+WARNING 2025-11-21 11:51:04,054 log 3205 140638059509504 Not Found: /compra/facturar/assets/favicon.ico
+WARNING 2025-11-21 11:51:04,060 basehttp 3205 140638059509504 "GET /compra/facturar/assets/favicon.ico HTTP/1.1" 404 10075
+INFO 2025-11-21 11:52:53,841 basehttp 3205 140638041413376 "POST /compra/facturar/ HTTP/1.1" 302 0
+INFO 2025-11-21 11:52:53,882 basehttp 3205 140638041413376 "GET /compra/recibo/ HTTP/1.1" 302 0
+INFO 2025-11-21 11:52:55,061 basehttp 3205 140638041413376 "GET /carrito/carrito/ HTTP/1.1" 200 60098
+INFO 2025-11-21 11:53:09,162 basehttp 3205 140638041413376 "GET /compra/compras/ HTTP/1.1" 200 362474
+INFO 2025-11-21 11:53:47,812 basehttp 3205 140638041413376 "GET /compra/ordenes/ HTTP/1.1" 200 54445
+WARNING 2025-11-21 11:53:48,009 log 3205 140638041413376 Not Found: /compra/ordenes/assets/favicon.ico
+WARNING 2025-11-21 11:53:48,017 basehttp 3205 140638041413376 "GET /compra/ordenes/assets/favicon.ico HTTP/1.1" 404 10072
+INFO 2025-11-21 11:53:53,161 basehttp 3205 140638059509504 "GET /compra/gestion/ HTTP/1.1" 200 465914
+WARNING 2025-11-21 11:53:53,781 log 3205 140638059509504 Not Found: /compra/gestion/assets/favicon.ico
+WARNING 2025-11-21 11:53:53,782 basehttp 3205 140638059509504 "GET /compra/gestion/assets/favicon.ico HTTP/1.1" 404 10072
+INFO 2025-11-21 11:54:03,628 basehttp 3205 140638059509504 "POST /compra/gestion/ HTTP/1.1" 200 382156
+INFO 2025-11-21 11:59:15,550 basehttp 3205 140638059509504 "GET /compra/configuraciones/ HTTP/1.1" 200 54617
+WARNING 2025-11-21 11:59:15,781 log 3205 140638059509504 Not Found: /compra/configuraciones/assets/favicon.ico
+WARNING 2025-11-21 11:59:15,782 basehttp 3205 140638059509504 "GET /compra/configuraciones/assets/favicon.ico HTTP/1.1" 404 10096
+INFO 2025-11-21 11:59:21,216 basehttp 3205 140638059509504 "GET /precio/ HTTP/1.1" 200 59051
+WARNING 2025-11-21 11:59:21,453 log 3205 140638059509504 Not Found: /precio/assets/favicon.ico
+WARNING 2025-11-21 11:59:21,454 basehttp 3205 140638059509504 "GET /precio/assets/favicon.ico HTTP/1.1" 404 4569
+INFO 2025-11-21 12:00:03,444 basehttp 3205 140638059509504 "GET /precio/editar/3 HTTP/1.1" 200 60432
+WARNING 2025-11-21 12:00:03,638 log 3205 140638059509504 Not Found: /precio/editar/assets/favicon.ico
+WARNING 2025-11-21 12:00:03,639 basehttp 3205 140638059509504 "GET /precio/editar/assets/favicon.ico HTTP/1.1" 404 4590
+INFO 2025-11-21 12:02:17,496 basehttp 3205 140638059509504 "GET /catalogo/categoria/linea-automotriz/ HTTP/1.1" 200 66029
+WARNING 2025-11-21 12:02:17,716 log 3205 140638059509504 Not Found: /catalogo/categoria/linea-automotriz/assets/favicon.ico
+WARNING 2025-11-21 12:02:17,718 basehttp 3205 140638059509504 "GET /catalogo/categoria/linea-automotriz/assets/favicon.ico HTTP/1.1" 404 8217
+INFO 2025-11-21 12:05:14,878 basehttp 3205 140638059509504 "POST /catalogo/categoria/linea-automotriz/ HTTP/1.1" 200 66504
+INFO 2025-11-21 12:06:08,872 basehttp 3205 140638059509504 "POST /catalogo/categoria/linea-automotriz/ HTTP/1.1" 200 66504
+INFO 2025-11-21 12:06:12,015 basehttp 3205 140638059509504 "GET /carrito/carrito/ HTTP/1.1" 200 69285
+INFO 2025-11-21 12:06:13,480 basehttp 3205 140638059509504 "GET /carrito/carrito/ HTTP/1.1" 200 69285
+INFO 2025-11-21 12:11:50,121 basehttp 3205 140638059509504 "POST /carrito/carrito/ HTTP/1.1" 200 69285
+INFO 2025-11-21 12:15:05,399 basehttp 3205 140638059509504 "POST /carrito/carrito/ HTTP/1.1" 200 69285
+INFO 2025-11-21 12:16:28,413 basehttp 3205 140638059509504 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-11-21 12:16:29,398 basehttp 3205 140638059509504 "GET /compra/facturar/ HTTP/1.1" 200 58745
+WARNING 2025-11-21 12:16:29,871 log 3205 140638059509504 Not Found: /compra/facturar/assets/favicon.ico
+WARNING 2025-11-21 12:16:47,607 log 3205 140638059509504 Not Found: /favicon.ico
+INFO 2025-11-21 12:16:53,131 basehttp 3205 140638041413376 "GET /carrito/carrito/ HTTP/1.1" 200 69285
+INFO 2025-11-21 12:18:21,576 basehttp 3205 140638041413376 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-11-21 12:18:22,523 basehttp 3205 140638041413376 "GET /compra/pagar/ HTTP/1.1" 200 60677
+WARNING 2025-11-21 12:18:22,794 log 3205 140638041413376 Not Found: /compra/pagar/assets/favicon.ico
+WARNING 2025-11-21 12:18:22,795 basehttp 3205 140638041413376 "GET /compra/pagar/assets/favicon.ico HTTP/1.1" 404 10066
+INFO 2025-11-21 12:18:39,336 basehttp 3205 140638041413376 "POST /compra/pagar/ HTTP/1.1" 302 0
+INFO 2025-11-21 12:18:39,534 basehttp 3205 140638041413376 "GET /compra/transfer/624/ HTTP/1.1" 200 56503
+WARNING 2025-11-21 12:18:39,841 log 3205 140638041413376 Not Found: /compra/transfer/624/assets/favicon.ico
+WARNING 2025-11-21 12:18:39,842 basehttp 3205 140638041413376 "GET /compra/transfer/624/assets/favicon.ico HTTP/1.1" 404 10087
+INFO 2025-11-21 12:18:46,065 basehttp 3205 140638041413376 "GET /compra/ordenes/ HTTP/1.1" 200 54445
+INFO 2025-11-21 12:18:48,747 basehttp 3205 140638041413376 "GET /compra/gestion/ HTTP/1.1" 200 467521
+WARNING 2025-11-21 12:18:49,069 log 3205 140638041413376 Not Found: /compra/gestion/assets/favicon.ico
+INFO 2025-11-21 12:18:54,634 basehttp 3205 140638041413376 "POST /compra/gestion/ HTTP/1.1" 200 382354
+INFO 2025-11-22 20:57:27,326 autoreload 3626 140469632399168 Watching for file changes with StatReloader
+INFO 2025-11-22 21:20:38,062 basehttp 3626 140469455550208 "GET / HTTP/1.1" 200 76505
+INFO 2025-11-22 21:20:38,526 basehttp 3626 140469455550208 "GET /static/js/chatbot_http.js HTTP/1.1" 304 0
+WARNING 2025-11-22 21:20:41,711 log 3626 140469455550208 Not Found: /assets/favicon.ico
+INFO 2025-11-22 21:20:47,335 basehttp 3626 140469447157504 "GET /catalogo/gestion/ HTTP/1.1" 200 54655
+INFO 2025-11-22 21:20:51,244 basehttp 3626 140469447157504 "GET /catalogo/productos/ HTTP/1.1" 200 78552
+WARNING 2025-11-22 21:20:51,496 log 3626 140469438764800 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-11-22 21:20:51,501 basehttp 3626 140469438764800 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-11-22 21:20:51,826 basehttp 3626 140469430372096 "GET /media/Productos/ChampuAGranel.webp HTTP/1.1" 200 104464
+INFO 2025-11-22 21:20:51,827 basehttp 3626 140469447157504 "GET /static/img/prod_Default.webp HTTP/1.1" 200 24102
+INFO 2025-11-22 21:20:51,907 basehttp 3626 140469430372096 "GET /media/Productos/IMG_9515.jpg HTTP/1.1" 304 0
+INFO 2025-11-22 21:20:51,935 basehttp 3626 140469430372096 "GET /media/Productos/IMG_9512.jpg HTTP/1.1" 304 0
+INFO 2025-11-22 21:20:52,039 basehttp 3626 140469438764800 "GET /media/Productos/p_LiquidoDeFreno_500ml.jpg HTTP/1.1" 304 0
+INFO 2025-11-22 21:20:52,039 basehttp 3626 140469430372096 "GET /media/Productos/p_GelAnticalcareo_1l.jpg HTTP/1.1" 304 0
+WARNING 2025-11-22 21:20:52,304 log 3626 140469430372096 Not Found: /catalogo/productos/assets/favicon.ico
+WARNING 2025-11-22 21:20:52,312 basehttp 3626 140469430372096 "GET /catalogo/productos/assets/favicon.ico HTTP/1.1" 404 8166
+INFO 2025-11-22 21:21:03,221 basehttp 3626 140469430372096 "GET /catalogo/productos/editar/11 HTTP/1.1" 200 68799
+WARNING 2025-11-22 21:21:03,403 log 3626 140469430372096 Not Found: /catalogo/productos/editar/assets/favicon.ico
+WARNING 2025-11-22 21:21:03,405 basehttp 3626 140469430372096 "GET /catalogo/productos/editar/assets/favicon.ico HTTP/1.1" 404 8187
+INFO 2025-11-22 21:21:55,827 basehttp 3626 140469430372096 "POST /catalogo/productos/editar/11 HTTP/1.1" 302 0
+INFO 2025-11-22 21:21:56,052 basehttp 3626 140469430372096 "GET /catalogo/productos/ HTTP/1.1" 200 79095
+INFO 2025-11-22 21:21:56,163 basehttp 3626 140469430372096 "GET /media/Productos/Deteregente_A_granel.jpeg HTTP/1.1" 200 38532
+WARNING 2025-11-22 21:21:56,256 log 3626 140469438764800 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-11-22 21:21:56,267 basehttp 3626 140469438764800 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-11-22 22:00:23,894 autoreload 7771 140196394358592 Watching for file changes with StatReloader
+INFO 2025-11-22 22:01:11,101 autoreload 7979 140462399395648 Watching for file changes with StatReloader
+INFO 2025-11-22 22:01:52,451 basehttp 7979 140462229489408 "GET /catalogo/productos/ HTTP/1.1" 200 78574
+INFO 2025-11-22 22:01:54,267 basehttp 7979 140462140684032 "GET /media/Productos/Deteregente_A_granel.jpeg HTTP/1.1" 200 38532
+INFO 2025-11-22 22:01:54,269 basehttp 7979 140462229489408 "GET /static/img/LogoNavidad1.jpeg HTTP/1.1" 200 78528
+WARNING 2025-11-22 22:01:54,689 log 7979 140462219642624 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-11-22 22:01:54,693 log 7979 140462140684032 Not Found: /catalogo/productos/assets/favicon.ico
+WARNING 2025-11-22 22:01:54,693 basehttp 7979 140462219642624 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-11-22 22:02:33,884 autoreload 7979 140462399395648 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-11-22 22:02:46,295 autoreload 8133 140154494838592 Watching for file changes with StatReloader
+INFO 2025-11-22 22:02:52,986 basehttp 8133 140154325673728 "GET /catalogo/productos/ HTTP/1.1" 200 78574
+WARNING 2025-11-22 22:02:53,110 log 8133 140154325673728 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-11-22 22:02:53,120 basehttp 8133 140154325673728 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-11-23 22:17:02,376 autoreload 4988 140027917752128 Watching for file changes with StatReloader
+INFO 2025-11-24 07:56:45,393 autoreload 3272 139975671727936 Watching for file changes with StatReloader
+INFO 2025-11-24 08:08:29,347 autoreload 3272 139975671727936 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-11-24 08:08:49,563 autoreload 4238 140268337903424 Watching for file changes with StatReloader
+INFO 2025-11-24 08:11:19,008 basehttp 4238 140268167960320 "GET / HTTP/1.1" 200 76157
+INFO 2025-11-24 08:11:22,048 basehttp 4238 140267902453504 "GET /static/js/chatbot_http.js HTTP/1.1" 304 0
+INFO 2025-11-24 08:11:22,251 basehttp 4238 140267910846208 "GET /static/img/LogoNavidad1.jpeg HTTP/1.1" 200 78528
+WARNING 2025-11-24 08:11:24,404 log 4238 140267910846208 Not Found: /assets/favicon.ico
+WARNING 2025-11-24 08:12:00,200 log 4238 140267902453504 Not Found: /chatbot/api/chatbot/
+WARNING 2025-11-24 08:12:00,204 basehttp 4238 140267902453504 "POST /chatbot/api/chatbot/ HTTP/1.1" 404 3908
+INFO 2025-11-24 08:21:32,365 autoreload 4238 140268337903424 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/includes changed, reloading.
+INFO 2025-11-24 08:21:51,597 autoreload 5320 140382449751872 Watching for file changes with StatReloader
+INFO 2025-11-24 08:22:48,633 autoreload 5320 140382449751872 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/includes changed, reloading.
+INFO 2025-11-24 08:22:51,139 autoreload 5470 139947178317632 Watching for file changes with StatReloader
+INFO 2025-11-24 08:23:12,363 autoreload 5470 139947178317632 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-11-24 08:23:14,125 autoreload 5551 140111726815040 Watching for file changes with StatReloader
+ERROR 2025-11-24 08:23:24,649 log 5551 140111556945664 Internal Server Error: /
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 470, in parse
+    compile_func = self.tags[command]
+KeyError: 'cart_box'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/tienda/views.py", line 43, in index_view
+    return render(request, 'index.html', {'products':products, 'banners':banners, 'bestsellers':bestsellers, 'offer1':offer1, 'offer2':offer2, 'profile':profile})
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader_tags.py", line 183, in render
+    template = context.template.engine.select_template(template_name)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/engine.py", line 174, in select_template
+    return self.get_template(template_name)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/engine.py", line 143, in get_template
+    template, origin = self.find_template(template_name)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/engine.py", line 125, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loaders/base.py", line 29, in get_template
+    return Template(
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 155, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 193, in compile_nodelist
+    return parser.parse()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 472, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 531, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 70: 'cart_box'. Did you forget to register or load this tag?
+ERROR 2025-11-24 08:23:24,674 basehttp 5551 140111556945664 "GET / HTTP/1.1" 500 223193
+WARNING 2025-11-24 08:23:25,147 log 5551 140111556945664 Not Found: /favicon.ico
+INFO 2025-11-24 08:25:42,815 autoreload 5551 140111726815040 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/includes/navbar.html changed, reloading.
+INFO 2025-11-24 08:25:44,704 autoreload 5757 140310393411392 Watching for file changes with StatReloader
+ERROR 2025-11-24 08:25:49,233 log 5757 140310224803584 Internal Server Error: /
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 470, in parse
+    compile_func = self.tags[command]
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/tienda/views.py", line 43, in index_view
+    return render(request, 'index.html', {'products':products, 'banners':banners, 'bestsellers':bestsellers, 'offer1':offer1, 'offer2':offer2, 'profile':profile})
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader_tags.py", line 183, in render
+    template = context.template.engine.select_template(template_name)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/engine.py", line 174, in select_template
+    return self.get_template(template_name)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/engine.py", line 143, in get_template
+    template, origin = self.find_template(template_name)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/engine.py", line 125, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loaders/base.py", line 29, in get_template
+    return Template(
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 155, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 193, in compile_nodelist
+    return parser.parse()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 472, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 531, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 3: 'static'. Did you forget to register or load this tag?
+ERROR 2025-11-24 08:25:49,239 basehttp 5757 140310224803584 "GET / HTTP/1.1" 500 213935
+INFO 2025-11-24 08:27:10,490 autoreload 5757 140310393411392 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/includes/navbar.html changed, reloading.
+INFO 2025-11-24 08:27:12,097 autoreload 5907 140535870973760 Watching for file changes with StatReloader
+ERROR 2025-11-24 08:27:17,368 log 5907 140535769233152 Internal Server Error: /
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 470, in parse
+    compile_func = self.tags[command]
+KeyError: 'mostrar_estrellas'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/exception.py", line 47, in inner
+    response = get_response(request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/core/handlers/base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/tienda/views.py", line 43, in index_view
+    return render(request, 'index.html', {'products':products, 'banners':banners, 'bestsellers':bestsellers, 'offer1':offer1, 'offer2':offer2, 'profile':profile})
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 170, in render
+    return self._render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 905, in render_annotated
+    return self.render(context)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loader_tags.py", line 183, in render
+    template = context.template.engine.select_template(template_name)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/engine.py", line 174, in select_template
+    return self.get_template(template_name)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/engine.py", line 143, in get_template
+    template, origin = self.find_template(template_name)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/engine.py", line 125, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/loaders/base.py", line 29, in get_template
+    return Template(
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 155, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 193, in compile_nodelist
+    return parser.parse()
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 478, in parse
+    raise self.error(token, e)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 476, in parse
+    compiled_result = compile_func(self, token)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/defaulttags.py", line 965, in do_if
+    nodelist = parser.parse(('elif', 'else', 'endif'))
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 472, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "/media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/01-Entornos/ldj_env/lib/python3.9/site-packages/django/template/base.py", line 522, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 12: 'mostrar_estrellas', expected 'elif', 'else' or 'endif'. Did you forget to register or load this tag?
+ERROR 2025-11-24 08:27:17,381 basehttp 5907 140535769233152 "GET / HTTP/1.1" 500 231542
+INFO 2025-11-24 08:27:42,360 autoreload 5907 140535870973760 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2025-11-24 08:27:43,928 autoreload 6005 140595441985344 Watching for file changes with StatReloader
+INFO 2025-11-24 08:27:47,507 basehttp 6005 140595273623296 "GET / HTTP/1.1" 200 66884
+INFO 2025-11-24 08:27:49,262 basehttp 6005 140595238336256 "GET /static/img/Favicon.ico HTTP/1.1" 200 1414
+INFO 2025-11-24 08:30:17,699 autoreload 6005 140595441985344 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/includes/footer.html changed, reloading.
+INFO 2025-11-24 08:30:19,110 autoreload 6244 139728888182592 Watching for file changes with StatReloader
+INFO 2025-11-24 08:30:25,528 basehttp 6244 139728719025920 "GET / HTTP/1.1" 200 66881
+INFO 2025-11-24 08:41:03,806 autoreload 6244 139728888182592 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-11-24 08:41:19,471 autoreload 7085 140656664508224 Watching for file changes with StatReloader
+INFO 2025-11-24 08:41:50,228 basehttp 7085 140656563554048 "GET /compra/ventas/ HTTP/1.1" 200 45723
+INFO 2025-11-24 08:41:59,429 basehttp 7085 140656563554048 "GET /compra/venta-productos/ HTTP/1.1" 200 54689
+INFO 2025-11-24 08:43:20,550 autoreload 7085 140656664508224 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/ccheckout/views.py changed, reloading.
+INFO 2025-11-24 08:43:27,479 autoreload 7361 140529346320192 Watching for file changes with StatReloader
+INFO 2025-11-24 08:43:59,318 basehttp 7361 140529176372992 "GET /compra/venta-productos/ HTTP/1.1" 200 54689
+INFO 2025-11-24 08:44:05,472 basehttp 7361 140529176372992 "GET / HTTP/1.1" 200 81080
+INFO 2025-11-24 08:44:06,352 basehttp 7361 140529148167936 "GET /media/Productos/Aroma1L.webp HTTP/1.1" 200 29670
+INFO 2025-11-24 08:44:06,525 basehttp 7361 140529167456000 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 200 43160
+INFO 2025-11-24 08:44:06,525 basehttp 7361 140529156560640 "GET /media/Productos/Acond240ml.webp HTTP/1.1" 200 22936
+WARNING 2025-11-24 08:44:07,005 log 7361 140528779785984 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-11-24 08:44:07,028 basehttp 7361 140528779785984 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025

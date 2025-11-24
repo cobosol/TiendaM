@@ -1088,6 +1088,8 @@ def sales_products(request):
         .order_by('-total_quantity')[:cant_prod]  # ¡Solo los 10 primeros!
     )
 
+    print(products_data)
+
     # 2. Monto total por producto (top 10)
     revenue_by_product = list(
         OrderItem.objects
@@ -1105,6 +1107,9 @@ def sales_products(request):
     # Convertir Decimal a float
     for p in products_data:
         p['total_quantity'] = float(p['total_quantity'])
+        prod = get_object_or_404(Product, name=p['product__name'])
+        prod.is_bestseller = True
+        prod.save()
 
     for r in revenue_by_product:
         r['total_revenue'] = float(r['total_revenue'])
