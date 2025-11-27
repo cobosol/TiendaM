@@ -131,49 +131,53 @@ class CartItem(models.Model):
         
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
+    
+    @property
+    def total_base_usd(self):
+        return decimal.Decimal(self.quantity * self.product.price_base)
 
-    def total_USD(self, special=False):
-        if special:
-            return decimal.Decimal(self.quantity * self.product.price_base)
-        print(self.product.min_quantity_whole)
-        print(self.quantity)
-        if self.product.min_quantity_whole > 0 and self.quantity >= self.product.min_quantity_whole:
+    @property
+    def total_base_cup(self):
+        return decimal.Decimal(self.quantity * self.product.price_cup)
+
+    def total_USD(self, daily=False, contract=False):
+        price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
+        total = decimal.Decimal(self.quantity * self.product.price_base)
+        if not contract:
+            print('special')
+            print(self.product.available_CUP)
+            print(price.discount_amount_by_litre)
+            print(total)
+            if self.product.available_CUP and price.discount_amount_by_litre > 0 and total*price.change_usd_cup > 300:       
+                cant_litres = self.quantity * decimal.Decimal(self.product.litres_units) 
+                discount = int(cant_litres) * (price.discount_amount_by_litre / price.change_usd_cup)
+                return decimal.Decimal(total) - decimal.Decimal(discount) 
+        if not daily and self.product.min_quantity_whole > 0 and self.quantity >= self.product.min_quantity_whole:
             porciento = 1-self.product.whole_discount/100
             discount = self.product.price_base*decimal.Decimal(porciento)
             total = self.quantity*decimal.Decimal(discount) 
-            return decimal.Decimal(total)
-        price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
-        total = decimal.Decimal(self.quantity * self.product.price_cup)
-        if self.product.available_CUP and price.discount_amount_by_litre > 0 and total > 300:       
-            print("En el if")
-            cant_litres = self.quantity * self.product.litres_units
-            discount = int(cant_litres) * (price.discount_amount_by_litre / price.change_usd_cup)
-            return decimal.Decimal(total) - decimal.Decimal(discount)  
+            return decimal.Decimal(total)  
         return decimal.Decimal(total) 
     
-    def total_CUP(self, special=False):
-        if special:
-            return decimal.Decimal(self.quantity * self.product.price_cup)
-        print(self.product.min_quantity_whole)
-        print(self.quantity)
-        if self.product.min_quantity_whole > 0 and self.quantity >= self.product.min_quantity_whole:
+    def total_CUP(self, daily=False, contract=False):
+        price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
+        total = decimal.Decimal(self.quantity * self.product.price_cup)
+        if not contract:
+            print(self.product.available_CUP)
+            print(price.discount_amount_by_litre)
+            print(total)
+            if self.product.available_CUP and price.discount_amount_by_litre > 0 and total > 300:       
+                print("En el if")
+                cant_litres = self.quantity * decimal.Decimal(self.product.litres_units)
+                print(cant_litres)
+                discount = int(cant_litres) * price.discount_amount_by_litre
+                print(discount)
+                return decimal.Decimal(total) - decimal.Decimal(discount)
+        if not daily and self.product.min_quantity_whole > 0 and self.quantity >= self.product.min_quantity_whole:
             porciento = 1-self.product.whole_discount/100
             discount = self.product.price_cup*decimal.Decimal(porciento)
             total = self.quantity*decimal.Decimal(discount)
-            return decimal.Decimal(total)
-        total = self.quantity * self.product.price_cup
-        price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
-        total = decimal.Decimal(self.quantity * self.product.price_cup)
-        print(self.product.available_CUP)
-        print(price.discount_amount_by_litre)
-        print(total)
-        if self.product.available_CUP and price.discount_amount_by_litre > 0 and total > 300:       
-            print("En el if")
-            cant_litres = self.quantity * decimal.Decimal(self.product.litres_units)
-            print(cant_litres)
-            discount = int(cant_litres) * price.discount_amount_by_litre
-            print(discount)
-            return decimal.Decimal(total) - decimal.Decimal(discount)  
+            return decimal.Decimal(total)  
         return decimal.Decimal(total)
     
     def total_MLC(self, special=False):

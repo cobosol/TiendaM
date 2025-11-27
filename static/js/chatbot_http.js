@@ -182,7 +182,10 @@ function appendMessage(message, isUser = false, sender = null) {
     messageDiv.classList.add(isUser ? 'message-user' : 'message-bot');
     
     if (sender && !isUser) {
-        messageDiv.innerHTML = `<div class="fw-bold">${sender}</div>${message}`;
+        /* messageDiv.innerHTML = `<div class="fw-bold">${sender}</div>${message}`; */
+        const safeSender = encodeForHTML(sender);
+        const safeMessage = encodeForHTML(message);
+        messageDiv.innerHTML = `<div class="fw-bold">${safeSender}</div>${safeMessage}`;
     } else {
         messageDiv.textContent = message;
     }
@@ -196,7 +199,14 @@ function appendMessage(message, isUser = false, sender = null) {
         timestamp: new Date().toISOString()
     });
 }
-
+function encodeForHTML(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
 function showTypingIndicator() {
     if (typingIndicator) {
         typingIndicator.style.display = 'block';

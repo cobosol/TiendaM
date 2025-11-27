@@ -100,7 +100,7 @@ class Order(models.Model):
     total_reported = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total reportado")
     # Descuentos
     coupon_percent = models.PositiveIntegerField(default=0, verbose_name="Porciento de descuento de cupón")
-    others_discount = models.PositiveIntegerField(default=0, verbose_name="Porciento de otros descuentos")
+    others_discount = models.PositiveIntegerField(default=0, null=True, blank=True, verbose_name="Porciento de otros descuentos")
     wallet_discount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name="descuento del monedero")
     discount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name="Descuento por ajuste de contrato")
 
@@ -432,6 +432,7 @@ class OrderItem(models.Model):
     is_summary_item = models.BooleanField(default=False, verbose_name="Elemento especial de resumen diario ")  # Identificar items especiales
     store_name = models.CharField(max_length=250, default="Envío Habana", verbose_name = "Forma de entrega")
     totalf = models.DecimalField(max_digits=9,decimal_places=2, default=-1.00, verbose_name = "Precio total del producto")
+    #has_discount = models.BooleanField(default=False, verbose_name="Tiene descuentos")
 
     @property
     def has_discount(self):
@@ -450,6 +451,7 @@ class OrderItem(models.Model):
                 porciento = 1-self.product.whole_discount/100
                 precio = decimal.Decimal('0.00')
                 precio = self.price * decimal.Decimal(porciento)
+                self.has_discount = True
                 return self.quantity * precio
             else:
                 return self.quantity * self.price
@@ -458,8 +460,16 @@ class OrderItem(models.Model):
             return 0
 
     @property
+    def total_cup(self):
+        return self.total * self.order.price.change_usd_cup
+
+    @property
     def total_base_CUP(self):
         return self.quantity * self.price_CUP
+    
+    @property
+    def total_base(self):
+        return self.quantity * self.price
 
     @property
     def name(self):

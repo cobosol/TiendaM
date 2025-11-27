@@ -55,7 +55,7 @@ class ProductoAgrupadoAPIView(generics.ListAPIView):
         queryset = self.get_queryset()
         
         # Definir los campos por los que agrupar (puedes hacerlos configurables)
-        campos_agrupacion = ['name', 'gname', 'categories']
+        campos_agrupacion = ['name', 'gname']
         
         # Usar el método del serializador para agrupar
         datos_agrupados = ProductAgrupedSerializer.agrupar_por_atributos(queryset, campos_agrupacion)
@@ -113,7 +113,6 @@ def show_all_active(request, template_name="catalog/allActive.html"):
         except Exception:
             messages.error(request, "Error al adicionar al carrito")
     return render(request, template_name, locals())
-
 
 def show_category(request, category_slug, template_name="catalog/category.html"):
     c = get_object_or_404(Category, slug=category_slug)
@@ -424,3 +423,4 @@ class eliminar_producto_almacen(SuccessMessageMixin, DeleteView):
         success_message = 'Producto eliminado correctamente!'
         messages.success (self.request, (success_message))       
         return reverse('productos_almacen') # Redireccionamos a la vista principal
+    

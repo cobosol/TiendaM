@@ -16,12 +16,12 @@ class ProductsCoboChatSerializer(serializers.ModelSerializer):
     categories = CategoryModelSerializer(many=True)
     class Meta:
         model = Product
-        fields = ['gname', 'name', 'presentation', 'is_feedstock', 'categories']
+        fields = ['gname', 'name', 'presentation', 'is_feedstock', 'categories', 'price_base', 'count']
 
 class ProductAgrupedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['gname', 'name', 'categories']
+        fields = ['gname', 'name']
 
     @staticmethod
     def agrupar_por_atributos(queryset, campos):

@@ -9,8 +9,16 @@ USD = 0
 CUP = 1
 MLC = 2
 
+S_C_ROLL = 'C_ROLL'
+
+SUMMARY = 0
+SELLER = 1
+
 MONEY_TYPE = ((USD,'USD'),
                    (CUP,'CUP'),
+                   )
+COMERCIAL_ROLL = ((SUMMARY,'RESUMEN'),
+                   (SELLER,'CONTRATO'),
                    )
 
 #(MLC,'MLC'),
@@ -18,6 +26,7 @@ MONEY_TYPE = ((USD,'USD'),
 def tienda_generales(request):
     user = request.user
     MND = 'USD'
+    C_ROLL = 'RESUMEN'
     distribuidor = 'False'
     productor = 'False'
     user = request.user
@@ -39,6 +48,13 @@ def tienda_generales(request):
         if user.groups.filter(name__in=['comercial']):
             comercial = 'True'
             adminAccess = 'True'
+            if request.session.get(S_C_ROLL,'') == '':
+                print('session vacia')
+                request.session[S_C_ROLL] = SUMMARY
+            else:
+                c = request.session.get(S_C_ROLL,'')
+                C_ROLL = COMERCIAL_ROLL[int(request.session.get(S_C_ROLL,''))][1] 
+                print(C_ROLL)
         MND = profile.MONEY_TYPE[profile.money_type][1]
         #TU = profile.CLIENT_TYPE[profile.client_type][1] 
     categories = Category.objects.filter(is_active=True)
@@ -61,6 +77,8 @@ def tienda_generales(request):
         'meta_description': settings.META_DESCRIPTION,
         'request': request,
         'MONEY_TYPE': MONEY_TYPE,
+        'COMERCIAL_ROLL': COMERCIAL_ROLL,
+        'C_ROLL': C_ROLL,
         'unread_count': notifi['unread_count']
         }
 
