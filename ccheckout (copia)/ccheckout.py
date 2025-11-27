@@ -227,19 +227,20 @@ def create_order(request, transaction_id, usd = True, cach = False):
             prod = ci.product
             if MND == 'USD':
                 oi.price = ci.price_USD()
-                oi.totalf = ci.total_USD(order.is_daily_summary) #Si va valor True no hace descuentos
+                oi.totalf = ci.total_USD(daily=order.is_daily_summary) #Si va valor True no hace descuentos
             elif MND == 'CUP':
                 oi.price = ci.price_CUP()
-                oi.totalf = ci.total_CUP(order.is_daily_summary)
+                oi.totalf = ci.total_CUP(daily=order.is_daily_summary)
             else:
                 oi.price = ci.price_MLC()
-                oi.totalf = ci.total_MLC(order.is_daily_summary)
+                oi.totalf = ci.total_MLC(daily=order.is_daily_summary)
             oi.save()
         order.update_status(Order.SUBMITTED)
         order.base_total = cart.cart_subtotal(request, not order.is_daily_summary) #order.total_items
         amounth_discount = "False"
         mount = 0
         if not order.is_daily_summary:
+            print(f'diferencias entre total item y base total {abs(order.total_items - order.base_total)}')
             if abs(order.total_items - order.base_total) > 0.01:
                 amounth_discount = "True"
                 mount = 100 - round((order.base_total / order.total_items * 100 ), 0)

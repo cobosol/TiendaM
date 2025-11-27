@@ -159,6 +159,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
         cart_subtotal = cart.cart_subtotal(request)
         order.delivery_price = cart.cart_delivery_price(request, cart_subtotal, MND)
     elif transaction_id == 3: # Facturar por contrato
+        print("En fcturar por cotrato")
         checkout_form = FacturarForm(request.POST, instance=order)
         order = checkout_form.save(commit=False)
         if usd: # Guardo el tipo de moneda en efectivo
@@ -168,6 +169,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
             order.currency = 'CUP'
         else:
             order.currency = 'MLC'
+        print(f"Desccuento al salir de la form {order.discount}")
     elif transaction_id == 4: # Resumen diario
         checkout_form = DailySummaryForm(request.POST, instance=order)
         if checkout_form.is_valid():
@@ -217,6 +219,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
     order.store_name = store.name
     order.price = price2    
     order.save()
+    print(f'Despues del save: {order.discount}')
     if order.pk:
         cart_items = cart.get_cart_items(request)
         for ci in cart_items:
@@ -227,25 +230,44 @@ def create_order(request, transaction_id, usd = True, cach = False):
             oi.quantity = ci.quantity
             #actualizar la cantidad de reservado del producto en ese almacen
             prod = ci.product
-            if MND == 'USD':
-                oi.price = ci.price_USD()
-                oi.totalf = ci.total_USD(order.is_daily_summary) #Si va valor True no hace descuentos
-            elif MND == 'CUP':
-                oi.price = ci.price_CUP()
-                oi.totalf = ci.total_CUP(order.is_daily_summary)
+            if transaction_id == 3:
+                if MND == 'USD':
+                    oi.price = ci.price_USD()
+                    oi.totalf = ci.total_base_usd
+                elif MND == 'CUP':
+                    oi.price = ci.price_CUP()
+                    oi.totalf = ci.total_base_cup
             else:
-                oi.price = ci.price_MLC()
-                oi.totalf = ci.total_MLC(order.is_daily_summary)
+                if MND == 'USD':
+                    oi.price = ci.price_USD()
+                    oi.totalf = ci.total_USD(daily=order.is_daily_summary) #Si va valor True no hace descuentos
+                elif MND == 'CUP':
+                    oi.price = ci.price_CUP()
+                    oi.totalf = ci.total_CUP(daily=order.is_daily_summary)
+                else:
+                    oi.price = ci.price_MLC()
+                    oi.totalf = ci.total_MLC(order.is_daily_summary)
             oi.save()
         order.update_status(Order.SUBMITTED)
         order.base_total = cart.cart_subtotal(request, not order.is_daily_summary) #order.total_items
         amounth_discount = "False"
         mount = 0
+        print(f"Antes del if de daily {order.discount}")
         if not order.is_daily_summary:
-            if abs(order.total_items - order.base_total) > 0.01:
+            dif = abs(order.total_items - order.base_total)
+            if dif > 0.01: #abs(order.total_items - order.base_total) 
+                print("Hay diferencias")
                 amounth_discount = "True"
+                print(order.total_items)
+                print(order.base_total)
                 mount = 100 - round((order.base_total / order.total_items * 100 ), 0)
+                print(mount)
                 order.others_discount = mount
+            """ elif request.session.get('S_C_ROLL', '') == 'CONTRATO' and :
+                    print("dentro del if de no contrato")
+                    print(dif)
+                    order.discount = abs(dif) """
+            print(f'disocunt despues de condicionales {order.discount}')
             #Aquí oficializo la transacción
             order.wallet_discount = request.session.get('wallet_discount', 0)
             if not order.wallet_discount:

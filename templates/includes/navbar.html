@@ -120,6 +120,22 @@
                     </select>
                 </form>
             </div>
+            {% if comercial == 'True' or request.user.is_staff %}
+            <div style="padding-left: 2ch;">                    
+                <form method="post" action="{% url 'update_c_roll' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <select name="c_roll" onchange="this.form.submit()">
+                    {% for value, label in COMERCIAL_ROLL %}
+                        <option value="{{ value }}" 
+                            {% if C_ROLL == label %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                    </select>
+                </form>
+            </div>
+            {% endif %}
         </div>
     </div>
 </nav>

@@ -88,14 +88,16 @@
                 <td class="table-info-td" style="width: 250px;"> {{ item.name }} </td>
                 <td class="table-info-td" style="width: 100px;"> {{ item.price|currency }} </td>
                 <td class="table-info-td" style="width: 70px;"> {{ item.quantity }} </td>
-                <td class="table-info-td" style="width: 100px;"> {{ item.total|currency }} </td>
+                <td class="table-info-td" style="width: 100px;"> {{ item.total|currency }} {% if item.has_discount %} * {% endif %} </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <br>
-
+    {% if data.discount_item == "True" %}
+    * Este producto tiene descuentos
+    {% endif %} 
     <hr>
 
     <br>

@@ -17,6 +17,7 @@ from wallet.models import Transaction, Wallet
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.db import transaction
+from utils.context_processors import COMERCIAL_ROLL, S_C_ROLL
 
 import decimal
 import random
@@ -24,6 +25,7 @@ import random
 # not needed yet but we will later
 CART_ID_SESSION_KEY = 'cart_id'
 SESSION_DELIVERY = 'delivery'
+
 
 # Pedir el delivery por defecto entrega en planta pk = 1
 def get_delivery(request, delivery='1'):
@@ -251,8 +253,7 @@ def remove_from_cart(request):
         cart_item.delete()
 
 # gets the total cost for the current cart
-def cart_subtotal(request, standard=True, mCUP=False):
-    print("Car subtotal")
+def cart_subtotal(request, standard=True, mCUP=False, contract=False):
     cart_total = decimal.Decimal('0.00')
     price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
     cart_products = get_cart_items(request)
@@ -267,20 +268,29 @@ def cart_subtotal(request, standard=True, mCUP=False):
         else:
             MND = profile.MONEY_TYPE[profile.money_type][1]
         TU = profile.CLIENT_TYPE[profile.client_type][1]
+    C_ROLL = COMERCIAL_ROLL[int(request.session.get(S_C_ROLL,0))][1]
+    print(f'roll: {C_ROLL}')
     if MND == 'USD': 
-        for cart_item in cart_products:
-            cart_total += cart_item.total_USD()
+        for cart_item in cart_products: 
+            if C_ROLL == 'CONTRATO':
+                cart_total += cart_item.total_USD(contract=True)
+            else:
+                cart_total += cart_item.total_USD()
         min_quantity_amount = price.min_quantity_amount
-        discount_by_litre = price.discount_amount_by_litre / price.change_usd_cup
+        #discount_by_litre = price.discount_amount_by_litre / price.change_usd_cup
     elif MND == 'CUP':
         for cart_item in cart_products:
-            cart_total += cart_item.total_CUP()
+            if C_ROLL == 'CONTRATO':
+                cart_total += cart_item.total_CUP(contract=True)
+            else:
+                cart_total += cart_item.total_CUP()
         min_quantity_amount = price.min_quantity_amount*price.change_usd_cup
-        discount_by_litre = price.discount_amount_by_litre
+        #discount_by_litre = price.discount_amount_by_litre
     else: # MLC deprecated
         for cart_item in cart_products:
             cart_total += cart_item.total_MLC()
         min_quantity_amount = price.min_quantity_amount*price.change_usd_mlc
+    print(f'cart_total despues del if {cart_total}')
     if standard:
         if (cart_total >= min_quantity_amount):
             porciento = 1-price.amunt_discount/100

@@ -149,6 +149,7 @@ def show_cart(request, template_name="cart/cart.html"):
             messages.info(request, text) """
     page_title = 'Shopping Cart'
     cart_subtotal = cart.cart_subtotal(request)
+    print(f'Al salir {cart_subtotal}')
     cart_delivery = cart.cart_delivery_price(request, cart_subtotal, MND)
     delivery_name = str(cart.delivery_name(request))
     envio = False

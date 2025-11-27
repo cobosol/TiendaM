@@ -121,17 +121,13 @@
                 <td colspan="3" class="table-info-td" style="width: 200px;"> {{ item.name }} </td>
                 <td class="table-info-td" style="width: 100px;"> {{ item.price|currency }} </td>
                 <td class="table-info-td" style="width: 70px;"> {{ item.quantity }} </td>
-                <td class="table-info-td" style="width: 100px;"> {{ item.total|currency }} {% if item.has_discount %} * {% endif %}</td>
+                <td class="table-info-td" style="width: 100px;"> {{ item.total_base|currency }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <br>
-
-    {% if data.discount_item == "True" %}
-    * Este producto tiene descuentos
-    {% endif %} 
 
     <br>
     <table border="0" style="border-collapse: collapse;">
