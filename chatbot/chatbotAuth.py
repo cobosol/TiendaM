@@ -1,21 +1,19 @@
-import spacy
+#import spacy
 from django.db import close_old_connections
 from registration.models import Profile
 #from enlac_preg.models import FAQ
 from datetime import datetime, timedelta
 
 # Cargar modelo de español de spaCy
-try:
+""" try:
     nlp = spacy.load("es_core_news_md")
 except:
     # Fallback si no está instalado
-    nlp = None
+    nlp = None """
 
 def encontrar_respuesta(pregunta_usuario, usuario=None):
     close_old_connections()
-    print("En encontrar respuestas")
     pregunta = pregunta_usuario.lower()
-    print(pregunta)
     # 1. Verificar si es una consulta de autenticación
     if any(palabra in pregunta for palabra in ['iniciar sesión', 'login', 'autenticar', 'registrarse', 'entrar']):
         return "Para acceder a tus datos personales, necesito que te autentiques. Por favor, proporciona tu usuario y contraseña."
@@ -23,10 +21,7 @@ def encontrar_respuesta(pregunta_usuario, usuario=None):
     # 2. Si el cliente está autenticado, buscar información personal
     if usuario:
         # Consultas sobre pedidos
-        print("usuario autenticado")
-        print(usuario)
         if any(palabra in pregunta for palabra in ['mis datos', 'perfil', 'currículo']):
-            print("Encontró perfil")
             datos = Profile.objects.filter(user=usuario.id).order_by('-created_at')[:5]
             if datos:
                 respuesta = "Tus datos:\n"
@@ -92,4 +87,4 @@ def encontrar_respuesta(pregunta_usuario, usuario=None):
         return mejor_coincidencia.respuesta.text """
     
     # 6. Respuesta por defecto
-    return "Lo siento, no tengo información sobre eso. ¿Puedes intentar con otra pregunta o contactar con nuestro equipo de soporte?"
+    return "Estamos en proceso de aprendizaje. Pronto estaré en condiciones de responderte preguntas sobre nuestros productos y mucho más"

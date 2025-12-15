@@ -31,6 +31,31 @@ class ProductAlmacenFilterForm(forms.Form):
         widget=forms.TextInput(attrs={'placeholder': 'Buscar por almacén...'})
     )
 
+#class ProductFilterForm(forms.Form):
+    """ product = forms.ModelChoiceField(
+        queryset=Product_Sales.objects.all(),
+        required=False,
+        label='Filtrar por producto',
+        empty_label="Todos los producto",
+        widget=forms.Select(attrs={'class': 'select2'})
+    )
+    store = forms.ModelChoiceField(
+        queryset=Store.objects.all(),
+        required=False,
+        label='Filtrar por almacén:',
+        widget=forms.Select(attrs={'class': 'select2'})
+    )
+   
+    product_texto = forms.CharField(
+        required=False,
+        label='Buscar en producto:',
+        widget=forms.TextInput(attrs={'placeholder': 'Buscar por nombre...'})
+    )
+    store_texto = forms.CharField(
+        required=False,
+        label='Buscar en almacén',
+        widget=forms.TextInput(attrs={'placeholder': 'Buscar por almacén...'})
+    ) """
 
     
 class ProductForm(forms.ModelForm):

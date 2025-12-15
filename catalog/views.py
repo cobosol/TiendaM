@@ -216,9 +216,9 @@ def gestion_productos(request, template_name="catalog/productos_admin.html"):
                 form = SelectCategoryForm(request, postdata)
                 form.selected_category = postdata['selected_category']
                 c = get_object_or_404(Category, pk=postdata['selected_category'])
-                object_list = c.product_set.all()
+                object_list = c.product_set.all().order_by('name')
         else:
-            object_list = Product.objects.all()
+            object_list = Product.objects.all().order_by('name')
     except:
         text = "Error al seleccionar la categoría"
         messages.error(request, text)
@@ -297,7 +297,34 @@ class eliminar_producto(SuccessMessageMixin, DeleteView):
         messages.success (self.request, (success_message))       
         return reverse('productos') # Redireccionamos a la vista principal
 
+def lista_productos_precios(request):
+    objetos = Product.objects.all().order_by('name')
+    
+    return render(request, 'catalog/actualiza_precios.html', {
+        'objetos': objetos
+    })
 
+@csrf_exempt
+@require_POST
+def actualizar_precios(request, pk, campo):
+    objeto = get_object_or_404(Product, pk=pk)
+    nuevo_valor = request.POST.get(campo)
+    print(campo)
+    print(nuevo_valor)
+    campos_editables = ['price_base', 'old_price']
+
+    if campo not in campos_editables:
+        return JsonResponse({'status': 'error', 'message': 'Campo no editable'})
+    
+    try:
+        # Actualizar el valor
+        setattr(objeto, campo, nuevo_valor)
+        objeto.save()
+        return JsonResponse({'status': 'success', 'nuevo_valor': str(getattr(objeto, campo))})
+    except Exception as e:
+        logging.exception("Error actualizando precio:")
+        return JsonResponse({'status': 'error', 'message': 'Ha ocurrido un error interno. Por favor, inténtalo de nuevo más tarde.'})
+    
 
 #---------- Gestión de productos en almacen----------------
 
@@ -413,6 +440,9 @@ def actualizar_inventario(request, pk, campo):
     except Exception as e:
         logging.exception("Error actualizando inventario:")
         return JsonResponse({'status': 'error', 'message': 'Ha ocurrido un error interno. Por favor, inténtalo de nuevo más tarde.'})
+
+
+
     
 class eliminar_producto_almacen(SuccessMessageMixin, DeleteView):
     model = Product_Sales

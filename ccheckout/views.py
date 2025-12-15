@@ -1088,7 +1088,6 @@ def sales_products(request):
         .order_by('-total_quantity')[:cant_prod]  # ¡Solo los 10 primeros!
     )
 
-    print(products_data)
 
     # 2. Monto total por producto (top 10)
     revenue_by_product = list(

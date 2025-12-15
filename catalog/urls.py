@@ -27,4 +27,6 @@ urlpatterns = [
     path('productos_almacen/editar/<int:pk>', actualizar_producto_almacen.as_view(template_name = "catalog/producto_almacen_actualizar.html"), name='actualizar_producto_almacen'),
     path('productos_almacen/inventario', views.lista_productos_inventario, name='lista_productos_inventario'),
     path('productos_almacen/actualizar/<int:pk>/<str:campo>/', views.actualizar_inventario, name='actualizar_inventario'),
+    path('productos/precios', views.lista_productos_precios, name='lista_productos_precios'),
+    path('productos/actualizar/<int:pk>/<str:campo>/', views.actualizar_precios, name='actualizar_precio'),
 ]

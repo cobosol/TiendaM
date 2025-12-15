@@ -462,6 +462,17 @@ class OrderItem(models.Model):
     @property
     def total_cup(self):
         return self.total * self.order.price.change_usd_cup
+    
+    @property
+    def total_CUP_discount(self):
+        price = self.order.price 
+        total = decimal.Decimal(self.quantity * self.product.price_cup)
+        price_litre = decimal.Decimal(1/self.product.litres_units)*self.product.price_cup 
+        if self.product.available_CUP and price.discount_amount_by_litre > 0 and price_litre > 300:       
+            cant_litres = self.quantity * decimal.Decimal(self.product.litres_units)
+            discount = int(cant_litres) * price.discount_amount_by_litre
+            return decimal.Decimal(total) - decimal.Decimal(discount)
+        return decimal.Decimal(total)
 
     @property
     def total_base_CUP(self):

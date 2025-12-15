@@ -97,22 +97,21 @@ function setupAuthModalEvents() {
 function setupChatEventListeners() {
     console.log('🔄 Configurando event listeners del chat...');
     
-    // --- CORRECCIÓN IMPLEMENTADA: Manejador directo para abrir el chat ---
-    if (chatButton) {
-        chatButton.addEventListener('click', function(e) {
+    // Usar delegación de eventos para el botón del chat
+    document.addEventListener('click', function(e) {
+        // Abrir chat al hacer clic en el avatar o sus hijos
+        if (e.target.closest('#open-chat')) {
             e.preventDefault();
             e.stopPropagation();
             toggleChat(true);
-        });
-    }
-
-    // Listener delegado en el documento para cerrar al hacer clic fuera
-    document.addEventListener('click', function(e) {
-        // Cerrar chat al hacer clic fuera, pero no si es dentro del botón de abrir
+            return;
+        }
+        
+        // Cerrar chat al hacer clic fuera
         if (isChatOpen && 
-            chatContainer && 
             !chatContainer.contains(e.target) && 
-            !e.target.closest('#open-chat')) {
+            !e.target.closest('#open-chat') &&
+            !e.target.closest('#chat-container')) {
             toggleChat(false);
         }
     });
@@ -542,6 +541,35 @@ function resetAuthForm() {
     }
 }
 
+// Efectos interactivos para el avatar
+/* function setupAvatarEffects() {
+    const chatAvatar = document.getElementById('open-chat');
+    
+    if (chatAvatar) {
+        // Efecto al hacer hover
+        chatAvatar.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1)';
+        });
+        
+        chatAvatar.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+        
+        // Efecto al hacer clic
+        chatAvatar.addEventListener('click', function() {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 200);
+        });
+        
+        // Mostrar notificación después de 10 segundos de inactividad
+        setTimeout(() => {
+            showAvatarNotification();
+        }, 10000);
+    }
+} */
+
 function setupAvatarEffects() {
     const chatAvatar = document.getElementById('open-chat');
     
@@ -569,17 +597,9 @@ function showAvatarNotification() {
         notification.style.display = 'block';
         
         // Parpadear la notificación
-        let intervalId = setInterval(() => {
-            // Detener si el chat se abre
-            if (isChatOpen) {
-                clearInterval(intervalId);
-                notification.style.opacity = '1';
-                notification.style.display = 'none';
-                return;
-            }
+        setInterval(() => {
             notification.style.opacity = notification.style.opacity === '0.5' ? '1' : '0.5';
         }, 1000);
-        notification.dataset.intervalId = intervalId; // Guardar ID para limpieza
     }
 }
 
@@ -588,11 +608,6 @@ function hideAvatarNotification() {
     const notification = document.querySelector('.chat-notification');
     if (notification) {
         notification.style.display = 'none';
-        const intervalId = notification.dataset.intervalId;
-        if (intervalId) {
-            clearInterval(parseInt(intervalId));
-            notification.dataset.intervalId = '';
-        }
     }
 }
 
