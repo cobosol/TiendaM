@@ -26,8 +26,8 @@ def notification_user_sale(request):
 
 def notification_sale(request):
     name = request.user.first_name
-    email = "prueba@produccionesmuhia.ca" # "comercial@produccionesmuhia.ca"
-    email2 = "ycoca@produccionesmuhia.ca"
+    email = "ycoca@produccionesmuhia.ca" # "redes_soc@produccionesmuhia.ca" # 
+    email2 = "ycoca@produccionesmuhia.ca" # "presidencia@produccionesmuhia.ca"
     order_number = request.session.get('order_number','')
     if order_number:
         order = Order.objects.filter(id=order_number)[0]
@@ -56,8 +56,8 @@ def notification_sale(request):
 
 def notification_reserve(request):
     name = request.user.username
-    email = "comercial@produccionesmuhia.ca"
-    email2 = "presidencia@produccionesmuhia.ca"
+    email = "ycoca@produccionesmuhia.ca" #"redes_soc@produccionesmuhia.ca"
+    email2 = "ycoca@produccionesmuhia.ca" #"presidencia@produccionesmuhia.ca"
     order_number = request.session.get('order_number','')
     if order_number:
         order = Order.objects.filter(id=order_number)[0]

@@ -1,10 +1,27 @@
 {% load static %}
 
 <!-- Botón flotante para abrir el chat -->
-<div id="chat-button" class="position-fixed bottom-0 end-0 mb-4 me-4" style="z-index: 10000;">
+<!-- <div id="chat-button" class="position-fixed bottom-0 end-0 mb-4 me-4" style="z-index: 10000;">
     <button type="button" class="btn btn-primary rounded-circle p-3 shadow-lg" id="open-chat" 
             title="Chatear con nuestro asistente">
         <i class="bi bi-chat-dots-fill fs-4"></i>
+    </button>
+</div> -->
+
+<!-- Botón flotante con avatar personalizado -->
+<div id="chat-button" class="position-fixed bottom-0 end-0 mb-4 me-4" style="z-index: 10000;">
+    <button class="chat-avatar-container" id="open-chat" title="Chatear con nuestro asistente" 
+            style="border: none; background: transparent; padding: 0; cursor: pointer;">
+        <!-- Avatar con imagen personalizada -->
+        <img src="{% static 'img/avatar.png' %}" 
+             alt="Asistente Virtual" 
+             class="chat-avatar-img">
+        
+        <!-- Indicador de notificación (opcional) -->
+        <span class="chat-notification"></span>
+        
+        <!-- Efecto de pulso (opcional) -->
+        <div class="chat-pulse"></div>
     </button>
 </div>
 
@@ -13,7 +30,7 @@
     <div class="chat-header d-flex justify-content-between align-items-center">
         <div>
             <i class="bi bi-robot me-2"></i>
-            <strong>Asistente Virtual</strong>
+            <strong>Asistente virtual: Iris</strong>
         </div>
         <div>
             <button id="minimize-chat" class="btn btn-sm btn-light me-2" title="Minimizar">
@@ -27,8 +44,8 @@
     
     <div class="chat-messages" id="chat-messages">
         <div class="message-bot">
-            <div class="fw-bold">🤖 Asistente Virtual</div>
-            ¡Hola! Soy tu asistente virtual MUHIA. ¿En qué puedo ayudarte hoy?
+            <div class="fw-bold">🤖 Asistente</div>
+            ¡Hola! Soy tu asistente virtual Iris de MUHIA.
         </div>
     </div>
     
