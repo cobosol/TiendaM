@@ -14,7 +14,9 @@ let authModalInstance = null;
 let userId = generateUserId();
 
 function generateUserId() {
-    return 'user_' + Math.random().toString(36).substr(2, 9);
+    const randomArray = new Uint32Array(2);
+    window.crypto.getRandomValues(randomArray);
+    return 'user_' + Array.from(randomArray).map(n => n.toString(36)).join('').substr(0, 9);
 }
         
 // ==========================================
