@@ -18,7 +18,6 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from registration.models import Profile
 
-
 @method_decorator(csrf_exempt, name='dispatch')
 class ChatbotAuthAPI(View):
     def post(self, request):
@@ -64,7 +63,6 @@ class ChatbotPrivateAPI(View):
         try:
             data = json.loads(request.body)
             user_message = data.get('message', '')
-            print("En la llamada post")
             # Obtener información del cliente autenticado
             try:
                 usuario = Profile.objects.get(user=request.user)
@@ -104,7 +102,7 @@ def chatbot_api(request):
             }, status=400)
         
         # Obtener respuesta del chatbot (puedes pasar el historial si lo necesitas)
-        print("Voy a encorar respuesta")
+        print("Voy a encontrar respuesta")
         bot_response = encontrar_respuesta(user_message)
         return JsonResponse({
             'status': 'success',

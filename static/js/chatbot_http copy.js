@@ -11,12 +11,7 @@ let isAuthenticated = false;
 let currentUser = null;
 let chatHistory = [];
 let authModalInstance = null;
-let userId = generateUserId();
 
-function generateUserId() {
-    return 'user_' + Math.random().toString(36).substr(2, 9);
-}
-        
 // ==========================================
 // VERIFICACIÓN DE BOOTSTRAP
 // ==========================================
@@ -309,7 +304,10 @@ async function sendMessage() {
     showTypingIndicator();
 
     try {
-        let endpoint = 'https://chatbot.cobosis.com/assistant/api/chat/';
+        let endpoint = '/chatbot/api/chatbot/';        
+        if (isAuthenticated) {
+            endpoint = '/chatbot/api/chatbot/private/';
+        }
 
         const response = await fetch(endpoint, {
             method: 'POST',
@@ -319,22 +317,18 @@ async function sendMessage() {
             },
             body: JSON.stringify({ 
                 message: message,
-                history: chatHistory.slice(-5),
-                user_id: userId,
-                include_analysis: false
+                history: chatHistory.slice(-5)
             })
         });
 
-        if (!response.success) {
+        if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
         }
 
         const data = await response.json();
         
-        if (!data.success) {
-            appendMessage('⚠️ ' + data.message, false);
-        } else {
-            appendMessage(data.response, false, '🤖 Iris');
+        if (data.status === 'success') {
+            appendMessage(data.message, false, '🤖 Iris');
             
             // Verificar si la respuesta sugiere necesidad de autenticación
             const authKeywords = [
@@ -344,12 +338,14 @@ async function sendMessage() {
             ];
             
             const needsAuth = authKeywords.some(keyword => 
-                data.response.toLowerCase().includes(keyword.toLowerCase())
+                data.message.toLowerCase().includes(keyword.toLowerCase())
             );
             
             if (needsAuth && !isAuthenticated) {
                 setTimeout(() => showAuthModal(), 500);
             }
+        } else {
+            appendMessage('⚠️ ' + data.message, false);
         }
     } catch (error) {
         console.error('❌ Error:', error);
