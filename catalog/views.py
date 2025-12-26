@@ -197,6 +197,10 @@ def gestion_productos(request, template_name="catalog/productos_admin.html"):
                 form.selected_category = postdata['selected_category']
                 c = get_object_or_404(Category, pk=postdata['selected_category'])
                 object_list = c.product_set.all()
+            if postdata['submit'] == 'Buscar':
+                productSearch = postdata['producto']
+                url = '/catalogo/productos/' + productSearch + '/'
+            return HttpResponseRedirect(url) 
         else:
             object_list = Product.objects.all()
     except:
@@ -230,6 +234,10 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
                     request.session.delete_test_cookie()
                 url = reverse('catalogo_productos')
                 return HttpResponseRedirect(url)
+            elif postdata['submit'] == 'Buscar':
+                productSearch = postdata['producto']
+                url = '/catalogo/productos/' + productSearch + '/'
+                return HttpResponseRedirect(url) 
         else:
             object_list = Product.objects.filter(is_active=True)
     except:

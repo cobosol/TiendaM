@@ -12,7 +12,7 @@
     </div>
     <!-- Page Header End -->
 
-    <h6> <i class="fa fa-plus"></i>Buscar por:</h6>
+    <i class="fa fa-plus"></i>Buscar por:
 
     <div class="mb-1">
         <form enctype="multipart/form-data" method="GET" style="display: inline-block;">
@@ -20,16 +20,16 @@
         {% load widget_tweaks %}
         <div class="row">
             {% for field in filter.form %}
-            <div class="mb-1 col-md-6">
+            <div class="mb-1 col-md-4">
                 <label for="{{field.id_for_label}}"> {{ field.label }} </label>
                 {{ field|add_class:"form-control" }}
             </div>  
             {% endfor %}
-        </div>
-        <br>
-        <button type="submit" class="btn btn-primary"> <i class="fas fa-search text-secondary mr-0"> </i> Filtrar</button>
+            <div class="mb-1 col-md-4" style="margin:auto;">
+                <button type="submit" class="btn btn-primary"> <i class="fas fa-search text-secondary mr-0"> </i> Filtrar</button>
+            </div>
+        </div>        
         </form>
-        <br>
     </div>
 
 <div class="container-fluid pt-6">

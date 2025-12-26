@@ -12,7 +12,7 @@
     </div>
     <!-- Page Header End -->
 
-    <div class="mb-1">
+    <div class="mb-1 row">
         <form enctype="multipart/form-data" method="GET" style="display: inline-block;">
         {% csrf_token %}
         {% load widget_tweaks %}
@@ -21,18 +21,14 @@
             <label>Resumen diario: <input type="checkbox" name="summary"></label>
             <label>Ventas comercial: <input type="checkbox" name="comercial"></label>
             <label>Ventas clientes: <input type="checkbox" name="clientes"></label>
-        <div class="row">
             {% for field in filter.form %}
             <div class="mb-1 col-md-4">
                 <label for="{{field.id_for_label}}"> {{ field.label }} </label>
                 {{ field|add_class:"form-control" }}
             </div>  
             {% endfor %}
-        </div>
-        <br>
-        <button type="submit" class="btn btn-primary"> <i class="fas fa-search text-secondary mr-0"> </i> Filtrar</button>
-        </form>
-        <br>
+            <button type="submit" class="btn btn-primary"> <i class="fas fa-search text-secondary mr-0"> </i> Filtrar</button>
+        </form>      
     </div>
 
     <!-- Botón de exportación -->

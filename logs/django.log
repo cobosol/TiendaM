@@ -2696,3 +2696,1332 @@ INFO 2025-11-19 12:05:18,376 autoreload 25664 22124 Watching for file changes wi
 INFO 2025-11-19 12:06:57,262 autoreload 25664 22124 D:\Works\Python\cobosis\TiendaM\templates\promo\offer_admin.html changed, reloading.
 INFO 2025-11-19 12:06:59,052 autoreload 14976 24728 Watching for file changes with StatReloader
 INFO 2025-11-19 12:18:20,029 autoreload 20900 20912 Watching for file changes with StatReloader
+INFO 2025-11-19 16:27:10,391 autoreload 15036 25764 Watching for file changes with StatReloader
+ERROR 2025-11-19 16:36:43,448 log 15036 6996 Internal Server Error: /compra/gestion/
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.OperationalError: no such column: ccheckout_order.consecutivo
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Works\Python\cobosis\TiendaM\ccheckout\views.py", line 776, in admin_orders_list
+    return render(request, template_name, locals())
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 170, in render
+    return self._render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\defaulttags.py", line 311, in render
+    if match:
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 284, in __bool__
+    self._fetch_all()
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 1324, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 51, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\sql\compiler.py", line 1169, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.OperationalError: no such column: ccheckout_order.consecutivo
+ERROR 2025-11-19 16:36:43,484 basehttp 15036 6996 "GET /compra/gestion/ HTTP/1.1" 500 264261
+WARNING 2025-11-19 16:36:44,040 log 15036 6996 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 16:36:44,042 basehttp 15036 6996 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-11-19 16:36:45,036 log 15036 6996 Not Found: /favicon.ico
+WARNING 2025-11-19 16:36:45,037 basehttp 15036 6996 "GET /favicon.ico HTTP/1.1" 404 3880
+INFO 2025-11-19 16:39:49,728 basehttp 15036 6996 "GET /compra/ordenes/ HTTP/1.1" 200 42851
+WARNING 2025-11-19 16:39:49,944 log 15036 6996 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 16:39:49,971 basehttp 15036 6996 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+ERROR 2025-11-19 16:39:57,594 log 15036 6996 Internal Server Error: /compra/gestion/
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.OperationalError: no such column: ccheckout_order.consecutivo
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Works\Python\cobosis\TiendaM\ccheckout\views.py", line 776, in admin_orders_list
+    return render(request, template_name, locals())
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 170, in render
+    return self._render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\defaulttags.py", line 311, in render
+    if match:
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 284, in __bool__
+    self._fetch_all()
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 1324, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 51, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\sql\compiler.py", line 1169, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.OperationalError: no such column: ccheckout_order.consecutivo
+ERROR 2025-11-19 16:39:57,623 basehttp 15036 6996 "GET /compra/gestion/ HTTP/1.1" 500 264132
+WARNING 2025-11-19 16:39:58,075 log 15036 6996 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 16:39:58,123 basehttp 15036 6996 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 16:51:09,248 autoreload 17280 3084 Watching for file changes with StatReloader
+INFO 2025-11-19 17:40:44,146 autoreload 15084 19396 Watching for file changes with StatReloader
+INFO 2025-11-19 17:40:53,836 basehttp 15084 5776 "GET / HTTP/1.1" 200 65223
+WARNING 2025-11-19 17:40:54,004 log 15084 5776 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:40:54,023 basehttp 15084 5776 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 17:41:03,365 basehttp 15084 5776 "GET /compra/ordenes/ HTTP/1.1" 200 42851
+WARNING 2025-11-19 17:41:03,560 log 15084 5776 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:41:03,583 basehttp 15084 5776 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+ERROR 2025-11-19 17:41:06,421 log 15084 5776 Internal Server Error: /compra/gestion/
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.OperationalError: no such column: ccheckout_order.consecutivo
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Works\Python\cobosis\TiendaM\ccheckout\views.py", line 776, in admin_orders_list
+    return render(request, template_name, locals())
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 170, in render
+    return self._render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\defaulttags.py", line 311, in render
+    if match:
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 284, in __bool__
+    self._fetch_all()
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 1324, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 51, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\sql\compiler.py", line 1169, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.OperationalError: no such column: ccheckout_order.consecutivo
+ERROR 2025-11-19 17:41:06,435 basehttp 15084 5776 "GET /compra/gestion/ HTTP/1.1" 500 264042
+WARNING 2025-11-19 17:41:06,811 log 15084 5776 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:41:06,814 basehttp 15084 5776 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-11-19 17:41:37,733 log 15084 5776 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:41:37,756 basehttp 15084 5776 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-11-19 17:41:37,980 log 15084 5776 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:41:37,990 basehttp 15084 5776 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 17:41:41,495 basehttp 15084 5776 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+WARNING 2025-11-19 17:41:41,643 log 15084 5776 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:41:41,673 basehttp 15084 5776 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 17:41:43,918 basehttp 15084 5776 "GET /notification/incentivos/ HTTP/1.1" 302 0
+INFO 2025-11-19 17:41:44,049 basehttp 15084 5776 "GET / HTTP/1.1" 200 65223
+WARNING 2025-11-19 17:41:44,257 log 15084 5776 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:41:44,259 basehttp 15084 5776 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 17:42:13,984 basehttp 15084 5776 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+WARNING 2025-11-19 17:42:14,168 log 15084 5776 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:42:14,189 basehttp 15084 5776 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 17:42:16,996 basehttp 15084 5776 "GET /compra/cupones/ HTTP/1.1" 302 0
+INFO 2025-11-19 17:42:17,098 basehttp 15084 5776 "GET / HTTP/1.1" 200 65223
+WARNING 2025-11-19 17:42:17,269 log 15084 5776 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:42:17,271 basehttp 15084 5776 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 17:42:22,782 basehttp 15084 5776 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+WARNING 2025-11-19 17:42:22,979 log 15084 5776 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:42:22,981 basehttp 15084 5776 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 17:42:25,716 basehttp 15084 5776 "GET /precio/ HTTP/1.1" 200 47457
+WARNING 2025-11-19 17:42:25,914 log 15084 5776 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:42:25,930 basehttp 15084 5776 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 17:42:34,169 basehttp 15084 19064 "GET /precio/crear HTTP/1.1" 200 44131
+WARNING 2025-11-19 17:42:34,385 log 15084 19064 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:42:34,386 basehttp 15084 19064 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 17:43:29,310 basehttp 15084 19064 "GET /catalogo/gestion/ HTTP/1.1" 200 43061
+WARNING 2025-11-19 17:43:29,505 log 15084 19064 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:43:29,526 basehttp 15084 19064 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 17:43:32,667 basehttp 15084 19064 "GET /catalogo/productos/ HTTP/1.1" 200 67033
+WARNING 2025-11-19 17:43:32,858 log 15084 19064 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:43:32,867 basehttp 15084 19064 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-11-19 17:43:33,169 log 15084 19064 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-11-19 17:43:33,171 basehttp 15084 19064 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+WARNING 2025-11-19 17:44:50,084 log 15084 19064 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:44:50,109 basehttp 15084 19064 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-11-19 17:44:50,223 log 15084 19064 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:44:50,233 basehttp 15084 19064 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 17:44:52,463 basehttp 15084 19064 "GET /catalogo/productos_almacen/inventario HTTP/1.1" 200 98555
+WARNING 2025-11-19 17:44:52,713 log 15084 19064 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:44:52,716 basehttp 15084 19064 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 17:45:22,757 basehttp 15084 19064 "GET /compra/marketing/ HTTP/1.1" 200 42889
+WARNING 2025-11-19 17:45:23,172 log 15084 19064 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:45:23,211 basehttp 15084 19064 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 17:47:18,526 basehttp 15084 19064 "GET /promo/banners HTTP/1.1" 200 48667
+WARNING 2025-11-19 17:47:18,727 log 15084 19064 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 17:47:18,757 basehttp 15084 19064 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 19:34:49,868 basehttp 15084 10224 "GET /compra/ventas/ HTTP/1.1" 200 43754
+WARNING 2025-11-19 19:34:50,044 log 15084 10224 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 19:34:50,048 basehttp 15084 10224 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-19 19:36:43,656 autoreload 15084 19396 D:\Works\Python\cobosis\TiendaM\templates\promo\banners_admin.html changed, reloading.
+INFO 2025-11-19 19:36:46,211 autoreload 25664 12140 Watching for file changes with StatReloader
+INFO 2025-11-27 16:14:47,262 autoreload 5568 33424 Watching for file changes with StatReloader
+INFO 2025-11-27 16:15:01,993 basehttp 5568 32940 "GET / HTTP/1.1" 200 63559
+INFO 2025-11-27 16:15:02,219 basehttp 5568 32940 "GET /static/img/LogoStrech.png HTTP/1.1" 304 0
+INFO 2025-11-27 16:15:02,227 basehttp 5568 29728 "GET /media/Banners/Principal2_XVD8K4r.webp HTTP/1.1" 304 0
+INFO 2025-11-27 16:15:02,752 basehttp 5568 32940 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 304 0
+INFO 2025-11-27 16:15:02,760 basehttp 5568 29728 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 304 0
+INFO 2025-11-27 16:15:04,313 basehttp 5568 21444 "GET /static/css/style.css HTTP/1.1" 200 186500
+INFO 2025-11-27 16:15:07,095 basehttp 5568 21444 "GET /static/img/Favicon.ico HTTP/1.1" 304 0
+INFO 2025-11-27 16:15:37,818 basehttp 5568 21444 "GET /accounts/login/?next=/ HTTP/1.1" 200 41689
+INFO 2025-11-27 16:15:44,188 basehttp 5568 21444 "POST /accounts/login/?next=/ HTTP/1.1" 302 0
+INFO 2025-11-27 16:15:44,444 basehttp 5568 21444 "GET / HTTP/1.1" 200 65223
+INFO 2025-11-27 16:16:17,218 basehttp 5568 21444 "GET /compra/marketing/ HTTP/1.1" 200 42889
+INFO 2025-11-27 16:16:21,965 basehttp 5568 21444 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+INFO 2025-11-27 16:16:28,845 basehttp 5568 21444 "GET /catalogo/gestion/ HTTP/1.1" 200 43061
+INFO 2025-11-27 16:16:31,800 basehttp 5568 21444 "GET /catalogo/productos/ HTTP/1.1" 200 67033
+INFO 2025-11-27 16:16:32,181 basehttp 5568 21444 "GET /static/img/prod_Default.webp HTTP/1.1" 304 0
+WARNING 2025-11-27 16:16:33,346 log 5568 21444 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-11-27 16:16:33,364 basehttp 5568 21444 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-11-27 16:16:50,656 basehttp 5568 21444 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+INFO 2025-11-27 16:16:53,755 basehttp 5568 21444 "GET /notification/incentivos/ HTTP/1.1" 302 0
+INFO 2025-11-27 16:16:54,015 basehttp 5568 21444 "GET / HTTP/1.1" 200 65223
+INFO 2025-11-27 16:24:16,192 basehttp 5568 34936 "GET /compra/ordenes/ HTTP/1.1" 200 42851
+ERROR 2025-11-27 16:24:26,207 log 5568 34936 Internal Server Error: /compra/gestion/
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.OperationalError: no such column: ccheckout_order.consecutivo
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Works\Python\cobosis\TiendaM\ccheckout\views.py", line 776, in admin_orders_list
+    return render(request, template_name, locals())
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 170, in render
+    return self._render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\defaulttags.py", line 311, in render
+    if match:
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 284, in __bool__
+    self._fetch_all()
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 1324, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 51, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\sql\compiler.py", line 1169, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.OperationalError: no such column: ccheckout_order.consecutivo
+ERROR 2025-11-27 16:24:26,247 basehttp 5568 34936 "GET /compra/gestion/ HTTP/1.1" 500 264059
+WARNING 2025-11-27 16:24:27,733 log 5568 34936 Not Found: /favicon.ico
+WARNING 2025-11-27 16:24:27,739 basehttp 5568 34936 "GET /favicon.ico HTTP/1.1" 404 3880
+ERROR 2025-11-27 16:25:13,813 log 5568 34936 Internal Server Error: /compra/actualiza_orden/
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+sqlite3.OperationalError: no such column: ccheckout_order.consecutivo
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Works\Python\cobosis\TiendaM\ccheckout\views.py", line 707, in vendedor_orders_list
+    return render(request, template_name, locals())
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 170, in render
+    return self._render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\template\defaulttags.py", line 311, in render
+    if match:
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 284, in __bool__
+    self._fetch_all()
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 1324, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\query.py", line 51, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\models\sql\compiler.py", line 1169, in execute_sql
+    cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+django.db.utils.OperationalError: no such column: ccheckout_order.consecutivo
+ERROR 2025-11-27 16:25:13,843 basehttp 5568 34936 "GET /compra/actualiza_orden/ HTTP/1.1" 500 260839
+INFO 2025-11-27 16:27:15,594 autoreload 26264 17268 Watching for file changes with StatReloader
+INFO 2025-11-27 16:27:23,347 basehttp 26264 29744 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231315
+INFO 2025-11-27 16:27:58,425 basehttp 26264 29744 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231315
+WARNING 2025-11-27 16:28:02,841 log 26264 29744 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-27 16:28:02,870 basehttp 26264 29744 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-11-27 16:29:04,976 autoreload 21268 11968 Watching for file changes with StatReloader
+INFO 2025-12-01 19:26:17,971 autoreload 14140 6392 Watching for file changes with StatReloader
+INFO 2025-12-01 19:35:59,382 basehttp 14140 712 "GET / HTTP/1.1" 200 65223
+INFO 2025-12-01 19:36:05,631 basehttp 14140 712 "GET /static/css/style.css HTTP/1.1" 200 186500
+INFO 2025-12-01 19:36:07,628 basehttp 14140 712 "GET /media/Banners/Fabricamos2.webp HTTP/1.1" 200 975418
+INFO 2025-12-01 19:36:07,831 basehttp 14140 20428 "GET /static/img/LogoStrech.png HTTP/1.1" 200 254597
+INFO 2025-12-01 19:36:08,023 basehttp 14140 10908 "GET /media/Banners/Principal2_XVD8K4r.webp HTTP/1.1" 200 306572
+INFO 2025-12-01 19:36:08,029 basehttp 14140 4544 "GET /media/Banners/Asesoramos2.webp HTTP/1.1" 200 699954
+INFO 2025-12-01 19:36:08,642 basehttp 14140 18224 "GET /media/Banners/Comercializamos2.webp HTTP/1.1" 200 791970
+INFO 2025-12-01 19:36:08,862 basehttp 14140 20428 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 200 45040
+INFO 2025-12-01 19:36:09,046 basehttp 14140 10908 "GET /media/Productos/Acond240ml.webp HTTP/1.1" 200 22936
+INFO 2025-12-01 19:36:09,693 basehttp 14140 18620 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 200 43160
+INFO 2025-12-01 19:36:09,741 basehttp 14140 20428 "GET /media/Productos/Aroma1L.webp HTTP/1.1" 200 29670
+INFO 2025-12-01 19:36:09,965 basehttp 14140 4544 "GET /media/Productos/AutoEscudo240ml.webp HTTP/1.1" 200 29034
+INFO 2025-12-01 19:38:18,974 basehttp 14140 4544 "GET /static/img/Favicon.ico HTTP/1.1" 200 1414
+INFO 2025-12-01 19:49:20,716 basehttp 14140 14736 "GET /compra/ordenes/ HTTP/1.1" 200 42851
+INFO 2025-12-01 19:49:32,430 basehttp 14140 14736 "GET /compra/gestion/ HTTP/1.1" 200 387221
+WARNING 2025-12-01 19:50:04,089 log 14140 14736 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-01 19:50:04,097 basehttp 14140 14736 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-01 19:52:45,685 basehttp 14140 8100 "GET /compra/ordenes/ HTTP/1.1" 200 42851
+WARNING 2025-12-01 19:52:45,972 log 14140 8100 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-01 19:52:45,975 basehttp 14140 8100 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-01 19:52:49,234 basehttp 14140 8100 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231315
+WARNING 2025-12-01 19:52:49,597 log 14140 8100 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-01 19:52:49,605 basehttp 14140 8100 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-01 19:57:48,483 autoreload 14140 6392 D:\Works\Python\cobosis\TiendaM\templates\checkout\vendedor_orders_list.html changed, reloading.
+INFO 2025-12-01 19:57:52,226 autoreload 10836 18232 Watching for file changes with StatReloader
+INFO 2025-12-01 20:00:52,268 basehttp 10836 9280 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231315
+WARNING 2025-12-01 20:00:52,637 log 10836 9280 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-01 20:00:52,638 basehttp 10836 9280 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-01 20:02:47,088 autoreload 10836 18232 D:\Works\Python\cobosis\TiendaM\templates\checkout\vendedor_orders_list.html changed, reloading.
+INFO 2025-12-01 20:02:49,818 autoreload 6040 14600 Watching for file changes with StatReloader
+INFO 2025-12-01 20:02:55,008 basehttp 6040 18812 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231301
+WARNING 2025-12-01 20:02:55,563 log 6040 18812 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-01 20:02:55,578 basehttp 6040 18812 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-01 20:03:32,518 autoreload 6040 14600 D:\Works\Python\cobosis\TiendaM\templates\checkout\vendedor_orders_list.html changed, reloading.
+INFO 2025-12-01 20:03:35,654 autoreload 20176 5976 Watching for file changes with StatReloader
+INFO 2025-12-01 20:03:41,953 basehttp 20176 16168 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231315
+WARNING 2025-12-01 20:03:42,233 log 20176 16168 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-01 20:03:42,244 basehttp 20176 16168 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-01 20:04:27,996 autoreload 20176 5976 D:\Works\Python\cobosis\TiendaM\templates\checkout\vendedor_orders_list.html changed, reloading.
+INFO 2025-12-01 20:04:30,716 autoreload 13648 15984 Watching for file changes with StatReloader
+INFO 2025-12-01 20:04:36,496 basehttp 13648 16304 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231310
+WARNING 2025-12-01 20:04:36,951 log 13648 16304 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-01 20:04:36,958 basehttp 13648 16304 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-01 20:06:00,077 autoreload 13648 15984 D:\Works\Python\cobosis\TiendaM\templates\checkout\vendedor_orders_list.html changed, reloading.
+INFO 2025-12-01 20:06:03,430 autoreload 15568 8336 Watching for file changes with StatReloader
+INFO 2025-12-01 20:06:08,872 basehttp 15568 1508 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231365
+WARNING 2025-12-01 20:06:09,320 log 15568 1508 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-01 20:06:09,336 basehttp 15568 1508 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-01 20:07:34,015 autoreload 15568 8336 D:\Works\Python\cobosis\TiendaM\templates\checkout\vendedor_orders_list.html changed, reloading.
+INFO 2025-12-01 20:07:36,962 autoreload 14332 16300 Watching for file changes with StatReloader
+INFO 2025-12-01 20:07:44,356 basehttp 14332 19524 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231373
+WARNING 2025-12-01 20:07:44,663 log 14332 19524 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-01 20:07:44,678 basehttp 14332 19524 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-01 20:08:10,053 autoreload 14332 16300 D:\Works\Python\cobosis\TiendaM\templates\checkout\vendedor_orders_list.html changed, reloading.
+INFO 2025-12-01 20:08:12,871 autoreload 19172 17684 Watching for file changes with StatReloader
+INFO 2025-12-01 20:08:20,764 basehttp 19172 19880 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231364
+WARNING 2025-12-01 20:08:21,057 log 19172 19880 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-01 20:08:21,057 basehttp 19172 19880 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-01 20:12:50,740 autoreload 19172 17684 D:\Works\Python\cobosis\TiendaM\templates\checkout\vendedor_orders_list.html changed, reloading.
+INFO 2025-12-01 20:12:53,830 autoreload 6248 5480 Watching for file changes with StatReloader
+INFO 2025-12-01 20:12:59,885 basehttp 6248 19504 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231393
+WARNING 2025-12-01 20:13:00,201 log 6248 19384 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-01 20:13:00,251 basehttp 6248 19384 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-01 20:18:18,496 autoreload 6248 5480 D:\Works\Python\cobosis\TiendaM\templates\checkout\vendedor_orders_list.html changed, reloading.
+INFO 2025-12-01 20:18:21,554 autoreload 14068 18296 Watching for file changes with StatReloader
+INFO 2025-12-01 20:18:31,279 basehttp 14068 19244 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231385
+WARNING 2025-12-01 20:18:31,776 log 14068 19244 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-01 20:18:31,786 basehttp 14068 19244 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-01 20:20:47,342 autoreload 14068 18296 D:\Works\Python\cobosis\TiendaM\templates\checkout\vendedor_orders_list.html changed, reloading.
+INFO 2025-12-01 20:20:50,573 autoreload 7852 18004 Watching for file changes with StatReloader
+INFO 2025-12-01 20:21:01,273 basehttp 7852 8240 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231375
+WARNING 2025-12-01 20:21:01,976 log 7852 8240 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-01 20:21:02,086 basehttp 7852 8240 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-01 20:34:01,993 autoreload 7852 18004 D:\Works\Python\cobosis\TiendaM\templates\checkout\vendedor_orders_list.html changed, reloading.
+INFO 2025-12-01 20:34:04,868 autoreload 3700 11400 Watching for file changes with StatReloader
+INFO 2025-12-02 07:44:30,634 autoreload 12860 11664 Watching for file changes with StatReloader
+INFO 2025-12-02 08:01:39,118 basehttp 12860 12736 "GET / HTTP/1.1" 200 65223
+INFO 2025-12-02 08:01:52,165 basehttp 12860 12736 "GET /compra/ordenes/ HTTP/1.1" 200 42851
+INFO 2025-12-02 08:01:57,709 basehttp 12860 12736 "GET /compra/gestion/ HTTP/1.1" 200 387221
+INFO 2025-12-02 08:02:25,299 basehttp 12860 12736 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231375
+INFO 2025-12-02 08:02:35,170 basehttp 12860 12736 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-02 08:02:38,135 basehttp 12860 12736 "GET /compra/venta-productos/ HTTP/1.1" 200 52717
+INFO 2025-12-02 08:02:45,701 basehttp 12860 12736 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-02 08:02:48,519 basehttp 12860 12736 "GET /compra/venta-clientes/ HTTP/1.1" 200 45454
+INFO 2025-12-02 08:05:15,608 basehttp 12860 4252 "GET /compra/venta-resumen/ HTTP/1.1" 200 47387
+INFO 2025-12-02 08:05:22,191 basehttp 12860 4252 "GET /compra/ventas-totales-resumen/ HTTP/1.1" 200 47537
+INFO 2025-12-02 08:05:27,942 basehttp 12860 4252 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-02 08:05:31,987 basehttp 12860 4252 "GET /compra/compras-clientes/ HTTP/1.1" 200 187696
+INFO 2025-12-02 08:20:53,251 basehttp 12860 5368 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-02 09:03:45,130 autoreload 12860 11664 D:\Works\Python\cobosis\TiendaM\templates\checkout\resumen_ventas_oficial.html changed, reloading.
+INFO 2025-12-02 09:03:51,372 autoreload 24280 9340 Watching for file changes with StatReloader
+INFO 2025-12-02 09:04:03,484 basehttp 24280 15284 "GET /compra/ventas-totales-resumen/ HTTP/1.1" 200 47537
+INFO 2025-12-02 09:04:08,824 basehttp 24280 15284 "GET /compra/venta-resumen/ HTTP/1.1" 200 47387
+INFO 2025-12-02 09:04:12,747 basehttp 24280 15284 "GET /compra/ventas-totales-resumen/ HTTP/1.1" 200 47537
+INFO 2025-12-02 09:15:54,886 basehttp 24280 24092 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-02 09:15:57,798 basehttp 24280 24092 "GET /compra/compras-clientes/ HTTP/1.1" 200 187696
+INFO 2025-12-02 09:17:37,018 autoreload 24280 9340 D:\Works\Python\cobosis\TiendaM\templates\checkout\clients_orders_list.html changed, reloading.
+INFO 2025-12-02 09:17:38,807 autoreload 5280 9080 Watching for file changes with StatReloader
+INFO 2025-12-02 09:18:09,163 autoreload 5280 9080 D:\Works\Python\cobosis\TiendaM\templates\checkout\clients_orders_list.html changed, reloading.
+INFO 2025-12-02 09:18:10,794 autoreload 12356 21096 Watching for file changes with StatReloader
+INFO 2025-12-02 09:18:13,694 basehttp 12356 11376 "GET /compra/compras-clientes/ HTTP/1.1" 200 187745
+WARNING 2025-12-02 09:18:22,018 log 12356 11376 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-02 09:18:22,022 basehttp 12356 11376 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-02 14:16:33,524 autoreload 12356 21096 D:\Works\Python\cobosis\TiendaM\templates\checkout\clients_orders_list.html changed, reloading.
+INFO 2025-12-02 14:16:35,443 autoreload 26904 26664 Watching for file changes with StatReloader
+INFO 2025-12-02 14:17:30,663 autoreload 26904 26664 D:\Works\Python\cobosis\TiendaM\templates\checkout\clients_orders_list.html changed, reloading.
+INFO 2025-12-02 14:17:32,771 autoreload 988 13640 Watching for file changes with StatReloader
+INFO 2025-12-02 14:17:42,968 basehttp 988 9364 "GET /compra/compras-clientes/ HTTP/1.1" 200 187743
+WARNING 2025-12-02 14:17:43,349 log 988 9364 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-02 14:17:43,369 basehttp 988 9364 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-02 14:18:18,742 basehttp 988 9364 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+WARNING 2025-12-02 14:18:18,928 log 988 9364 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-02 14:18:18,932 basehttp 988 9364 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-02 14:18:21,776 basehttp 988 9364 "GET /precio/ HTTP/1.1" 200 47457
+WARNING 2025-12-02 14:18:21,981 log 988 9364 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-02 14:18:21,998 basehttp 988 9364 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-02 14:18:41,026 basehttp 988 9364 "GET /compra/marketing/ HTTP/1.1" 200 42889
+WARNING 2025-12-02 14:18:41,177 log 988 9364 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-02 14:18:41,182 basehttp 988 9364 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-02 14:18:44,036 basehttp 988 9364 "GET /promo/banners HTTP/1.1" 200 48668
+WARNING 2025-12-02 14:18:44,231 log 988 9364 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-02 14:18:44,234 basehttp 988 9364 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-02 14:18:50,869 basehttp 988 9364 "GET /compra/marketing/ HTTP/1.1" 200 42889
+WARNING 2025-12-02 14:18:51,053 log 988 9364 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-02 14:18:51,061 basehttp 988 9364 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-02 14:18:53,500 basehttp 988 9364 "GET /promo/offers HTTP/1.1" 200 46164
+WARNING 2025-12-02 14:18:53,774 log 988 9364 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-02 14:18:53,778 basehttp 988 9364 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-02 14:18:59,046 basehttp 988 9364 "GET /compra/marketing/ HTTP/1.1" 200 42889
+WARNING 2025-12-02 14:18:59,315 log 988 9364 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-02 14:18:59,329 basehttp 988 9364 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-02 14:19:03,015 basehttp 988 9364 "GET /accounts/users_list/ HTTP/1.1" 200 50101
+WARNING 2025-12-02 14:19:03,162 log 988 9364 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-02 14:19:03,174 basehttp 988 9364 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-08 09:22:38,938 autoreload 16340 16344 Watching for file changes with StatReloader
+INFO 2025-12-08 09:24:36,723 basehttp 16340 12544 "GET / HTTP/1.1" 200 65223
+INFO 2025-12-08 09:24:36,999 basehttp 16340 12544 "GET /static/css/style.css HTTP/1.1" 304 0
+INFO 2025-12-08 09:24:37,018 basehttp 16340 18164 "GET /static/img/LogoStrech.png HTTP/1.1" 304 0
+INFO 2025-12-08 09:24:37,398 basehttp 16340 18164 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 304 0
+INFO 2025-12-08 09:24:37,435 basehttp 16340 18164 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 304 0
+INFO 2025-12-08 10:35:16,551 basehttp 16340 5968 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-08 10:35:25,516 basehttp 16340 5968 "GET /compra/venta-clientes/ HTTP/1.1" 200 45454
+INFO 2025-12-08 10:35:38,664 basehttp 16340 5968 "GET /compra/venta-resumen/ HTTP/1.1" 200 47387
+INFO 2025-12-08 10:35:44,991 basehttp 16340 5968 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+INFO 2025-12-08 10:35:49,677 basehttp 16340 5968 "GET /precio/ HTTP/1.1" 200 47457
+INFO 2025-12-08 10:54:16,731 autoreload 19344 13640 Watching for file changes with StatReloader
+INFO 2025-12-08 10:54:22,746 basehttp 19344 10024 "GET /compra/marketing/ HTTP/1.1" 200 42889
+INFO 2025-12-08 10:54:31,136 basehttp 19344 10024 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+INFO 2025-12-08 10:54:32,114 basehttp 19344 10024 "GET /static/img/Favicon.ico HTTP/1.1" 304 0
+INFO 2025-12-08 10:54:33,386 basehttp 19344 10024 "GET /precio/ HTTP/1.1" 200 47457
+INFO 2025-12-08 10:54:40,186 basehttp 19344 10024 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+INFO 2025-12-08 10:54:42,034 basehttp 19344 10024 "GET /notification/incentivos/ HTTP/1.1" 302 0
+INFO 2025-12-08 10:54:42,232 basehttp 19344 10024 "GET / HTTP/1.1" 200 65223
+INFO 2025-12-08 10:57:13,684 basehttp 19344 10024 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+INFO 2025-12-08 10:57:16,653 basehttp 19344 10024 "GET /notification/incentivos/ HTTP/1.1" 302 0
+INFO 2025-12-08 10:57:16,754 basehttp 19344 10024 "GET / HTTP/1.1" 200 65223
+INFO 2025-12-08 11:03:15,096 basehttp 19344 13276 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-08 11:03:27,412 basehttp 19344 13276 "GET /compra/venta-productos/ HTTP/1.1" 200 52717
+INFO 2025-12-08 11:06:23,048 basehttp 19344 13276 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-08 11:06:25,698 basehttp 19344 13276 "GET /compra/venta-clientes/ HTTP/1.1" 200 45454
+INFO 2025-12-08 11:10:10,751 basehttp 19344 13276 "GET / HTTP/1.1" 200 65223
+INFO 2025-12-08 11:11:39,116 basehttp 19344 13276 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-08 11:11:41,384 basehttp 19344 13276 "GET /compra/venta-productos/ HTTP/1.1" 200 52717
+INFO 2025-12-08 11:14:12,237 basehttp 19344 13276 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-08 11:14:29,629 basehttp 19344 13276 "GET /compra/venta-productos/ HTTP/1.1" 200 52717
+INFO 2025-12-08 14:56:31,096 basehttp 19344 2764 "GET /catalogo/catalogo/ HTTP/1.1" 200 60760
+INFO 2025-12-08 14:56:35,157 basehttp 19344 18656 "GET /media/Productos/DetBlanqueador1L.webp HTTP/1.1" 200 19464
+INFO 2025-12-08 14:56:35,210 basehttp 19344 10300 "GET /media/Productos/IMG_9515.jpg HTTP/1.1" 200 987704
+INFO 2025-12-08 14:56:35,212 basehttp 19344 18160 "GET /media/Productos/p_GelAnticalcareo_1l.jpg HTTP/1.1" 200 1003667
+INFO 2025-12-08 14:56:35,213 basehttp 19344 2764 "GET /static/img/prod_Default.webp HTTP/1.1" 200 24102
+INFO 2025-12-08 14:56:35,272 basehttp 19344 16900 "GET /media/Productos/prod_Default.jpg HTTP/1.1" 200 912976
+INFO 2025-12-08 14:56:35,344 basehttp 19344 2672 "GET /media/Productos/IMG_9512.jpg HTTP/1.1" 200 1150792
+WARNING 2025-12-08 14:56:35,497 log 19344 18656 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 14:56:35,532 basehttp 19344 18656 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-08 14:56:35,545 basehttp 19344 2764 "GET /media/Productos/p_LiquidoDeFreno_500ml.jpg HTTP/1.1" 200 1260611
+ERROR 2025-12-08 15:23:36,829 log 19344 18408 Internal Server Error: /catalogo/catalogo/
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Works\Python\cobosis\TiendaM\catalog\views.py", line 239, in catalogo_productos
+    context={'object_list':object_list, 'form':form}
+UnboundLocalError: local variable 'object_list' referenced before assignment
+ERROR 2025-12-08 15:23:36,835 basehttp 19344 18408 "POST /catalogo/catalogo/ HTTP/1.1" 500 92993
+WARNING 2025-12-08 15:23:41,312 log 19344 18408 Not Found: /favicon.ico
+WARNING 2025-12-08 15:23:41,316 basehttp 19344 18408 "GET /favicon.ico HTTP/1.1" 404 3880
+INFO 2025-12-08 15:32:29,468 autoreload 19344 13640 D:\Works\Python\cobosis\TiendaM\catalog\views.py changed, reloading.
+INFO 2025-12-08 15:32:31,213 autoreload 4736 6856 Watching for file changes with StatReloader
+INFO 2025-12-08 15:32:43,527 autoreload 4736 6856 D:\Works\Python\cobosis\TiendaM\catalog\views.py changed, reloading.
+INFO 2025-12-08 15:32:45,644 autoreload 18352 13948 Watching for file changes with StatReloader
+INFO 2025-12-08 15:33:22,617 basehttp 18352 3576 "POST /catalogo/catalogo/ HTTP/1.1" 302 0
+INFO 2025-12-08 15:33:22,810 basehttp 18352 3576 "GET /catalogo/productos/ambientador/ HTTP/1.1" 200 107432
+WARNING 2025-12-08 15:33:23,154 log 18352 3576 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:33:23,161 basehttp 18352 3576 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-08 15:33:50,243 basehttp 18352 3576 "GET /catalogo/catalogo/ HTTP/1.1" 200 60760
+WARNING 2025-12-08 15:33:50,430 log 18352 3576 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:33:50,435 basehttp 18352 3576 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-08 15:34:07,661 basehttp 18352 3576 "POST /catalogo/catalogo/ HTTP/1.1" 302 0
+INFO 2025-12-08 15:34:07,775 basehttp 18352 3576 "GET /catalogo/productos/color%20rojo/ HTTP/1.1" 200 102298
+WARNING 2025-12-08 15:34:07,891 log 18352 3576 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:34:07,892 basehttp 18352 3576 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-08 15:34:17,891 basehttp 18352 3576 "POST /catalogo/productos/color%20rojo/ HTTP/1.1" 302 0
+INFO 2025-12-08 15:34:18,027 basehttp 18352 3576 "GET /catalogo/productos/carro/ HTTP/1.1" 200 102293
+WARNING 2025-12-08 15:34:18,148 log 18352 3576 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:34:18,149 basehttp 18352 3576 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-08 15:34:21,749 basehttp 18352 3576 "POST /catalogo/productos/carro/ HTTP/1.1" 302 0
+INFO 2025-12-08 15:34:21,836 basehttp 18352 3576 "GET /catalogo/productos/gel/ HTTP/1.1" 200 120815
+WARNING 2025-12-08 15:34:21,964 log 18352 3576 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:34:21,965 basehttp 18352 3576 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+WARNING 2025-12-08 15:34:22,036 log 18352 3576 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:34:22,041 basehttp 18352 3576 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-08 15:34:39,101 basehttp 18352 3576 "POST /catalogo/productos/gel/ HTTP/1.1" 302 0
+INFO 2025-12-08 15:34:39,207 basehttp 18352 3576 "GET /catalogo/productos/gel%20de%20bano/ HTTP/1.1" 200 102299
+WARNING 2025-12-08 15:34:39,340 log 18352 3576 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:34:39,343 basehttp 18352 3576 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-08 15:35:33,953 basehttp 18352 3576 "POST /catalogo/productos/gel%20de%20bano/ HTTP/1.1" 302 0
+INFO 2025-12-08 15:35:34,069 basehttp 18352 3576 "GET /catalogo/productos/acondicionador/ HTTP/1.1" 200 102302
+WARNING 2025-12-08 15:35:34,275 log 18352 3576 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:35:34,277 basehttp 18352 3576 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-08 15:35:40,710 basehttp 18352 3576 "POST /catalogo/productos/acondicionador/ HTTP/1.1" 302 0
+INFO 2025-12-08 15:35:40,829 basehttp 18352 3576 "GET /catalogo/productos/acondicionador/ HTTP/1.1" 200 102302
+WARNING 2025-12-08 15:35:40,987 log 18352 3576 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:35:40,988 basehttp 18352 3576 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-08 15:35:45,886 basehttp 18352 3576 "POST /catalogo/productos/acondicionador/ HTTP/1.1" 302 0
+INFO 2025-12-08 15:35:45,989 basehttp 18352 3576 "GET /catalogo/productos/ambientador/ HTTP/1.1" 200 107432
+WARNING 2025-12-08 15:35:46,126 log 18352 3576 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:35:46,128 basehttp 18352 3576 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-08 15:36:42,928 basehttp 18352 3576 "GET /catalogo/productos/ HTTP/1.1" 200 67033
+WARNING 2025-12-08 15:36:43,074 log 18352 16488 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:36:43,082 basehttp 18352 16488 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-08 15:36:44,106 basehttp 18352 3576 "GET /media/Productos/ChampuAGranel.webp HTTP/1.1" 200 104464
+INFO 2025-12-08 15:37:16,230 basehttp 18352 3576 "GET /compra/ordenes/ HTTP/1.1" 200 42851
+INFO 2025-12-08 15:37:19,045 basehttp 18352 3576 "GET /compra/gestion/ HTTP/1.1" 200 387221
+ERROR 2025-12-08 15:37:33,179 log 18352 3576 Internal Server Error: /compra/gestion/
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Works\Python\cobosis\TiendaM\ccheckout\views.py", line 774, in admin_orders_list
+    return HttpResponseRedirect(receipt)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\http\response.py", line 501, in __init__
+    self['Location'] = iri_to_uri(redirect_to)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\utils\encoding.py", line 147, in iri_to_uri
+    return quote(iri, safe="/#%[]=:;$&()+,!?*@'~")
+  File "C:\Users\Mybeartis\AppData\Local\Programs\Python\Python39\lib\urllib\parse.py", line 871, in quote
+    return quote_from_bytes(string, safe)
+  File "C:\Users\Mybeartis\AppData\Local\Programs\Python\Python39\lib\urllib\parse.py", line 896, in quote_from_bytes
+    raise TypeError("quote_from_bytes() expected bytes")
+TypeError: quote_from_bytes() expected bytes
+ERROR 2025-12-08 15:37:33,185 basehttp 18352 3576 "POST /compra/gestion/ HTTP/1.1" 500 111823
+INFO 2025-12-08 15:40:02,232 autoreload 18352 13948 D:\Works\Python\cobosis\TiendaM\ccheckout\views.py changed, reloading.
+INFO 2025-12-08 15:40:04,100 autoreload 1364 4388 Watching for file changes with StatReloader
+INFO 2025-12-08 15:41:00,861 autoreload 1364 4388 D:\Works\Python\cobosis\TiendaM\ccheckout\views.py changed, reloading.
+INFO 2025-12-08 15:41:02,484 autoreload 14112 2148 Watching for file changes with StatReloader
+ERROR 2025-12-08 15:41:12,454 log 14112 13404 Internal Server Error: /compra/gestion/
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\utils\datastructures.py", line 76, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'sumbit'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Works\Python\cobosis\TiendaM\ccheckout\views.py", line 773, in admin_orders_list
+    if postdata['sumbit'] =='Buscar':
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\utils\datastructures.py", line 78, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'sumbit'
+ERROR 2025-12-08 15:41:12,458 basehttp 14112 13404 "POST /compra/gestion/ HTTP/1.1" 500 103588
+INFO 2025-12-08 15:42:10,529 autoreload 14112 2148 D:\Works\Python\cobosis\TiendaM\ccheckout\views.py changed, reloading.
+INFO 2025-12-08 15:42:12,041 autoreload 19432 14288 Watching for file changes with StatReloader
+ERROR 2025-12-08 15:42:21,514 log 19432 4124 Internal Server Error: /compra/gestion/
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\utils\datastructures.py", line 76, in __getitem__
+    list_ = super().__getitem__(key)
+KeyError: 'sumbit'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Works\Python\cobosis\TiendaM\ccheckout\views.py", line 773, in admin_orders_list
+    if postdata['sumbit'] == 'Buscar':
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\utils\datastructures.py", line 78, in __getitem__
+    raise MultiValueDictKeyError(key)
+django.utils.datastructures.MultiValueDictKeyError: 'sumbit'
+ERROR 2025-12-08 15:42:21,519 basehttp 19432 4124 "POST /compra/gestion/ HTTP/1.1" 500 103590
+INFO 2025-12-08 15:42:39,003 autoreload 19432 14288 D:\Works\Python\cobosis\TiendaM\ccheckout\views.py changed, reloading.
+INFO 2025-12-08 15:42:40,795 autoreload 6220 18696 Watching for file changes with StatReloader
+INFO 2025-12-08 15:42:43,290 basehttp 6220 2752 "POST /compra/gestion/ HTTP/1.1" 302 0
+INFO 2025-12-08 15:42:43,459 basehttp 6220 2752 "GET /catalogo/productos/gel/ HTTP/1.1" 200 120815
+WARNING 2025-12-08 15:42:43,610 log 6220 2752 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:42:43,614 basehttp 6220 2752 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+WARNING 2025-12-08 15:42:43,675 log 6220 2752 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:42:43,677 basehttp 6220 2752 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-08 15:43:03,172 basehttp 6220 2752 "GET /catalogo/producto/gel-de-bano-1l/ HTTP/1.1" 200 50428
+WARNING 2025-12-08 15:43:03,309 log 6220 2752 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:43:03,310 basehttp 6220 2752 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+WARNING 2025-12-08 15:43:57,939 log 6220 2752 Not Found: /catalogo/producto/l/
+WARNING 2025-12-08 15:43:57,940 basehttp 6220 2752 "GET /catalogo/producto/l/ HTTP/1.1" 404 3021
+WARNING 2025-12-08 15:44:02,415 log 6220 2752 Not Found: /catalogo/producto/
+WARNING 2025-12-08 15:44:02,417 basehttp 6220 2752 "GET /catalogo/producto/ HTTP/1.1" 404 7696
+INFO 2025-12-08 15:44:40,070 basehttp 6220 2752 "GET /compra/ordenes/ HTTP/1.1" 200 42851
+INFO 2025-12-08 15:44:42,225 basehttp 6220 2752 "GET /compra/gestion/ HTTP/1.1" 200 387221
+INFO 2025-12-08 15:44:51,812 basehttp 6220 2752 "POST /compra/gestion/ HTTP/1.1" 302 0
+INFO 2025-12-08 15:44:51,998 basehttp 6220 2752 "GET /catalogo/productos/ambientador/ HTTP/1.1" 200 107432
+WARNING 2025-12-08 15:44:52,134 log 6220 2752 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-08 15:44:52,135 basehttp 6220 2752 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-08 15:46:08,857 basehttp 6220 2752 "GET /compra/ordenes/ HTTP/1.1" 200 42851
+INFO 2025-12-08 15:46:10,909 basehttp 6220 2752 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231375
+INFO 2025-12-08 15:46:22,183 basehttp 6220 2752 "POST /compra/actualiza_orden/ HTTP/1.1" 200 231375
+INFO 2025-12-08 15:46:33,334 basehttp 6220 2752 "POST /compra/actualiza_orden/ HTTP/1.1" 200 231375
+WARNING 2025-12-08 15:46:41,902 log 6220 2752 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-08 15:46:41,970 basehttp 6220 2752 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-08 15:46:50,294 basehttp 6220 2752 "POST /compra/actualiza_orden/ HTTP/1.1" 200 231375
+WARNING 2025-12-08 15:46:50,582 log 6220 2752 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-08 15:46:50,584 basehttp 6220 2752 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-08 15:47:09,719 basehttp 6220 2752 "POST /compra/actualiza_orden/ HTTP/1.1" 200 231375
+WARNING 2025-12-08 15:47:09,960 log 6220 2752 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-08 15:47:09,961 basehttp 6220 2752 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-08 15:47:40,643 basehttp 6220 17280 "POST /compra/actualiza_orden/ HTTP/1.1" 200 231375
+WARNING 2025-12-08 15:47:40,855 log 6220 17280 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-08 15:47:40,857 basehttp 6220 17280 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-08 15:51:49,838 autoreload 6220 18696 D:\Works\Python\cobosis\TiendaM\ccheckout\views.py changed, reloading.
+INFO 2025-12-08 15:51:51,592 autoreload 13288 8396 Watching for file changes with StatReloader
+INFO 2025-12-08 19:08:48,058 autoreload 13288 8396 D:\Works\Python\cobosis\TiendaM\ccheckout\views.py changed, reloading.
+INFO 2025-12-11 07:52:26,112 autoreload 20792 10720 Watching for file changes with StatReloader
+INFO 2025-12-11 07:53:08,336 basehttp 20792 6072 "GET / HTTP/1.1" 200 65223
+INFO 2025-12-11 07:53:08,518 basehttp 20792 6072 "GET /media/Banners/Principal2_XVD8K4r.webp HTTP/1.1" 304 0
+INFO 2025-12-11 07:53:08,539 basehttp 20792 21868 "GET /static/css/style.css HTTP/1.1" 304 0
+INFO 2025-12-11 07:55:49,787 basehttp 20792 21868 "GET /compra/ordenes/ HTTP/1.1" 200 42851
+INFO 2025-12-11 07:55:59,527 basehttp 20792 21868 "GET /compra/actualiza_orden/ HTTP/1.1" 200 231375
+INFO 2025-12-11 07:56:10,478 basehttp 20792 21868 "POST /compra/actualiza_orden/ HTTP/1.1" 200 231375
+WARNING 2025-12-11 07:56:16,661 log 20792 21868 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-11 07:56:16,683 basehttp 20792 21868 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-11 07:56:27,028 basehttp 20792 21868 "POST /compra/actualiza_orden/ HTTP/1.1" 200 231375
+WARNING 2025-12-11 07:56:27,321 log 20792 21868 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-11 07:56:27,321 basehttp 20792 21868 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-11 07:56:31,914 basehttp 20792 21868 "GET /catalogo/catalogo/ HTTP/1.1" 200 60760
+WARNING 2025-12-11 07:56:32,154 log 20792 21868 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-11 07:56:32,156 basehttp 20792 21868 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-11 07:56:32,529 log 20792 21868 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-11 07:56:32,533 basehttp 20792 21868 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-11 07:56:43,268 basehttp 20792 21868 "POST /catalogo/catalogo/ HTTP/1.1" 302 0
+INFO 2025-12-11 07:56:43,486 basehttp 20792 21868 "GET /catalogo/productos/ambientador/ HTTP/1.1" 200 107432
+WARNING 2025-12-11 07:56:43,812 log 20792 21868 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-11 07:56:43,812 log 20792 6072 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-11 07:56:43,820 basehttp 20792 21868 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-11 07:56:43,822 basehttp 20792 6072 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-12 19:20:18,634 autoreload 13416 17748 Watching for file changes with StatReloader
+INFO 2025-12-12 19:20:44,634 basehttp 13416 10708 "GET / HTTP/1.1" 200 65223
+INFO 2025-12-12 19:21:45,958 basehttp 13416 10708 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-12 19:21:53,507 basehttp 13416 10708 "GET /compra/venta-productos/ HTTP/1.1" 200 52717
+INFO 2025-12-12 19:22:14,709 basehttp 13416 10708 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-12 19:22:17,071 basehttp 13416 10708 "GET /compra/venta-clientes/ HTTP/1.1" 200 45454
+INFO 2025-12-12 19:22:24,003 basehttp 13416 10708 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-12 19:22:26,009 basehttp 13416 10708 "GET /compra/venta-resumen/ HTTP/1.1" 200 47387
+INFO 2025-12-12 19:22:35,782 basehttp 13416 10708 "GET /compra/ventas-totales-resumen/ HTTP/1.1" 200 47537
+INFO 2025-12-12 19:22:43,227 basehttp 13416 10708 "GET /compra/compras-clientes/ HTTP/1.1" 200 187743
+INFO 2025-12-12 19:24:26,427 basehttp 13416 10708 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-12 19:24:28,817 basehttp 13416 10708 "GET /servicios/gestion/ HTTP/1.1" 200 45489
+INFO 2025-12-12 19:24:42,760 basehttp 13416 10708 "GET /wallet/transactions/ HTTP/1.1" 200 90731
+INFO 2025-12-12 19:24:52,063 basehttp 13416 10708 "GET /compra/resumen_oficial/ HTTP/1.1" 200 175667
+INFO 2025-12-12 19:26:09,364 basehttp 13416 10708 "GET /compra/resumen_oficial/ HTTP/1.1" 200 175667
+INFO 2025-12-12 19:26:58,927 basehttp 13416 10708 "GET /compra/resumen_oficial/ HTTP/1.1" 200 175667
+WARNING 2025-12-12 19:27:26,852 log 13416 10708 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 19:27:26,853 basehttp 13416 10708 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 19:33:48,115 autoreload 13416 17748 D:\Works\Python\cobosis\TiendaM\templates\checkout\resumen_ventas_oficial.html changed, reloading.
+INFO 2025-12-12 19:33:50,021 autoreload 18020 16316 Watching for file changes with StatReloader
+INFO 2025-12-12 19:33:59,657 basehttp 18020 1160 "GET /compra/resumen_oficial/ HTTP/1.1" 200 175644
+WARNING 2025-12-12 19:33:59,792 log 18020 1160 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 19:33:59,807 basehttp 18020 1160 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 19:34:35,509 autoreload 18020 16316 D:\Works\Python\cobosis\TiendaM\templates\checkout\resumen_ventas_oficial.html changed, reloading.
+INFO 2025-12-12 19:34:37,111 autoreload 1416 9040 Watching for file changes with StatReloader
+INFO 2025-12-12 19:34:42,832 basehttp 1416 10508 "GET /compra/resumen_oficial/ HTTP/1.1" 200 175654
+WARNING 2025-12-12 19:34:43,036 log 1416 10508 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 19:34:43,070 basehttp 1416 10508 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 19:35:06,290 autoreload 1416 9040 D:\Works\Python\cobosis\TiendaM\templates\checkout\resumen_ventas_oficial.html changed, reloading.
+INFO 2025-12-12 19:35:08,048 autoreload 7036 13012 Watching for file changes with StatReloader
+INFO 2025-12-12 19:35:13,654 basehttp 7036 6564 "GET /compra/resumen_oficial/ HTTP/1.1" 200 175658
+WARNING 2025-12-12 19:35:13,838 log 7036 6564 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 19:35:13,864 basehttp 7036 6564 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 19:37:08,590 autoreload 7036 13012 D:\Works\Python\cobosis\TiendaM\templates\checkout\resumen_ventas_oficial.html changed, reloading.
+INFO 2025-12-12 19:37:10,553 autoreload 4776 16592 Watching for file changes with StatReloader
+INFO 2025-12-12 19:37:17,211 basehttp 4776 15192 "GET /compra/resumen_oficial/ HTTP/1.1" 200 175659
+WARNING 2025-12-12 19:37:17,478 log 4776 15192 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 19:37:17,491 basehttp 4776 15192 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 19:39:06,209 autoreload 4776 16592 D:\Works\Python\cobosis\TiendaM\templates\checkout\resumen_ventas_oficial.html changed, reloading.
+INFO 2025-12-12 19:39:07,842 autoreload 17744 18232 Watching for file changes with StatReloader
+INFO 2025-12-12 19:39:25,830 autoreload 17744 18232 D:\Works\Python\cobosis\TiendaM\templates\checkout\resumen_ventas_oficial.html changed, reloading.
+INFO 2025-12-12 19:39:27,546 autoreload 5536 10012 Watching for file changes with StatReloader
+INFO 2025-12-12 19:39:30,485 basehttp 5536 5104 "GET /compra/resumen_oficial/ HTTP/1.1" 200 175622
+WARNING 2025-12-12 19:39:30,763 log 5536 5104 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 19:39:30,791 basehttp 5536 5104 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 19:39:46,005 autoreload 5536 10012 D:\Works\Python\cobosis\TiendaM\templates\checkout\resumen_ventas_oficial.html changed, reloading.
+INFO 2025-12-12 19:39:47,637 autoreload 15628 11052 Watching for file changes with StatReloader
+INFO 2025-12-12 19:39:51,355 basehttp 15628 4676 "GET /compra/resumen_oficial/ HTTP/1.1" 200 175622
+WARNING 2025-12-12 19:39:51,516 log 15628 4676 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 19:39:51,534 basehttp 15628 4676 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 19:40:07,044 basehttp 15628 4676 "GET /catalogo/gestion/ HTTP/1.1" 200 43061
+WARNING 2025-12-12 19:40:07,239 log 15628 4676 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 19:40:07,281 basehttp 15628 4676 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 19:40:09,806 basehttp 15628 4676 "GET /catalogo/productos/ HTTP/1.1" 200 67033
+WARNING 2025-12-12 19:40:09,958 log 15628 4676 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 19:40:09,963 basehttp 15628 4676 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-12 19:40:10,236 log 15628 4676 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-12 19:40:10,238 basehttp 15628 4676 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+ERROR 2025-12-12 19:40:27,303 log 15628 4676 Internal Server Error: /catalogo/productos/
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Works\Python\cobosis\TiendaM\catalog\views.py", line 205, in gestion_productos
+    context={'object_list':object_list, 'form':form}
+UnboundLocalError: local variable 'object_list' referenced before assignment
+ERROR 2025-12-12 19:40:27,306 basehttp 15628 4676 "POST /catalogo/productos/ HTTP/1.1" 500 92994
+WARNING 2025-12-12 19:40:27,650 log 15628 4676 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 19:40:27,684 basehttp 15628 4676 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-12 19:40:28,511 log 15628 4676 Not Found: /favicon.ico
+WARNING 2025-12-12 19:40:28,512 basehttp 15628 4676 "GET /favicon.ico HTTP/1.1" 404 3880
+INFO 2025-12-12 19:41:54,290 autoreload 15628 11052 D:\Works\Python\cobosis\TiendaM\templates\checkout\resumen_ventas_oficial.html changed, reloading.
+INFO 2025-12-12 19:41:55,915 autoreload 11996 13896 Watching for file changes with StatReloader
+INFO 2025-12-12 19:42:12,554 autoreload 11996 13896 D:\Works\Python\cobosis\TiendaM\templates\checkout\resumen_ventas_oficial.html changed, reloading.
+INFO 2025-12-12 19:42:14,149 autoreload 2968 8020 Watching for file changes with StatReloader
+INFO 2025-12-12 19:44:52,667 autoreload 5248 17704 Watching for file changes with StatReloader
+INFO 2025-12-12 20:10:32,298 autoreload 2968 8020 D:\Works\Python\cobosis\TiendaM\catalog\views.py changed, reloading.
+INFO 2025-12-12 20:10:32,940 autoreload 5248 17704 D:\Works\Python\cobosis\TiendaM\catalog\views.py changed, reloading.
+INFO 2025-12-12 20:10:34,851 autoreload 18060 14424 Watching for file changes with StatReloader
+INFO 2025-12-12 20:10:35,571 autoreload 14240 15048 Watching for file changes with StatReloader
+INFO 2025-12-12 20:10:42,077 basehttp 18060 9904 "POST /catalogo/productos/ HTTP/1.1" 302 0
+INFO 2025-12-12 20:10:42,410 basehttp 18060 9904 "GET /catalogo/productos/gel/ HTTP/1.1" 200 120815
+WARNING 2025-12-12 20:10:42,674 log 18060 9904 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 20:10:42,857 basehttp 18060 9904 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-12 20:10:43,048 log 18060 9904 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-12 20:10:43,057 basehttp 18060 9904 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+WARNING 2025-12-12 20:10:43,512 log 18060 9904 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-12 20:10:43,547 basehttp 18060 9904 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-12 20:11:09,186 autoreload 14240 15048 D:\Works\Python\cobosis\TiendaM\catalog\views.py changed, reloading.
+INFO 2025-12-12 20:11:09,263 autoreload 18060 14424 D:\Works\Python\cobosis\TiendaM\catalog\views.py changed, reloading.
+INFO 2025-12-12 20:11:11,601 autoreload 16708 14264 Watching for file changes with StatReloader
+INFO 2025-12-12 20:11:11,687 autoreload 9896 15636 Watching for file changes with StatReloader
+INFO 2025-12-12 20:11:16,041 basehttp 16708 14640 "GET /catalogo/productos/ HTTP/1.1" 200 67033
+WARNING 2025-12-12 20:11:16,214 log 16708 14640 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 20:11:16,241 basehttp 16708 14640 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 20:11:22,225 basehttp 16708 14640 "GET /catalogo/gestion/ HTTP/1.1" 200 43061
+WARNING 2025-12-12 20:11:22,448 log 16708 14640 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 20:11:22,513 basehttp 16708 14640 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 20:11:27,123 basehttp 16708 14640 "GET /catalogo/productos_almacen/inventario HTTP/1.1" 200 98555
+WARNING 2025-12-12 20:11:27,383 log 16708 14640 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 20:11:27,393 basehttp 16708 14640 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 20:11:37,085 basehttp 16708 14640 "POST /catalogo/productos_almacen/ HTTP/1.1" 200 97868
+WARNING 2025-12-12 20:11:37,360 log 16708 14640 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 20:11:37,392 basehttp 16708 14640 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 20:12:11,575 basehttp 16708 14640 "POST /catalogo/productos_almacen/ HTTP/1.1" 200 97868
+WARNING 2025-12-12 20:12:11,879 log 16708 14640 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 20:12:11,931 basehttp 16708 14640 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 20:13:18,006 basehttp 16708 14640 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+WARNING 2025-12-12 20:13:18,162 log 16708 14640 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 20:13:18,181 basehttp 16708 14640 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 20:13:20,448 basehttp 16708 14640 "GET /precio/ HTTP/1.1" 200 47457
+WARNING 2025-12-12 20:13:20,840 log 16708 14640 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 20:13:20,842 basehttp 16708 14640 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-12 20:13:26,234 base 16708 14640 Method Not Allowed (POST): /precio/
+WARNING 2025-12-12 20:13:26,234 log 16708 14640 Method Not Allowed: /precio/
+WARNING 2025-12-12 20:13:26,244 basehttp 16708 14640 "POST /precio/ HTTP/1.1" 405 0
+WARNING 2025-12-12 20:13:36,024 log 16708 14640 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 20:13:36,028 basehttp 16708 14640 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-12 20:13:36,123 log 16708 14640 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 20:13:36,191 basehttp 16708 14640 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-12 20:13:43,555 basehttp 16708 14640 "GET /precio/ HTTP/1.1" 200 47457
+WARNING 2025-12-12 20:13:43,702 log 16708 14640 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 20:13:43,705 basehttp 16708 14640 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-12 20:14:36,208 log 16708 14640 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-12 20:14:36,242 basehttp 16708 14640 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-12 20:14:48,106 base 16708 14640 Method Not Allowed (POST): /precio/
+WARNING 2025-12-12 20:14:48,106 log 16708 14640 Method Not Allowed: /precio/
+WARNING 2025-12-12 20:14:48,108 basehttp 16708 14640 "POST /precio/ HTTP/1.1" 405 0
+INFO 2025-12-17 12:35:44,538 autoreload 20048 4008 Watching for file changes with StatReloader
+INFO 2025-12-17 13:06:58,460 basehttp 20048 4176 "GET / HTTP/1.1" 200 65223
+INFO 2025-12-17 13:06:58,541 basehttp 20048 4176 "GET /static/css/style.css HTTP/1.1" 304 0
+INFO 2025-12-17 13:06:58,569 basehttp 20048 17948 "GET /static/img/LogoStrech.png HTTP/1.1" 304 0
+INFO 2025-12-17 13:06:58,946 basehttp 20048 17948 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 304 0
+INFO 2025-12-17 13:06:58,979 basehttp 20048 17948 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 304 0
+INFO 2025-12-17 13:28:53,916 basehttp 20048 16380 "GET /compra/ventas/ HTTP/1.1" 200 43754
+INFO 2025-12-17 13:29:06,820 basehttp 20048 16380 "GET /compra/compras-clientes/ HTTP/1.1" 200 187743
+WARNING 2025-12-17 13:29:07,642 log 20048 12044 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-17 13:29:07,709 basehttp 20048 12044 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-17 13:29:07,798 log 20048 12044 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-17 13:29:07,807 basehttp 20048 12044 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+ERROR 2025-12-18 12:49:12,160 log 20048 21036 Internal Server Error: /compra/compras-clientes/
+Traceback (most recent call last):
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "D:\Works\Python\cobosis\TiendaM\ccheckout\views.py", line 867, in clients_orders_list
+    return HttpResponseRedirect(receipt)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\http\response.py", line 501, in __init__
+    self['Location'] = iri_to_uri(redirect_to)
+  File "D:\Works\Python\cobosis\tenv\lib\site-packages\django\utils\encoding.py", line 147, in iri_to_uri
+    return quote(iri, safe="/#%[]=:;$&()+,!?*@'~")
+  File "C:\Users\Mybeartis\AppData\Local\Programs\Python\Python39\lib\urllib\parse.py", line 871, in quote
+    return quote_from_bytes(string, safe)
+  File "C:\Users\Mybeartis\AppData\Local\Programs\Python\Python39\lib\urllib\parse.py", line 896, in quote_from_bytes
+    raise TypeError("quote_from_bytes() expected bytes")
+TypeError: quote_from_bytes() expected bytes
+ERROR 2025-12-18 12:49:12,169 basehttp 20048 21036 "POST /compra/compras-clientes/ HTTP/1.1" 500 118573
+WARNING 2025-12-18 12:49:12,639 log 20048 21036 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 12:49:12,644 basehttp 20048 21036 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 12:49:13,644 log 20048 21036 Not Found: /favicon.ico
+WARNING 2025-12-18 12:49:13,659 basehttp 20048 21036 "GET /favicon.ico HTTP/1.1" 404 3880
+INFO 2025-12-18 12:55:02,215 autoreload 20048 4008 D:\Works\Python\cobosis\TiendaM\ccheckout\views.py changed, reloading.
+INFO 2025-12-18 12:55:05,544 autoreload 26588 3348 Watching for file changes with StatReloader
+INFO 2025-12-18 12:55:16,762 autoreload 26588 3348 D:\Works\Python\cobosis\TiendaM\ccheckout\views.py changed, reloading.
+INFO 2025-12-18 12:55:18,405 autoreload 18632 22584 Watching for file changes with StatReloader
+INFO 2025-12-18 12:55:27,814 autoreload 18632 22584 D:\Works\Python\cobosis\TiendaM\ccheckout\views.py changed, reloading.
+INFO 2025-12-18 12:55:29,815 autoreload 21124 26500 Watching for file changes with StatReloader
+INFO 2025-12-18 12:55:36,516 basehttp 21124 23352 "POST /compra/compras-clientes/ HTTP/1.1" 302 0
+INFO 2025-12-18 12:55:36,734 basehttp 21124 23352 "GET /catalogo/productos/gel/ HTTP/1.1" 200 120815
+WARNING 2025-12-18 12:55:37,071 log 21124 23352 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 12:55:37,071 basehttp 21124 23352 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 12:55:37,201 basehttp 21124 14568 "GET /static/img/prod_Default.webp HTTP/1.1" 304 0
+WARNING 2025-12-18 12:55:37,201 log 21124 23352 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-18 12:55:37,236 basehttp 21124 23352 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-18 12:55:56,262 basehttp 21124 23352 "GET /catalogo/gestion/ HTTP/1.1" 200 43061
+WARNING 2025-12-18 12:55:56,426 log 21124 23352 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 12:55:56,452 basehttp 21124 23352 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 12:55:59,706 basehttp 21124 23352 "GET /catalogo/productos/ HTTP/1.1" 200 67033
+WARNING 2025-12-18 12:55:59,873 log 21124 23352 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 12:55:59,891 basehttp 21124 23352 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 12:55:59,897 log 21124 14568 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-18 12:55:59,934 basehttp 21124 14568 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-18 12:56:04,763 basehttp 21124 14568 "POST /catalogo/productos/ HTTP/1.1" 302 0
+INFO 2025-12-18 12:56:04,936 basehttp 21124 14568 "GET /catalogo/productos/gel/ HTTP/1.1" 200 120815
+WARNING 2025-12-18 12:56:05,147 log 21124 14568 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 12:56:05,153 log 21124 23352 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-18 12:56:05,153 basehttp 21124 14568 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 12:56:05,159 basehttp 21124 23352 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+WARNING 2025-12-18 12:56:05,541 log 21124 23352 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-18 12:56:05,542 basehttp 21124 23352 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-18 12:56:18,163 basehttp 21124 23352 "GET /catalogo/gestion/ HTTP/1.1" 200 43061
+WARNING 2025-12-18 12:56:18,357 log 21124 23352 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 12:56:18,361 basehttp 21124 23352 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 14:47:44,802 basehttp 21124 26456 "GET /catalogo/productos/ HTTP/1.1" 200 67033
+WARNING 2025-12-18 14:47:45,043 log 21124 26456 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 14:47:45,045 basehttp 21124 26456 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 14:47:45,311 log 21124 26456 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-18 14:47:45,328 basehttp 21124 26456 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-18 14:47:50,720 basehttp 21124 26456 "POST /catalogo/productos/ HTTP/1.1" 302 0
+INFO 2025-12-18 14:47:50,907 basehttp 21124 26456 "GET /catalogo/productos/gel/ HTTP/1.1" 200 120815
+WARNING 2025-12-18 14:47:51,113 log 21124 26456 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 14:47:51,120 log 21124 20604 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-18 14:47:51,124 basehttp 21124 26456 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 14:47:51,138 basehttp 21124 20604 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+WARNING 2025-12-18 14:47:51,465 log 21124 20604 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-18 14:47:51,470 basehttp 21124 20604 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-18 14:48:17,766 basehttp 21124 20604 "GET /compra/ventas/ HTTP/1.1" 200 43754
+WARNING 2025-12-18 14:48:17,927 log 21124 20604 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 14:48:17,942 basehttp 21124 20604 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 14:48:22,726 basehttp 21124 20604 "GET /servicios/gestion/ HTTP/1.1" 200 45489
+WARNING 2025-12-18 14:48:22,915 log 21124 20604 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 14:48:22,922 basehttp 21124 20604 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 14:48:29,178 base 21124 20604 Method Not Allowed (POST): /servicios/gestion/
+WARNING 2025-12-18 14:48:29,180 log 21124 20604 Method Not Allowed: /servicios/gestion/
+WARNING 2025-12-18 14:48:29,182 basehttp 21124 20604 "POST /servicios/gestion/ HTTP/1.1" 405 0
+INFO 2025-12-18 19:32:02,303 basehttp 21124 7932 "GET /compra/ventas/ HTTP/1.1" 200 43754
+WARNING 2025-12-18 19:32:02,587 log 21124 7932 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:32:02,587 basehttp 21124 7932 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 19:32:07,489 basehttp 21124 7932 "GET /servicios/gestion/ HTTP/1.1" 200 45489
+WARNING 2025-12-18 19:32:07,620 log 21124 7932 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:32:07,628 basehttp 21124 7932 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 19:32:18,712 base 21124 7932 Method Not Allowed (POST): /servicios/gestion/
+WARNING 2025-12-18 19:32:18,713 log 21124 7932 Method Not Allowed: /servicios/gestion/
+WARNING 2025-12-18 19:32:18,714 basehttp 21124 7932 "POST /servicios/gestion/ HTTP/1.1" 405 0
+WARNING 2025-12-18 19:33:21,784 log 21124 7932 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:33:21,796 basehttp 21124 7932 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 19:33:21,898 log 21124 7932 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:33:22,014 basehttp 21124 7932 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 19:33:24,388 basehttp 21124 7932 "GET /servicios/gestion/ HTTP/1.1" 200 45489
+WARNING 2025-12-18 19:33:24,551 log 21124 7932 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:33:24,553 basehttp 21124 7932 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 19:35:58,521 base 21124 7932 Method Not Allowed (POST): /servicios/gestion/
+WARNING 2025-12-18 19:35:58,523 log 21124 7932 Method Not Allowed: /servicios/gestion/
+WARNING 2025-12-18 19:35:58,524 basehttp 21124 7932 "POST /servicios/gestion/ HTTP/1.1" 405 0
+WARNING 2025-12-18 19:36:14,834 base 21124 7932 Method Not Allowed (POST): /servicios/gestion/
+WARNING 2025-12-18 19:36:14,834 log 21124 7932 Method Not Allowed: /servicios/gestion/
+WARNING 2025-12-18 19:36:14,834 basehttp 21124 7932 "POST /servicios/gestion/ HTTP/1.1" 405 0
+INFO 2025-12-18 19:36:19,271 basehttp 21124 7932 "GET /static/img/Favicon.ico HTTP/1.1" 304 0
+WARNING 2025-12-18 19:36:19,383 log 21124 7932 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:36:19,498 basehttp 21124 7932 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 19:36:19,638 log 21124 7932 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:36:19,643 basehttp 21124 7932 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 19:36:21,265 basehttp 21124 7932 "GET /servicios/gestion/ HTTP/1.1" 200 45489
+WARNING 2025-12-18 19:36:21,415 log 21124 7932 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:36:21,425 basehttp 21124 7932 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 19:36:30,575 basehttp 21124 7932 "GET /servicios/gestion/?usuario=cliente&servicio= HTTP/1.1" 200 45288
+WARNING 2025-12-18 19:36:30,757 log 21124 7932 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:36:30,760 basehttp 21124 7932 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 19:37:02,574 basehttp 21124 7932 "GET /servicios/gestion/?usuario=&servicio=Elaboraci%C3%B3n+de+jabones HTTP/1.1" 200 45085
+WARNING 2025-12-18 19:37:02,880 log 21124 7932 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:37:02,880 basehttp 21124 7932 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 19:40:08,807 basehttp 21124 7932 "GET /compra/ventas/ HTTP/1.1" 200 43754
+WARNING 2025-12-18 19:40:09,110 log 21124 7932 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:40:09,226 basehttp 21124 7932 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 19:40:19,098 basehttp 21124 7932 "GET /servicios/gestion/ HTTP/1.1" 200 45489
+WARNING 2025-12-18 19:40:19,387 log 21124 7932 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:40:19,399 basehttp 21124 7932 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 19:42:00,110 basehttp 21124 7932 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+WARNING 2025-12-18 19:42:00,490 log 21124 7932 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:42:00,520 basehttp 21124 7932 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 19:42:03,588 basehttp 21124 7932 "GET /precio/ HTTP/1.1" 200 47457
+WARNING 2025-12-18 19:42:03,848 log 21124 7932 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:42:03,894 basehttp 21124 7932 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 19:42:10,196 base 21124 7932 Method Not Allowed (POST): /precio/
+WARNING 2025-12-18 19:42:10,198 log 21124 7932 Method Not Allowed: /precio/
+WARNING 2025-12-18 19:42:10,205 basehttp 21124 7932 "POST /precio/ HTTP/1.1" 405 0
+WARNING 2025-12-18 19:47:33,434 log 21124 23428 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:47:33,450 basehttp 21124 23428 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 19:47:33,685 log 21124 23428 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:47:33,768 basehttp 21124 23428 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 19:47:45,275 basehttp 21124 23428 "GET /catalogo/catalogo/ HTTP/1.1" 200 60760
+WARNING 2025-12-18 19:47:45,483 log 21124 23428 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:47:45,485 basehttp 21124 23428 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 19:47:45,808 log 21124 23428 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-18 19:47:45,810 basehttp 21124 23428 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-18 19:47:53,102 basehttp 21124 23428 "GET /catalogo/catalogo/ HTTP/1.1" 200 60760
+WARNING 2025-12-18 19:47:53,253 log 21124 23428 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:47:53,361 basehttp 21124 23428 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 19:47:53,398 log 21124 6240 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-18 19:47:53,404 basehttp 21124 6240 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-18 19:48:24,047 basehttp 21124 6240 "GET /compra/marketing/ HTTP/1.1" 200 42889
+WARNING 2025-12-18 19:48:24,249 log 21124 6240 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:48:24,251 basehttp 21124 6240 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 19:48:27,485 basehttp 21124 6240 "GET /promo/banners HTTP/1.1" 200 48668
+WARNING 2025-12-18 19:48:27,675 log 21124 6240 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:48:27,683 basehttp 21124 6240 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 19:48:37,034 log 21124 6240 Not Found: /promo/
+WARNING 2025-12-18 19:48:37,050 basehttp 21124 6240 "POST /promo/ HTTP/1.1" 404 5305
+WARNING 2025-12-18 19:48:37,240 log 21124 6240 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:48:37,243 basehttp 21124 6240 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 19:50:44,054 log 21124 6240 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:50:44,119 basehttp 21124 6240 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 19:50:44,346 log 21124 6240 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 19:50:44,346 basehttp 21124 6240 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 19:58:19,339 autoreload 21124 26500 D:\Works\Python\cobosis\TiendaM\promo\views.py changed, reloading.
+INFO 2025-12-18 19:58:24,971 autoreload 23180 20364 Watching for file changes with StatReloader
+INFO 2025-12-18 20:03:19,277 basehttp 23180 26452 "GET /promo/banners HTTP/1.1" 200 48668
+WARNING 2025-12-18 20:03:19,645 log 23180 26452 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:03:19,647 basehttp 23180 26452 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 20:03:24,722 log 23180 26452 Not Found: /promo/
+WARNING 2025-12-18 20:03:24,724 basehttp 23180 26452 "POST /promo/ HTTP/1.1" 404 5305
+WARNING 2025-12-18 20:03:24,929 log 23180 26452 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:03:24,932 basehttp 23180 26452 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:05:58,505 autoreload 23180 20364 D:\Works\Python\cobosis\TiendaM\promo\views.py changed, reloading.
+INFO 2025-12-18 20:06:00,351 autoreload 10132 23968 Watching for file changes with StatReloader
+WARNING 2025-12-18 20:06:06,607 log 10132 25516 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:06:06,614 basehttp 10132 25516 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 20:06:06,998 log 10132 25516 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:06:07,005 basehttp 10132 25516 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:06:09,016 basehttp 10132 25516 "GET /compra/marketing/ HTTP/1.1" 200 42889
+WARNING 2025-12-18 20:06:09,233 log 10132 25516 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:06:09,313 basehttp 10132 25516 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:06:11,421 basehttp 10132 25516 "GET /promo/offers HTTP/1.1" 200 46164
+WARNING 2025-12-18 20:06:11,620 log 10132 25516 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:06:11,629 basehttp 10132 25516 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:06:18,666 basehttp 10132 25516 "GET /compra/marketing/ HTTP/1.1" 200 42889
+WARNING 2025-12-18 20:06:18,877 log 10132 25516 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:06:18,880 basehttp 10132 25516 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:06:20,685 basehttp 10132 25516 "GET /accounts/users_list/ HTTP/1.1" 200 50101
+WARNING 2025-12-18 20:06:20,879 log 10132 25516 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:06:20,880 basehttp 10132 25516 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:06:32,134 basehttp 10132 25516 "GET /compra/marketing/ HTTP/1.1" 200 42889
+WARNING 2025-12-18 20:06:32,364 log 10132 25516 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:06:32,366 basehttp 10132 25516 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:06:35,079 basehttp 10132 25516 "GET /promo/offers HTTP/1.1" 200 46164
+WARNING 2025-12-18 20:06:35,343 log 10132 25516 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:06:35,352 basehttp 10132 25516 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:06:42,761 autoreload 10132 23968 D:\Works\Python\cobosis\TiendaM\promo\views.py changed, reloading.
+INFO 2025-12-18 20:06:44,813 autoreload 15672 19020 Watching for file changes with StatReloader
+INFO 2025-12-18 20:06:59,480 basehttp 15672 26816 "GET /promo/offers HTTP/1.1" 200 46164
+WARNING 2025-12-18 20:06:59,672 log 15672 26816 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:06:59,717 basehttp 15672 26816 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:07:08,379 basehttp 15672 26816 "GET /compra/marketing/ HTTP/1.1" 200 42889
+WARNING 2025-12-18 20:07:08,867 log 15672 26816 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:07:08,900 basehttp 15672 26816 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:07:11,069 basehttp 15672 26816 "GET /promo/offers HTTP/1.1" 200 46164
+WARNING 2025-12-18 20:07:11,382 log 15672 26816 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:07:11,396 basehttp 15672 26816 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:29:13,067 basehttp 15672 17956 "GET /compra/marketing/ HTTP/1.1" 200 42889
+WARNING 2025-12-18 20:29:13,412 log 15672 17956 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:29:13,495 basehttp 15672 17956 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:29:20,495 basehttp 15672 17956 "GET /promo/offers HTTP/1.1" 200 46164
+WARNING 2025-12-18 20:29:20,725 log 15672 17956 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:29:20,729 basehttp 15672 17956 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 20:29:33,595 log 15672 17956 Not Found: /promo/
+WARNING 2025-12-18 20:29:33,599 basehttp 15672 17956 "POST /promo/ HTTP/1.1" 404 5305
+WARNING 2025-12-18 20:29:33,805 log 15672 17956 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:29:33,809 basehttp 15672 17956 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 20:30:29,538 log 15672 17956 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:30:29,540 basehttp 15672 17956 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 20:30:29,717 log 15672 17956 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:30:29,754 basehttp 15672 17956 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:30:32,435 basehttp 15672 17956 "GET /compra/marketing/ HTTP/1.1" 200 42889
+WARNING 2025-12-18 20:30:32,644 log 15672 17956 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:30:32,661 basehttp 15672 17956 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:30:36,155 basehttp 15672 17956 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+WARNING 2025-12-18 20:30:36,343 log 15672 17956 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:30:36,346 basehttp 15672 17956 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:30:38,086 basehttp 15672 17956 "GET /notification/incentivos/ HTTP/1.1" 302 0
+INFO 2025-12-18 20:30:38,230 basehttp 15672 17956 "GET / HTTP/1.1" 200 65223
+WARNING 2025-12-18 20:30:38,424 log 15672 17956 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:30:38,438 basehttp 15672 17956 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:30:45,012 basehttp 15672 17956 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+WARNING 2025-12-18 20:30:45,215 log 15672 17956 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:30:45,216 basehttp 15672 17956 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:30:48,677 basehttp 15672 17956 "GET /precio/ HTTP/1.1" 200 47457
+WARNING 2025-12-18 20:30:48,938 log 15672 17956 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:30:48,941 basehttp 15672 17956 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 20:31:01,096 base 15672 17956 Method Not Allowed (POST): /precio/
+WARNING 2025-12-18 20:31:01,098 log 15672 17956 Method Not Allowed: /precio/
+WARNING 2025-12-18 20:31:01,100 basehttp 15672 17956 "POST /precio/ HTTP/1.1" 405 0
+WARNING 2025-12-18 20:31:05,282 log 15672 17956 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:31:05,284 basehttp 15672 17956 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-18 20:31:05,444 log 15672 17956 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-18 20:31:05,447 basehttp 15672 17956 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-18 20:42:26,766 autoreload 15672 19020 D:\Works\Python\cobosis\TiendaM\ccheckout\views.py changed, reloading.
+INFO 2025-12-18 20:42:28,603 autoreload 5064 25084 Watching for file changes with StatReloader
+INFO 2025-12-18 20:42:45,992 autoreload 5064 25084 D:\Works\Python\cobosis\TiendaM\ccheckout\views.py changed, reloading.
+INFO 2025-12-18 20:42:47,695 autoreload 9948 25564 Watching for file changes with StatReloader
+INFO 2025-12-22 08:39:04,975 autoreload 26616 6108 Watching for file changes with StatReloader
+INFO 2025-12-22 08:41:21,461 basehttp 26616 12812 "GET / HTTP/1.1" 200 65223
+INFO 2025-12-22 08:41:21,565 basehttp 26616 12812 "GET /static/css/style.css HTTP/1.1" 304 0
+INFO 2025-12-22 08:41:21,590 basehttp 26616 23052 "GET /media/Banners/Principal2_XVD8K4r.webp HTTP/1.1" 304 0
+INFO 2025-12-22 08:41:37,117 basehttp 26616 23052 "POST / HTTP/1.1" 302 0
+INFO 2025-12-22 08:41:37,262 basehttp 26616 23052 "GET /catalogo/productos/ambientador/ HTTP/1.1" 200 107432
+WARNING 2025-12-22 08:41:37,633 log 26616 23052 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-22 08:41:37,639 basehttp 26616 23052 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-22 09:23:02,057 basehttp 26616 18300 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+INFO 2025-12-22 09:23:06,032 basehttp 26616 18300 "GET /notification/incentivos/ HTTP/1.1" 302 0
+INFO 2025-12-22 09:23:06,113 basehttp 26616 18300 "GET / HTTP/1.1" 200 65223
+INFO 2025-12-22 09:23:12,888 basehttp 26616 18300 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+INFO 2025-12-22 09:23:14,698 basehttp 26616 18300 "GET /precio/ HTTP/1.1" 200 47457
+WARNING 2025-12-22 09:23:23,833 base 26616 18300 Method Not Allowed (POST): /precio/
+WARNING 2025-12-22 09:23:23,835 log 26616 18300 Method Not Allowed: /precio/
+WARNING 2025-12-22 09:23:23,836 basehttp 26616 18300 "POST /precio/ HTTP/1.1" 405 0
+INFO 2025-12-22 14:05:50,826 autoreload 26616 6108 D:\Works\Python\cobosis\TiendaM\promo\views.py changed, reloading.
+INFO 2025-12-22 14:05:54,412 autoreload 9536 6116 Watching for file changes with StatReloader
+INFO 2025-12-22 14:09:59,157 autoreload 9536 6116 D:\Works\Python\cobosis\TiendaM\promo\views.py changed, reloading.
+INFO 2025-12-22 14:10:03,903 autoreload 16096 1808 Watching for file changes with StatReloader
+WARNING 2025-12-22 14:10:15,796 base 16096 13164 Method Not Allowed (POST): /precio/
+WARNING 2025-12-22 14:10:15,796 log 16096 13164 Method Not Allowed: /precio/
+WARNING 2025-12-22 14:10:15,796 basehttp 16096 13164 "POST /precio/ HTTP/1.1" 405 0
+INFO 2025-12-22 14:10:20,247 basehttp 16096 13164 "GET /compra/configuraciones/ HTTP/1.1" 200 43019
+INFO 2025-12-22 14:10:33,385 basehttp 16096 13164 "POST /compra/configuraciones/ HTTP/1.1" 200 43019
+INFO 2025-12-22 14:10:39,161 basehttp 16096 13164 "GET /precio/ HTTP/1.1" 200 47457
+WARNING 2025-12-22 14:10:44,448 base 16096 13164 Method Not Allowed (POST): /precio/
+WARNING 2025-12-22 14:10:44,450 log 16096 13164 Method Not Allowed: /precio/
+WARNING 2025-12-22 14:10:44,455 basehttp 16096 13164 "POST /precio/ HTTP/1.1" 405 0
+INFO 2025-12-22 14:10:53,654 basehttp 16096 13164 "POST /compra/configuraciones/ HTTP/1.1" 200 43019
+INFO 2025-12-22 14:10:57,283 basehttp 16096 13164 "GET /compra/marketing/ HTTP/1.1" 200 42889
+INFO 2025-12-22 14:10:59,366 basehttp 16096 13164 "GET /promo/banners HTTP/1.1" 200 48668
+WARNING 2025-12-22 14:11:05,216 log 16096 13164 Not Found: /promo/
+WARNING 2025-12-22 14:11:05,218 basehttp 16096 13164 "POST /promo/ HTTP/1.1" 404 5305
+WARNING 2025-12-22 14:11:05,544 log 16096 13164 Not Found: /favicon.ico
+WARNING 2025-12-22 14:11:05,557 basehttp 16096 13164 "GET /favicon.ico HTTP/1.1" 404 3880
+WARNING 2025-12-22 14:17:13,635 log 16096 4068 Not Found: /promo/
+WARNING 2025-12-22 14:17:13,637 basehttp 16096 4068 "POST /promo/ HTTP/1.1" 404 5305
+WARNING 2025-12-22 14:20:51,842 log 16096 4068 Not Found: /promo/
+WARNING 2025-12-22 14:20:51,844 basehttp 16096 4068 "POST /promo/ HTTP/1.1" 404 5305
+WARNING 2025-12-22 14:21:08,241 log 16096 4068 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-22 14:21:08,242 basehttp 16096 4068 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-22 14:21:18,113 log 16096 4068 Not Found: /promo/
+WARNING 2025-12-22 14:21:18,115 basehttp 16096 4068 "POST /promo/ HTTP/1.1" 404 5305
+WARNING 2025-12-22 14:21:18,281 log 16096 4068 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-22 14:21:18,282 basehttp 16096 4068 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-22 14:25:01,798 autoreload 16096 1808 D:\Works\Python\cobosis\TiendaM\promo\views.py changed, reloading.
+INFO 2025-12-22 14:25:04,125 autoreload 22172 26912 Watching for file changes with StatReloader
+INFO 2025-12-22 14:26:51,468 autoreload 22172 26912 D:\Works\Python\cobosis\TiendaM\promo\views.py changed, reloading.
+INFO 2025-12-22 14:26:52,991 autoreload 19076 15112 Watching for file changes with StatReloader
+WARNING 2025-12-22 14:30:17,103 log 19076 6032 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-22 14:30:17,106 basehttp 19076 6032 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+WARNING 2025-12-22 14:30:17,150 log 19076 6032 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-22 14:30:17,152 basehttp 19076 6032 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-22 14:30:18,934 basehttp 19076 6032 "GET / HTTP/1.1" 200 65223
+WARNING 2025-12-22 14:30:19,134 log 19076 6032 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-22 14:30:19,136 basehttp 19076 6032 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-23 09:59:31,869 autoreload 19076 15112 D:\Works\Python\cobosis\TiendaM\ccheckout\views.py changed, reloading.
+INFO 2025-12-23 09:59:37,817 autoreload 6296 3524 Watching for file changes with StatReloader
+INFO 2025-12-26 08:17:53,136 autoreload 7684 5148 Watching for file changes with StatReloader
+INFO 2025-12-26 08:19:57,248 basehttp 7684 24228 "GET / HTTP/1.1" 200 63559
+INFO 2025-12-26 08:19:57,332 basehttp 7684 24228 "GET /static/css/style.css HTTP/1.1" 304 0
+INFO 2025-12-26 08:19:57,395 basehttp 7684 24228 "GET /static/img/LogoStrech.png HTTP/1.1" 304 0
+INFO 2025-12-26 08:19:57,757 basehttp 7684 24228 "GET /media/Offers/TodosProductos.webp HTTP/1.1" 304 0
+INFO 2025-12-26 08:19:57,764 basehttp 7684 2136 "GET /media/Offers/Categorizacion2_O6I2UmW.webp HTTP/1.1" 304 0
+INFO 2025-12-26 08:20:38,862 autoreload 7684 5148 D:\Works\Python\cobosis\TiendaM\promo\views.py changed, reloading.
+INFO 2025-12-26 08:20:40,864 autoreload 13924 18448 Watching for file changes with StatReloader
+INFO 2025-12-26 08:22:36,954 basehttp 13924 5832 "GET /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-12-26 08:22:37,037 basehttp 13924 5832 "GET /accounts/login/ HTTP/1.1" 200 42022
+INFO 2025-12-26 08:23:43,618 basehttp 13924 5832 "POST /accounts/login/ HTTP/1.1" 200 41788
+INFO 2025-12-26 08:23:53,941 basehttp 13924 5832 "POST /accounts/login/ HTTP/1.1" 200 41788
+INFO 2025-12-26 08:24:36,802 basehttp 13924 5832 "POST /accounts/login/ HTTP/1.1" 200 41788
+INFO 2025-12-26 08:24:53,606 basehttp 13924 5832 "POST /accounts/login/ HTTP/1.1" 200 41788
+INFO 2025-12-26 08:25:54,971 basehttp 13924 5832 "POST /accounts/login/ HTTP/1.1" 200 41788
+INFO 2025-12-26 08:26:06,738 basehttp 13924 5832 "POST /accounts/login/ HTTP/1.1" 302 0
+INFO 2025-12-26 08:26:06,900 basehttp 13924 5832 "GET /accounts/profile/ HTTP/1.1" 200 48429
+INFO 2025-12-26 08:26:07,899 basehttp 13924 5832 "GET /static/img/Profile/pensativo.jpg HTTP/1.1" 200 3239
+INFO 2025-12-26 08:26:32,623 basehttp 13924 5832 "GET /carrito/carrito/ HTTP/1.1" 200 48038
+INFO 2025-12-26 08:26:45,911 basehttp 13924 5832 "POST /carrito/carrito/ HTTP/1.1" 302 0
+INFO 2025-12-26 08:26:46,078 basehttp 13924 5832 "GET /catalogo/productos/gel/ HTTP/1.1" 200 120815
+INFO 2025-12-26 08:26:46,251 basehttp 13924 7308 "GET /static/img/prod_Default.webp HTTP/1.1" 304 0
+WARNING 2025-12-26 08:26:46,351 log 13924 5832 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-26 08:26:46,352 basehttp 13924 5832 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-26 08:26:56,002 basehttp 13924 5832 "POST /catalogo/productos/gel/ HTTP/1.1" 200 121433
+WARNING 2025-12-26 08:26:56,124 log 13924 5832 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-26 08:26:56,125 basehttp 13924 5832 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+WARNING 2025-12-26 08:26:56,219 log 13924 5832 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-26 08:26:56,220 basehttp 13924 5832 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-26 08:26:59,625 basehttp 13924 5832 "POST /catalogo/productos/gel/ HTTP/1.1" 200 121433
+WARNING 2025-12-26 08:26:59,768 log 13924 5832 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-26 08:26:59,769 basehttp 13924 5832 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+WARNING 2025-12-26 08:26:59,855 log 13924 5832 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-26 08:26:59,857 basehttp 13924 5832 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-26 08:27:04,264 basehttp 13924 5832 "POST /catalogo/productos/gel/ HTTP/1.1" 200 121433
+WARNING 2025-12-26 08:27:04,438 log 13924 5832 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-26 08:27:04,439 basehttp 13924 5832 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+WARNING 2025-12-26 08:27:04,515 log 13924 5832 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-26 08:27:04,516 basehttp 13924 5832 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-26 08:27:08,491 basehttp 13924 5832 "GET /carrito/carrito/ HTTP/1.1" 200 60549
+WARNING 2025-12-26 08:27:08,623 log 13924 5832 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-26 08:27:08,624 basehttp 13924 5832 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-26 09:17:23,166 basehttp 13924 27804 "GET /catalogo/catalogo/ HTTP/1.1" 200 60760
+WARNING 2025-12-26 09:17:23,641 log 13924 27804 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-26 09:17:23,643 basehttp 13924 27804 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-26 09:18:50,675 basehttp 13924 27804 "GET /catalogo/catalogo/ HTTP/1.1" 200 60760
+WARNING 2025-12-26 09:18:51,177 log 13924 27804 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-26 09:18:51,179 basehttp 13924 27804 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+INFO 2025-12-26 09:18:53,192 basehttp 13924 27804 "GET /static/img/Favicon.ico HTTP/1.1" 304 0
+WARNING 2025-12-26 09:18:57,123 log 13924 27804 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-26 09:18:57,124 basehttp 13924 27804 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-26 09:19:02,091 basehttp 13924 27804 "GET /catalogo/categoria/linea-automotriz/ HTTP/1.1" 200 54483
+WARNING 2025-12-26 09:19:02,830 log 13924 11628 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-26 09:19:02,833 basehttp 13924 11628 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-26 09:19:08,510 basehttp 13924 11628 "GET /catalogo/catalogo/ HTTP/1.1" 200 60760
+WARNING 2025-12-26 09:19:08,808 log 13924 11628 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-26 09:19:08,810 basehttp 13924 11628 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+WARNING 2025-12-26 09:19:08,871 log 13924 27804 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-26 09:19:08,987 basehttp 13924 27804 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991
+INFO 2025-12-26 09:23:36,635 autoreload 13924 18448 D:\Works\Python\cobosis\TiendaM\templates\catalog\search.html changed, reloading.
+INFO 2025-12-26 09:23:41,364 autoreload 11272 9896 Watching for file changes with StatReloader
+INFO 2025-12-26 09:59:02,336 autoreload 11272 9896 D:\Works\Python\cobosis\TiendaM\templates\catalog\catalog_template.html changed, reloading.
+INFO 2025-12-26 09:59:05,710 autoreload 20144 6564 Watching for file changes with StatReloader
+INFO 2025-12-26 10:01:31,678 autoreload 20144 6564 D:\Works\Python\cobosis\TiendaM\templates\checkout\transfer_mlc.html changed, reloading.
+INFO 2025-12-26 10:01:35,112 autoreload 16928 29276 Watching for file changes with StatReloader
+INFO 2025-12-26 10:01:43,766 autoreload 16928 29276 D:\Works\Python\cobosis\TiendaM\templates\catalog\catalog_template.html changed, reloading.
+INFO 2025-12-26 10:01:45,938 autoreload 11816 16020 Watching for file changes with StatReloader
+INFO 2025-12-26 10:01:58,875 basehttp 11816 24064 "GET /catalogo/catalogo/ HTTP/1.1" 200 60650
+WARNING 2025-12-26 10:01:59,165 log 11816 24064 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2025-12-26 10:01:59,200 basehttp 11816 24064 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4025
+WARNING 2025-12-26 10:01:59,248 log 11816 29964 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-26 10:01:59,268 basehttp 11816 29964 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3991

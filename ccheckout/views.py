@@ -760,7 +760,6 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
     if currency:
         if currency!='':
             orders = orders.filter(currency__icontains=currency).order_by('-date')
-    
 
     if request.method == 'POST':
         postdata = request.POST.copy()
@@ -770,8 +769,7 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
         if postdata['submit'] == 'Detalles':
             order_id = postdata['order_id']
             template = 'checkout/details.html'
-            return redirect(reverse('details'))
-        return HttpResponseRedirect(receipt)
+            return redirect(reverse('details'))    
     user_name = ""
     return render(request, template_name, locals())
 
@@ -793,7 +791,6 @@ def clients_orders_list(request, template_name='checkout/clients_orders_list.htm
         comercial_orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], user__in=comerciales, is_daily_summary=False).order_by('-date')
         com_count = comercial_orders.count()
     
-
     # Filtrar órdenes válidas en el rango
     sin_g = User.objects.filter(groups__isnull=True)
     client_orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], user__in=sin_g).order_by('-date')
@@ -841,7 +838,6 @@ def clients_orders_list(request, template_name='checkout/clients_orders_list.htm
     s = request.GET.get('summary')
     if s == 'on':
         orders = orders.filter(is_daily_summary=True).order_by('-date')
-
     
     comercial = request.GET.get('comercial')    
     if comercial == 'on':
@@ -860,6 +856,10 @@ def clients_orders_list(request, template_name='checkout/clients_orders_list.htm
             order_id = postdata['order_id']
             template = 'checkout/details.html'
             return redirect(reverse('details'))
+        if postdata['submit'] == 'Buscar':
+            productSearch = postdata['producto']
+            url = '/catalogo/productos/' + productSearch + '/'
+            return HttpResponseRedirect(url) 
         return HttpResponseRedirect(receipt)
     user_name = ""
     return render(request, template_name, locals())
