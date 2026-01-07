@@ -10,13 +10,12 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 import uuid
 import datetime
+from utils.models import Price
 
 # Crear una clase delivery que incluya todas las definiciones de los envios.
 # El municipio con los precios (diccionario), descuentos por monto...
 
 class Order(models.Model):
-
-    DOLLAR_CHANGE_OFFICIAL = 120
 
     # each individual status
     SUBMITTED = 0
@@ -141,10 +140,14 @@ class Order(models.Model):
     class Meta:
         verbose_name = "Orden de compra"
 
+    def __init__(self, *args, **kwargs):
+        self.DOLLAR_CHANGE_OFFICIAL = Price.objects.filter(is_active=True)[0].change_usd_cup
+        super().__init__(*args, **kwargs)
+
     def __unicode__(self):
         return 'Orden #' + str(self.id)
 
-    def set_consecutivo(self):
+    """ def set_consecutivo(self):
         if self.currency == 'USD':
             self.consecutivo = Order.objects.filter(currency = 'USD').last().consecutivo + 1
         else:
@@ -152,7 +155,7 @@ class Order(models.Model):
             if consecutivo == 0:
                 self.consecutivo = self.id
             else:
-                self.consecutivo = consecutivo 
+                self.consecutivo = consecutivo  """
 
     def save(self, *args, **kwargs):
         if self.base_total is None or self.base_total == 0:
@@ -214,6 +217,8 @@ class Order(models.Model):
     
     @property
     def total(self):
+        if self.is_daily_summary:
+            return self.total_reported
         if self.end_total != 0:
             return self.end_total
         else:

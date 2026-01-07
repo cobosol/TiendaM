@@ -118,6 +118,7 @@ def show_all_active(request, template_name="catalog/allActive.html"):
 def show_category(request, category_slug, template_name="catalog/category.html"):
     c = get_object_or_404(Category, slug=category_slug)
     products = c.product_set.all()
+    products = products.filter(is_active=True)
     page_title = c.name
     meta_keywords = c.meta_keywords
     meta_description = c.meta_description

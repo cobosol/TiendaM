@@ -239,4 +239,196 @@
                 </div>
             </div>
         </div>
+<<<<<<< Updated upstream
     </div>
+=======
+      {% elif p.available_online %}
+      <div class="col-6 col-md-4 col-lg-3 mb-4">
+        <div class="card h-100 product-card border-0 shadow-sm rounded-3 overflow-hidden">                
+          <div class="position-relative product-image-container">
+            <a href="{{ p.get_absolute_url }}">
+              <img src="{{ p.get_image_url }}" 
+                class="card-img-top product-img-responsive" 
+                alt="{{ p.name }}" 
+                loading="lazy">
+            </a>
+            {% if p.on_sale %}
+              <span class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 m-2 rounded-pill fw-bold small">
+                ¡Oferta!
+              </span>
+            {% elif p.is_bestseller %}
+              <span class="position-absolute top-0 start-0 bg-info text-white px-2 py-1 m-2 rounded-pill fw-bold small">
+                ¡Recomendado!
+              </span>
+            {% endif %}
+          </div>
+
+          <div class="card-body p-3 d-flex flex-column">
+            <h6 class="card-title fw-bold mb-1">
+                <a href="{{ p.get_absolute_url }}" class="text-dark text-decoration-none">
+                    {{ p.name }}
+                </a>
+            </h6>
+            
+            <div class="d-flex align-items-baseline justify-content-center mb-2 mt-auto">
+                {% if p.on_sale %}
+                <span class="text-danger fw-bolder fs-5 me-2">
+                    {{ p.price_base|currency }} 
+                </span>
+                <span class="text-muted text-decoration-line-through small">
+                    {{ p.old_price|currency }}
+                </span>
+                {% else %}
+                <span class="text-primary fw-bolder fs-5">
+                    {{ p.price_base|currency }}
+                </span>
+                {% endif %}
+            </div>
+
+            <div class="card-footer d-flex text-center justify-content-between bg-light border">
+              {% if p.count > 0 %}
+              <form method="post" action="." class="cart">
+                      {% csrf_token %}
+                      <input type="number" name="quantity" value="1" min="1" step="1" class="cantidad-input">
+                      <input type="hidden" name="product_slug" value="{{ p.slug }}" />
+                      <button type="submit" name="submit" value="Comprar" class="btn btn-sm btn-primary w-50 rounded-pill mt-2" name="submit" alt="Add To Cart">
+                        <i class="fas fa-shopping-cart me-1"></i> 
+                      </button>
+                      <a href="{{p.get_absolute_url}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-dark mr-1"></i>Detalles</a>
+              </form>
+              {% else %}
+                 <h6 class="text-red text-center" style="font-family: sans-serif;"> AGOTADO </h6>                               
+              {% endif %}
+             </div>
+
+<!--               <a href="" 
+               class="btn btn-sm btn-primary w-100 rounded-pill mt-2">
+                <i class="fas fa-shopping-cart me-1"></i> Añadir
+            </a> -->
+          </div>
+        </div>
+      </div>
+      {% endif %}                  
+    {% elif MND == 'CUP' %}
+      {% if vendedor == 'True' or comercial == 'True' and p.available_CUP %}
+      <div class="col-6 col-md-4 col-lg-3 mb-4">
+        <div class="card h-100 product-card border-0 shadow-sm rounded-3 overflow-hidden">                
+          <div class="position-relative product-image-container">
+            <a href="{{ p.get_absolute_url }}">
+              <img src="{{ p.get_image_url }}" 
+                class="card-img-top product-img-responsive" 
+                alt="{{ p.name }}" 
+                loading="lazy">
+            </a>
+            {% if p.on_sale %}
+              <span class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 m-2 rounded-pill fw-bold small">
+                ¡Oferta!
+              </span>
+            {% elif p.is_bestseller %}
+              <span class="position-absolute top-0 start-0 bg-info text-white px-2 py-1 m-2 rounded-pill fw-bold small">
+                ¡Recomendado!
+              </span>
+            {% endif %}
+          </div>
+          <div class="card-body p-3 d-flex justify-content-center flex-column">
+            <h6 class="card-title fw-bold mb-1">
+                <a href="{{ p.get_absolute_url }}" class="text-dark text-decoration-none">
+                    {{ p.name }}
+                </a>
+            </h6>              
+            <div class="d-flex align-items-baseline justify-content-center mb-2 mt-auto">
+                {% if p.on_sale %}
+                <span class="text-danger fw-bolder fs-5 me-2">
+                    {{ p.price_cup|currency }} CUP 
+                </span>
+                <span class="text-muted text-decoration-line-through small">
+                    {{ p.old_price_cup|currency }}
+                </span>
+                {% else %}
+                <span class="text-primary fw-bolder fs-5">
+                    {{ p.price_cup|currency }} CUP
+                </span>
+                {% endif %}
+            </div>
+
+            <div class="card-footer d-flex text-center justify-content-between bg-light border">
+              {% if p.count > 0 %}
+              <form method="post" action="." class="cart">
+                      {% csrf_token %}
+                      <input type="number" name="quantity" value="1" min="1" step="0.1" class="cantidad-input">
+                      <input type="hidden" name="product_slug" value="{{ p.slug }}" />
+                      <button type="submit" name="submit" value="Comprar" class="btn btn-sm btn-primary w-50 rounded-pill mt-2" name="submit" alt="Add To Cart">
+                        <i class="fas fa-shopping-cart me-1"></i> 
+                      </button>
+                      <a href="{{p.get_absolute_url}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-dark mr-1"></i>Detalles</a>
+              </form>
+              {% else %}
+                 <h6 class="text-red text-center" style="font-family: sans-serif;"> AGOTADO </h6>                               
+              {% endif %}
+             </div>
+          </div>
+        </div>
+      </div>
+      {% elif p.available_online and p.available_CUP %}
+      <div class="col-6 col-md-4 col-lg-3 mb-4">
+      <div class="card h-100 product-card border-0 shadow-sm rounded-3 overflow-hidden">                
+        <div class="position-relative product-image-container">
+          <a href="{{ p.get_absolute_url }}">
+            <img src="{{ p.get_image_url }}" 
+              class="card-img-top product-img-responsive" 
+              alt="{{ p.name }}" 
+              loading="lazy">
+          </a>
+          {% if p.is_bestseller %}
+            <span class="position-absolute top-0 start-0 bg-info text-white px-2 py-1 m-2 rounded-pill fw-bold small">
+              Recomendación
+            </span>
+          {% endif %}
+        </div>
+        <div class="card-body p-3 d-flex justify-content-center flex-column">
+          <h6 class="card-title fw-bold mb-1">
+              <a href="{{ p.get_absolute_url }}" class="text-dark text-decoration-none">
+                  {{ p.name }}
+              </a>
+          </h6>              
+          <div class="d-flex align-items-baseline justify-content-center mb-2 mt-auto">
+            {% if p.on_sale %}
+                <span class="text-danger fw-bolder fs-5 me-2">
+                    {{ p.price_cup|currency }} CUP 
+                </span>
+                <span class="text-muted text-decoration-line-through small">
+                    {{ p.old_price_cup|currency }}
+                </span>
+                {% else %}
+                <span class="text-primary fw-bolder fs-5">
+                    {{ p.price_cup|currency }} CUP
+                </span>
+                {% endif %} 
+          </div>
+
+          <div class="card-footer d-flex text-center justify-content-between bg-light border">
+            {% if p.count > 0 %}
+            <form method="post" action="." class="cart">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="1" min="1" step="1" class="cantidad-input">
+                    <input type="hidden" name="product_slug" value="{{ p.slug }}" />
+                    <button type="submit" name="submit" value="Comprar" class="btn btn-sm btn-primary w-50 rounded-pill mt-2" name="submit" alt="Add To Cart">
+                      <i class="fas fa-shopping-cart me-1"></i> 
+                    </button>
+                    <a href="{{p.get_absolute_url}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-dark mr-1"></i>Detalles</a>
+            </form>
+            {% else %}
+               <h6 class="text-red text-center" style="font-family: sans-serif;"> AGOTADO </h6>                               
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      </div>
+      {% endif %}
+    {% endif %}  
+  {% endfor %}
+{% else %}
+  <h6 class="text-center mb-3" style="font-family: sans-serif;">En este momento no tenemos productos disponibles en este apartado.</h6>
+  <h6 class="text-center mb-3" style="font-family: sans-serif;">Puede contactarnos para más información.</h6>
+{% endif %}
+>>>>>>> Stashed changes

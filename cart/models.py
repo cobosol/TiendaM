@@ -144,6 +144,7 @@ class CartItem(models.Model):
             return decimal.Decimal(total)
         price = Price.objects.filter(is_active=True)[0] # Capturo la configración de precio actual
         total = decimal.Decimal(self.quantity * self.product.price_cup)
+<<<<<<< Updated upstream
         if self.product.available_CUP and price.discount_amount_by_litre > 0 and total > 300:       
             print("En el if")
             cant_litres = self.quantity * self.product.litres_units
@@ -157,6 +158,15 @@ class CartItem(models.Model):
         print(self.product.min_quantity_whole)
         print(self.quantity)
         if self.product.min_quantity_whole > 0 and self.quantity >= self.product.min_quantity_whole:
+=======
+        price_litre = decimal.Decimal(1/self.product.litres_units)*self.product.price_cup             
+        if not contract:
+            if self.product.available_CUP and price.discount_amount_by_litre > 0 and price_litre > 300:       
+                cant_litres = self.quantity * decimal.Decimal(self.product.litres_units)
+                discount = int(cant_litres) * price.discount_amount_by_litre
+                return decimal.Decimal(total) - decimal.Decimal(discount)
+        if not daily and self.product.min_quantity_whole > 0 and self.quantity >= self.product.min_quantity_whole:
+>>>>>>> Stashed changes
             porciento = 1-self.product.whole_discount/100
             discount = self.product.price_cup*decimal.Decimal(porciento)
             total = self.quantity*decimal.Decimal(discount)

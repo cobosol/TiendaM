@@ -11,8 +11,10 @@
         </div>
     </div>
     <!-- Page Header End -->
+     <div class="row g-4"> 
+        {% include 'catalog/catalog_template.html' with products=productSearch%}
+    </div>
 
-    {% include 'catalog/catalog_template.html' with products=productSearch%}
 
     <!-- Page Header Start -->
     <!-- <div class="container-fluid bg-purple-300 mb-5">
@@ -83,12 +85,15 @@
         <!-- Ofertas del día. Todos los más vedidos -->
         <div class="container-fluid bg-primary mb-2">
           <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 60px">
-              <h2 class="text-light font-weight-semi-bold text-uppercase mb-0" style="font-family: sans-serif;">Hoy le ofrecemos</h2>
+              <h2 class="text-light font-weight-semi-bold text-uppercase mb-0" style="font-family: sans-serif;">Hoy le sugerimos</h2>
               <h6 class="text-light align-items-center justify-content-center mb-3" style="font-family: sans-serif;">Las fotos de los productos son referenciales</h6>
           </div>
         </div>
 
-      {% include 'catalog/catalog_template.html' with products=products%}
+    <div class="row g-4"> 
+      {% include 'catalog/catalog_template.html' with products=products %}
+    </div>
+
 
 <!--       <div class="container-fluid bg-purple-300 mb-5">
           <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">

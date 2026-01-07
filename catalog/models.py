@@ -155,6 +155,21 @@ class Product(models.Model):
         price_actual = Price.objects.filter(is_active=True)[0]
         p = self.price_base * price_actual.change_usd_cup
         return (p) + 10 - (p % 10) if (p % 10) > 0 else p
+<<<<<<< Updated upstream
+=======
+
+    @property        
+    def old_price_cup(self):
+        price = Price.objects.filter(is_active=True)[0]
+        p = self.old_price * price.change_usd_cup
+        return (p) + 10 - (p % 10) if (p % 10) > 0 else p
+    
+    @property        
+    def on_sale(self):
+        if self.old_price != 0 and self.old_price > self.price_base:
+            return True
+        return False
+>>>>>>> Stashed changes
         
     @property
     def price_mlc(self):

@@ -507,7 +507,7 @@ def transfer(request, template_name='checkout/transfer.html', id=0):
 
 # Página para crear resumen de ventas diarias
 def create_daily_summary(request):
-    MD = 'USD'
+    MD = 'CUP'
     if cart.is_empty(request):
         cart_url = reverse('show_cart')
         return HttpResponseRedirect(cart_url)
@@ -545,17 +545,15 @@ def create_daily_summary(request):
                     messages.info(request, "No coincide el monto del listado de productos con lo reportado en el resumen")
                 check = checkOrderSummary(id_order=order.id)
                 if check > 0:
-                    print('Entro a check')
                     order.cup_oficial = decimal.Decimal(round(order.total_items, 2))*Order.DOLLAR_CHANGE_OFFICIAL
                 else:
-                    print('No check')
                     o = Order.objects.filter(is_cons_usd = False).order_by('-pk').first()
-                    if o.consecutivo == 0:
+                    """ if o.consecutivo == 0:
                         order.consecutivo = o.id + 1
                         order.is_cons_usd = False
                     else:
                         order.consecutivo = o.consecutivo + 1
-                        order.is_cons_usd = False
+                        order.is_cons_usd = False """
                     order.cup_oficial = decimal.Decimal(round(order.total_reported, 2))                
                 order.save()
                 app_label = order._meta.app_label
