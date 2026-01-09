@@ -12,9 +12,10 @@
 
 {% if products %}
   {% for p in products %}
+  {% if p.count > 0 %}
     {% if MND == 'USD' %}
-      {% if vendedor == 'True' or comercial == 'True' %}
-        <div class="col-6 col-md-4 col-lg-3 mb-4">
+      {% if vendedor == 'True' or comercial == 'True'  %}
+        <div class="col-6 col-md-2 col-lg-2 mb-2">
           <div class="card h-100 product-card border-0 shadow-sm rounded-3 overflow-hidden">                
             <div class="position-relative product-image-container">
               <a href="{{ p.get_absolute_url }}">
@@ -23,7 +24,7 @@
                   alt="{{ p.name }}" 
                   loading="lazy">
               </a>
-              {% if p.is_bestseller %}
+              {% if p.is_bestseller and p.count > 0 %}
                 <span class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 m-2 rounded-pill fw-bold small">
                   ¡Oferta!
                 </span>
@@ -73,7 +74,7 @@
           </div>
         </div>
       {% elif p.available_online %}
-      <div class="col-6 col-md-4 col-lg-3 mb-4">
+      <div class="col-6 col-md-2 col-lg-2 mb-2">
         <div class="card h-100 product-card border-0 shadow-sm rounded-3 overflow-hidden">                
           <div class="position-relative product-image-container">
             <a href="{{ p.get_absolute_url }}">
@@ -140,8 +141,8 @@
       </div>
       {% endif %}                  
     {% elif MND == 'CUP' %}
-      {% if vendedor == 'True' or comercial == 'True' and p.available_CUP %}
-      <div class="col-6 col-md-4 col-lg-3 mb-4">
+      {% if vendedor == 'True' or comercial == 'True' and p.available_CUP == True %}
+      <div class="col-6 col-md-2 col-lg-2 mb-2">
         <div class="card h-100 product-card border-0 shadow-sm rounded-3 overflow-hidden">                
           <div class="position-relative product-image-container">
             <a href="{{ p.get_absolute_url }}">
@@ -150,9 +151,13 @@
                 alt="{{ p.name }}" 
                 loading="lazy">
             </a>
-            {% if p.is_bestseller %}
+            {% if p.on_sale %}
+              <span class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 m-2 rounded-pill fw-bold small">
+                ¡Oferta!
+              </span>
+            {% elif p.is_bestseller %}
               <span class="position-absolute top-0 start-0 bg-info text-white px-2 py-1 m-2 rounded-pill fw-bold small">
-                Recomendación
+                ¡Recomendado!
               </span>
             {% endif %}
           </div>
@@ -163,9 +168,18 @@
                 </a>
             </h6>              
             <div class="d-flex align-items-baseline justify-content-center mb-2 mt-auto">
+                {% if p.on_sale %}
+                <span class="text-danger fw-bolder fs-5 me-2">
+                    {{ p.price_cup|currency }} CUP 
+                </span>
+                <span class="text-muted text-decoration-line-through small">
+                    {{ p.old_price_cup|currency }}
+                </span>
+                {% else %}
                 <span class="text-primary fw-bolder fs-5">
                     {{ p.price_cup|currency }} CUP
                 </span>
+                {% endif %}
             </div>
 
             <div class="card-footer d-flex text-center justify-content-between bg-light border">
@@ -187,7 +201,7 @@
         </div>
       </div>
       {% elif p.available_online and p.available_CUP %}
-      <div class="col-6 col-md-4 col-lg-3 mb-4">
+      <div class="col-6 col-md-2 col-lg-2 mb-2">
       <div class="card h-100 product-card border-0 shadow-sm rounded-3 overflow-hidden">                
         <div class="position-relative product-image-container">
           <a href="{{ p.get_absolute_url }}">
@@ -209,9 +223,18 @@
               </a>
           </h6>              
           <div class="d-flex align-items-baseline justify-content-center mb-2 mt-auto">
-              <span class="text-primary fw-bolder fs-5">
-                  {{ p.price_cup|currency }} CUP
-              </span>
+            {% if p.on_sale %}
+                <span class="text-danger fw-bolder fs-5 me-2">
+                    {{ p.price_cup|currency }} CUP 
+                </span>
+                <span class="text-muted text-decoration-line-through small">
+                    {{ p.old_price_cup|currency }}
+                </span>
+                {% else %}
+                <span class="text-primary fw-bolder fs-5">
+                    {{ p.price_cup|currency }} CUP
+                </span>
+                {% endif %} 
           </div>
 
           <div class="card-footer d-flex text-center justify-content-between bg-light border">
@@ -234,6 +257,7 @@
       </div>
       {% endif %}
     {% endif %}  
+  {% endif %}
   {% endfor %}
 {% else %}
   <h6 class="text-center mb-3" style="font-family: sans-serif;">En este momento no tenemos productos disponibles en este apartado.</h6>

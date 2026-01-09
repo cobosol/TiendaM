@@ -281,10 +281,10 @@ async function sendMessage() {
         userInput.value = '';
         
         if (!isAuthenticated) {
-            appendMessage('Te mostraré el formulario de autenticación...', false, '🤖 Iris');
+            appendMessage('Te mostraré el formulario de autenticación...', false, '👩 Iris');
             setTimeout(showAuthModal, 1000);
         } else {
-            appendMessage(`Ya estás autenticado como ${currentUser.nombre}. ¿En qué más puedo ayudarte?`, false, '🤖 Iris');
+            appendMessage(`Ya estás autenticado como ${currentUser.nombre}. ¿En qué más puedo ayudarte?`, false, '👩 Iris');
         }
         return;
     }
@@ -300,7 +300,7 @@ async function sendMessage() {
         if (isAuthenticated) {
             await logoutUser();
         } else {
-            appendMessage('No hay ninguna sesión activa.', false, '🤖 Iris');
+            appendMessage('No hay ninguna sesión activa.', false, '👩 Iris');
         }
         return;
     }
@@ -319,6 +319,7 @@ async function sendMessage() {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': getCSRFToken(),
             },
+            mode: 'cors',
             body: JSON.stringify({ 
                 message: message,
                 history: chatHistory.slice(-5),
@@ -327,8 +328,8 @@ async function sendMessage() {
             })
         });
 
-        if (!response.success) {
-            throw new Error(`Error HTTP: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
         }
 
         const data = await response.json();
@@ -336,7 +337,7 @@ async function sendMessage() {
         if (!data.success) {
             appendMessage('⚠️ ' + data.message, false);
         } else {
-            appendMessage(data.response, false, '🤖 Iris');
+            appendMessage(data.response, false, '👩 Iris');
             
             // Verificar si la respuesta sugiere necesidad de autenticación
             const authKeywords = [
@@ -370,7 +371,7 @@ function showAuthModal() {
     
     // Verificar Bootstrap primero
     if (!checkBootstrap()) {
-        appendMessage('Error: No se puede mostrar el formulario de autenticación. Recarga la página.', false, '🤖 Iris');
+        appendMessage('Error: No se puede mostrar el formulario de autenticación. Recarga la página.', false, '👩 Iris');
         return;
     }
     
@@ -461,7 +462,7 @@ async function logoutUser() {
         
         isAuthenticated = false;
         currentUser = null;
-        appendMessage('Sesión cerrada correctamente.', false, '🤖 Iris');
+        appendMessage('Sesión cerrada correctamente.', false, '👩 Iris');
         
     } catch (error) {
         console.error('❌ Error al cerrar sesión:', error);
@@ -501,7 +502,7 @@ async function handleAuthSubmit() {
             submitButton.disabled = false;
             submitButton.innerHTML = '<i class="bi bi-box-arrow-in-right me-1"></i>Iniciar Sesión';
             
-            appendMessage(`¡Bienvenido ${result.user.nombre}! Ahora puedo ayudarte con tus datos personales.`, false, '🤖 Iris');
+            appendMessage(`¡Bienvenido ${result.user.nombre}! Ahora puedo ayudarte con tus datos personales.`, false, '👩 Iris');
             
         }, 1500);
         
