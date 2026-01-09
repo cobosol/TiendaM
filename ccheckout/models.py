@@ -166,12 +166,12 @@ class Order(models.Model):
                 self.end_total = self.end_total - self.wallet_discount 
         if self.currency == 'CUP':
             self.cup_oficial = self.end_total 
-        """ elif not self.is_daily_summary:
+        elif not self.is_daily_summary:
             self.cup_oficial = self.end_total * decimal.Decimal(self.change_usd_cup) # Crear una variable cambio oficial en Price
         #En los resumenes diarios e CUP oficial se llena en 
         if self.total_reported == 0.00:
             self.total_reported = self.end_total
-        if self.price:
+        """if self.price:
             if self.currency == 'USD':
                 self.usd_total = self.end_total   #No voy a incluir el envío
                 self.cup_total = (self.end_total) * self.change_usd_cup 

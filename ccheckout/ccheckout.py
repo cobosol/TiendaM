@@ -159,7 +159,6 @@ def create_order(request, transaction_id, usd = True, cach = False):
         cart_subtotal = cart.cart_subtotal(request)
         order.delivery_price = cart.cart_delivery_price(request, cart_subtotal, MND)
     elif transaction_id == 3: # Facturar por contrato
-        print("En fcturar por cotrato")
         checkout_form = FacturarForm(request.POST, instance=order)
         order = checkout_form.save(commit=False)
         if usd: # Guardo el tipo de moneda en efectivo
@@ -169,7 +168,6 @@ def create_order(request, transaction_id, usd = True, cach = False):
             order.currency = 'CUP'
         else:
             order.currency = 'MLC'
-        print(f"Desccuento al salir de la form {order.discount}")
     elif transaction_id == 4: # Resumen diario
         checkout_form = DailySummaryForm(request.POST, instance=order)
         if checkout_form.is_valid():
@@ -292,16 +290,12 @@ def create_order(request, transaction_id, usd = True, cach = False):
         else:
             check = checkOrderSummary(id_order=order.id)
             if check > 0:
-                print(check)
-                order.cup_oficial = decimal.Decimal(round(order.total_items, 2))*Order.DOLLAR_CHANGE_OFFICIAL
+                order.cup_oficial = decimal.Decimal(round(order.total_items, 2))*Order.change_usd_cup
             else:
-                print("Check no mayor que cero")
                 #order.consecutivo = Order.objects.filter(is_cons_usd = False).order_by('-pk').first().consecutivo + 1
                 #order.is_cons_usd = False
                 order.end_total = decimal.Decimal(round(order.total_reported, 2))
-                print(decimal.Decimal(round(order.total_reported, 2)))
-                order.cup_oficial = decimal.Decimal(round(order.total_reported, 2))  
-                print(order.end_total)              
+                order.cup_oficial = decimal.Decimal(round(order.total_reported, 2))                
         order.save()
 
         # all set, empty cart

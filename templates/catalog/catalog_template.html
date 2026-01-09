@@ -140,8 +140,8 @@
         </div>
       </div>
       {% endif %}                  
-    {% elif MND == 'CUP' %}
-      {% if vendedor == 'True' or comercial == 'True' and p.available_CUP == True %}
+    {% elif MND == 'CUP' and p.available_CUP %}
+      {% if vendedor == 'True' or comercial == 'True' %}
       <div class="col-6 col-md-2 col-lg-2 mb-2">
         <div class="card h-100 product-card border-0 shadow-sm rounded-3 overflow-hidden">                
           <div class="position-relative product-image-container">
@@ -200,7 +200,7 @@
           </div>
         </div>
       </div>
-      {% elif p.available_online and p.available_CUP %}
+      {% elif p.available_online  %}
       <div class="col-6 col-md-2 col-lg-2 mb-2">
       <div class="card h-100 product-card border-0 shadow-sm rounded-3 overflow-hidden">                
         <div class="position-relative product-image-container">
