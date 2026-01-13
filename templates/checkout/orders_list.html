@@ -14,7 +14,7 @@
         </div>
     </div>
     <!-- Page Header End -->
-    <h6> <i class="fa fa-plus"></i>Buscar por:</h6>
+    <h6> <i class="fa fa-plus"></i> Buscar por:</h6>
     <form enctype="multipart/form-data" method="GET" style="display: inline-block;">
       {% csrf_token %}
       {% load widget_tweaks %}
@@ -25,10 +25,8 @@
             {{ field|add_class:"form-control" }}
           </div>  
       {% endfor %}
-      <div class="col-md-3">
         <button type="submit" class="btn btn-primary"> <i class="fas fa-search text-secondary mr-0"> </i> Filtrar</button>
       </div>
-    </div>
     </form>
     <br>
 

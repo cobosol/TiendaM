@@ -23,16 +23,17 @@
             <label>Ventas clientes: <input type="checkbox" name="clientes"></label>
         <div class="row">
             {% for field in filter.form %}
-            <div class="mb-1 col-md-4">
+            <div class="mb-1 col-md-3">
                 <label for="{{field.id_for_label}}"> {{ field.label }} </label>
                 {{ field|add_class:"form-control" }}
             </div>  
             {% endfor %}
+            <div class="mb-1 col-md-3">
+                <button type="submit" class="btn btn-primary"> <i class="fas fa-search text-secondary mr-0"> </i> Filtrar</button>
+            </div>
         </div>
-        <br>
-        <button type="submit" class="btn btn-primary"> <i class="fas fa-search text-secondary mr-0"> </i> Filtrar</button>
         </form>
-        <br>
+     
     </div>
 
     <h4> Totales</h4>
