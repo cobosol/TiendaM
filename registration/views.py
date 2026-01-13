@@ -35,7 +35,8 @@ from django.contrib.auth.views import PasswordResetView
 from django.views.generic import ListView, DetailView 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
-from .forms import CustomPasswordResetForm, MNDForm
+from .forms import CustomPasswordResetForm, MNDForm, CRollForm
+from utils.context_processors import S_C_ROLL, COMERCIAL_ROLL
 
 def wallet(request):
     return render(request, "registration/wallet_form.html", {})
@@ -195,7 +196,6 @@ def users_list(request, template_name="registration/users_list.html"):
     perfiles = Profile.objects.all().order_by('-user__date_joined')
     return render(request, template_name, locals())
 
-
 @login_required
 @require_POST
 def update_mnd(request):
@@ -207,6 +207,21 @@ def update_mnd(request):
         request.session['wallet_discount'] = float(0)
     # Redirige a la misma página desde donde se envió el formulario
     next_url = request.POST.get('next', '/')  # Valor por defecto si no hay 'next'
+    if url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
+        return redirect(next_url)
+    else:
+        return redirect('/')
+    
+@login_required
+@require_POST
+def update_c_roll(request):
+    form = CRollForm(request.POST)
+    if form.is_valid():
+        print("form valid")
+        request.session[S_C_ROLL] = form.cleaned_data['c_roll'] 
+    # Redirige a la misma página desde donde se envió el formulario
+    next_url = request.POST.get('next', '/')  # Valor por defecto si no hay 'next'
+    print(request.session.get(S_C_ROLL,''))
     if url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
         return redirect(next_url)
     else:

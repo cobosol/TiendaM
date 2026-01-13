@@ -1,8 +1,9 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from .models import Coupon, Coupon_first
 from django.conf import settings
 from .utils import send_coupon
+from utils.models import Price
 import datetime
 
 from django.contrib.auth.models import Group
@@ -63,7 +64,49 @@ def actualizar_incentivos_cliente(sender, instance, **kwargs):
                         cliente_incentivo.estado = 'entregado'
                         cliente_incentivo.save()
                     incentivado = True
-    
+
+""" @receiver(pre_save, sender=Order)
+def adicionar_consecutivo(sender, instance, **kwargs):
+    if not instance.pk:
+        if instance.currency == 'USD':
+            ultimoUSD = Order.objects.filter(currency = 'USD').order_by('-consecutivo').first()
+            instance.consecutivo = ultimoUSD.consecutivo + 1
+        else:
+            ultimoCUP = Order.objects.filter(currency = 'CUP').order_by('-consecutivo').first()
+            if ultimoCUP.consecutivo == 0:
+                #ultimo = Order.objects.all().order_by('-consecutivo').first()
+                instance.consecutivo = ultimoCUP.id + 1
+            else:
+                instance.consecutivo = ultimoCUP.consecutivo + 1  """
+
+@receiver(pre_save, sender=Order)
+def adicionar_consecutivo(sender, instance, **kwargs):
+    if not instance.pk:
+        instance.change_usd_cup = Price.objects.filter(is_active=True)[0].change_usd_cup
+        ultimoUSD = Order.objects.last()
+        if not ultimoUSD:
+            instance.consecutivo = 1
+        else:
+            instance.consecutivo = ultimoUSD.consecutivo + 1
+    else:
+        if instance.change_usd_cup == 120: 
+            if instance.price:
+                instance.change_usd_cup = instance.price.change_usd_cup
+            else:
+                instance.change_usd_cup = 120
+        """ if instance.currency == 'USD':
+            ultimoUSD = Order.objects.filter(is_cons_usd = True).order_by('-pk').first()
+            if not ultimoUSD:
+                instance.consecutivo = 1
+            else:
+                instance.consecutivo = ultimoUSD.consecutivo + 1
+        else:
+            ultimoCUP = Order.objects.filter(is_cons_usd = False).order_by('-pk').first()
+            if ultimoCUP.consecutivo == 0:
+                instance.consecutivo = ultimoCUP.id + 1
+            else:
+                instance.consecutivo = ultimoCUP.consecutivo + 1 """ 
+
 """ @receiver(post_save, sender=Order)
 def notify_stars(sender, instance, created, **kwargs):
     if instance.:  

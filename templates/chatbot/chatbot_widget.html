@@ -1,0 +1,118 @@
+{% load static %}
+
+<!-- Botón flotante para abrir el chat -->
+<!-- <div id="chat-button" class="position-fixed bottom-0 end-0 mb-4 me-4" style="z-index: 10000;">
+    <button type="button" class="btn btn-primary rounded-circle p-3 shadow-lg" id="open-chat" 
+            title="Chatear con nuestro asistente">
+        <i class="bi bi-chat-dots-fill fs-4"></i>
+    </button>
+</div> -->
+
+<!-- Botón flotante con avatar personalizado -->
+<div id="chat-button" class="position-fixed bottom-0 end-0 mb-4 me-4" style="z-index: 10000;">
+    <button class="chat-avatar-container" id="open-chat" title="Chatear con nuestro asistente" 
+            style="border: none; background: transparent; padding: 0; cursor: pointer;">
+        <!-- Avatar con imagen personalizada -->
+        <img src="{% static 'img/avatar.png' %}" 
+             alt="Asistente Virtual" 
+             class="chat-avatar-img">
+        
+        <!-- Indicador de notificación (opcional) -->
+        <span class="chat-notification"></span>
+        
+        <!-- Efecto de pulso (opcional) -->
+        <div class="chat-pulse"></div>
+    </button>
+</div>
+
+<!-- Contenedor del chat (inicialmente oculto) -->
+<div id="chat-container" class="bg-white shadow-lg">
+    <div class="chat-header d-flex justify-content-between align-items-center">
+        <div>
+            <i class="bi bi-robot me-2"></i>
+            <strong>Asistente virtual: Iris</strong>
+        </div>
+        <div>
+            <button id="minimize-chat" class="btn btn-sm btn-light me-2" title="Minimizar">
+                <i class="bi bi-dash-lg"></i>
+            </button>
+            <button id="close-chat" class="btn btn-sm btn-light" title="Cerrar">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+    </div>
+    
+    <div class="chat-messages" id="chat-messages">
+        <div class="message-bot">
+            <div class="fw-bold">👩 Iris</div>
+            ¡Hola! Soy tu asistente virtual de MUHIA.
+        </div>
+    </div>
+    
+    <!-- Indicador de "escribiendo" -->
+    <div class="typing-indicator" id="typing-indicator">
+        <div class="typing-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <span class="ms-2">El asistente está escribiendo...</span>
+    </div>
+    
+    <div class="chat-input p-2">
+        <div class="input-group">
+            <input type="text" id="user-input" class="form-control" 
+                   placeholder="Escribe tu pregunta..." 
+                   aria-label="Mensaje para el asistente"
+                   autocomplete="off">
+            <button class="btn btn-primary" type="button" id="send-btn" title="Enviar mensaje">
+                <i class="bi bi-send-fill"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de autenticación -->
+<div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="authModalLabel">
+                    <i class="bi bi-shield-lock me-2"></i>Autenticación Requerida
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="auth-form">
+                    <p class="text-muted mb-3">Para acceder a tus datos personales, inicia sesión.</p>
+                    
+                    <div class="mb-3">
+                        <label for="auth-username" class="form-label">Usuario</label>
+                        <input type="text" class="form-control" id="auth-username" placeholder="Tu usuario">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="auth-password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="auth-password" placeholder="Tu contraseña">
+                    </div>
+                    
+                    <div class="alert alert-danger d-none" id="auth-error">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        <span id="auth-error-text">Error de autenticación</span>
+                    </div>
+                </div>
+                
+                <div id="auth-success" class="d-none text-center">
+                    <div class="alert alert-success">
+                        <i class="bi bi-check-circle-fill me-2"></i>
+                        ¡Autenticación Exitosa!
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="auth-submit">Iniciar Sesión</button>
+            </div>
+        </div>
+    </div>
+</div>

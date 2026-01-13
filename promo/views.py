@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from .models import Banner, Offer
-from catalog.models import Product
 from .forms import BannerForm, OfferForm
 
 #Librerías para mensajes, algunos basados en views
@@ -12,21 +11,11 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView, DetailView 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 
 def banner(request):
-    banners = Banner.objects.all()    
+    banners = Banner.objects.all()
     return render(request, "promo/banner.html", {'banners':banners})
-    
-# def show_search(request, productSearch):
-#     productSearch = Product.objects.filter(meta_keywords__icontains=productSearch)
-#     if request.method == 'POST':
-#         postdata = request.POST.copy()
-#         if postdata['submit'] == 'Buscar':
-#             productSearch = postdata['producto']
-#             url = '/catalogo/productos/' + productSearch + '/'
-#             return HttpResponseRedirect(url) 
 
 #---------- Gestión de banners ----------------
 class gestion_banners(ListView):

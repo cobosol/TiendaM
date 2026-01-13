@@ -16,7 +16,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 #from django.views import View
 from django.views.generic import ListView, DetailView 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.response import Response
+
 
 # Habilitamos los formularios en Django
 from django import forms
@@ -30,20 +32,39 @@ from stores.models import Store, Product_Sales
 from catalog.models import *
 from pages.models import *
 from .forms import ProductAdminForm, ProductForm, ProductAlmacenForm
-from .serializers import ProductsGipproSerializer
+from .serializers import ProductsGipproSerializer, ProductsCoboChatSerializer, ProductAgrupedSerializer
 
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from .forms import ProductAlmacenFilterForm
 
-
+class ProductCoboChatListView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductsCoboChatSerializer
 
 class ProductGipproListView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductsGipproSerializer
 
-
+class ProductoAgrupadoAPIView(generics.ListAPIView):
+    serializer_class = ProductAgrupedSerializer
+    
+    def get(self, request, *args, **kwargs):
+        # Obtener los productos
+        queryset = self.get_queryset()
+        
+        # Definir los campos por los que agrupar (puedes hacerlos configurables)
+        campos_agrupacion = ['name', 'gname']
+        
+        # Usar el método del serializador para agrupar
+        datos_agrupados = ProductAgrupedSerializer.agrupar_por_atributos(queryset, campos_agrupacion)
+        
+        return Response(datos_agrupados)
+    
+    def get_queryset(self):
+        return Product.objects.all()
+    
 def index(request, template_name="index.html"):
     context = {'name':'Tienda Virtual MUHIA'}
     return render(request, template_name, context)
@@ -93,10 +114,10 @@ def show_all_active(request, template_name="catalog/allActive.html"):
             messages.error(request, "Error al adicionar al carrito")
     return render(request, template_name, locals())
 
-
 def show_category(request, category_slug, template_name="catalog/category.html"):
     c = get_object_or_404(Category, slug=category_slug)
     products = c.product_set.all()
+    products = products.filter(is_active=True)
     page_title = c.name
     meta_keywords = c.meta_keywords
     meta_description = c.meta_description
@@ -196,13 +217,9 @@ def gestion_productos(request, template_name="catalog/productos_admin.html"):
                 form = SelectCategoryForm(request, postdata)
                 form.selected_category = postdata['selected_category']
                 c = get_object_or_404(Category, pk=postdata['selected_category'])
-                object_list = c.product_set.all()
-            if postdata['submit'] == 'Buscar':
-                productSearch = postdata['producto']
-                url = '/catalogo/productos/' + productSearch + '/'
-            return HttpResponseRedirect(url) 
+                object_list = c.product_set.all().order_by('name')
         else:
-            object_list = Product.objects.all()
+            object_list = Product.objects.all().order_by('name')
     except:
         text = "Error al seleccionar la categoría"
         messages.error(request, text)
@@ -234,10 +251,6 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
                     request.session.delete_test_cookie()
                 url = reverse('catalogo_productos')
                 return HttpResponseRedirect(url)
-            elif postdata['submit'] == 'Buscar':
-                productSearch = postdata['producto']
-                url = '/catalogo/productos/' + productSearch + '/'
-                return HttpResponseRedirect(url) 
         else:
             object_list = Product.objects.filter(is_active=True)
     except:
@@ -285,7 +298,34 @@ class eliminar_producto(SuccessMessageMixin, DeleteView):
         messages.success (self.request, (success_message))       
         return reverse('productos') # Redireccionamos a la vista principal
 
+def lista_productos_precios(request):
+    objetos = Product.objects.all().order_by('name')
+    
+    return render(request, 'catalog/actualiza_precios.html', {
+        'objetos': objetos
+    })
 
+@csrf_exempt
+@require_POST
+def actualizar_precios(request, pk, campo):
+    objeto = get_object_or_404(Product, pk=pk)
+    nuevo_valor = request.POST.get(campo)
+    print(campo)
+    print(nuevo_valor)
+    campos_editables = ['price_base', 'old_price']
+
+    if campo not in campos_editables:
+        return JsonResponse({'status': 'error', 'message': 'Campo no editable'})
+    
+    try:
+        # Actualizar el valor
+        setattr(objeto, campo, nuevo_valor)
+        objeto.save()
+        return JsonResponse({'status': 'success', 'nuevo_valor': str(getattr(objeto, campo))})
+    except Exception as e:
+        logging.exception("Error actualizando precio:")
+        return JsonResponse({'status': 'error', 'message': 'Ha ocurrido un error interno. Por favor, inténtalo de nuevo más tarde.'})
+    
 
 #---------- Gestión de productos en almacen----------------
 
@@ -401,6 +441,9 @@ def actualizar_inventario(request, pk, campo):
     except Exception as e:
         logging.exception("Error actualizando inventario:")
         return JsonResponse({'status': 'error', 'message': 'Ha ocurrido un error interno. Por favor, inténtalo de nuevo más tarde.'})
+
+
+
     
 class eliminar_producto_almacen(SuccessMessageMixin, DeleteView):
     model = Product_Sales
@@ -411,3 +454,4 @@ class eliminar_producto_almacen(SuccessMessageMixin, DeleteView):
         success_message = 'Producto eliminado correctamente!'
         messages.success (self.request, (success_message))       
         return reverse('productos_almacen') # Redireccionamos a la vista principal
+    

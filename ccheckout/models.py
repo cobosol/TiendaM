@@ -10,13 +10,12 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 import uuid
 import datetime
+from utils.models import Price
 
 # Crear una clase delivery que incluya todas las definiciones de los envios.
 # El municipio con los precios (diccionario), descuentos por monto...
 
 class Order(models.Model):
-
-    DOLLAR_CHANGE_OFFICIAL = 120
 
     # each individual status
     SUBMITTED = 0
@@ -76,6 +75,7 @@ class Order(models.Model):
 
     # order info
     consecutivo = models.IntegerField(verbose_name="consecutivo", default=0)
+    is_cons_usd = models.BooleanField(default=False, verbose_name="Consecutivo USD")
     date = models.DateTimeField(auto_now_add=True, verbose_name = "Fecha de facturación")
     status = models.IntegerField(choices=ORDER_STATUSES, default=SUBMITTED, verbose_name = "Estado")
     ip_address = models.GenericIPAddressField(verbose_name = "Dirección ip")
@@ -99,12 +99,14 @@ class Order(models.Model):
     total_reported = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00, verbose_name="Total reportado")
     # Descuentos
     coupon_percent = models.PositiveIntegerField(default=0, verbose_name="Porciento de descuento de cupón")
-    others_discount = models.PositiveIntegerField(default=0, verbose_name="Porciento de otros descuentos")
+    others_discount = models.PositiveIntegerField(default=0, null=True, blank=True, verbose_name="Porciento de otros descuentos")
     wallet_discount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name="descuento del monedero")
+    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name="Descuento por ajuste de contrato")
 
     # Configuración de monedas, sus cambios y de los descuentos
     currency = models.CharField(max_length=3, default="USD", verbose_name = "Tipo de moneda")
     price = models.ForeignKey(Price, on_delete = models.PROTECT, blank = True, null=True, verbose_name="Valores para el cálculo del Precio de la compra")
+    change_usd_cup = models.IntegerField(default = 120, verbose_name="Cambio USD a CUP")
     store_name = models.CharField(max_length=200, default="Envío Habana", verbose_name = "Nombre del tipo de entrega")
     pay_url = models.URLField(verbose_name="URL de pago", blank = True, null=True, default="")
     coupon = models.ForeignKey('Coupon', on_delete=models.SET_NULL, null=True, blank=True, related_name='orders', verbose_name="Cupón de descuento")
@@ -139,14 +141,21 @@ class Order(models.Model):
     class Meta:
         verbose_name = "Orden de compra"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
     def __unicode__(self):
         return 'Orden #' + str(self.id)
 
-    def set_consecutivo(self):
+    """ def set_consecutivo(self):
         if self.currency == 'USD':
             self.consecutivo = Order.objects.filter(currency = 'USD').last().consecutivo + 1
         else:
-            self.consecutivo = self.id
+            consecutivo = Order.objects.filter(currency = 'CUP').last().consecutivo
+            if consecutivo == 0:
+                self.consecutivo = self.id
+            else:
+                self.consecutivo = consecutivo  """
 
     def save(self, *args, **kwargs):
         if self.base_total is None or self.base_total == 0:
@@ -158,23 +167,23 @@ class Order(models.Model):
         if self.currency == 'CUP':
             self.cup_oficial = self.end_total 
         elif not self.is_daily_summary:
-            self.cup_oficial = self.end_total * self.DOLLAR_CHANGE_OFFICIAL # Crear una variable cambio oficial en Price
+            self.cup_oficial = self.end_total * decimal.Decimal(self.change_usd_cup) # Crear una variable cambio oficial en Price
         #En los resumenes diarios e CUP oficial se llena en 
         if self.total_reported == 0.00:
             self.total_reported = self.end_total
-        if self.price:
+        """if self.price:
             if self.currency == 'USD':
                 self.usd_total = self.end_total   #No voy a incluir el envío
-                self.cup_total = (self.end_total) * self.price.change_usd_cup 
+                self.cup_total = (self.end_total) * self.change_usd_cup 
                 self.mlc_total = (self.end_total) * self.price.change_usd_mlc
             elif self.currency == 'CUP':
-                self.usd_total = (self.end_total) / self.price.change_usd_cup
+                self.usd_total = (self.end_total) / self.change_usd_cup
                 self.cup_total = self.end_total
-                self.mlc_total = (self.end_total) / self.price.change_usd_cup * self.price.change_usd_mlc
+                self.mlc_total = (self.end_total) / self.change_usd_cup * self.price.change_usd_mlc
             else:
                 self.usd_total = (self.end_total) / self.price.change_usd_mlc
-                self.cup_total = (self.end_total) / self.price.change_usd_mlc * self.price.change_usd_cup
-                self.mlc_total = self.end_total
+                self.cup_total = (self.end_total) / self.price.change_usd_mlc * self.change_usd_cup
+                self.mlc_total = self.end_total """
         super().save(*args, **kwargs)
 
     @property
@@ -182,7 +191,7 @@ class Order(models.Model):
         if self.currency == 'CUP':
             return self.wallet_discount  
         else:
-            return self.wallet_discount/self.DOLLAR_CHANGE_OFFICIAL
+            return self.wallet_discount/120
 
     @property
     def total_items(self):
@@ -208,6 +217,8 @@ class Order(models.Model):
     
     @property
     def total(self):
+        if self.is_daily_summary:
+            return self.total_reported
         if self.end_total != 0:
             return self.end_total
         else:
@@ -422,11 +433,20 @@ class OrderItem(models.Model):
     product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.SET_NULL, verbose_name = "Producto")
     quantity = models.DecimalField(max_digits=9, decimal_places=2,default=1.00, verbose_name = "Cantidad")
     price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name = "Precio")
+    
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items', verbose_name = "Orden")
     is_summary_item = models.BooleanField(default=False, verbose_name="Elemento especial de resumen diario ")  # Identificar items especiales
     store_name = models.CharField(max_length=250, default="Envío Habana", verbose_name = "Forma de entrega")
     totalf = models.DecimalField(max_digits=9,decimal_places=2, default=-1.00, verbose_name = "Precio total del producto")
+    #has_discount = models.BooleanField(default=False, verbose_name="Tiene descuentos")
 
+    @property
+    def price_cup(self):
+        if self.order.currency == 'USD':
+            return self.price * self.order.change_usd_cup
+        else:
+            return self.price
+    
     @property
     def has_discount(self):
         bool = abs((self.price * self.quantity) - self.total) > 0.01
@@ -444,16 +464,35 @@ class OrderItem(models.Model):
                 porciento = 1-self.product.whole_discount/100
                 precio = decimal.Decimal('0.00')
                 precio = self.price * decimal.Decimal(porciento)
+                self.has_discount = True
                 return self.quantity * precio
             else:
                 return self.quantity * self.price
         except:
-            print(self.order.pk)
             return 0
+
+    @property
+    def total_cup(self):
+        return self.total * self.order.change_usd_cup
+    
+    @property
+    def total_CUP_discount(self):
+        price = self.order.price 
+        total = decimal.Decimal(self.quantity * self.price_cup)
+        price_litre = decimal.Decimal(1/self.product.litres_units)*self.price_cup 
+        if self.product.available_CUP and price.discount_amount_by_litre > 0 and price_litre > 300:       
+            cant_litres = self.quantity * decimal.Decimal(self.product.litres_units)
+            discount = int(cant_litres) * price.discount_amount_by_litre
+            return decimal.Decimal(total) - decimal.Decimal(discount)
+        return decimal.Decimal(total)
 
     @property
     def total_base_CUP(self):
         return self.quantity * self.price_CUP
+    
+    @property
+    def total_base(self):
+        return self.quantity * self.price
 
     @property
     def name(self):
@@ -466,9 +505,9 @@ class OrderItem(models.Model):
     def price_CUP(self):
         cup_price = 0
         if self.order.currency == 'USD':
-            cup_price = self.price * self.order.price.change_usd_cup
+            cup_price = self.price * self.order.change_usd_cup
         elif self.order.currency == 'MLC':
-            cup_price = (self.price / self.order.price.change_usd_mlc) * self.order.price.change_usd_cup
+            cup_price = (self.price / self.order.price.change_usd_mlc) * self.order.change_usd_cup
         else:
             cup_price = self.price
 

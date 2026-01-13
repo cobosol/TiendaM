@@ -315,8 +315,7 @@ def facturar(request, template_name='checkout/facturar.html'):
                     request.session['order_number'] = order_number['order_number']
                     order = Order.objects.filter(id=order_number['order_number'])[0] 
                     order.save()
-                    """ order.update_status(Order.PAIDED)
-                    order.update_status(Order.DELIVERED) """
+                    order.update_status(Order.PROCESSED)
                     order.save()
                     receipt_url = reverse('checkout_receipt')
                     return HttpResponseRedirect(receipt_url)
@@ -508,7 +507,7 @@ def transfer(request, template_name='checkout/transfer.html', id=0):
 
 # Página para crear resumen de ventas diarias
 def create_daily_summary(request):
-    MD = 'USD'
+    MD = 'CUP'
     if cart.is_empty(request):
         cart_url = reverse('show_cart')
         return HttpResponseRedirect(cart_url)
@@ -544,6 +543,18 @@ def create_daily_summary(request):
                 order.total_reported = sum([form.cleaned_data['amount'] for form in formset])
                 if order.total_reported != order.base_total:
                     messages.info(request, "No coincide el monto del listado de productos con lo reportado en el resumen")
+                check = checkOrderSummary(id_order=order.id)
+                if check > 0:
+                    order.cup_oficial = decimal.Decimal(round(order.total_items, 2))*Order.DOLLAR_CHANGE_OFFICIAL
+                else:
+                    o = Order.objects.filter(is_cons_usd = False).order_by('-pk').first()
+                    """ if o.consecutivo == 0:
+                        order.consecutivo = o.id + 1
+                        order.is_cons_usd = False
+                    else:
+                        order.consecutivo = o.consecutivo + 1
+                        order.is_cons_usd = False """
+                    order.cup_oficial = decimal.Decimal(round(order.total_reported, 2))                
                 order.save()
                 app_label = order._meta.app_label
                 model_name = order._meta.model_name
@@ -713,19 +724,9 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
     orders = Order.objects.all().order_by('-date')
     
     #Esto es para actualizar valores
-    """ ordersp = Order.objects.filter(status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], is_daily_summary=True)     
-    for o in ordersp:
-        o.end_total = 0
-        check = checkOrderSummary(id_order=o.pk)
-        print(o.id)
-        if check > 0:
-            o.cup_oficial = decimal.Decimal(round(o.total_items, 2))*Order.DOLLAR_CHANGE_OFFICIAL
-            print(f'check: {round(o.total_items, 2)}')
-        else:
-            o.cup_oficial = decimal.Decimal(round(o.total_reported, 2))
-            print(round(o.total_reported, 2))
-        print(f'cup_oficial: {o.cup_oficial}')
-        o.save() """
+    ordersp = Order.objects.all() #filter(status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], is_daily_summary=True)     
+    for o in ordersp:        
+        o.save() 
 
     start_date = request.GET.get('start_date', '2025-01-01')
     end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
@@ -760,6 +761,7 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
     if currency:
         if currency!='':
             orders = orders.filter(currency__icontains=currency).order_by('-date')
+    
 
     if request.method == 'POST':
         postdata = request.POST.copy()
@@ -769,7 +771,8 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
         if postdata['submit'] == 'Detalles':
             order_id = postdata['order_id']
             template = 'checkout/details.html'
-            return redirect(reverse('details'))    
+            return redirect(reverse('details'))
+        return HttpResponseRedirect(receipt)
     user_name = ""
     return render(request, template_name, locals())
 
@@ -791,6 +794,7 @@ def clients_orders_list(request, template_name='checkout/clients_orders_list.htm
         comercial_orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], user__in=comerciales, is_daily_summary=False).order_by('-date')
         com_count = comercial_orders.count()
     
+
     # Filtrar órdenes válidas en el rango
     sin_g = User.objects.filter(groups__isnull=True)
     client_orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], user__in=sin_g).order_by('-date')
@@ -838,6 +842,7 @@ def clients_orders_list(request, template_name='checkout/clients_orders_list.htm
     s = request.GET.get('summary')
     if s == 'on':
         orders = orders.filter(is_daily_summary=True).order_by('-date')
+
     
     comercial = request.GET.get('comercial')    
     if comercial == 'on':
@@ -856,10 +861,6 @@ def clients_orders_list(request, template_name='checkout/clients_orders_list.htm
             order_id = postdata['order_id']
             template = 'checkout/details.html'
             return redirect(reverse('details'))
-        if postdata['submit'] == 'Buscar':
-            productSearch = postdata['producto']
-            url = '/catalogo/productos/' + productSearch + '/'
-            return HttpResponseRedirect(url) 
         return HttpResponseRedirect(receipt)
     user_name = ""
     return render(request, template_name, locals())
@@ -1081,6 +1082,7 @@ def sales_products(request):
         .order_by('-total_quantity')[:cant_prod]  # ¡Solo los 10 primeros!
     )
 
+
     # 2. Monto total por producto (top 10)
     revenue_by_product = list(
         OrderItem.objects
@@ -1098,6 +1100,9 @@ def sales_products(request):
     # Convertir Decimal a float
     for p in products_data:
         p['total_quantity'] = float(p['total_quantity'])
+        prod = get_object_or_404(Product, name=p['product__name'])
+        prod.is_bestseller = True
+        prod.save()
 
     for r in revenue_by_product:
         r['total_revenue'] = float(r['total_revenue'])

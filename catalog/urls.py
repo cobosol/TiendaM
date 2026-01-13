@@ -1,6 +1,6 @@
 from django.urls import path, re_path
 from . import views
-from .views import ProductGipproListView
+from .views import ProductGipproListView, ProductCoboChatListView, ProductoAgrupadoAPIView
 from catalog.views import show_search, gestion_productos,eliminar_producto,crear_producto,actualizar_producto, gestion_productos_almacen,eliminar_producto_almacen,crear_producto_almacen,actualizar_producto_almacen
 from . import views
 #from ppreview import views
@@ -12,6 +12,8 @@ urlpatterns = [
     path("producto/<product_slug>/", views.show_product, name='catalog_product'),
     path("productos/<productSearch>/", views.show_search, name='product_search'),
     path('listarGippro/', ProductGipproListView.as_view(), name='product-gippro-list'),
+    path('listarCoboChat/', ProductCoboChatListView.as_view(), name='product-cobochat-list'),
+    path('api/productos/agrupados/', ProductoAgrupadoAPIView.as_view(), name='api_productos_agrupados'),
     path("todos/", views.show_all_active, name='all_products'),
     path('gestion/', views.i_admin, name='gestion'),
     path('catalogo/', views.catalogo_productos, name='catalogo_productos'),
@@ -25,4 +27,6 @@ urlpatterns = [
     path('productos_almacen/editar/<int:pk>', actualizar_producto_almacen.as_view(template_name = "catalog/producto_almacen_actualizar.html"), name='actualizar_producto_almacen'),
     path('productos_almacen/inventario', views.lista_productos_inventario, name='lista_productos_inventario'),
     path('productos_almacen/actualizar/<int:pk>/<str:campo>/', views.actualizar_inventario, name='actualizar_inventario'),
+    path('productos/precios', views.lista_productos_precios, name='lista_productos_precios'),
+    path('productos/actualizar/<int:pk>/<str:campo>/', views.actualizar_precios, name='actualizar_precio'),
 ]

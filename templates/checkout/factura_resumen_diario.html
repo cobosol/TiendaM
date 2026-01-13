@@ -71,7 +71,7 @@
         </tbody>
     </table>
 
-    <h1 style="text-align: center; font-size: 14px; "> VENTA ONLINE </h1>
+    <h1 style="text-align: center; font-size: 14px; "> VENTAS </h1>
     <table border="0.5" style="width: 220px; height: 30px; border-collapse: collapse; text-align: center;">
         <tbody>
             <tr>
@@ -86,15 +86,23 @@
             {% for item in orders %}
             <tr>
                 <td class="table-info-td" style="width: 250px;"> {{ item.name }} </td>
-                <td class="table-info-td" style="width: 100px;"> {{ item.product.price_cup|currency }} </td>
+                <td class="table-info-td" style="width: 100px;"> {{ item.price|currency }} </td>
                 <td class="table-info-td" style="width: 70px;"> {{ item.quantity }} </td>
-                <td class="table-info-td" style="width: 100px;"> {{ item.total_base_CUP|currency }} </td>
+                <td class="table-info-td" style="width: 100px;"> {{ item.total_CUP_discount|currency }}  {% if data.descuento > 0 %} * {% endif %} </td>
             </tr>
             {% endfor %}
+            <tr>
+                <td class="table-info-td" colspan="3" align="right"> <strong> SubTotal: </strong> </td>
+                <td class="table-info-td"> ${{ data.importe }} CUP </td>
+            </tr>
         </tbody>
     </table>
 
     <br>
+
+    {% if data.descuento > 0 %}
+    * Este producto tiene descuentos
+    {% endif %} 
 
     <hr>
 
@@ -104,7 +112,8 @@
         <tbody>
             <tr>
                 <!-- <td class="first-td"><strong>IMPORTE TOTAL: {{data.importeCUP}} {% if data.currency == 'USD'%} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td> -->
-                <td class="first-td"><strong>IMPORTE: {{data.importeCUP}} CUP </strong></td>
+                <td class="first-td"><strong>DESCUENTO: {{data.descuento}} CUP </strong></td>
+                <td class="first-td"><strong>IMPORTE FINAL: {{data.importeCUP}} CUP </strong></td>
             </tr>
         </tbody>
     </table>

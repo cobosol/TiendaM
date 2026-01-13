@@ -4,22 +4,37 @@
 
 {% block title %}Inicio - Mi Tienda Online{% endblock %}
 
+<style>
+    
+</style>
 {% block content %}
     <!-- Banner principal -->
-    <section class="banner mb-5">
+    <section class="banner mb-1">
         <div id="mainBanner" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner rounded" style="height: 60vh;">
                 {% for banner in banners %}
                 {% if banner.is_active %}
                 {% if banner.main %}
+                <!-- <div class="carousel-item active">
+                    <img src="{{ banner.image.url }}" 
+                         class="d-block w-100 h-100" alt="Ofertas especiales" style="object-fit: cover;">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2>Oferta de Temporada</h2>
+                        <p>200 CUP de descuento por litro comprado</p>
+                        <a href="/catalogo/catalogo" class="btn btn-primary btn-lg">Catálogo</a>
+                    </div>
+                </div> -->
                 <div class="carousel-item active">
                     <img src="{{ banner.image.url }}" 
                          class="d-block w-100 h-100" alt="Ofertas especiales" style="object-fit: cover;">
-                    <!-- <div class="carousel-caption d-none d-md-block">
-                        <h2>Ofertas de Temporada</h2>
-                        <p>Hasta 50% de descuento en productos seleccionados</p>
-                        <a href="#" class="btn btn-primary btn-lg">Ver Ofertas</a>
-                    </div> -->
+                    <div class="image-overlay"></div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <div class="container text-center text-md-start"> 
+                            <h4>Nuevo año, nuevos precios</h4>
+                            <p>Visita nuestro catálogo</p>
+                            <a href="/catalogo/catalogo" class="btn btn-primary btn-lg">Catálogo</a>
+                        </div>
+                    </div>
                 </div>
                 {% else %}
                 <div class="carousel-item">
@@ -46,55 +61,10 @@
         </div>
     </section>
 
-    <!-- Tarjetas de ofertas -->
-    <section class="featured-offers mb-5">
-<!--         <h2 class="text-center mb-4">Ofertas Destacadas</h2> -->
-        <div class="row g-4">
-            <div class="col-md-6">
-                <div class="card offer-card h-100 overflow-hidden">
-                    <img src="{{offer1.image.url}}" 
-                         class="card-img-top" alt="Oferta en audífonos" style="height: 250px; object-fit: cover;">
-                    <div class="card-body">
-                        <h3 class="card-title text-danger">{{offer1.title}}</h3>
-                        <p class="card-text">{{offer1.mainText}}.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                {% if offer1.newPrice %}
-                                <span class="text-danger fw-bold fs-4">{{offer1.newPrice}}</span>
-                                <span class="text-muted text-decoration-line-through ms-2">{{offer1.oldPrice}}</span>
-                                {% endif %}
-                            </div>
-                            <a href="{{offer1.butonLink}}" class="btn btn-outline-primary">{{offer1.button}}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card offer-card h-100 overflow-hidden">
-                    <img src="{{offer2.image.url}}" 
-                         class="card-img-top" alt="Reloj inteligente" style="height: 250px; object-fit: cover;">
-                    <div class="card-body">
-                        <h3 class="card-title text-danger">{{offer2.title}}</h3>
-                        <p class="card-text">{{offer2.mainText}}.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                {% if offer2.newPrice %}
-                                <span class="text-danger fw-bold fs-4">${{offer2.newPrice}}</span>
-                                <span class="text-muted text-decoration-line-through ms-2">${{offer2.oldPrice}}</span>
-                                {% endif %}
-                            </div>
-                            <a href="{{offer2.butonLink}}" class="btn btn-outline-primary">{{offer2.button}}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Featured Start -->
-    <div class="container-fluid pt-5">
+    <div class="container-fluid pt-1">
         <div class="row px-xl-5 pb-3">
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                 <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
                     <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
                     <a href="https://produccionesmuhia.ca" target="_blank" >
@@ -102,15 +72,15 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+<!--             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                 <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
                     <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
                     <a href="/tiendas/" target="_blank">
                         <h5 class="font-weight-semi-bold m-0">Envíos</h5>
                     </a>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            </div> -->
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                 <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
                     <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
                     <a href="/pagina/3/" target="_blank">
@@ -118,7 +88,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                 <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
                     <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
                     <a href="/contacto/" target="_blank">
@@ -130,49 +100,61 @@
     </div>
     <!-- Featured End -->
 
-
     <!-- Productos destacados -->
     <section class="featured-products mb-5">
         
         <h2 class="text-center mb-4 text-primary"><strong>Productos Destacados</strong></h2>
         <br>
-        <div class="row g-4">
-            <!-- Producto 1 -->
-            <!-- <div class="col-md-4 col-sm-6">
-                <div class="card h-100 product-card">
-                    <div class="position-relative">
-                        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" 
-                             class="card-img-top" alt="Altavoz Bluetooth">
-                        <span class="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 m-2 rounded">-20%</span>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Altavoz Bluetooth</h5>
-                        <p class="card-text">Sonido potente y portátil para llevar tu música a todas partes.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-primary fw-bold">$49.99</span>
-                            <a href="#" class="btn btn-sm btn-outline-primary">Añadir al carrito</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="card h-100 product-card">
-                    <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" 
-                         class="card-img-top" alt="Laptop Ultradelgada">
-                    <div class="card-body">
-                        <h5 class="card-title">Laptop Ultradelgada</h5>
-                        <p class="card-text">Potencia y rendimiento en un diseño elegante y ligero.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-primary fw-bold">$899.99</span>
-                            <a href="#" class="btn btn-sm btn-outline-primary">Añadir al carrito</a>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
+        <div class="row g-4"> 
             
             {% include 'catalog/catalog_template.html' with products=bestsellers %}
             
         </div>
+    </section>
+
+    <!-- Tarjetas de ofertas -->
+    <section class="featured-offers mb-5">
+        <!--         <h2 class="text-center mb-4">Ofertas Destacadas</h2> -->
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card offer-card h-100 overflow-hidden">
+                            <img src="{{offer1.image.url}}" 
+                                 class="card-img-top" alt="Oferta 1" style="height: 250px; object-fit: cover;">
+                            <div class="card-body">
+                                <h3 class="card-title text-danger">{{offer1.title}}</h3>
+                                <p class="card-text">{{offer1.mainText}}.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        {% if offer1.newPrice %}
+                                        <span class="text-danger fw-bold fs-4">{{offer1.newPrice}}</span>
+                                        <span class="text-muted text-decoration-line-through ms-2">{{offer1.oldPrice}}</span>
+                                        {% endif %}
+                                    </div>
+                                    <a href="{{offer1.butonLink}}" class="btn btn-outline-primary">{{offer1.button}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card offer-card h-100 overflow-hidden">
+                            <img src="{{offer2.image.url}}" 
+                                 class="card-img-top" alt="Oferta 2" style="height: 250px; object-fit: cover;">
+                            <div class="card-body">
+                                <h3 class="card-title text-danger">{{offer2.title}}</h3>
+                                <p class="card-text">{{offer2.mainText}}.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        {% if offer2.newPrice %}
+                                        <span class="text-danger fw-bold fs-4">${{offer2.newPrice}}</span>
+                                        <span class="text-muted text-decoration-line-through ms-2">${{offer2.oldPrice}}</span>
+                                        {% endif %}
+                                    </div>
+                                    <a href="{{offer2.butonLink}}" class="btn btn-outline-primary">{{offer2.button}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </section>
 
     <!-- Sección de newsletter -->

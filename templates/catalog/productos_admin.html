@@ -62,7 +62,7 @@
               <th width="25%">Nombre</th>
               <th>Activo</th>
               <th width="10%">Precio USD</th>
-              <th width="10%">Precio MLC</th>
+              <!-- <th width="10%">Precio MLC</th> -->
               <th width="10%">Precio CUP</th>
               <th>Cantidad</th>
               <th>Acciones</th>
@@ -82,13 +82,13 @@
                   No definido
                 {% endif %}
               </td>
-              <td>
+<!--               <td>
                 {%if elem.price %}
                   {{ elem.price_mlc|currency }}
                 {% else %}
                   No definido
                 {% endif %}
-              </td>
+              </td> -->
               <td>
                 {%if elem.price %}
                   {{ elem.price_cup|currency }}

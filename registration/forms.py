@@ -134,8 +134,11 @@ class UpdateProfileAdminForm(forms.ModelForm):
         model = Profile
         fields = ['money_type', 'prefered_store']
 
-from utils.context_processors import MONEY_TYPE
+from utils.context_processors import MONEY_TYPE, COMERCIAL_ROLL
 
 class MNDForm(forms.Form):
     mnd = forms.ChoiceField(choices=MONEY_TYPE)
+
+class CRollForm(forms.Form):
+    c_roll = forms.ChoiceField(choices=COMERCIAL_ROLL)
     

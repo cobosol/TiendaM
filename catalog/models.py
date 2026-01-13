@@ -155,11 +155,40 @@ class Product(models.Model):
         price_actual = Price.objects.filter(is_active=True)[0]
         p = self.price_base * price_actual.change_usd_cup
         return (p) + 10 - (p % 10) if (p % 10) > 0 else p
+
+    @property        
+    def old_price_cup(self):
+        price = Price.objects.filter(is_active=True)[0]
+        p = self.old_price * price.change_usd_cup
+        return (p) + 10 - (p % 10) if (p % 10) > 0 else p
+    
+    @property        
+    def on_sale(self):
+        if self.old_price != 0 and self.old_price > self.price_base:
+            return True
+        return False
         
     @property
     def price_mlc(self):
         price_actual = Price.objects.filter(is_active=True)[0]
         return self.price_base * price_actual.change_usd_mlc
+    
+    @property
+    def litres_units(self):
+        cap = ''
+        if 'granel' in self.presentation.lower():
+            return 1
+        for i in self.presentation:
+            try:
+                if int(i) or i == '0':
+                    cap += i
+            except:
+                break
+        print(f'capacidad: {cap}')
+        if cap.__len__() <= 2:
+            return int(cap)
+        else:
+            return int(cap)/1000
     
     @property
     def get_file_url(self):

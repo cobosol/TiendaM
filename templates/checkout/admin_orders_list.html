@@ -44,7 +44,7 @@
             <table class="table table-bordered text-center mb-0">
                 <thead class="bg-primary text-light">
                     <tr>
-                        <th>Id</th>
+                        <th>No.</th>
                         <th>Usuario</th>
                         <th>Estado</th>
                         <th>Importe</th>
@@ -58,7 +58,7 @@
                     {% for order in orders %}
                     <tr>
                         <td class="align-middle">
-                                {{ order.id }}
+                                {{ order.consecutivo }}
                         </td>
                         <td class="align-middle">
                             {{ order.user.username }}
