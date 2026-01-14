@@ -46,3 +46,4 @@ tienda/wsgi.py/*
 payments/migrations/*
 payments/__pycache__/*
 
+*.pyc
