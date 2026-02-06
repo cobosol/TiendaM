@@ -424,10 +424,8 @@ def export_pdf(request, id_orden):
     #if profile.client_type == profile.COMPRADOR:
     #Generando reporte PDF
     if order.is_daily_summary:
-        print("Es summary")
         check = checkOrderSummary(id_order=id_orden)
         # Procesar métodos de pago con detalles
-        print(check)
         payment_methods = []
         transfer_sum = 0
         for payment in order.payment_methods.all():

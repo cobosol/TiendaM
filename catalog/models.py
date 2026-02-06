@@ -184,7 +184,7 @@ class Product(models.Model):
                     cap += i
             except:
                 break
-        print(f'capacidad: {cap}')
+        
         if cap.__len__() <= 2:
             return int(cap)
         else:

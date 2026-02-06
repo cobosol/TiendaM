@@ -14,9 +14,12 @@ class ProductsGipproSerializer(serializers.ModelSerializer):
 
 class ProductsCoboChatSerializer(serializers.ModelSerializer):
     categories = CategoryModelSerializer(many=True)
+    price_cup = serializers.ReadOnlyField()
+
     class Meta:
         model = Product
-        fields = ['gname', 'name', 'presentation', 'is_feedstock', 'categories', 'price_base', 'count']
+        fields = ['gname', 'name', 'presentation', 'is_feedstock', 'categories', 'price_base', 
+                  'count', 'price_cup']
 
 class ProductAgrupedSerializer(serializers.ModelSerializer):
     class Meta:
