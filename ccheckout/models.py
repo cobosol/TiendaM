@@ -432,8 +432,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.SET_NULL, verbose_name = "Producto")
     quantity = models.DecimalField(max_digits=9, decimal_places=2,default=1.00, verbose_name = "Cantidad")
-    price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name = "Precio")
-    
+    price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name = "Precio")    
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items', verbose_name = "Orden")
     is_summary_item = models.BooleanField(default=False, verbose_name="Elemento especial de resumen diario ")  # Identificar items especiales
     store_name = models.CharField(max_length=250, default="Envío Habana", verbose_name = "Forma de entrega")

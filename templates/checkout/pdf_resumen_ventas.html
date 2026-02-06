@@ -158,7 +158,7 @@
                     <td>#{{ order.id }}</td>
                     <td>{{ order.user.first_name }} {{ order.user.last_name }}</td>
                     <td>{{ order.date|date:"d/m/Y" }}</td>
-                    <td>${{ order.cup_oficial|floatformat:2 }}</td>
+                    <td>${{ order.total_reported|floatformat:2 }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
