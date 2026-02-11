@@ -1128,15 +1128,16 @@ def sales_client(request):
     end = datetime.strptime(end_date, '%Y-%m-%d')
     
     # Filtrar órdenes en el rango
-    orders = Order.objects.filter(date__range=[start, end], currency='USD')
+    orders = Order.objects.filter(date__range=[start, end])
 
     users = User.objects.all().order_by('last_name')
     
     # 4. Compras por usuario (top 10)
     top_customers = list(
-        orders.values('user__username')
+        orders.filter(Q(user__groups__isnull=True))
+        .values('user__username')
         .annotate(
-            total_spent=Sum('end_total'),
+            total_spent=Sum('cup_oficial'),
             order_count=Count('id')
         )
         .order_by('-total_spent')
