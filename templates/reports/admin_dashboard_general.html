@@ -1,0 +1,307 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h1 class="mb-4">📊 Dashboard de Gestión</h1>
+    
+    <!-- Tarjetas de resumen -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Órdenes Totales</h5>
+                    <h2 class="text-white">{{ total_orders }}</h2>
+                    <p class="card-text"> 
+                        Histórico completo
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Pendientes</h5>
+                    <h2>{{ pending_orders }}</h2>
+                    <p class="card-text">Por procesar</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Este mes</h5>
+                    <h2>{{ today_orders }}</h2>
+                    <p class="card-text">Órdenes este mes</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Ventas del mes</h5>
+                    <h2>${{ today_sales_cup|floatformat:2 }} CUP</h2>
+                    <p>${{ today_sales_usd|floatformat:2 }} USD</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dos columnas principales -->
+    <div class="row">
+        <!-- Columna izquierda: Productos y Clientes -->
+        <div class="col-md-6">
+            <!-- Productos más vendidos -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>🏆 Productos Más Vendidos (30 días)</h5>
+                    <a href="{% url 'sales_products' %}" class="btn btn-sm btn-outline-primary">
+                        Ver Detalles
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Código</th>
+                                    <th>Cantidad</th>
+                                    <th>Ingresos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in top_products %}
+                                <tr>
+                                    <td>{{ product.product__name|truncatechars:30 }}</td>
+                                    <td><code>{{ product.product__code }}</code></td>
+                                    <td><span class="badge bg-primary">{{ product.total_sold }}</span></td>
+                                    <td>${{ product.total_revenue|floatformat:2 }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" class="text-center">No hay datos</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Clientes principales -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>👥 Clientes Más Activos (30 días)</h5>
+                    <a href="{% url 'venta_clientes' %}" class="btn btn-sm btn-outline-primary">
+                        Ver Detalles
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Órdenes</th>
+                                    <th>Total Gastado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for client in top_clients %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ client.user__first_name }} {{ client.user__last_name }}</strong><br>
+                                        <small class="text-muted">{{ client.user__email }}</small>
+                                    </td>
+                                    <td><span class="badge bg-info">{{ client.order_count }}</span></td>
+                                    <td>${{ client.total_spent|floatformat:2 }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="3" class="text-center">No hay datos</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Columna derecha: Órdenes y Resumen -->
+        <div class="col-md-6">
+            <!-- Órdenes recientes -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>🔄 Órdenes Recientes</h5>
+                    <a href="{% url 'admin_orders_list' %}" class="btn btn-sm btn-outline-primary">
+                        Ver Todas
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th># Orden</th>
+                                    <th>Cliente</th>
+                                    <th>Fecha</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in recent_orders %}
+                                <tr>
+                                    <td><a href="{% url 'details' order.id %}">#{{ order.id }}</a></td>
+                                    <td>{{ order.user.username }}</td>
+                                    <td>{{ order.date|date:"d/m/Y" }}</td>
+                                    <td>${{ order.end_total|floatformat:2 }} {{ order.currency }}</td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if order.status == 1 or order.status == 2 %}bg-warning
+                                            {% elif order.status == order.DELIVERED %}bg-success
+                                            {% elif order.status == order.PAIDED %}bg-info
+                                            {% else %}bg-secondary{% endif %}">
+                                            {{ order.get_status_display }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center">No hay órdenes recientes</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Resumen por moneda -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>💰 Resumen por Moneda (30 días)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for summary in currency_summary %}
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 border rounded">
+                                <h6>{{ summary.currency }}</h6>
+                                <p class="mb-1">Órdenes: <strong>{{ summary.count }}</strong></p>
+                                <p class="mb-1">Total USD: <strong>${{ summary.total_amount|floatformat:2 }}</strong></p>
+                                {% if summary.currency == 'CUP' %}
+                                <p class="mb-0">Total CUP: <strong>{{ summary.cup_total|floatformat:2 }}</strong></p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Inventario crítico -->
+            {% if low_stock_products %}
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5>⚠️ Inventario Crítico</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Stock Actual</th>
+                                    <th>Mínimo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in low_stock_products %}
+                                <tr>
+                                    <td>{{ product.name }}</td>
+                                    <td><span class="badge bg-danger">{{ product.stock }}</span></td>
+                                    <td>{{ product.min_stock }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Accesos rápidos -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>🚀 Acceso Rápido a Reportes</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-2 mb-3">
+                            <a href="{% url 'admin_orders_list' %}" class="btn btn-outline-primary btn-lg w-100">
+                                <i class="fas fa-list"></i><br>
+                                Órdenes
+                            </a>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <a href="{% url 'venta_resumen' %}" class="btn btn-outline-success btn-lg w-100">
+                                <i class="fas fa-chart-line"></i><br>
+                                Ventas
+                            </a>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <a href="{% url 'sales_products' %}" class="btn btn-outline-info btn-lg w-100">
+                                <i class="fas fa-box"></i><br>
+                                Productos
+                            </a>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <a href="{% url 'venta_clientes' %}" class="btn btn-outline-warning btn-lg w-100">
+                                <i class="fas fa-users"></i><br>
+                                Clientes
+                            </a>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <a href="{% url 'clients_orders_list' %}" class="btn btn-outline-secondary btn-lg w-100">
+                                <i class="fas fa-file-invoice-dollar"></i><br>
+                                Resumen
+                            </a>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <a href="{% url 'ventas_totales_resumen' %}" class="btn btn-outline-dark btn-lg w-100">
+                                <i class="fas fa-file-pdf"></i><br>
+                                Reporte PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.dashboard-container {
+    padding: 20px;
+}
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.card-header {
+    border-radius: 10px 10px 0 0 !important;
+}
+.badge {
+    font-size: 0.8em;
+    padding: 4px 8px;
+}
+</style>
+{% endblock %}

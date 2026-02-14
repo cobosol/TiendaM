@@ -1,0 +1,550 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h1 class="mb-4">📊 Reportes </h1>
+    
+    <!-- Indicador de progreso del mes -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h5>Progreso del Mes</h5>
+                    <p class="mb-0">Día {{ today.day }} de {{ today|date:"F" }}</p>
+                </div>
+                <div class="w-50">
+                    <div class="progress" style="height: 20px;">
+                        <div class="progress-bar bg-primary" role="progressbar" 
+                             style="width: {{ month_progress }}%;" 
+                             aria-valuenow="{{ month_progress }}" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100">
+                            {{ month_progress|floatformat:0 }}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tarjetas de resumen DEL MES -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Órdenes del Mes</h5>
+                    <h2 class="text-white">{{ month_orders }}</h2>
+                    <p class="card-text">{{ first_day_of_month|date:"d/m" }} - {{ today|date:"d/m" }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Ventas USD</h5>
+                    <h2>${{ month_sales_usd|floatformat:2 }}</h2>
+                    <p class="card-text text-dark">
+                        {% if usd_growth >= 0 %}
+                            <span class="badge bg-light text-success">▲ {{ usd_growth|floatformat:1 }}%</span>
+                        {% else %}
+                            <span class="badge bg-light text-danger">▼ {{ usd_growth|floatformat:1 }}%</span>
+                        {% endif %}
+                        vs mes anterior
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Ventas CUP</h5>  
+                    <h2>${{ month_sales_cup|floatformat:2 }}</h2>
+                    <p class="card-text">
+                        {% if cup_growth >= 0 %}
+                            <span class="badge bg-light text-success">▲ {{ cup_growth|floatformat:1 }}%</span>
+                        {% else %}
+                            <span class="badge bg-light text-danger">▼ {{ cup_growth|floatformat:1 }}%</span>
+                        {% endif %}
+                        vs mes anterior
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Ventas Totales</h5>
+                    <h2>${{ month_sales_mlc|floatformat:2 }}</h2>
+                    <p class="card-text">Expresado en CUP</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Gráfico de ventas diarias -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>📈 Ventas Diarias del Mes</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="dailySalesChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>📋 Estado de Órdenes del Mes</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Estado</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for status in month_status_summary %}
+                            <tr>
+                                <td>
+                                    <span class="badge 
+                                        {% if status.status == 0 or status.status == 1 %}bg-warning
+                                        {% elif status.status == 5 %}bg-success
+                                        {% elif status.status == 2 %}bg-info
+                                        {% else %}bg-primary{% endif %}">
+                                        {{ status.status_name }}
+                                    </span>
+                                </td>
+                                <td>{{ status.count }}</td>
+                                <td>${{ status.total_amount|floatformat:2 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Dos columnas principales -->
+    <div class="row">
+        <!-- Columna izquierda: Productos y Clientes -->
+        <div class="col-md-6">
+            <!-- Productos más vendidos DEL MES -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>🏆 Productos Más Vendidos ({{ current_month }})</h5>
+                    <a href="{% url 'sales_products' %}?start_date={{ first_day_of_month|date:'Y-m-d' }}&end_date={{ today|date:'Y-m-d' }}" 
+                       class="btn btn-sm btn-outline-primary">
+                        Ver Detalles
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Ingresos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in top_products %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>
+                                        <strong>{{ product.product__name|truncatechars:25 }}</strong>
+                                        {% if product.product__sku %}
+                                        <br><small class="text-muted">Código: {{ product.product__sku }}</small>
+                                        {% endif %}
+                                    </td>
+                                    <td><span class="badge bg-primary">{{ product.total_sold|floatformat:2 }}</span></td>
+                                    <td>${{ product.total_revenue|floatformat:2 }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center">No hay ventas este mes</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Clientes principales DEL MES -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>👥 Clientes Más Activos ({{ current_month }})</h5>
+                    <a href="{% url 'venta_clientes' %}?start_date={{ first_day_of_month|date:'Y-m-d' }}&end_date={{ today|date:'Y-m-d' }}" 
+                       class="btn btn-sm btn-outline-primary">
+                        Ver Detalles
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Cliente</th>
+                                    <th>Órdenes</th>
+                                    <th>Total Gastado</th>
+                                    <th>Última Compra</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for client in top_clients %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>
+                                        <strong>{{ client.user__first_name }} {{ client.user__last_name }}</strong><br>
+                                        <small class="text-muted">{{ client.user__email|truncatechars:20 }}</small>
+                                    </td>
+                                    <td><span class="badge bg-info">{{ client.order_count }}</span></td>
+                                    <td>${{ client.total_spent|floatformat:2 }}</td>
+                                    <td>{{ client.last_order|date:"d/m" }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center">No hay clientes este mes</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Columna derecha: Órdenes y Resumen -->
+        <div class="col-md-6">
+            <!-- Órdenes recientes DEL MES -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5>🔄 Órdenes Recientes del Mes</h5>
+                    <a href="{% url 'admin_orders_list' %}?start_date={{ first_day_of_month|date:'Y-m-d' }}&end_date={{ today|date:'Y-m-d' }}" 
+                       class="btn btn-sm btn-outline-primary">
+                        Ver Todas
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th># Orden</th>
+                                    <th>Cliente</th>
+                                    <th>Fecha</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in recent_orders %}
+                                <tr>
+                                    <td><a href="#" onclick="showOrderDetails({{ order.id }})">#{{ order.id }}</a></td>
+                                    <td>{{ order.user.username|truncatechars:12 }}</td>
+                                    <td>{{ order.date|date:"d/m H:i" }}</td>
+                                    <td>${{ order.end_total|floatformat:2 }} {{ order.currency }}</td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if order.status == 1 or order.status == 2 %}bg-warning
+                                            {% elif order.status == order.DELIVERED %}bg-success
+                                            {% elif order.status == order.PAIDED %}bg-info
+                                            {% else %}bg-secondary{% endif %}">
+                                            {{ order.get_status_display }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center">No hay órdenes este mes</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Resumen por moneda DEL MES -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>💰 Resumen por Moneda ({{ current_month }})</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for summary in currency_summary %}
+                        <div class="col-md-{% if currency_summary|length == 1 %}12{% elif currency_summary|length == 2 %}6{% else %}4{% endif %} mb-3">
+                            <div class="p-3 border rounded text-center">
+                                <h6>{{ summary.currency }}</h6>
+                                <p class="mb-1">Órdenes: <strong>{{ summary.count }}</strong></p>
+                                <p class="mb-1">Total: <strong>${{ summary.total_amount|floatformat:2 }}</strong></p>
+                                {% if summary.currency == 'USD' %}
+                                <p class="mb-0">Total CUP: <strong>${{ summary.cup_total|floatformat:2 }}</strong></p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="col-12">
+                            <p class="text-center text-muted">No hay transacciones este mes</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Inventario crítico -->
+            {% if low_stock_products %}
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+                    <h5>⚠️ Inventario Crítico</h5>
+                    <span class="badge bg-light text-danger">{{ low_stock_products|length }}</span>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Stock Actual</th>
+                                    <th>Mínimo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in low_stock_products %}
+                                <tr>
+                                    <td>{{ product.name|truncatechars:30 }}</td>
+                                    <td><span class="{% if product.min_stock > product.count %} badge bg-danger {% else %} badge bg-warning {% endif %}">{{ product.count }} </span></td>
+                                    <td>{{ product.min_stock }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Accesos rápidos -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>🚀 Acceso Rápido a Reportes</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'admin_orders_list' %}?start_date={{ first_day_of_month|date:'Y-m-d' }}&end_date={{ today|date:'Y-m-d' }}" 
+                               class="btn btn-outline-primary btn-lg w-100">
+                                <i class="fas fa-list"></i><br>
+                                Listado de compras
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'venta_resumen' %}?start_date={{ first_day_of_month|date:'Y-m-d' }}&end_date={{ today|date:'Y-m-d' }}" 
+                               class="btn btn-outline-success btn-lg w-100">
+                                <i class="fas fa-chart-line"></i><br>
+                                Resumen de ventas
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'sales_products' %}?start_date={{ first_day_of_month|date:'Y-m-d' }}&end_date={{ today|date:'Y-m-d' }}" 
+                               class="btn btn-outline-info btn-lg w-100">
+                                <i class="fas fa-box"></i><br>
+                                Resumen productos
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'venta_clientes' %}?start_date={{ first_day_of_month|date:'Y-m-d' }}&end_date={{ today|date:'Y-m-d' }}" 
+                               class="btn btn-outline-warning btn-lg w-100">
+                                <i class="fas fa-users"></i><br>
+                                Clientes destacados
+                            </a>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para detalles de orden -->
+<div class="modal fade" id="orderDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalles de Orden #<span id="modalOrderId"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="orderDetailsContent">
+                <!-- Los detalles se cargarán aquí via AJAX -->
+                <div class="text-center">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Gráfico de ventas diarias
+const dailySalesCtx = document.getElementById('dailySalesChart').getContext('2d');
+const daysList = JSON.parse('{{ days_list|safe }}');
+const salesList = JSON.parse('{{ sales_list|safe }}');
+const ordersList = JSON.parse('{{ orders_list|safe }}');
+
+new Chart(dailySalesCtx, {
+    type: 'bar',
+    data: {
+        labels: daysList,
+        datasets: [
+            {
+                label: 'Ventas (CUP)',
+                data: salesList,
+                backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                yAxisID: 'y'
+            },
+            {
+                label: 'Órdenes',
+                data: ordersList,
+                type: 'line',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                borderWidth: 2,
+                yAxisID: 'y1'
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        interaction: {
+            mode: 'index',
+            intersect: false,
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                type: 'linear',
+                display: true,
+                position: 'left',
+                title: {
+                    display: true,
+                    text: 'Ventas (CUP)'
+                },
+                ticks: {
+                    callback: function(value) {
+                        return '$' + value.toFixed(2);
+                    }
+                }
+            },
+            y1: {
+                type: 'linear',
+                display: true,
+                position: 'right',
+                title: {
+                    display: true,
+                    text: 'Cantidad de Órdenes'
+                },
+                grid: {
+                    drawOnChartArea: false,
+                },
+                min: 0
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        if (context.datasetIndex === 0) {
+                            return `Ventas: $${context.parsed.y.toFixed(2)}`;
+                        } else {
+                            return `Órdenes: ${context.parsed.y}`;
+                        }
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Función para mostrar detalles de orden
+function showOrderDetails(orderId) {
+    $('#modalOrderId').text(orderId);
+    $('#orderDetailsModal').modal('show');
+    
+    // Aquí puedes cargar los detalles via AJAX
+    // fetch(`/api/orders/${orderId}/details/`)
+    //   .then(response => response.text())
+    //   .then(html => {
+    //       $('#orderDetailsContent').html(html);
+    //   });
+}
+
+// Actualizar automáticamente cada 5 minutos (opcional)
+setTimeout(function() {
+    location.reload();
+}, 300000); // 5 minutos
+
+// Resaltar el día actual en el gráfico
+const todayIndex = daysList.indexOf('{{ today|date:"d/m" }}');
+if (todayIndex !== -1) {
+    // Puedes personalizar cómo resaltar el día actual
+    console.log('Hoy es el día', daysList[todayIndex]);
+}
+</script>
+
+<style>
+.dashboard-container {
+    padding: 20px;
+}
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+}
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+.card-header {
+    border-radius: 10px 10px 0 0 !important;
+    padding: 15px 20px;
+}
+.badge {
+    font-size: 0.8em;
+    padding: 4px 8px;
+}
+.progress {
+    border-radius: 10px;
+}
+.progress-bar {
+    border-radius: 10px;
+}
+.table th {
+    border-top: none;
+    font-weight: 600;
+}
+</style>
+{% endblock %}

@@ -94,18 +94,7 @@ def adicionar_consecutivo(sender, instance, **kwargs):
                 instance.change_usd_cup = instance.price.change_usd_cup
             else:
                 instance.change_usd_cup = 120
-        """ if instance.currency == 'USD':
-            ultimoUSD = Order.objects.filter(is_cons_usd = True).order_by('-pk').first()
-            if not ultimoUSD:
-                instance.consecutivo = 1
-            else:
-                instance.consecutivo = ultimoUSD.consecutivo + 1
-        else:
-            ultimoCUP = Order.objects.filter(is_cons_usd = False).order_by('-pk').first()
-            if ultimoCUP.consecutivo == 0:
-                instance.consecutivo = ultimoCUP.id + 1
-            else:
-                instance.consecutivo = ultimoCUP.consecutivo + 1 """ 
+
 
 """ @receiver(post_save, sender=Order)
 def notify_stars(sender, instance, created, **kwargs):

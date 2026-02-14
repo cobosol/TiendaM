@@ -251,6 +251,10 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
                     request.session.delete_test_cookie()
                 url = reverse('catalogo_productos')
                 return HttpResponseRedirect(url)
+            elif postdata['submit'] == 'Buscar':
+                productSearch = postdata['producto']
+                url = '/catalogo/productos/' + productSearch + '/'
+                return HttpResponseRedirect(url)
         else:
             object_list = Product.objects.filter(is_active=True)
     except:

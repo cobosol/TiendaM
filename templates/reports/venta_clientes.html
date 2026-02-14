@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load static %}
+{% load checkout_tags %}
+{% load catalog_filters %}
+{% block content %}
+
+<head>
+    <title>Resumen de Ventas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0"></script>
+</head>
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-2">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
+            <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Resumen de ventas por clientes ({{ start_date }} al {{ end_date }})</h4>
+        </div>
+    </div>
+    <!-- Page Header End -->
+    
+    <form method="get">
+        <label>Desde: <input type="date" name="start_date" value="{{ start_date }}"></label>
+        <label>Hasta: <input type="date" name="end_date" value="{{ end_date }}"></label>
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </form>
+
+    <br>
+    <br>
+
+    <!-- Gráfica: Top Clientes -->
+    <div style="width: 800px;">
+        <h6 class="font-weight-bold" style="font-family: sans-serif;">Ventas por clientes </h6>
+        <canvas id="customersChart"></canvas>
+    </div>
+
+
+<!-- <div class="row px-xl-6">
+    <div class="col-lg-12 table-responsive mb-5">
+        <table class="table table-bordered text-center mb-0">
+            <thead class="bg-primary text-light">
+                <tr>
+                    <th>Usuario</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Alta</th>
+                    <th>Último acceso</th>
+                </tr>
+            </thead>
+            <tbody class="align-middle text-primary">
+                {% if orders %}
+                {% for order in orders %}
+                <tr>
+                    <td class="align-middle">
+                            {{ order.consecutivo }}
+                    </td>
+                    {% if not user_name %}
+                    <td class="align-middle">
+                        {{ order.user.first_name }}
+                    </td>
+                    {% endif%}
+                    <td class="align-middle">
+                        {{ order.statusS }}
+                    </td>
+                    <td class="align-middle">
+                        {% for prod in order.products_list%}  
+                        {{ prod }} <br>
+                        {% endfor %}
+                    </td>
+                    <td class="align-middle">
+                        {{ order.total|currency }} {{ order.currency }}      
+                    </td>
+                    <td class="align-middle">
+                        {{ order.date|date:"d/m/y" }}
+                    </td>
+                    <td class="align-middle">
+                        {% if order.statusS == "Pagada" or order.statusS == "Entregada" %}
+                        <form action="." method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="order_id" value="{{ order.id }}" /> 
+                            <input type="submit" name="submit" class="btn btn-block btn-primary my-2 py-2" value="Factura" />
+                        </form>
+                        {% elif order.statusS == "Procesada" %}
+                        <a class="" id="url" href="{{ order.pay_url }}" target="_blank" style="width: 100%;"> {{order.pay_url}} </a>
+                        {% endif %}
+                    </td>
+                    {% if not user_name %}
+                    <td>
+                        <form action="." method="post">
+                            {% csrf_token %}
+                            <a href="{{ order.get_absolute_url }}" class="cart">Detalles</a>
+                        </form>
+                    </td>
+                    {% endif%}
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="6" style="height:30px;">
+                        No tiene productos comprados.
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div> -->
+
+    <script>
+        // Configuración común para gráficas
+        const chartOptions = {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                tooltip: { mode: 'index', intersect: false }
+            },
+            scales: { y: { beginAtZero: true } }
+        };
+
+
+        // Gráfica 3: Top Clientes
+        const customersData = JSON.parse('{{ top_customers|escapejs }}');
+        new Chart(document.getElementById('customersChart'), {
+            type: 'radar',
+            data: {
+                labels: customersData.map(item => item.user__username),
+                datasets: [{
+                    label: 'Gasto Total ($)',
+                    data: customersData.map(item => item.total_spent),
+                    fill: true,
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)'
+                }]
+            },
+            options: chartOptions
+        });
+    </script>
+
+{% endblock %}

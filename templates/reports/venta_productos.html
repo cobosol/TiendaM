@@ -1,0 +1,489 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="mb-4">📈 Análisis de Ventas por Producto</h1>
+    
+    <!-- Filtros -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Fecha Inicio</label>
+                    <input type="date" name="start_date" value="{{ start_date }}" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Fecha Fin</label>
+                    <input type="date" name="end_date" value="{{ end_date }}" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Cantidad de Productos</label>
+                    <select name="cant_prod" class="form-select">
+                        <option value="10" {% if cant_prod == 10 %}selected{% endif %}>Top 10</option>
+                        <option value="20" {% if cant_prod == 20 %}selected{% endif %}>Top 20</option>
+                        <option value="50" {% if cant_prod == 50 %}selected{% endif %}>Top 50</option>
+                        <option value="100" {% if cant_prod == 100 %}selected{% endif %}>Top 100</option>
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-filter"></i> Filtrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Gráficos -->
+    <div class="row mb-4">
+        <!-- Gráfico de Cantidad Vendida vs Stock -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>📊 Cantidad Vendida vs Stock Disponible (Top {{ cant_prod }})</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="quantityStockChart" height="300"></canvas>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle"></i> El gráfico muestra cuánto se vendió vs cuánto queda en almacén
+                    </small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gráfico de Ingresos -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>💰 Ingresos por Producto (Top {{ cant_prod }})</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="revenueChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tabla detallada con stock -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5>📋 Detalle de Ventas por Producto</h5>
+            <div>
+                <button class="btn btn-sm btn-outline-warning" onclick="toggleStockAlert()">
+                    <i class="fas fa-exclamation-triangle"></i> Alertas de Stock
+                </button>
+                <button class="btn btn-sm btn-outline-success" onclick="exportToExcel()">
+                    <i class="fas fa-file-excel"></i> Exportar Excel
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" id="productsTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Producto</th>
+                            <th>Cantidad Vendida</th>
+                            <th>Stock Disponible</th>
+                            <th>Ratio Venta/Stock</th>
+                            <th>Estado Stock</th>
+                            <th>Ingresos Totales (USD)</th>
+                            <th>Precio Promedio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Los datos se llenarán con JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para detalles de stock -->
+<div class="modal fade" id="stockModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">📦 Detalles de Stock</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="stockModalBody">
+                <!-- Los detalles se cargarán aquí -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script>
+// Procesar datos JSON
+const productsData = {{ products|safe }};
+const revenueData = {{ revenue_data|safe }};
+
+// Gráfico de cantidad vendida vs stock
+const quantityStockCtx = document.getElementById('quantityStockChart').getContext('2d');
+const productNames = productsData.map(p => p.product__name);
+const quantitiesSold = productsData.map(p => p.total_quantity);
+const stockQuantities = productsData.map(p => p.product__count);
+
+// Colores según el ratio venta/stock
+function getBarColor(ratio) {
+    if (ratio > 70) return 'rgba(220, 53, 69, 0.7)'; // Rojo: alto riesgo
+    if (ratio > 30) return 'rgba(255, 193, 7, 0.7)'; // Amarillo: atención
+    return 'rgba(75, 192, 192, 0.7)'; // Verde: normal
+}
+
+const barColors = productsData.map(p => getBarColor(p.sold_stock_ratio || 0));
+
+new Chart(quantityStockCtx, {
+    type: 'bar',
+    data: {
+        labels: productNames,
+        datasets: [
+            {
+                label: 'Cantidad Vendida',
+                data: quantitiesSold,
+                backgroundColor: barColors,
+                borderColor: barColors.map(c => c.replace('0.7', '1')),
+                borderWidth: 1,
+                yAxisID: 'y',
+            },
+            {
+                label: 'Stock Disponible',
+                data: stockQuantities,
+                type: 'line',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                pointRadius: 4,
+                yAxisID: 'y',
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let label = context.dataset.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        if (context.datasetIndex === 0) {
+                            // Para barras (ventas)
+                            const productIndex = context.dataIndex;
+                            const product = productsData[productIndex];
+                            const ratio = product.sold_stock_ratio || 0;
+                            label += `${context.parsed.y} unidades`;
+                            label += ` (${ratio.toFixed(1)}% del stock)`;
+                        } else {
+                            // Para línea (stock)
+                            label += `${context.parsed.y} unidades disponibles`;
+                        }
+                        return label;
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false
+                },
+                ticks: {
+                    maxRotation: 45,
+                    minRotation: 0
+                }
+            },
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Unidades'
+                }
+            }
+        }
+    }
+});
+
+// Gráfico de ingresos
+const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+const revenueLabels = revenueData.map(r => r.product__name);
+const revenueValues = revenueData.map(r => r.total_revenue_cup);
+
+new Chart(revenueCtx, {
+    type: 'bar',
+    data: {
+        labels: revenueLabels,
+        datasets: [{
+            label: 'Ingresos (CUP)',
+            data: revenueValues,
+            backgroundColor: 'rgba(153, 102, 255, 0.7)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return '$' + value.toFixed(2);
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Llenar tabla con datos
+function populateTable() {
+    const tableBody = document.querySelector('#tableBody');
+    tableBody.innerHTML = '';
+    
+    productsData.forEach((product, index) => {
+        const revenue = revenueData.find(r => r.product__name === product.product__name);
+        const avgPrice = revenue ? revenue.total_revenue_cup / product.total_quantity : 0;
+        const ratio = product.sold_stock_ratio || 0;
+        
+        // Determinar estado del stock
+        let stockStatus = '';
+        let stockClass = '';
+        let stockIcon = '';
+        
+        if (product.product__count <= 0) {
+            stockStatus = 'Agotado';
+            stockClass = 'danger';
+            stockIcon = 'fas fa-times-circle';
+        } else if (ratio > 70) {
+            stockStatus = 'Alto Riesgo';
+            stockClass = 'warning';
+            stockIcon = 'fas fa-exclamation-triangle';
+        } else if (ratio > 30) {
+            stockStatus = 'Atención';
+            stockClass = 'info';
+            stockIcon = 'fas fa-exclamation-circle';
+        } else {
+            stockStatus = 'Normal';
+            stockClass = 'success';
+            stockIcon = 'fas fa-check-circle';
+        }
+        
+        const row = `
+            <tr id="productRow${index}" class="${ratio > 70 ? 'table-warning' : ''} ${product.product__count <= 0 ? 'table-danger' : ''}">
+                <td>${index + 1}</td>
+                <td><strong>${product.product__name}</strong></td>
+                <td>
+                    <span class="badge bg-primary">${product.total_quantity}</span>
+                </td>
+                <td>
+                    <span class="badge ${product.product__count <= 10 ? 'bg-danger' : 'bg-primary'}">
+                        ${product.product__count}
+                    </span>
+                </td>
+                <td>
+                    <div class="progress" style="height: 20px;">
+                        <div class="progress-bar ${ratio > 70 ? 'bg-danger' : ratio > 30 ? 'bg-warning' : 'bg-success'}" 
+                             role="progressbar" 
+                             style="width: ${Math.min(ratio, 100)}%;" 
+                             aria-valuenow="${ratio}" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100">
+                            ${ratio.toFixed(1)}%
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <span class="badge bg-${stockClass}">
+                        <i class="${stockIcon}"></i> ${stockStatus}
+                    </span>
+                </td>
+                <td>$${revenue ? revenue.total_revenue_cup.toFixed(2) : '0.00'}</td>
+                <td>$${avgPrice.toFixed(2)}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-info" onclick="showStockDetails(${index})">
+                        <i class="fas fa-box"></i> Stock
+                    </button>
+                </td>
+            </tr>
+        `;
+        tableBody.innerHTML += row;
+    });
+}
+
+// Mostrar detalles de stock
+function showStockDetails(index) {
+    const product = productsData[index];
+    const revenue = revenueData.find(r => r.product__name === product.product__name);
+    const ratio = product.sold_stock_ratio || 0;
+    
+    const modalContent = `
+        <div class="stock-details">
+            <h5>${product.product__name}</h5>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body text-center">
+                            <h6 class="card-title">Vendido en el período</h6>
+                            <h2 class="text-primary">${product.total_quantity}</h2>
+                            <p class="text-muted">unidades</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body text-center">
+                            <h6 class="card-title">Stock Disponible</h6>
+                            <h2 class="${product.product__count <= 10 ? 'text-danger' : 'text-success'}">${product.product__count}</h2>
+                            <p class="text-muted">unidades</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6>Ratio Venta/Stock</h6>
+                            <div class="progress mb-2" style="height: 25px;">
+                                <div class="progress-bar ${ratio > 70 ? 'bg-danger' : ratio > 30 ? 'bg-warning' : 'bg-success'}" 
+                                     role="progressbar" 
+                                     style="width: ${Math.min(ratio, 100)}%;">
+                                    ${ratio.toFixed(1)}%
+                                </div>
+                            </div>
+                            <small class="text-muted">
+                                ${ratio > 70 ? 
+                                    '⚠️ Alto consumo: Considerar reabastecimiento urgente' :
+                                  ratio > 30 ?
+                                    '📈 Consumo moderado: Monitorear stock regularmente' :
+                                    '✅ Consumo normal: Stock adecuado'}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ${revenue ? `
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6>Información Financiera</h6>
+                            <p><strong>Ingresos Totales:</strong> $${revenue.total_revenue_cup.toFixed(2)} USD</p>
+                            <p><strong>Precio Promedio:</strong> $${(revenue.total_revenue_cup / product.total_quantity).toFixed(2)} USD por unidad</p>
+                            <p><strong>Valor del Stock Actual:</strong> $${(product.product__count * (revenue.total_revenue_cup / product.total_quantity)).toFixed(2)} USD</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            ` : ''}
+        </div>
+    `;
+    
+    document.getElementById('stockModalBody').innerHTML = modalContent;
+    const modal = new bootstrap.Modal(document.getElementById('stockModal'));
+    modal.show();
+}
+
+// Alternar alertas de stock
+function toggleStockAlert() {
+    const rows = document.querySelectorAll('#tableBody tr');
+    const showAlert = !document.querySelector('.stock-alert-highlight');
+    
+    rows.forEach(row => {
+        if (row.classList.contains('table-danger') || row.classList.contains('table-warning')) {
+            if (showAlert) {
+                row.classList.add('stock-alert-highlight');
+                row.style.animation = 'pulse 2s infinite';
+            } else {
+                row.classList.remove('stock-alert-highlight');
+                row.style.animation = '';
+            }
+        }
+    });
+}
+
+// Exportar a Excel
+function exportToExcel() {
+    // Preparar datos para exportación
+    const exportData = productsData.map((product, index) => {
+        const revenue = revenueData.find(r => r.product__name === product.product__name);
+        const avgPrice = revenue ? revenue.total_revenue_cup / product.total_quantity : 0;
+        const ratio = product.sold_stock_ratio || 0;
+        
+        let stockStatus = '';
+        if (product.product__count <= 0) stockStatus = 'Agotado';
+        else if (ratio > 70) stockStatus = 'Alto Riesgo';
+        else if (ratio > 30) stockStatus = 'Atención';
+        else stockStatus = 'Normal';
+        
+        return {
+            'N°': index + 1,
+            'Producto': product.product__name,
+            'Cantidad Vendida': product.total_quantity,
+            'Stock Disponible': product.product__count,
+            'Ratio Venta/Stock (%)': ratio.toFixed(1),
+            'Estado Stock': stockStatus,
+            'Ingresos Totales (USD)': revenue ? revenue.total_revenue_cup.toFixed(2) : '0.00',
+            'Precio Promedio (USD)': avgPrice.toFixed(2),
+            'Valor Stock Actual (USD)': (product.product__count * avgPrice).toFixed(2)
+        };
+    });
+    
+    const ws = XLSX.utils.json_to_sheet(exportData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Productos");
+    XLSX.writeFile(wb, `ventas_stock_productos_${new Date().toISOString().split('T')[0]}.xlsx`);
+}
+
+// Inicializar
+document.addEventListener('DOMContentLoaded', populateTable);
+
+// Estilos CSS adicionales
+const style = document.createElement('style');
+style.textContent = `
+    .stock-alert-highlight {
+        background-color: #fff3cd !important;
+        border-left: 4px solid #ffc107;
+    }
+    
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.8; }
+        100% { opacity: 1; }
+    }
+    
+    .progress-bar-danger {
+        background-color: #dc3545 !important;
+    }
+    
+    .progress-bar-warning {
+        background-color: #ffc107 !important;
+    }
+    
+    .progress-bar-success {
+        background-color: #28a745 !important;
+    }
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %}

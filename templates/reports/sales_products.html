@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="mb-4">📈 Análisis de Ventas por Producto</h1>
+    
+    <!-- Filtros -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Fecha Inicio</label>
+                    <input type="date" name="start_date" value="{{ start_date }}" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Fecha Fin</label>
+                    <input type="date" name="end_date" value="{{ end_date }}" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Cantidad de Productos</label>
+                    <select name="cant_prod" class="form-select">
+                        <option value="10" {% if cant_prod == 10 %}selected{% endif %}>Top 10</option>
+                        <option value="20" {% if cant_prod == 20 %}selected{% endif %}>Top 20</option>
+                        <option value="50" {% if cant_prod == 50 %}selected{% endif %}>Top 50</option>
+                        <option value="100" {% if cant_prod == 100 %}selected{% endif %}>Top 100</option>
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-filter"></i> Filtrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Dos gráficos lado a lado -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>📊 Cantidad Vendida (Top {{ cant_prod }})</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="quantityChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>💰 Ingresos por Producto (Top {{ cant_prod }})</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="revenueChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tabla detallada -->
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5>📋 Detalle de Ventas por Producto</h5>
+            <button class="btn btn-sm btn-outline-success" onclick="exportToExcel()">
+                <i class="fas fa-file-excel"></i> Exportar Excel
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover" id="productsTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Producto</th>
+                            <th>Cantidad Vendida</th>
+                            <th>Ingresos Totales (USD)</th>
+                            <th>Precio Promedio</th>
+                            <th>Órdenes con este Producto</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% comment %} Los datos se llenarán con JavaScript {% endcomment %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script>
+// Procesar datos JSON
+const productsData = {{ products|safe }};
+const revenueData = {{ revenue_data|safe }};
+
+// Gráfico de cantidad
+const quantityCtx = document.getElementById('quantityChart').getContext('2d');
+const quantityLabels = productsData.map(p => p.product__name);
+const quantityValues = productsData.map(p => p.total_quantity);
+
+new Chart(quantityCtx, {
+    type: 'bar',
+    data: {
+        labels: quantityLabels,
+        datasets: [{
+            label: 'Cantidad Vendida',
+            data: quantityValues,
+            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+
+// Gráfico de ingresos
+const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+const revenueLabels = revenueData.map(r => r.product__name);
+const revenueValues = revenueData.map(r => r.total_revenue);
+
+new Chart(revenueCtx, {
+    type: 'bar',
+    data: {
+        labels: revenueLabels,
+        datasets: [{
+            label: 'Ingresos (USD)',
+            data: revenueValues,
+            backgroundColor: 'rgba(75, 192, 192, 0.7)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return '$' + value.toFixed(2);
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Llenar tabla
+function populateTable() {
+    const tableBody = document.querySelector('#productsTable tbody');
+    tableBody.innerHTML = '';
+    
+    productsData.forEach((product, index) => {
+        const revenue = revenueData.find(r => r.product__name === product.product__name);
+        const avgPrice = revenue ? revenue.total_revenue / product.total_quantity : 0;
+        
+        const row = `
+            <tr>
+                <td>${index + 1}</td>
+                <td><strong>${product.product__name}</strong></td>
+                <td><span class="badge bg-primary">${product.total_quantity}</span></td>
+                <td>$${revenue ? revenue.total_revenue.toFixed(2) : '0.00'}</td>
+                <td>$${avgPrice.toFixed(2)}</td>
+                <td>{% comment %} Aquí puedes agregar conteo de órdenes si lo tienes {% endcomment %}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-info">
+                        <i class="fas fa-eye"></i> Detalles
+                    </button>
+                </td>
+            </tr>
+        `;
+        tableBody.innerHTML += row;
+    });
+}
+
+// Exportar a Excel
+function exportToExcel() {
+    const ws = XLSX.utils.table_to_sheet(document.getElementById('productsTable'));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Productos");
+    XLSX.writeFile(wb, `ventas_productos_${new Date().toISOString().split('T')[0]}.xlsx`);
+}
+
+// Inicializar
+document.addEventListener('DOMContentLoaded', populateTable);
+</script>
+{% endblock %}

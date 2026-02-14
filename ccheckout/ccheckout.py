@@ -290,12 +290,13 @@ def create_order(request, transaction_id, usd = True, cach = False):
         else:
             check = checkOrderSummary(id_order=order.id)
             if check > 0:
-                order.cup_oficial = decimal.Decimal(round(order.total_items, 2))*Order.change_usd_cup
+                order.cup_oficial = decimal.Decimal(round(order.total_items, 2))*order.change_usd_cup
             else:
                 #order.consecutivo = Order.objects.filter(is_cons_usd = False).order_by('-pk').first().consecutivo + 1
                 #order.is_cons_usd = False
                 order.end_total = decimal.Decimal(round(order.total_reported, 2))
-                order.cup_oficial = decimal.Decimal(round(order.total_reported, 2))                
+                order.cup_oficial = decimal.Decimal(round(order.total_reported, 2))   
+                order.save()                             
         order.save()
 
         # all set, empty cart
@@ -402,12 +403,12 @@ def checkOrderSummary(id_order):
                 cards_amount = cards_amount + payment.amount
             else:
                 cach_amount = cach_amount + payment.amount
-        efectivo = (order.total_items * Order.DOLLAR_CHANGE_OFFICIAL) - transfer_amount - cards_amount
+        efectivo = (order.total_items * order.change_usd_cup) - transfer_amount - cards_amount
         print(f'transfer_amount {transfer_amount}')
         print(f'cards_amount {cards_amount}')
-        t = order.total_items * Order.DOLLAR_CHANGE_OFFICIAL
+        t = order.total_items * order.change_usd_cup
         print(f'total:  {t}')
-        return (order.total_items * Order.DOLLAR_CHANGE_OFFICIAL) - transfer_amount - cards_amount 
+        return (order.total_items * order.change_usd_cup) - transfer_amount - cards_amount 
     elif order.is_daily_summary and order.currency == 'CUP':
         order.total_reported = cards_amount + cach_amount + transfer_amount
         order.save()
@@ -572,7 +573,7 @@ def export_pdf(request, id_orden):
 def generate_pdf_response(context, filename):
     """Genera y devuelve un PDF como respuesta HTTP"""
     # Renderizar HTML
-    template_src = 'checkout/pdf_resumen_ventas.html'
+    template_src = 'reports/pdf_resumen_ventas.html'
     template = get_template(template_src)
     
     response = HttpResponse(content_type='application/pdf')
