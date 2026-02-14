@@ -166,6 +166,8 @@ class Order(models.Model):
                 self.end_total = self.end_total - self.wallet_discount 
         if self.currency == 'CUP':
             self.cup_oficial = self.end_total 
+            if self.is_daily_summary:
+                self.cup_oficial = self.total_reported
         elif not self.is_daily_summary:
             self.cup_oficial = self.end_total * decimal.Decimal(self.change_usd_cup) # Crear una variable cambio oficial en Price
         #En los resumenes diarios e CUP oficial se llena en 
@@ -432,7 +434,8 @@ class Order(models.Model):
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, null=True, blank=True, on_delete=models.SET_NULL, verbose_name = "Producto")
     quantity = models.DecimalField(max_digits=9, decimal_places=2,default=1.00, verbose_name = "Cantidad")
-    price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name = "Precio")    
+    price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name = "Precio")
+    
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items', verbose_name = "Orden")
     is_summary_item = models.BooleanField(default=False, verbose_name="Elemento especial de resumen diario ")  # Identificar items especiales
     store_name = models.CharField(max_length=250, default="Envío Habana", verbose_name = "Forma de entrega")
@@ -478,7 +481,10 @@ class OrderItem(models.Model):
     def total_CUP_discount(self):
         price = self.order.price 
         total = decimal.Decimal(self.quantity * self.price_cup)
-        price_litre = decimal.Decimal(1/self.product.litres_units)*self.price_cup 
+        if self.product.litres_units > 0:
+            price_litre = decimal.Decimal(1/self.product.litres_units)*self.price_cup
+        else:
+            price_litre = self.price_cup
         if self.product.available_CUP and price.discount_amount_by_litre > 0 and price_litre > 300:       
             cant_litres = self.quantity * decimal.Decimal(self.product.litres_units)
             discount = int(cant_litres) * price.discount_amount_by_litre

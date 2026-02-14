@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+{% load checkout_tags %}
+{% load catalog_filters %}
+{% block content %}
+
+<head>
+    <title>Resumen de Ventas</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1.1.0"></script>
+</head>
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-2">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
+            <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Resumen de ventas ({{ start_date }} al {{ end_date }})</h4>
+            <p>
+            </p>
+        </div>
+    </div>
+
+    <!-- Page Header End -->
+
+    <!-- Gráficas de Ventas -->
+<div style="width: 100%; height: 500px;">
+    <h6 class="font-weight-bold" style="font-family: sans-serif;">Seleccione rango de fechas, granularidad y tipo de moneda: </h6>
+    <form method="get">
+        <label>Desde: <input type="date" name="start_date" value="{{ start_date }}"></label>
+        <label>Hasta: <input type="date" name="end_date" value="{{ end_date }}"></label>
+        
+        <!-- Selector de granularidad -->
+        <label>Agrupado por:
+            <select name="granularity">
+                <option value="day" {% if granularity == 'day' %}selected{% endif %}>Diario</option>
+                <option value="week" {% if granularity == 'week' %}selected{% endif %}>Semanal</option>
+                <option value="month" {% if granularity == 'month' %}selected{% endif %}>Mensual</option>
+            </select>
+        </label>
+
+        <!-- Selector de moneda -->
+                <label>Tipo de moneda:
+                    <select name="currency">
+                        <option value="USD" {% if currency == 'USD' %}selected{% endif %}>USD</option>
+                        <option value="CUP" {% if currency == 'CUP' %}selected{% endif %}>CUP</option>
+                        <option value="MLC" {% if currency == 'MLC' %}selected{% endif %}>MLC</option>
+                    </select>
+                </label>
+        
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </form>
+
+    <br>
+    <br>
+
+        <!-- Estadísticas Generales -->
+        <div>
+            <h6 class="font-weight-bold" style="font-family: sans-serif;">Estadísticas generales: </h6>
+            <p><strong>Total Órdenes: </strong>{{ total_orders }}<br>
+                <strong>Valor Promedio por Orden:</strong> ${{ avg_order_amount|floatformat:2 }}<br>
+                <strong>Valor Total:</strong> ${{ sum_order_amount|floatformat:2 }}
+            </p>
+        </div>
+
+        <br>
+
+<div style="width: 100%; height: 400px;">
+    <h6 class="font-weight-bold" style="font-family: sans-serif;">Ventas en la moneda seleccionada por 
+        {% if granularity == 'day' %}Día
+        {% elif granularity == 'week' %}Semana
+        {% else %}Mes{% endif %}: </h6>
+
+    <div style="position: relative; height: 65vh; width: 100%;">
+        <canvas id="salesChart"></canvas>
+    </div>
+</div>
+
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+    <script>
+        // Configuración común para gráficas
+        const chartOptions = {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                tooltip: { mode: 'index', intersect: false }
+            },
+            scales: { y: { beginAtZero: true } }
+        };
+        
+
+        new Chart(document.getElementById('salesChart'), {
+            type: 'line',
+            data: {
+                labels: JSON.parse('{{ period_labels|escapejs }}'),
+                datasets: [{
+                    label: 'Ventas en la moneda seleccionada',
+                    data: JSON.parse('{{ period_totals|escapejs }}'),
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1,
+                    fill: true,
+                    backgroundColor: 'rgba(75, 192, 192, 0.1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        bottom: 80
+                    }
+                }
+            },
+            scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Monto ($)' }
+                    },
+                    x: {
+                        title: { display: true, text: 'Período' },
+                        ticks: {
+                            autoSkip: true,
+                            maxRotation: 80,
+                            minRotation: 40,
+                            padding: 15
+                        }
+                    }
+                }
+        });
+
+    </script>
+<br>
+{% endblock %}

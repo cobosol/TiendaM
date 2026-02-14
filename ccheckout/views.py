@@ -44,6 +44,7 @@ from django.utils import timezone
 from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 from utils.mixins import ComercialGroupRequiredMixin
 from django.contrib.auth.models import Group
+from django.db.models import Q
 
 @require_POST
 @login_required
@@ -545,7 +546,8 @@ def create_daily_summary(request):
                     messages.info(request, "No coincide el monto del listado de productos con lo reportado en el resumen")
                 check = checkOrderSummary(id_order=order.id)
                 if check > 0:
-                    order.cup_oficial = decimal.Decimal(round(order.total_items, 2))*Order.DOLLAR_CHANGE_OFFICIAL
+                    print('Entro a check')
+                    order.cup_oficial = decimal.Decimal(round(order.total_items, 2))*order.change_usd_cup
                 else:
                     o = Order.objects.filter(is_cons_usd = False).order_by('-pk').first()
                     """ if o.consecutivo == 0:
@@ -724,9 +726,13 @@ def admin_orders_list(request, template_name='checkout/admin_orders_list.html'):
     orders = Order.objects.all().order_by('-date')
     
     #Esto es para actualizar valores
-    ordersp = Order.objects.all() #filter(status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], is_daily_summary=True)     
+    """ ordersp = Order.objects.all() #filter(status__in=[Order.DELIVERED, Order.PAIDED, Order.SHIPPED, Order.CONFIRMED], is_daily_summary=True)     
+    today = timezone.now()
+    corte = today.replace(day=1, month=11, year=2025)
     for o in ordersp:        
-        o.save() 
+        if o.date < corte:
+            o.consecutivo = o.pk 
+        o.save() """ 
 
     start_date = request.GET.get('start_date', '2025-01-01')
     end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
@@ -865,7 +871,6 @@ def clients_orders_list(request, template_name='checkout/clients_orders_list.htm
     user_name = ""
     return render(request, template_name, locals())
 
-
 def summary_oficial_sales(request, template_name='checkout/resumen_ventas_oficial.html'):
     start_date = request.GET.get('start_date', '2025-01-01')
     end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
@@ -894,7 +899,7 @@ def summary_oficial_sales(request, template_name='checkout/resumen_ventas_oficia
     summary_orders = Order.objects.filter(date__range=[start, end], status__in=[Order.DELIVERED], is_daily_summary=True).order_by('-date')
     so_count = summary_orders.count()
 
-    sum_daily_amount = summary_orders.aggregate(sum=Sum('cup_oficial'))['sum'] or 0
+    sum_daily_amount = summary_orders.aggregate(sum=Sum('total_reported'))['sum'] or 0
     sum_daily_amount = float(sum_daily_amount)
 
     sum_client_amount = client_orders.aggregate(sum=Sum('cup_oficial'))['sum'] or 0
@@ -1047,7 +1052,7 @@ def sales_products(request):
     end = datetime.strptime(end_date, '%Y-%m-%d')
     
     # Filtrar órdenes en el rango
-    orders = Order.objects.filter(date__range=[start, end], currency='USD')
+    orders = Order.objects.filter(date__range=[start, end])
     
     """     # 1. Cantidad vendida por producto
     products_data = list(
@@ -1120,7 +1125,7 @@ def sales_products(request):
 
 def sales_client(request):
     # Obtener fechas del request
-    start_date = request.GET.get('start_date', '2023-01-01')
+    start_date = request.GET.get('start_date', '2025-01-01')
     end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
     
     # Convertir a objetos datetime
@@ -1257,7 +1262,7 @@ def sales_total_summary(request):
     if currency == 'USD':
         atrr = 'usd_total'
     elif currency == 'CUP':
-        atrr = 'cup_total'
+        atrr = 'cup_oficial'
     else:
         atrr = 'mlc_total'
 

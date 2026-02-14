@@ -7,30 +7,36 @@
     <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-2">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
-            {% if user_name%}
-            <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">{{ user_name }} estas son sus</h4>
-            {% endif %}
-            <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">compras realizadas</h4>
+            <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: roboto;">Lista de órdenes generadas</h4>
         </div>
     </div>
     <!-- Page Header End -->
-    <h6> <i class="fa fa-plus"></i> Buscar por:</h6>
-    <form enctype="multipart/form-data" method="GET" style="display: inline-block;">
-      {% csrf_token %}
-      {% load widget_tweaks %}
-      <div class="row">
-        {% for field in filter.form %}
-          <div class="col-md-4">
-            <label for="{{field.id_for_label}}"> {{ field.label }} </label>
-            {{ field|add_class:"form-control" }}
-          </div>  
-        {% endfor %}
-      <div class="col-md-3">
-        <button type="submit" class="btn btn-primary"> <i class="fas fa-search text-secondary mr-0"> </i> Filtrar</button>
-      </div>
-    </form>
-    <br>
 
+    <h6 style="align-content: end;color:#036481; font-family: roboto;"> 
+        <i class="fa fa-plus"></i> Buscar por:
+    </h6>
+
+    <div class="mb-1">
+        <form enctype="multipart/form-data" method="GET" style="display: inline-block;">
+        {% csrf_token %}
+        {% load widget_tweaks %}
+            <label>Desde: <input type="date" name="start_date" value="{{ start_date }}"></label>
+            <label>Hasta: <input type="date" name="end_date" value="{{ end_date }}"></label>
+        <div class="row">
+            {% for field in filter.form %}
+            <div class="mb-1 col-md-3">
+                <label for="{{field.id_for_label}}"> {{ field.label }} </label>
+                {{ field|add_class:"form-control" }}
+            </div>  
+            {% endfor %}
+            <div class="mb-1 col-md-3">
+                <br>
+                    <button type="submit" class="btn btn-primary"> <i class="fas fa-search text-secondary mr-0"> </i> Filtrar</button>
+                </br>
+            <div>
+        </div>
+        </form>
+    </div>
 
 <div class="container-fluid pt-6">
     <div class="row px-xl-6">
@@ -39,17 +45,12 @@
                 <thead class="bg-primary text-light">
                     <tr>
                         <th>No.</th>
-                        {% if not user_name %}
-                        <th>Cliente</th>
-                        {% endif%}
+                        <th>Usuario</th>
                         <th>Estado</th>
-                        <th>Productos</th>
                         <th>Importe</th>
                         <th>Fecha</th>
-                        <th>Acción</th>
-                        {% if not user_name %}
+                        <th>Factura </th>
                         <th>Detalles</th>
-                        {% endif%}
                     </tr>
                 </thead>
                 <tbody class="align-middle text-primary">
@@ -59,46 +60,31 @@
                         <td class="align-middle">
                                 {{ order.consecutivo }}
                         </td>
-                        {% if not user_name %}
                         <td class="align-middle">
-                            {{ order.user.first_name }}
+                            {{ order.user.username }}
                         </td>
-                        {% endif%}
                         <td class="align-middle">
                             {{ order.statusS }}
                         </td>
                         <td class="align-middle">
-                            {% for prod in order.products_list%}  
-                            {{ prod }} <br>
-                            {% endfor %}
-                        </td>
-                        <td class="align-middle">
-                            {{ order.total|currency }} {{ order.currency }}      
+                            {{ order.total|currency }} {{order.currency}}     
                         </td>
                         <td class="align-middle">
                             {{ order.date|date:"d/m/y" }}
                         </td>
                         <td class="align-middle">
-                            {% if order.statusS == "Pagada" or order.statusS == "Entregada" %}
                             <form action="." method="post">
                                 {% csrf_token %}
                                 <input type="hidden" name="order_id" value="{{ order.id }}" /> 
                                 <input type="submit" name="submit" class="btn btn-block btn-primary my-2 py-2" value="Factura" />
                             </form>
-                            {% elif order.statusS == "Procesada" %}
-                            <a class="" id="url" href="{{ order.pay_url }}" target="_blank" style="width: 100%;"> {{order.pay_url}} </a>
-                            {% endif %}
                         </td>
-                        {% if not user_name %}
                         <td>
                             <form action="." method="post">
                                 {% csrf_token %}
                                 <a href="{{ order.get_absolute_url }}" class="cart">Detalles</a>
-<!--                                 <input type="hidden" name="order_id" value="{{ order.id }}" /> 
-                                <input type="submit" name="submit" class="btn btn-block btn-primary my-2 py-2" value="Detalles" /> -->
                             </form>
                         </td>
-                        {% endif%}
                     </tr>
                     {% endfor %}
                     {% else %}
