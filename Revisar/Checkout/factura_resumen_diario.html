@@ -1,0 +1,183 @@
+{% load static %}
+{% load catalog_filters %}
+<html>
+
+<head>
+    <style>
+        @page {
+            /* Configuracion general de la hoja */
+            /* size: a4 landscape; */
+            size: a4; 
+            margin: 2cm, 2cm, 2cm, 2cm;
+
+        }
+
+        th,
+        th {
+            font-size: 12px;
+            font-weight: bold;
+            word-wrap: break-word,
+        }
+
+        td {
+            font-size: 12px;
+            padding: 2px;
+            word-wrap: break-word,
+        }
+
+        .first-td {
+            font-size: 14px;
+            padding: 1px;
+            word-wrap: break-word,
+        }
+
+        .table-info-td {
+            font-size: 12px;
+            padding: 0.8px;
+            word-wrap: break-word,
+        }
+
+        #descripcion_cargas {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+            font-size: 1px;
+        }
+
+        #footer_content label{
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <img src="{{request.scheme}}://{{request.get_host}}{% static '/img/criminal.jpg' %}" /> !-->
+
+    <table border="1">
+        <tbody>
+            <tr>
+                <td rowspan="2" style="width: 100px; height: 40px;">
+                    <img style="height: 100%; width: 100%;" src="img/LogoStrech.png" />
+                </td>
+                <td class="header-td">
+                    <h1 style="text-align: left; font-size: 14px; margin-left: 125px;">PRODUCCIONES MUHIA SRL. No. {{data.id_order}}</h1> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h1 style="text-align: left; font-size: 12px; margin-left: 170px;">Fecha de facturación: {{data.date|date:"d/m/Y" }}</h1> 
+                </td>                
+            </tr>
+        </tbody>
+    </table>
+
+    <h1 style="text-align: center; font-size: 14px; "> VENTAS </h1>
+    <table border="0.5" style="width: 220px; height: 30px; border-collapse: collapse; text-align: center;">
+        <tbody>
+            <tr>
+                <td colspan="4" style="text-align: center;" class="first-td"><br><strong>DETALLES DE COMPRA</strong></td>
+            </tr>
+            <tr>
+                <td class="table-info-td" style="width: 250px;"><strong>Producto</strong></td>
+                <td class="table-info-td" style="width: 100px;"><strong>Precio</strong></td>
+                <td class="table-info-td" style="width: 70px;"><strong>Cantidad</strong></td>
+                <td class="table-info-td" style="width: 100px;"><strong>Importe</strong></td>
+            </tr>
+            {% for item in orders %}
+            <tr>
+                <td class="table-info-td" style="width: 250px;"> {{ item.name }} </td>
+                <td class="table-info-td" style="width: 100px;"> {{ item.price|currency }} </td>
+                <td class="table-info-td" style="width: 70px;"> {{ item.quantity }} </td>
+                <td class="table-info-td" style="width: 100px;"> {{ item.total_CUP_discount|currency }}  {% if data.descuento > 0 %} * {% endif %} </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td class="table-info-td" colspan="3" align="right"> <strong> SubTotal: </strong> </td>
+                <td class="table-info-td"> ${{ data.importe }} CUP </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    {% if data.descuento > 0 %}
+    * Este producto tiene descuentos
+    {% endif %} 
+
+    <hr>
+
+    <br>
+
+    <table border="0" style="border-collapse: collapse;">
+        <tbody>
+            <tr>
+                <!-- <td class="first-td"><strong>IMPORTE TOTAL: {{data.importeCUP}} {% if data.currency == 'USD'%} USD {% elif data.currency == 'MLC'%} MLC {% else %} CUP {% endif %}</strong></td> -->
+                <td class="first-td"><strong>DESCUENTO: {{data.descuento}} CUP </strong></td>
+                <td class="first-td"><strong>IMPORTE FINAL: {{data.importeCUP}} CUP </strong></td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+
+    <table border="0.5" style="border-collapse: collapse; text-align: center;">
+        <thead>
+            <tr>
+                <td colspan="3" style="text-align: center;" class="first-td"><br><strong>DETALLES DEL PAGO</strong></td>
+            </tr>
+            <tr>
+                <th>Método de Pago</th>
+                <th>Monto Total</th>
+                <th>N° Transacciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in data.payment_methods %}
+            <tr>
+                <td style="text-align: center;">{{ payment.method }}</td>
+                <td style="text-align: center;">${{ payment.amount|floatformat:2 }}</td>
+                <td style="text-align: center;">{{ payment.transaction_count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        
+    {% for payment in data.payment_methods %}
+    {% if payment.method == 'Transferencia' or payment.method == 'Tarjeta' and payment.details %}
+    <div class="transfer-details">
+        <h2>DETALLES DE: {{ payment.method }}</h2>
+        <table border="0.5" style="width: 80px; height: 30px; border-collapse: collapse; text-align: center;">
+            <thead> 
+                <tr>
+                    <th style="text-align: left;">Referencia</th>
+                    <th style="text-align: left;">Monto</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detail in payment.details %}
+                <tr>
+                    <td style="text-align: left;">{{ detail.reference|default:"N/A" }}</td>
+                    <td style="text-align: left;">${{ detail.amount|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    <br>
+
+    <table border="0" style="border-collapse: collapse;">
+        <tbody>
+            <tr>
+                <td class="first-td" colspan="2">
+                    <strong>VENDEDOR</strong><br>
+                    {{ data.seller }} <br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>

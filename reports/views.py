@@ -41,13 +41,15 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from ccheckout.validators import CouponValidator
 from django.db.models import Case, When, Value, Sum, Count, Avg, F, ExpressionWrapper, FloatField, Max
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from django.db.models.functions import TruncDate, TruncWeek, TruncMonth
 from django.utils import timezone
 from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 from utils.mixins import ComercialGroupRequiredMixin
 from django.contrib.auth.models import Group
 from django.db.models import Q
+from django.contrib import messages
+import calendar
 
 
 # Añade esta vista al archivo views.py
@@ -147,8 +149,6 @@ def admin_dashboard_general(request, template_name='reports/admin_dashboard_gene
 # Vista dashboard con datos del mes en curso
 def admin_dashboard(request, template_name='reports/admin_dashboard.html'):
     """Dashboard principal para la gerencia"""
-    from datetime import date, timedelta, datetime
-    import calendar
     
     # Fechas para resúmenes
     today = date.today()
@@ -250,27 +250,28 @@ def admin_dashboard(request, template_name='reports/admin_dashboard.html'):
     # 6. Ventas diarias del mes (para gráfico)
     daily_sales = Order.objects.filter(
         date__date__range=[first_day_of_month, today],
-        status__in=[Order.DELIVERED, Order.PAIDED, Order.CONFIRMED]
-    ).extra(
-        {'sale_day': "DATE(date)"}
+        status__in=[Order.DELIVERED, Order.PAIDED]
+    ).annotate(
+        sale_day=TruncDate('date')  # Esto da un objeto date
     ).values('sale_day').annotate(
-        daily_total=Sum('cup_oficial'),
+        daily_total=Sum('end_total'),
         order_count=Count('id')
     ).order_by('sale_day')
-    
+
     # Preparar datos para gráfico
     days_list = []
     sales_list = []
     orders_list = []
-    
+
     # Crear lista completa de días del mes hasta hoy
     current_day = first_day_of_month
     while current_day <= today:
         days_list.append(current_day.strftime("%d/%m"))
-        # Buscar ventas para este día
-        day_sales = next((item for item in daily_sales 
-                         if item['sale_day'] == current_day.strftime("%Y-%m-%d")), 
-                        {'daily_total': 0, 'order_count': 0})
+        # Buscar ventas para este día comparando objetos date
+        day_sales = next(
+            (item for item in daily_sales if item['sale_day'] == current_day),
+            {'daily_total': 0, 'order_count': 0}
+        )
         sales_list.append(float(day_sales['daily_total']))
         orders_list.append(day_sales['order_count'])
         current_day += timedelta(days=1)

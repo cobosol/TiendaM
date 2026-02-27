@@ -45,6 +45,8 @@ def tienda_generales(request):
         if user.groups.filter(name__in=['marketing']):
             marketing = 'True'
             adminAccess = 'True'
+        if user.groups.filter(name__in=['distribuidores']):
+            distribuidor = 'True'
         if user.groups.filter(name__in=['comercial']):
             comercial = 'True'
             adminAccess = 'True'

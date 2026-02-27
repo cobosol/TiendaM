@@ -40,7 +40,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h5>📊 Cantidad Vendida (Top {{ cant_prod }})</h5>
+                    <h5>📊 Cantidad Vendida CAMBIO (Top {{ cant_prod }})</h5>
                 </div>
                 <div class="card-body">
                     <canvas id="quantityChart" height="300"></canvas>
@@ -93,34 +93,116 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script>
-// Procesar datos JSON
+
+// Obtener datos desde el contexto (ya deben estar en formato JSON)
 const productsData = {{ products|safe }};
 const revenueData = {{ revenue_data|safe }};
 
-// Gráfico de cantidad
-const quantityCtx = document.getElementById('quantityChart').getContext('2d');
-const quantityLabels = productsData.map(p => p.product__name);
-const quantityValues = productsData.map(p => p.total_quantity);
+// Preparar arrays para el gráfico
+const productNames = productsData.map(p => p.product__name);
+const quantitiesSold = productsData.map(p => p.total_quantity);
+const stockQuantities = productsData.map(p => p.product__count);
+const stockRestante = productsData.map(p => Math.max(p.product__count - p.total_quantity, 0));
 
-new Chart(quantityCtx, {
+// Función para color de las barras según el porcentaje vendido respecto al stock
+function getBarColor(ratio) {
+    if (ratio > 70) return 'rgba(220, 53, 69, 0.8)';    // Rojo: más del 70% vendido
+    if (ratio > 30) return 'rgba(255, 193, 7, 0.8)';    // Amarillo: entre 30% y 70%
+    return 'rgba(40, 167, 69, 0.8)';                    // Verde: menos del 30%
+}
+
+// Calcular el ratio para cada producto (usando el stock total, evitar división por cero)
+const barColors = productsData.map(p => {
+    const ratio = p.product__stock ? (p.total_quantity / p.product__count) * 100 : 0;
+    return getBarColor(ratio);
+});
+
+// Crear el gráfico combinado
+const ctx = document.getElementById('quantityStockChart').getContext('2d');
+new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: quantityLabels,
-        datasets: [{
-            label: 'Cantidad Vendida',
-            data: quantityValues,
-            backgroundColor: 'rgba(54, 162, 235, 0.7)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-        }]
+        labels: productNames,
+        datasets: [
+            {
+                label: 'Vendido',
+                data: quantitiesSold,
+                backgroundColor: barColors,
+                borderColor: barColors.map(c => c.replace('0.8', '1')),
+                borderWidth: 1,
+                stack: 'stock',          // Agrupa con 'Stock Restante' para apilar
+                yAxisID: 'y-left',        // Eje izquierdo
+            },
+            {
+                label: 'Stock Restante',
+                data: stockRestante,
+                backgroundColor: 'rgba(200, 200, 200, 0.5)',
+                borderColor: 'rgba(150, 150, 150, 1)',
+                borderWidth: 1,
+                stack: 'stock',
+                yAxisID: 'y-left',
+            },
+            {
+                label: 'Stock Total',
+                data: stockQuantities,
+                type: 'line',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'transparent',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                pointRadius: 4,
+                yAxisID: 'y-right',       // Eje derecho
+            }
+        ]
     },
     options: {
         responsive: true,
+        interaction: {
+            mode: 'index',
+            intersect: false,
+        },
         plugins: {
-            legend: { display: false }
+            legend: {
+                position: 'top',
+                labels: { usePointStyle: true },
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const label = context.dataset.label || '';
+                        const value = context.parsed.y;
+                        if (context.datasetIndex === 0) { // Vendido
+                            const product = productsData[context.dataIndex];
+                            const total = product.product__count;
+                            const percent = total ? ((value / total) * 100).toFixed(1) : 0;
+                            return `${label}: ${value} unidades (${percent}% del stock)`;
+                        } else if (context.datasetIndex === 1) { // Stock Restante
+                            return `${label}: ${value} unidades`;
+                        } else { // Stock Total (línea)
+                            return `${label}: ${value} unidades`;
+                        }
+                    }
+                }
+            }
         },
         scales: {
-            y: { beginAtZero: true }
+            x: {
+                grid: { display: false },
+                ticks: { maxRotation: 45, minRotation: 0 }
+            },
+            'y-left': {
+                type: 'linear',
+                position: 'left',
+                title: { display: true, text: 'Cantidad (unidades)' },
+                beginAtZero: true,
+            },
+            'y-right': {
+                type: 'linear',
+                position: 'right',
+                title: { display: true, text: 'Stock Total (unidades)' },
+                beginAtZero: true,
+                grid: { drawOnChartArea: false }, // Evita líneas superpuestas
+            }
         }
     }
 });

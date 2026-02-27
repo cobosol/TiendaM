@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>Muhia - Marketing</title>
+
+{% block content %}
+{% if request.user.is_superuser or request.user.is_staff or comercial == 'True' %}
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-2">
+      <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
+          <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Elementos de marketing</h4>
+      </div>
+  </div>
+
+<div class="container mt-3">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Paginación -->
+        <table class="table table-bordered text-center mb-0">
+          <thead class="bg-primary text-light">
+            <tr>
+              <th>Gestión</th>
+              <th>Descripción de la gestión</th>
+            </tr>
+          </thead>
+          <tbody class="h5" >
+            <tr>
+                <td><a class="nav-link" href="{% url 'banners'  %}">Banners</a></td>
+                <td> Cambiar banners</td>
+            </tr>
+            <tr>
+              <td><a class="nav-link" href="{% url 'offers' %}"> Tarjetas de ofertas </a></td>
+              <td>Gestionar imagen, textos y enlaces de las tarjetas de ofertas</td>
+          </tr>
+          <tr>
+            <td><a class="nav-link" href="{% url 'users_list' %}"> Clientes</a></td>
+            <td> Gestionar perfiles de los clientes</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

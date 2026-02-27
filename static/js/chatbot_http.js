@@ -328,8 +328,8 @@ async function sendMessage() {
             })
         });
 
-        if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
+        if (!response.success) {
+            throw new Error(`Error HTTP: ${response.status}`);
         }
 
         const data = await response.json();

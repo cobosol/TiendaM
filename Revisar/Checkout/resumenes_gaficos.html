@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>Muhia - Gestión resúmenes</title>
+
+{% block content %}
+{% if request.user.is_superuser or request.user.is_staff or comercial == 'True' %}
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-2">
+      <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
+          <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Reportes</h4>
+      </div>
+  </div>
+
+<div class="container mt-3">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Paginación -->
+        <table class="table table-bordered text-center mb-0">
+          <thead class="bg-primary text-light">
+            <tr>
+              <th>Reporte</th>
+              <th>Descripción del tipo de reporte</th>
+            </tr>
+          </thead>
+          <tbody class="h5" >
+            <tr>
+                <td><a class="nav-link" href="{% url 'venta_productos'  %}">Productos</a></td>
+                <td> Cantidades por productos vendidos y montos.</td>
+            </tr>
+            <tr>
+              <td><a class="nav-link" href="{% url 'venta_clientes'  %}">Usuarios</a></td>
+              <td>Clientes que más compran.</td>
+          </tr>
+          <tr>
+            <td><a class="nav-link" href="{% url 'venta_resumen'  %}">Ventas parciales</a></td>
+            <td> Ventas por tipos de monedas.</td>
+          </tr>
+          <tr>
+            <td><a class="nav-link" href="{% url 'ventas_totales_resumen'  %}">Ventas totales</a></td>
+            <td> Ventas totales.</td>
+          </tr>
+          <tr>
+            <td><a class="nav-link" href="{% url 'clients_orders_list' %}">Compras por cliente</a></td>
+            <td> Compras por cliente</td>
+          </tr>
+          <tr>
+            <td><a class="nav-link" href="{% url 'gestion_solicitudes' %}">Servicios</a></td>
+            <td> Servicios solicitados</td>
+          </tr>
+          <tr>
+            <td><a class="nav-link" href="{% url 'transactions' %}">Transacciones</a></td>
+            <td> Listado de transacciones de los monederos</td>
+          </tr>
+          <tr>
+            <td><a class="nav-link" href="{% url 'sales_oficial_summary' %}">Resumen oficial de ventas</a></td>
+            <td> Resumen oficial de ventas por período</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
