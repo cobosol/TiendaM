@@ -39,7 +39,7 @@
                 <thead class="bg-primary text-light">
                     <tr>
                         <th>No.</th>
-                        {% if not user_name %}
+                        {% if not user_name or distribuidor == 'True' %}
                         <th>Cliente</th>
                         {% endif%}
                         <th>Estado</th>
@@ -63,6 +63,10 @@
                         <td class="align-middle">
                             {{ order.user.first_name }}
                         </td>
+                        {% elif distribuidor == 'True' %}
+                        <td class="align-middle">
+                            {{ order.payment_name }}
+                        </td>
                         {% endif%}
                         <td class="align-middle">
                             {{ order.statusS }}
@@ -79,7 +83,7 @@
                             {{ order.date|date:"d/m/y" }}
                         </td>
                         <td class="align-middle">
-                            {% if order.statusS == "Pagada" or order.statusS == "Entregada" %}
+                            {% if order.statusS == "Pagada" or order.statusS == "Entregada" or distribuidor == 'True' %}
                             <form action="." method="post">
                                 {% csrf_token %}
                                 <input type="hidden" name="order_id" value="{{ order.id }}" /> 

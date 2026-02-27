@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+{% load static %}
+{% load catalog_filters %}
+
+{% block title %}Inicio - Mi Tienda Online{% endblock %}
+
+<style>
+    
+</style>
+{% block content %}
+    <!-- Banner principal -->
+    <section class="banner mb-1">
+        <div id="mainBanner" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded" style="height: 60vh;">
+                {% for banner in banners %}
+                {% if banner.is_active %}
+                {% if banner.main %}
+                <!-- <div class="carousel-item active">
+                    <img src="{{ banner.image.url }}" 
+                         class="d-block w-100 h-100" alt="Ofertas especiales" style="object-fit: cover;">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2>Oferta de Temporada</h2>
+                        <p>200 CUP de descuento por litro comprado</p>
+                        <a href="/catalogo/catalogo" class="btn btn-primary btn-lg">Catálogo</a>
+                    </div>
+                </div> -->
+                <div class="carousel-item active">
+                    <img src="{{ banner.image.url }}" 
+                         class="d-block w-100 h-100" alt="Ofertas especiales" style="object-fit: cover;">
+                    <div class="image-overlay"></div>
+                    <div class="carousel-caption d-none d-md-block">
+                        <div class="container text-center text-md-start"> 
+                            <h4>Nuevo año, nuevos precios</h4>
+                            <p>Visita nuestro catálogo</p>
+                            <a href="/catalogo/catalogo" class="btn btn-primary btn-lg">Catálogo</a>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="carousel-item">
+                    <img src="{{ banner.image.url }}" 
+                         class="d-block w-100 h-100" alt="Nuevos productos" style="object-fit: cover;">
+<!--                     <div class="carousel-caption d-none d-md-block">
+                        <h2>Nuevos Productos</h2>
+                        <p>Descubre nuestras novedades de esta temporada</p>
+                        <a href="#" class="btn btn-primary btn-lg">Descubrir</a>
+                    </div> -->
+                </div>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#mainBanner" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#mainBanner" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Featured Start -->
+    <div class="container-fluid pt-1">
+        <div class="row px-xl-5 pb-3">
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+                    <a href="https://produccionesmuhia.ca" target="_blank" >
+                        <h5 class="font-weight-semi-bold m-0">Calidad garantizada</h5>
+                    </a>
+                </div>
+            </div>
+<!--             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+                    <a href="/tiendas/" target="_blank">
+                        <h5 class="font-weight-semi-bold m-0">Envíos</h5>
+                    </a>
+                </div>
+            </div> -->
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+                    <a href="/pagina/3/" target="_blank">
+                        <h5 class="font-weight-semi-bold m-0">Política de devoluciones</h5>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+                    <a href="/contacto/" target="_blank">
+                        <h5 class="font-weight-semi-bold m-0">Soporte y comunicación</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Featured End -->
+
+    <!-- Productos destacados -->
+    <section class="featured-products mb-5">
+        
+        <h2 class="text-center mb-4 text-primary"><strong>Productos Destacados</strong></h2>
+        <br>
+        <div class="row g-4"> 
+            
+            {% include 'catalog/catalog_template.html' with products=bestsellers %}
+            
+        </div>
+    </section>
+
+    <!-- Tarjetas de ofertas -->
+    <section class="featured-offers mb-5">
+        <!--         <h2 class="text-center mb-4">Ofertas Destacadas</h2> -->
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card offer-card h-100 overflow-hidden">
+                            <img src="{{offer1.image.url}}" 
+                                 class="card-img-top" alt="Oferta 1" style="height: 250px; object-fit: cover;">
+                            <div class="card-body">
+                                <h3 class="card-title text-danger">{{offer1.title}}</h3>
+                                <p class="card-text">{{offer1.mainText}}.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        {% if offer1.newPrice %}
+                                        <span class="text-danger fw-bold fs-4">{{offer1.newPrice}}</span>
+                                        <span class="text-muted text-decoration-line-through ms-2">{{offer1.oldPrice}}</span>
+                                        {% endif %}
+                                    </div>
+                                    <a href="{{offer1.butonLink}}" class="btn btn-outline-primary">{{offer1.button}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card offer-card h-100 overflow-hidden">
+                            <img src="{{offer2.image.url}}" 
+                                 class="card-img-top" alt="Oferta 2" style="height: 250px; object-fit: cover;">
+                            <div class="card-body">
+                                <h3 class="card-title text-danger">{{offer2.title}}</h3>
+                                <p class="card-text">{{offer2.mainText}}.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        {% if offer2.newPrice %}
+                                        <span class="text-danger fw-bold fs-4">${{offer2.newPrice}}</span>
+                                        <span class="text-muted text-decoration-line-through ms-2">${{offer2.oldPrice}}</span>
+                                        {% endif %}
+                                    </div>
+                                    <a href="{{offer2.butonLink}}" class="btn btn-outline-primary">{{offer2.button}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </section>
+
+    <!-- Sección de newsletter -->
+    <!-- <section class="newsletter bg-light py-5 mb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h2>Suscríbete a nuestro Newsletter</h2>
+                    <p class="lead">Recibe las últimas novedades, ofertas exclusivas y descuentos especiales directamente en tu email.</p>
+                    <form class="row g-3 justify-content-center">
+                        <div class="col-md-6">
+                            <input type="email" class="form-control form-control-lg" placeholder="Tu dirección de email">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary btn-lg w-100">Suscribirse</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Sección de testimonios -->
+   <!--  <section class="testimonials mb-5">
+        <h2 class="text-center mb-4">Lo que dicen nuestros clientes</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-quote-left fa-2x text-muted"></i>
+                        </div>
+                        <p class="card-text">"Excelente servicio al cliente y productos de alta calidad. Siempre encuentro lo que necesito a buenos precios."</p>
+                        <div class="mt-auto">
+                            <h5 class="card-title">María González</h5>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-quote-left fa-2x text-muted"></i>
+                        </div>
+                        <p class="card-text">"Los envíos son rápidos y los productos siempre llegan en perfecto estado. Mi tienda online de confianza."</p>
+                        <div class="mt-auto">
+                            <h5 class="card-title">Carlos Rodríguez</h5>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-quote-left fa-2x text-muted"></i>
+                        </div>
+                        <p class="card-text">"Las ofertas semanales son increíbles. He ahorrado mucho comprando aquí comparedo con otras tiendas."</p>
+                        <div class="mt-auto">
+                            <h5 class="card-title">Ana Martínez</h5>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+{% endblock %}

@@ -16,10 +16,10 @@
                 <div class="w-50">
                     <div class="progress" style="height: 20px;">
                         <div class="progress-bar bg-primary" role="progressbar" 
-                             style="width: {{ month_progress }}%;" 
-                             aria-valuenow="{{ month_progress }}" 
-                             aria-valuemin="0" 
-                             aria-valuemax="100">
+                            style="width: {{ month_progress|stringformat:'.1f' }}%;" 
+                            aria-valuenow="{{ month_progress|stringformat:'.1f' }}" 
+                            aria-valuemin="0" 
+                            aria-valuemax="100">
                             {{ month_progress|floatformat:0 }}%
                         </div>
                     </div>

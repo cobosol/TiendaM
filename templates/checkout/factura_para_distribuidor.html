@@ -1,0 +1,181 @@
+{% load static %}
+{% load catalog_filters %}
+<html>
+
+<head>
+    <style>
+        @page {
+            /* Configuracion general de la hoja */
+            /* size: a4 landscape; */
+            size: a4; 
+            margin: 2cm, 2cm, 2cm, 2cm;
+
+        }
+
+        th,
+        th {
+            font-size: 10px;
+            font-weight: bold;
+            word-wrap: break-word,
+        }
+
+        td {
+            font-size: 10px;
+            padding: 2px;
+            word-wrap: break-word,
+        }
+
+        .first-td {
+            font-size: 12px;
+            padding: 1px;
+            word-wrap: break-word,
+        }
+
+        .table-info-td {
+            font-size: 10px;
+            padding: 0.8px;
+            word-wrap: break-word,
+        }
+
+        #descripcion_cargas {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+            font-size: 1px;
+        }
+
+        #footer_content label{
+            font-size: 9px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <img src="{{request.scheme}}://{{request.get_host}}{% static '/img/criminal.jpg' %}" /> !-->
+
+    <table border="1">
+        <tbody>
+            <tr>
+                <td rowspan="2" style="width: 100px; height: 40px;">
+                    <img style="height: 100%; width: 100%;" src="img/LogoStrech.png" />
+                </td>
+                <td class="header-td">
+                    <h1 style="text-align: left; font-size: 14px; margin-left: 125px;">PRODUCCIONES MUHIA SRL. No. {{data.id_order}}</h1> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h1 style="text-align: left; font-size: 12px; margin-left: 170px;">Fecha de facturación: {{data.date|date:"d/m/Y" }}</h1> 
+                </td>                
+            </tr>
+        </tbody>
+    </table>
+    <h1 style="text-align: center; font-size: 14px; "> VENTA POR DISTRIBUIDOR ECOST</h1>
+    <table border="1" style="border-collapse: collapse;">
+        <tbody>
+            <tr>
+                <td colspan="3" style="text-align: center;" class="first-td"><strong>DATOS DEL CLIENTE</strong></td>
+            </tr>
+            <tr>
+                <td class="first-td"><strong>Nombre: </strong>{{data.first_name}} {{data.last_name}}</td>
+                <td class="first-td"><strong>Carnet de identidad: </strong>{% if data.user_CI %} {{data.user_CI}} {% endif %}</td>
+                <td class="first-td"><strong>Teléfono: </strong>{% if data.data.phone %} {{data.data.phone}} {% endif %}</td>
+            </tr>
+            <tr>
+                <td class="first-td"><strong>Contrato: </strong> {% if data.contract %} {{data.contract}} {% endif %}</td>
+                <td colspan="2" class="first-td"><strong>Correo electrónico: </strong>{% if data.email %} {{data.email}} {% endif %}</td>
+            </tr>
+            <tr>
+                <td class="first-td" colspan="3"><strong>Dirección: </strong>{% if data.address %} {{data.address}} {% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <table border="1" style="border-collapse: collapse;">
+        <tbody>
+            <tr>
+                <td colspan="3" style="text-align: center;" class="first-td"><strong>DETALLES DEL PAGO</strong></td>
+            </tr>
+            <tr>
+                <td class="first-td">  
+                    <strong> No. Cuenta MUHIA CUP: </strong> <br> 0528 0450 0004 0116 
+                </td>
+                <td class="first-td" colspan="2"> {% if data.details %} {{ data.details }} {% endif %} <br> <br> </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <table border="1" style="border-collapse: collapse; text-align: center;">
+        <tbody>
+            <tr>
+                <td colspan="6" style="text-align: center;" class="first-td"><br><strong>DETALLES DE LA FACTURA</strong></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="table-info-td" ><strong>Producto</strong></td>
+                <td class="table-info-td" ><strong>Precio</strong></td>
+                <td class="table-info-td" ><strong>Cantidad</strong></td>
+                <td class="table-info-td" ><strong>Importe</strong></td>
+            </tr>
+            {% for item in orders %}
+            <tr>
+                <td colspan="3" class="table-info-td" style="width: 200px;"> {{ item.name }} </td>
+                <td class="table-info-td" style="width: 100px;"> {{ item.price|currency }} </td>
+                <td class="table-info-td" style="width: 70px;"> {{ item.quantity }} </td>
+                <td class="table-info-td" style="width: 100px;"> {{ item.total_base|currency }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <br>
+
+    <br>
+
+    <table border="0" style="border-collapse: collapse;">
+        <tbody>
+            <tr>
+                <td class="first-td"><strong>IMPORTE TOTAL: {{data.monto_final|currency}} {{data.currency}} </strong></td>
+                {% if data.currency == 'USD'%}
+                <td class="first-td"><strong>IMPORTE CUP: {{data.cup_oficial|currency}} CUP </strong></td>
+                {% endif %}
+                <td class="first-td"><strong>Estado: {{data.status}} </strong></td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <table border="0" style="border-collapse: collapse;">
+        <tbody>
+            <tr>
+                <td class="first-td" colspan="2">
+                    <strong>VENDIDO POR</strong><br>
+                    {{data.seller}} <br>
+                    (ECOST)
+                </td>
+                <td class="first-td" colspan="2">
+                    <strong>ENTREGADO POR</strong><br>
+                    Nombre y apellidos: <br>
+                    Cargo: <br>
+                    Firma: 
+                </td>
+                <td class="first-td"><strong> </strong></td>
+                <td class="first-td" colspan="2">
+                    <strong>RECIBIDO POR</strong><br>
+                    Nombre y apellidos: <br>
+                    Carnet de identidad:<br>
+                    Cargo: <br>
+                    Firma:
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+<!--     <div style="page-break-after: always;"><span style="display: none;">&nbsp;</span></div>
+    <div id="footer_content">
+        <label>Tienda Virtual MUHIA. Desarrollado por Cobosis</label>
+    </div> -->
+
+</body>
+
+</html>

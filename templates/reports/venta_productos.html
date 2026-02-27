@@ -91,7 +91,7 @@
                             <th>Stock Disponible</th>
                             <th>Ratio Venta/Stock</th>
                             <th>Estado Stock</th>
-                            <th>Ingresos Totales (USD)</th>
+                            <th>Ingresos Totales (CUP)</th>
                             <th>Precio Promedio</th>
                             <th>Acciones</th>
                         </tr>
@@ -123,97 +123,114 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script>
-// Procesar datos JSON
+// Obtener datos desde el contexto (ya deben estar en formato JSON)
 const productsData = {{ products|safe }};
 const revenueData = {{ revenue_data|safe }};
 
-// Gráfico de cantidad vendida vs stock
-const quantityStockCtx = document.getElementById('quantityStockChart').getContext('2d');
+// Preparar arrays para el gráfico
 const productNames = productsData.map(p => p.product__name);
 const quantitiesSold = productsData.map(p => p.total_quantity);
 const stockQuantities = productsData.map(p => p.product__count);
+const stockRestante = productsData.map(p => Math.max(p.product__count - p.total_quantity, 0));
 
-// Colores según el ratio venta/stock
+// Función para color de las barras según el porcentaje vendido respecto al stock
 function getBarColor(ratio) {
-    if (ratio > 70) return 'rgba(220, 53, 69, 0.7)'; // Rojo: alto riesgo
-    if (ratio > 30) return 'rgba(255, 193, 7, 0.7)'; // Amarillo: atención
-    return 'rgba(75, 192, 192, 0.7)'; // Verde: normal
+    if (ratio > 70) return 'rgba(220, 53, 69, 0.8)';    // Rojo: más del 70% vendido
+    if (ratio > 30) return 'rgba(255, 193, 7, 0.8)';    // Amarillo: entre 30% y 70%
+    return 'rgba(40, 167, 69, 0.8)';                    // Verde: menos del 30%
 }
 
-const barColors = productsData.map(p => getBarColor(p.sold_stock_ratio || 0));
+// Calcular el ratio para cada producto (usando el stock total, evitar división por cero)
+const barColors = productsData.map(p => {
+    const ratio = p.product__count ? (p.total_quantity / p.product__count) * 100 : 0;
+    return getBarColor(ratio);
+});
 
-new Chart(quantityStockCtx, {
+// Crear el gráfico combinado
+const ctx = document.getElementById('quantityStockChart').getContext('2d');
+new Chart(ctx, {
     type: 'bar',
     data: {
         labels: productNames,
         datasets: [
             {
-                label: 'Cantidad Vendida',
+                label: 'Vendido',
                 data: quantitiesSold,
                 backgroundColor: barColors,
-                borderColor: barColors.map(c => c.replace('0.7', '1')),
+                borderColor: barColors.map(c => c.replace('0.8', '1')),
                 borderWidth: 1,
-                yAxisID: 'y',
+                stack: 'stock',          // Agrupa con 'Stock Restante' para apilar
+                yAxisID: 'y-left',        // Eje izquierdo
             },
             {
-                label: 'Stock Disponible',
+                label: 'Stock Restante',
+                data: stockRestante,
+                backgroundColor: 'rgba(200, 200, 200, 0.5)',
+                borderColor: 'rgba(150, 150, 150, 1)',
+                borderWidth: 1,
+                stack: 'stock',
+                yAxisID: 'y-left',
+            },
+            {
+                label: 'Stock Total',
                 data: stockQuantities,
                 type: 'line',
                 borderColor: 'rgba(54, 162, 235, 1)',
-                backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                backgroundColor: 'transparent',
                 borderWidth: 2,
                 pointBackgroundColor: 'rgba(54, 162, 235, 1)',
                 pointRadius: 4,
-                yAxisID: 'y',
+                yAxisID: 'y-right',       // Eje derecho
             }
         ]
     },
     options: {
         responsive: true,
+        interaction: {
+            mode: 'index',
+            intersect: false,
+        },
         plugins: {
             legend: {
-                display: true,
                 position: 'top',
+                labels: { usePointStyle: true },
             },
             tooltip: {
                 callbacks: {
                     label: function(context) {
-                        let label = context.dataset.label || '';
-                        if (label) {
-                            label += ': ';
+                        const label = context.dataset.label || '';
+                        const value = context.parsed.y;
+                        if (context.datasetIndex === 0) { // Vendido
+                            const product = productsData[context.dataIndex];
+                            const total = product.product__count;
+                            const percent = total ? ((value / total) * 100).toFixed(1) : 0;
+                            return `${label}: ${value} unidades (${percent}% del stock)`;
+                        } else if (context.datasetIndex === 1) { // Stock Restante
+                            return `${label}: ${value} unidades`;
+                        } else { // Stock Total (línea)
+                            return `${label}: ${value} unidades`;
                         }
-                        if (context.datasetIndex === 0) {
-                            // Para barras (ventas)
-                            const productIndex = context.dataIndex;
-                            const product = productsData[productIndex];
-                            const ratio = product.sold_stock_ratio || 0;
-                            label += `${context.parsed.y} unidades`;
-                            label += ` (${ratio.toFixed(1)}% del stock)`;
-                        } else {
-                            // Para línea (stock)
-                            label += `${context.parsed.y} unidades disponibles`;
-                        }
-                        return label;
                     }
                 }
             }
         },
         scales: {
             x: {
-                grid: {
-                    display: false
-                },
-                ticks: {
-                    maxRotation: 45,
-                    minRotation: 0
-                }
+                grid: { display: false },
+                ticks: { maxRotation: 45, minRotation: 0 }
             },
-            y: {
+            'y-left': {
+                type: 'linear',
+                position: 'left',
+                title: { display: true, text: 'Cantidad (unidades)' },
                 beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Unidades'
-                }
+            },
+            'y-right': {
+                type: 'linear',
+                position: 'right',
+                title: { display: true, text: 'Stock Total (unidades)' },
+                beginAtZero: true,
+                grid: { drawOnChartArea: false }, // Evita líneas superpuestas
             }
         }
     }
@@ -388,9 +405,9 @@ function showStockDetails(index) {
                     <div class="card">
                         <div class="card-body">
                             <h6>Información Financiera</h6>
-                            <p><strong>Ingresos Totales:</strong> $${revenue.total_revenue_cup.toFixed(2)} USD</p>
-                            <p><strong>Precio Promedio:</strong> $${(revenue.total_revenue_cup / product.total_quantity).toFixed(2)} USD por unidad</p>
-                            <p><strong>Valor del Stock Actual:</strong> $${(product.product__count * (revenue.total_revenue_cup / product.total_quantity)).toFixed(2)} USD</p>
+                            <p><strong>Ingresos Totales:</strong> $${revenue.total_revenue_cup.toFixed(2)} CUP</p>
+                            <p><strong>Precio Promedio:</strong> $${(revenue.total_revenue_cup / product.total_quantity).toFixed(2)} CUP por unidad</p>
+                            <p><strong>Valor del Stock Actual:</strong> $${(product.product__count * (revenue.total_revenue_cup / product.total_quantity)).toFixed(2)} CUP</p>
                         </div>
                     </div>
                 </div>
@@ -443,9 +460,9 @@ function exportToExcel() {
             'Stock Disponible': product.product__count,
             'Ratio Venta/Stock (%)': ratio.toFixed(1),
             'Estado Stock': stockStatus,
-            'Ingresos Totales (USD)': revenue ? revenue.total_revenue_cup.toFixed(2) : '0.00',
-            'Precio Promedio (USD)': avgPrice.toFixed(2),
-            'Valor Stock Actual (USD)': (product.product__count * avgPrice).toFixed(2)
+            'Ingresos Totales (CUP)': revenue ? revenue.total_revenue_cup.toFixed(2) : '0.00',
+            'Precio Promedio (CUP)': avgPrice.toFixed(2),
+            'Valor Stock Actual (CUP)': (product.product__count * avgPrice).toFixed(2)
         };
     });
     

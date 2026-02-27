@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            font-size: 12px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        .summary {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .section {
+            margin-bottom: 25px;
+            page-break-inside: avoid;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Reporte de Ventas</h1>
+        <p>
+            Período: {{ start_date|date:"d/m/Y" }} al {{ end_date|date:"d/m/Y" }} 
+        </p>
+    </div>
+
+    <div class="stats">
+        <div class="stat-item">
+            <strong>Compras directas de clientes</strong><br>
+            <strong>Cantidad de compras: </strong> {{ co_count }}<br>
+            <strong>Monto: </strong> ${{ sum_client_amount|floatformat:2 }} CUP
+        </div>
+        <div class="stat-item">
+            <strong>Ventas del comercial</strong><br>
+            <strong>Cantidad de ventas: </strong> {{ com_count }} <br>
+            <strong>Monto: </strong> ${{ sum_comercial_amount|floatformat:2 }} CUP
+        </div>
+        <div class="stat-item">
+            <strong>Resumen de ventas diaria</strong><br>
+            <strong>Cantidad de ventas: </strong> {{ so_count }} <br>
+            <strong>Monto: </strong> ${{ sum_daily_amount|floatformat:2 }} CUP
+        </div>
+        <div class="stat-item">
+            <strong>Ingresos Totales</strong><br>
+            ${{ sum_total|floatformat:2 }} CUP
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Compras directas de clientes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>No. orden</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in client_orders %}
+                <tr>
+                    <td>#{{ order.id }}</td>
+                    <td>{{ order.user.first_name }} {{ order.user.last_name }}</td>
+                    <td>{{ order.date|date:"d/m/Y" }}</td>
+                    <td>${{ order.cup_oficial|floatformat:2 }}</td>
+                    <td>{{ order.statusS }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Ventas del comercial</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>No. orden</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in comercial_orders %}
+                <tr>
+                    <td>#{{ order.id }}</td>
+                    <td>{{ order.payment_name }} </td>
+                    <td>{{ order.date|date:"d/m/Y" }}</td>
+                    <td>${{ order.cup_oficial|floatformat:2 }}</td>
+                    <td>{{ order.statusS }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Resúmenes diarios de ventas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>No. orden</th>
+                    <th>Registrador</th>
+                    <th>Fecha</th>
+                    <th>Monto</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in summary_orders %}
+                <tr>
+                    <td>#{{ order.id }}</td>
+                    <td>{{ order.user.first_name }} {{ order.user.last_name }}</td>
+                    <td>{{ order.date|date:"d/m/Y" }}</td>
+                    <td>${{ order.total_reported|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+<!--     <div class="section">
+        <h2>Productos Más Vendidos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Ingresos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in top_products %}
+                <tr>
+                    <td>{{ product.product_name }}</td>
+                    <td>{{ product.total_quantity }}</td>
+                    <td>${{ product.total_revenue|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Mejores Clientes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Email</th>
+                    <th>Órdenes</th>
+                    <th>Total Gastado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in top_customers %}
+                <tr>
+                    <td>{{ customer.customer__username }}</td>
+                    <td>{{ customer.customer__email }}</td>
+                    <td>{{ customer.total_orders }}</td>
+                    <td>${{ customer.total_spent|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div> -->
+
+    <div class="footer">
+        Generado el {% now "d/m/Y H:i" %} | Página <pdf:pageNumber> de <pdf:pageCount>
+    </div>
+</body>
+</html>

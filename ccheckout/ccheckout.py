@@ -18,7 +18,7 @@ from datetime import timedelta
 
 from cart import cart
 from .models import Order, OrderItem
-from .forms import CheckoutForm, PagarForm, CachForm, FacturarForm, DailySummaryForm
+from .forms import CheckoutForm, PagarForm, CachForm, FacturarForm, DailySummaryForm, DistributorForm
 from stores.models import Store, Product_Sales
 from utils.models import Price
 from registration.models import Profile
@@ -161,6 +161,16 @@ def create_order(request, transaction_id, usd = True, cach = False):
     elif transaction_id == 3: # Facturar por contrato
         checkout_form = FacturarForm(request.POST, instance=order)
         order = checkout_form.save(commit=False)
+        if usd: # Guardo el tipo de moneda en efectivo
+            order.currency = 'USD'
+            order.is_cons_usd = False
+        elif cach:
+            order.currency = 'CUP'
+        else:
+            order.currency = 'MLC'
+    elif transaction_id == 5: # Factura distribuidor
+        distributor_form = DistributorForm(request.POST, instance=order)
+        order = distributor_form.save(commit=False)
         if usd: # Guardo el tipo de moneda en efectivo
             order.currency = 'USD'
             order.is_cons_usd = False
@@ -476,6 +486,18 @@ def export_pdf(request, id_orden):
         data['importe'] = decimal.Decimal(round(order.base_total, 2))
         data['status'] = order.statusS
         data['details'] = order.payment_details
+    elif order.transaction_id == '5': # Si es una factura a distribuidor
+        template_src = 'checkout/factura_para_distribuidor.html'
+        data['first_name'] = order.payment_name
+        data['seller'] = order.user.first_name + ' ' + order.user.last_name
+        data['email'] = order.payment_email
+        data['user_CI'] = order.delivery_ci
+        data['phone'] = order.payment_phone 
+        data['address'] = profile.address # order.payment_address
+        data['importe'] = decimal.Decimal(round(order.base_total, 2))
+        data['status'] = order.statusS
+        data['details'] = order.payment_details
+        data['contract'] = order.payment_postCode #Aqui guarde el contrato del distribuidor para mostrarlo en la factura
     elif order.user.profile.client_type == profile.COMPRA_VENTA or order.user.profile.client_type == profile.DISTRIBUIDOR: # Si la compra es de un cliente con contrato de compraventa ..... #order.transaction_id == '3': # Factura por contrato order.user.groups.filter(name__in=['comercial']):
         template_src = 'checkout/factura_por_contrato.html'
         data['first_name'] = order.user.profile.name #order.payment_name
@@ -584,5 +606,5 @@ def generate_pdf_response(context, filename):
        html, dest=response, link_callback=link_callback)
     # if error then show some funny view
     if pisa_status.err:
-       return HttpResponse('Tuvimos algún error al geerar el pdf <pre>' + html + '</pre>')
+       return HttpResponse('Tuvimos algún error al generar el pdf <pre>' + html + '</pre>')
     return response

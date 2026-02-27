@@ -337,6 +337,62 @@ def facturar(request, template_name='checkout/facturar.html'):
         cobra_efectivo = True """
     return render(request, template_name, locals())
 
+#Pagar los grandes compradores con contratos
+@login_required
+def factura_distributor(request, template_name='checkout/factura_distributor.html'):
+    MD = 'USD'
+    if cart.is_empty(request):
+        cart_url = reverse('show_cart')
+        return HttpResponseRedirect(cart_url)
+    if request.method == 'POST': 
+        postdata = request.POST.copy()
+        if postdata['submit'] == 'Compra distribuidor':
+            form = DistributorForm(postdata)
+            if form.is_valid():
+                user = request.user
+                profile = get_object_or_404(Profile, user = user)
+                MD = profile.MONEY_TYPE[profile.money_type][1]
+                if MD == 'USD':
+                    order_number = create_order(request, 5, True, True) # Crear la orden con tipo de transacción 3 usd en cach
+                    if order_number['order_number'] == -1:
+                        fail = reverse('show_cart')
+                        return HttpResponseRedirect(fail)
+                elif MD == 'CUP':
+                    order_number = create_order(request, 5, False, True)
+                    if order_number['order_number'] == -1:
+                        fail = reverse('show_cart')
+                        return HttpResponseRedirect(fail)
+                else: # En MLC deprecated
+                    order_number = create_order(request, 5, False, False)
+                    if order_number['order_number'] == -1:
+                        fail = reverse('show_cart')
+                        return HttpResponseRedirect(fail)
+                error_message = postdata.get('message','')
+                if order_number:
+                    request.session['order_number'] = order_number['order_number']
+                    order = Order.objects.filter(id=order_number['order_number'])[0] 
+                    order.save()
+                    order.update_status(Order.PROCESSED)
+                    order.save()
+                    receipt_url = reverse('checkout_receipt')
+                    return HttpResponseRedirect(receipt_url)
+            else:
+                messages.error(request, f"Error de validacion de la form: {form.errors}")
+    else: # Si no es llamada post
+        form = DistributorForm()
+        #form.name = request.user.first_name + request.user.last_name
+    page_title = 'Facturar'
+    #cobra_efectivo = False
+    cart_subtotal = round(cart.cart_subtotal(request), 2)
+    cart_delivery = cart.cart_delivery_price(request, cart_subtotal, MD)
+    cart_total = cart_subtotal + cart_delivery
+    st_name = cart.delivery_Store(request).name
+    envio = False
+    #deli = cart.get_delivery(request) 
+    """ if (request.user.groups.filter(name = 'vendedores').exists() or request.user.groups.filter(name = 'comercial').exists() or request.user.is_staff):
+        cobra_efectivo = True """
+    return render(request, template_name, locals())
+
 # El view de la página de pago nacional
 @login_required
 def pagar(request, template_name='checkout/pagar.html'):
@@ -509,18 +565,37 @@ def transfer(request, template_name='checkout/transfer.html', id=0):
 # Página para crear resumen de ventas diarias
 def create_daily_summary(request):
     MD = 'CUP'
+    order_number = {}
     if cart.is_empty(request):
         cart_url = reverse('show_cart')
         return HttpResponseRedirect(cart_url)
+    else:
+        cart_items = cart.get_cart_items(request)
+        total_mount = 0
+        profile = get_object_or_404(Profile, user = request.user) # Accedo a su perfil
+        MND = profile.MONEY_TYPE[profile.money_type][1] # Saco el tipo de moneda del usuario
+        if MND == 'USD':
+            for ci in cart_items:
+                total_mount = total_mount + ci.price_USD() * ci.quantity
+        else:
+            for ci in cart_items:
+                total_mount = total_mount + ci.price_CUP() * ci.quantity
+        porciento_70 = decimal.Decimal('0.00')
+        porciento_70 = float(total_mount * decimal.Decimal(0.70))
+        porciento_70 = round(porciento_70, 2)
     if request.method == 'POST':
         order_form = DailySummaryForm(request.POST)
         formset = PaymentMethodFormSet(request.POST, prefix='payments')
         if not order_form.is_valid():
-            messages.error(request, "Por favor corrija los errores en order_form")
+            messages.error(request, "Por favor corrija los errores en los datos del resumen")
         elif not formset.is_valid():
-            messages.error(request, "Por favor corrija los errores en formset")
+            messages.error(request, "Por favor corrija los errores en los métodos de pago")
         else:
-            if MD == 'USD':
+            reported = sum([form.cleaned_data['amount'] for form in formset if form.is_valid()])
+            dif = porciento_70 - float(reported)
+            if dif > 0:
+                messages.error(request, f"El monto reportado no puede ser menor al 70% del monto total de los productos, le faltan: {dif}")
+            elif MD == 'USD':
                 order_number = create_order(request, 4, True, True) # Crear la orden con tipo de transacción 3 usd en cach
                 if order_number['order_number'] == -1:
                     fail = reverse('show_cart')
@@ -549,6 +624,7 @@ def create_daily_summary(request):
                     print('Entro a check')
                     order.cup_oficial = decimal.Decimal(round(order.total_items, 2))*order.change_usd_cup
                 else:
+                    print("Check menor que cero")
                     o = Order.objects.filter(is_cons_usd = False).order_by('-pk').first()
                     """ if o.consecutivo == 0:
                         order.consecutivo = o.id + 1
@@ -556,7 +632,9 @@ def create_daily_summary(request):
                     else:
                         order.consecutivo = o.consecutivo + 1
                         order.is_cons_usd = False """
-                    order.cup_oficial = decimal.Decimal(round(order.total_reported, 2))                
+                    order.cup_oficial = decimal.Decimal(round(order.total_reported, 2))  
+                    print(order.cup_oficial) 
+                    order.save()             
                 order.save()
                 app_label = order._meta.app_label
                 model_name = order._meta.model_name
@@ -579,7 +657,8 @@ def create_daily_summary(request):
         'cart_total': cart_total,
         'st_name': st_name,
         't_CUP_alcambio': t_CUP_alcambio,
-        't_CUP_oficial': t_CUP_Oficial
+        't_CUP_oficial': t_CUP_Oficial,
+        'porciento_70': porciento_70
     })
  
 
