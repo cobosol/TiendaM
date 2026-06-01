@@ -12,6 +12,7 @@ from django.contrib import messages
 def index_view(request, template_name="index.html"):
     products = Product.objects.filter(is_active=True)
     bestsellers = Product.objects.filter(is_bestseller=True)
+    prox_venta = Product.objects.filter(is_featured=True)
     banners = Banner.objects.all()
     offers1 = Offer.objects.filter(main=True)
     offers2 = Offer.objects.filter(second=True)
@@ -40,7 +41,7 @@ def index_view(request, template_name="index.html"):
                 return HttpResponseRedirect(url)
         except Exception:
                 messages.error(request, "Error en el envío de información")
-    return render(request, 'index.html', {'products':products, 'banners':banners, 'bestsellers':bestsellers, 'offer1':offer1, 'offer2':offer2, 'profile':profile})
+    return render(request, 'index.html', {'products':products, 'banners':banners, 'bestsellers':bestsellers, 'offer1':offer1, 'offer2':offer2, 'profile':profile, 'prox_venta':prox_venta})
 
 
 def about(request):    

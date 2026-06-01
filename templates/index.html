@@ -30,8 +30,8 @@
                     <div class="image-overlay"></div>
                     <div class="carousel-caption d-none d-md-block">
                         <div class="container text-center text-md-start"> 
-                            <h4>Oferta de navidad</h4>
-                            <p>200 CUP de descuento por litro comprado</p>
+                            <h5>También pensamos en papá</h5>
+                            <p>Busque nuestros productos</p>
                             <a href="/catalogo/catalogo" class="btn btn-primary btn-lg">Catálogo</a>
                         </div>
                     </div>
@@ -99,6 +99,58 @@
         </div>
     </div>
     <!-- Featured End -->
+
+        <!-- Próxima venta -->        
+        {% if prox_venta %}
+        <section class="featured-products mb-5">
+        <h2 class="text-center mb-4 text-primary"><strong>Próxima venta</strong></h2>
+        <br>
+        {% for p in prox_venta %}
+        <div class="col-6 col-md-4 col-lg-3 mb-2">
+          <div class="card h-100 product-card border-0 shadow-sm rounded-3 overflow-hidden">                
+            <div class="position-relative product-image-container">
+              <a href="{{ p.get_absolute_url }}">
+                <img src="{{ p.get_image_url }}" 
+                  class="card-img-top product-img-responsive" 
+                  alt="{{ p.name }}" 
+                  loading="lazy">
+              </a>
+                <span class="position-absolute top-0 start-0 bg-dark text-white px-2 py-1 m-2 rounded-pill fw-bold small">
+                  ¡Próxima venta!
+                </span>
+            </div>
+              <div class="card-body p-3 d-flex justify-content-between flex-column">
+              <p class="card-title fw-bold mb-1">
+                  <a href="{{ p.get_absolute_url }}" class="text-dark text-decoration-none">
+                      {{ p.name }}
+                  </a>
+                </p>              
+              <div class="d-flex align-items-baseline justify-content-center mb-2 mt-auto">
+                  <span class="text-danger fw-bolder fs-8 me-2">
+                    {% if p.available_CUP %} {{ p.price_cup|currency }} CUP 
+                    {% else %}                    
+                    {{ p.price_base|currency }} USD <br>
+                    {% endif %}  
+                  </span>
+              </div>
+
+              <div class="card-footer d-flex text-center justify-content-between bg-light border">
+                <form method="post" action="." class="cart">
+                        {% csrf_token %}
+                        <input type="number" name="quantity" value="1" min="1" step="0.1" class="cantidad-input">
+                        <input type="hidden" name="product_slug" value="{{ p.slug }}" />
+                        <button type="submit" name="submit" value="Comprar" class="btn btn-sm btn-primary w-50 rounded-pill mt-2" name="submit" alt="Add To Cart">
+                          <i class="fas fa-shopping-cart me-1"></i> 
+                        </button>
+                        <a href="{{p.get_absolute_url}}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-dark mr-1"></i>Detalles</a>
+                </form>
+               </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        </section>
+        {% endif %}
 
     <!-- Productos destacados -->
     <section class="featured-products mb-5">

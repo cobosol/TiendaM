@@ -179,7 +179,7 @@ class CheckoutForm(forms.ModelForm):
         exclude = ('status','ip_address','user','transaction_id','consecutivo',
                    'delivery_price', 'delivery_state', 'pay_url', 'delivery', 'currency', 
                    'store_name', 'base_total', 'end_total', 'coupon_percent', 'others_discount', 
-                   'coupon', 'discount')
+                   'coupon', 'discount', 'change_usd_cup')
 
     def clean_phone(self):
         phone = self.cleaned_data['phone']
@@ -210,7 +210,28 @@ class FacturarForm(forms.ModelForm):
         if len(stripped_phone) < 10:
             raise forms.ValidationError('Entre un número de teléfono válido con el código del área.(ejemplo.555-555-5555)')
         return self.cleaned_data['payment_phone']
-    
+
+class DistributorForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(DistributorForm, self).__init__(*args, **kwargs)
+        self.fields['payment_postCode'].required = False
+        self.fields['payment_postCode'].label = "Contrato"
+
+    class Meta:
+        model = Order
+        fields = ['payment_name', 'payment_postCode', 'payment_phone', 'delivery_ci', 'payment_email', 'payment_address', 'payment_details']
+        widgets = {
+            'payment_address': forms.Textarea(attrs={'width':'300px', 'rows':3}),
+            'payment_details': forms.Textarea(attrs={'width':'600px', 'rows':4}),
+        }
+
+    def clean_phone(self):
+        phone = self.cleaned_data['payment_phone']
+        stripped_phone = strip_non_numbers(phone)
+        if len(stripped_phone) < 10:
+            raise forms.ValidationError('Entre un número de teléfono válido con el código del área.(ejemplo.555-555-5555)')
+        return self.cleaned_data['payment_phone']
+        
 class CachForm(forms.ModelForm):
 
     class Meta:
@@ -242,7 +263,7 @@ class PagarForm(forms.ModelForm):
         model = Order
         exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery',
                     'store_name', 'payment_city', 'discount', 'delivery_state', 'currency', 'payment_postCode',
-                    'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon', 'usd_total',
+                    'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon', 'usd_total', 'change_usd_cup', 
                       'cup_total', 'mlc_total', 'total_reported', 'cup_oficial', 'wallet_discount', 'consecutivo', 'discount' 
                     )
     def clean_phone(self):
@@ -272,7 +293,7 @@ class ReserveForm(forms.ModelForm):
     
     class Meta:
         model = Order
-        exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 
+        exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'change_usd_cup',
                    'delivery', 'store_name', 'discount', 'payment_city', 'delivery_state', 'currency', 'payment_postCode',
                      'base_total', 'end_total', 'coupon_percent', 'others_discount', 'coupon', 'usd_total',
                       'cup_total', 'mlc_total', 'total_reported', 'cup_oficial', 'wallet_discount', 'consecutivo')
@@ -299,7 +320,7 @@ class ReserveEForm(forms.ModelForm):
         exclude = ('status','ip_address','user','transaction_id','delivery_price', 'pay_url', 'delivery', 'store_name', 'payment_city', 
                    'delivery_state', 'currency', 'payment_postCode', 'delivery_street', 'delivery_apto','consecutivo',
                      'base_total', 'end_total', 'discount', 'coupon_percent', 'others_discount', 'coupon', 'usd_total',
-                      'cup_total', 'mlc_total', 'total_reported', 'cup_oficial', 'wallet_discount')
+                      'cup_total', 'mlc_total', 'total_reported', 'cup_oficial', 'wallet_discount', 'change_usd_cup')
 
     def clean_phone(self):
         phone = self.cleaned_data['payment_phone']

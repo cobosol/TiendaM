@@ -48,7 +48,7 @@
                         <li> <a href="{% url 'ordenes' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-shopping-cart me-2"></i>Órdenes de compra</i></a></li>                               
                         {% endif %}
                         {% if request.user.is_staff %}
-                            <li> <a href="{% url 'ventas' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-chart-bar me-2"></i>Reportes</i></a></li>
+                            <li> <a href="{% url 'admin_dashboard' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-chart-bar me-2"></i>Pizarra del mes</i></a></li>
                         {% endif %}
                         {% if vendedor == 'True' or request.user.is_staff or comercial == 'True'%}
                             <li> <a href="{% url 'gestion' %}" style="font-family: sans-serif; text-primary"><i class="dropdown-item"><i class="fas fa-boxes me-2"></i>Gestionar productos</i></a></li>
@@ -120,7 +120,7 @@
                     </select>
                 </form>
             </div>
-            {% if comercial == 'True' or request.user.is_staff %}
+            <!-- {% if comercial == 'True' or request.user.is_staff %}
             <div style="padding-left: 2ch;">                    
                 <form method="post" action="{% url 'update_c_roll' %}">
                     {% csrf_token %}
@@ -135,7 +135,7 @@
                     </select>
                 </form>
             </div>
-            {% endif %}
+            {% endif %} -->
         </div>
     </div>
 </nav>

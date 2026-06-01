@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load catalog_filters %}
+
+<title>Muhia - Catálogo de productos</title>
+
+{% block content %}
+
+<style>
+  .cantidad-input {
+      width: 80px;       /* Ancho reducido */
+      padding: 5px;      /* Espaciado interno */
+      font-size: 14px;   /* Tamaño de fuente */
+      text-align: center; /* Centrar el número */
+  }
+</style>
+
+<div class="container-fluid bg-secondary mb-2">
+  <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 60px">
+      <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Catálogo de productos</h4>
+  </div>
+</div>
+<!-- Page Header End -->
+<div id="Filtros" class="row px-xl-12">
+    <div id="Por categorías" class="col">
+      <form method="post" action=".">
+        {% csrf_token %}
+        <p><h6 class="font-weight-semi-bold text-primary" style="font-family:sans-serif ;">Seleccione la categoría</h6></p>
+        <div class="input-group-append">
+            <span class="input-group-text bg-transparent text-primary">
+              {{form.selected_category}}
+              <input type="submit" name="submit" value="Ver" class="btn btn-block btn-primary my-1 py-1"/>
+            </span>
+        </div>
+      </form>
+    </div>
+    <div id="Materias primas" class="col">
+      <form method="post" action=".">
+        {% csrf_token %}
+      <input type="submit" name="submit" value="Materias primas" class="btn btn-block btn-primary my-1 py-1"/>
+      </form>
+    </div>
+    <div id="Productos terminados" class=" col">
+      <form method="post" action=".">
+        {% csrf_token %}
+      <input type="submit" name="submit" value="Productos terminados" class="btn btn-block btn-primary my-1 py-1"/>
+      </form>
+    </div>
+  <div id="Vacio" class="col">
+  </div>
+</div>
+
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Paginación -->
+        <table class="table table-bordered text-center mb-0">
+          <thead class="bg-primary text-light">
+            <tr>
+              <th width="10%">Foto</th>
+              <th width="35%">Nombre</th>
+              <th width="10%">Precio</th>
+<!--               <th width="10%">Disponible MLC</th>
+              <th width="10%">Disponible CUP</th> -->
+              <th width="10%">Estado</th>
+              <th width="10%">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+          <!-- Recorremos los objetos o registros que tenemos en nuestra tabla 'jugos' y los listamos -->
+          {% for elem in object_list %}
+            <tr>
+              {% if MND == 'USD' %}
+              <td><img src="{{elem.get_image_url}}" alt="{{elem.image}}" class="img-fluid" width="50%"></td>
+              <td><a href="{{elem.get_absolute_url}}" class="btn btn-sm text-dark p-0">{{ elem.name }}</a></td>
+              <td>{{ elem.price_base }}</td>
+<!--               <td>{% if elem.available_MLC %} Si {% else %} No {% endif %}</td>
+              <td>{% if elem.available_CUP %} Si {% else %} No {% endif %}</td> -->
+              <td>{% if elem.count > 0 %} Disponible {% else %} Agotado {% endif %}</td>
+              <td>
+                {% if elem.count > 0 and elem.available_online %}
+                <div id="item-{{ item.id }}">
+                <form method="post" action="." class="cart">
+                  {% csrf_token %}
+                  <input type="number" name="quantity" value="1" min="0" step="{% if elem.a_granel %}0.1{%else%}1{%endif%}" class="cantidad-input">
+                    <input type="hidden" name="item-id" value="{{ item.id }}" />
+                    <input type="hidden" name="product_slug" value="{{ elem.slug }}" />
+                    <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
+                      <i class="fas fa-shopping-cart text-secondary mr-1"></i>
+                    </button>
+                </form>
+                </div>
+                {% endif %}
+              </td>
+              {% else %}
+              <td><img src="{{elem.get_image_url}}" alt="{{elem.image}}" class="img-fluid" width="50%"></td>
+              <td><a href="{{elem.get_absolute_url}}" class="btn btn-sm text-dark p-0">{{ elem.name }}</a></td>
+              <td> {%if elem.available_CUP %} {{ elem.price_cup }} {% endif %}</td>
+<!--               <td>{% if elem.available_MLC %} Si {% else %} No {% endif %}</td>
+              <td>{% if elem.available_CUP %} Si {% else %} No {% endif %}</td> -->
+              <td>{% if elem.count > 0 %} Disponible {% if MND == 'CUP' and not elem.available_CUP and elem.available_online %} en USD {% endif %} {% else %} Agotado {% endif %}</td>
+              <td>
+                {% if elem.count > 0 and elem.available_CUP %}
+                <div id="item-{{ item.id }}">
+                <form method="post" action="." class="cart">
+                  {% csrf_token %}
+                  <input type="number" name="quantity" value="1" min="0" step="{% if elem.a_granel %}0.1{%else%}1{%endif%}" class="cantidad-input">
+                    <input type="hidden" name="item-id" value="{{ item.id }}" />
+                    <input type="hidden" name="product_slug" value="{{ elem.slug }}" />
+                    <button type="submit" name="submit" value="Comprar" class="btn btn-outline-primary my-2 py-0 text-light" name="submit" alt="Add To Cart">
+                      <i class="fas fa-shopping-cart text-secondary mr-1"></i>
+                    </button>
+                </form>
+                </div>
+                {% endif %}
+              </td>
+              {% endif %}
+
+            </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+
+      </div>
+    </div>
+  </div>
+
+ 
+<script>
+// Captura la posición del scroll antes de enviar cualquier formulario
+document.addEventListener('submit', function() {
+    sessionStorage.setItem('scrollPosition', window.scrollY);
+});
+
+// Restaura la posición al cargar la página
+window.addEventListener('load', function() {
+    const savedPosition = sessionStorage.getItem('scrollPosition');
+    if (savedPosition) {
+        window.scrollTo(0, savedPosition);
+        sessionStorage.removeItem('scrollPosition');
+    }
+});
+</script>
+
+{% endblock %}

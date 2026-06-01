@@ -18,7 +18,7 @@ from datetime import timedelta
 
 from cart import cart
 from .models import Order, OrderItem
-from .forms import CheckoutForm, PagarForm, CachForm, FacturarForm, DailySummaryForm
+from .forms import CheckoutForm, PagarForm, CachForm, FacturarForm, DailySummaryForm, DistributorForm
 from stores.models import Store, Product_Sales
 from utils.models import Price
 from registration.models import Profile
@@ -154,22 +154,30 @@ def create_order(request, transaction_id, usd = True, cach = False):
         checkout_form = PagarForm(request.POST, instance=order)
         order = checkout_form.save(commit=False)
         order.currency = 'USD'
-        order.is_cons_usd = True
+        order.is_cons_usd = False
         deliveryInfo = get_object_or_404(DeliveryInfo, client=request.user)
         cart_subtotal = cart.cart_subtotal(request)
         order.delivery_price = cart.cart_delivery_price(request, cart_subtotal, MND)
     elif transaction_id == 3: # Facturar por contrato
-        print("En fcturar por cotrato")
         checkout_form = FacturarForm(request.POST, instance=order)
         order = checkout_form.save(commit=False)
         if usd: # Guardo el tipo de moneda en efectivo
             order.currency = 'USD'
-            order.is_cons_usd = True
+            order.is_cons_usd = False
         elif cach:
             order.currency = 'CUP'
         else:
             order.currency = 'MLC'
-        print(f"Desccuento al salir de la form {order.discount}")
+    elif transaction_id == 5: # Factura distribuidor
+        distributor_form = DistributorForm(request.POST, instance=order)
+        order = distributor_form.save(commit=False)
+        if usd: # Guardo el tipo de moneda en efectivo
+            order.currency = 'USD'
+            order.is_cons_usd = False
+        elif cach:
+            order.currency = 'CUP'
+        else:
+            order.currency = 'MLC'
     elif transaction_id == 4: # Resumen diario
         checkout_form = DailySummaryForm(request.POST, instance=order)
         if checkout_form.is_valid():
@@ -177,7 +185,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
             order.is_daily_summary = True
             if usd: # Guardo el tipo de moneda en efectivo
                 order.currency = 'USD'
-                order.is_cons_usd = True
+                order.is_cons_usd = False
             elif cach:
                 order.currency = 'CUP'
     else:
@@ -186,7 +194,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
             order = checkout_form.save(commit=False)
             if usd: # Guardo el tipo de moneda en efectivo
                 order.currency = 'USD'
-                order.is_cons_usd = True
+                order.is_cons_usd = False
             else:
                 order.currency = 'CUP'
                 order.delivery_price = store.price_cup
@@ -195,7 +203,7 @@ def create_order(request, transaction_id, usd = True, cach = False):
                 checkout_form = CheckoutForm(request.POST, instance=order)
                 order = checkout_form.save(commit=False)
                 order.currency = 'USD'
-                order.is_cons_usd = True
+                order.is_cons_usd = False
                 deliveryInfo = get_object_or_404(DeliveryInfo, client=request.user)
                 order.delivery_price = deliveryInfo.calculate_deliveryHabana()
             else: # tarjetas nacionales
@@ -292,11 +300,13 @@ def create_order(request, transaction_id, usd = True, cach = False):
         else:
             check = checkOrderSummary(id_order=order.id)
             if check > 0:
-                order.cup_oficial = decimal.Decimal(round(order.total_items, 2))*Order.DOLLAR_CHANGE_OFFICIAL
+                order.cup_oficial = decimal.Decimal(round(order.total_items, 2))*order.change_usd_cup
             else:
-                order.consecutivo = Order.objects.filter(is_cons_usd = False).order_by('-pk').first().consecutivo + 1
-                order.is_cons_usd = False
-                order.cup_oficial = decimal.Decimal(round(order.total_reported, 2))                
+                #order.consecutivo = Order.objects.filter(is_cons_usd = False).order_by('-pk').first().consecutivo + 1
+                #order.is_cons_usd = False
+                order.end_total = decimal.Decimal(round(order.total_reported, 2))
+                order.cup_oficial = decimal.Decimal(round(order.total_reported, 2))   
+                order.save()                             
         order.save()
 
         # all set, empty cart
@@ -360,12 +370,14 @@ def generate_daily_summary_pdf(order_id):
                 except json.JSONDecodeError:
                     pass
             payment_methods.append(payment_data)
-        
+
+        total_general = sum(p.amount for p in order.payment_methods.all())
+        descuento = order.total_items - total_general
         # Contexto para la plantilla
         context = {
             'order': order,
             'payment_methods': payment_methods,
-            'total_general': sum(p.amount for p in order.payment_methods.all()),
+            'total_general': total_general,
             'date': order.date.strftime('%d/%m/%Y')
         }
         
@@ -391,6 +403,7 @@ def checkOrderSummary(id_order):
     order = Order.objects.filter(id=id_order)[0]
     transfer_amount = decimal.Decimal('0.00')
     cards_amount = decimal.Decimal('0.00')
+    cach_amount = decimal.Decimal('0.00')
     if order.is_daily_summary and order.currency == 'USD':
         payment_methods = order.payment_methods.all()
         for payment in payment_methods:
@@ -398,12 +411,18 @@ def checkOrderSummary(id_order):
                 transfer_amount = transfer_amount + payment.amount
             elif payment.method == "CARD":
                 cards_amount = cards_amount + payment.amount
-        efectivo = (order.total_items * Order.DOLLAR_CHANGE_OFFICIAL) - transfer_amount - cards_amount
+            else:
+                cach_amount = cach_amount + payment.amount
+        efectivo = (order.total_items * order.change_usd_cup) - transfer_amount - cards_amount
         print(f'transfer_amount {transfer_amount}')
         print(f'cards_amount {cards_amount}')
-        t = order.total_items * Order.DOLLAR_CHANGE_OFFICIAL
+        t = order.total_items * order.change_usd_cup
         print(f'total:  {t}')
-        return (order.total_items * Order.DOLLAR_CHANGE_OFFICIAL) - transfer_amount - cards_amount
+        return (order.total_items * order.change_usd_cup) - transfer_amount - cards_amount 
+    elif order.is_daily_summary and order.currency == 'CUP':
+        order.total_reported = cards_amount + cach_amount + transfer_amount
+        order.save()
+        return -1
 
 def export_pdf(request, id_orden):
     data = {}
@@ -453,6 +472,7 @@ def export_pdf(request, id_orden):
         else:
             data['importe'] = decimal.Decimal(round(order.total_items, 2))
             data['importeCUP'] = decimal.Decimal(round(order.total_reported, 2))
+            data['descuento'] = data['importe'] - data['importeCUP']
             data['seller'] = order.seller.first_name + ' ' + order.seller.last_name
             template_src = 'checkout/factura_resumen_diario.html'
         order.save() 
@@ -466,6 +486,18 @@ def export_pdf(request, id_orden):
         data['importe'] = decimal.Decimal(round(order.base_total, 2))
         data['status'] = order.statusS
         data['details'] = order.payment_details
+    elif order.transaction_id == '5': # Si es una factura a distribuidor
+        template_src = 'checkout/factura_para_distribuidor.html'
+        data['first_name'] = order.payment_name
+        data['seller'] = order.user.first_name + ' ' + order.user.last_name
+        data['email'] = order.payment_email
+        data['user_CI'] = order.delivery_ci
+        data['phone'] = order.payment_phone 
+        data['address'] = profile.address # order.payment_address
+        data['importe'] = decimal.Decimal(round(order.base_total, 2))
+        data['status'] = order.statusS
+        data['details'] = order.payment_details
+        data['contract'] = order.payment_postCode #Aqui guarde el contrato del distribuidor para mostrarlo en la factura
     elif order.user.profile.client_type == profile.COMPRA_VENTA or order.user.profile.client_type == profile.DISTRIBUIDOR: # Si la compra es de un cliente con contrato de compraventa ..... #order.transaction_id == '3': # Factura por contrato order.user.groups.filter(name__in=['comercial']):
         template_src = 'checkout/factura_por_contrato.html'
         data['first_name'] = order.user.profile.name #order.payment_name
@@ -563,7 +595,7 @@ def export_pdf(request, id_orden):
 def generate_pdf_response(context, filename):
     """Genera y devuelve un PDF como respuesta HTTP"""
     # Renderizar HTML
-    template_src = 'checkout/pdf_resumen_ventas.html'
+    template_src = 'reports/pdf_resumen_ventas.html'
     template = get_template(template_src)
     
     response = HttpResponse(content_type='application/pdf')
@@ -574,5 +606,5 @@ def generate_pdf_response(context, filename):
        html, dest=response, link_callback=link_callback)
     # if error then show some funny view
     if pisa_status.err:
-       return HttpResponse('Tuvimos algún error al geerar el pdf <pre>' + html + '</pre>')
+       return HttpResponse('Tuvimos algún error al generar el pdf <pre>' + html + '</pre>')
     return response

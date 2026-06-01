@@ -101,6 +101,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to="Productos", null=True, blank=True,
         verbose_name="Imagen del producto")
     count = models.DecimalField(max_digits=9,decimal_places=2, blank=True, default=0.00, verbose_name="Cantidad", help_text="Cantidad del producto en inventarios")
+    min_stock = models.DecimalField(max_digits=9,decimal_places=2, blank=True, default=10.00, verbose_name="Cantidad mínima recomendada", help_text="Cantidad mínima recomendada del producto en inventarios")
     reserved = models.DecimalField(max_digits=9,decimal_places=2, blank=True, default=0.00, verbose_name="Reservados", help_text="Cantidad reservados para comprar")
     is_active = models.BooleanField(default=True, verbose_name = "Activo")
     """ más vendidos """
@@ -155,6 +156,12 @@ class Product(models.Model):
         price_actual = Price.objects.filter(is_active=True)[0]
         p = self.price_base * price_actual.change_usd_cup
         return (p) + 10 - (p % 10) if (p % 10) > 0 else p
+
+    @property        
+    def old_price_cup(self):
+        price = Price.objects.filter(is_active=True)[0]
+        p = self.old_price * price.change_usd_cup
+        return (p) + 10 - (p % 10) if (p % 10) > 0 else p
     
     @property        
     def on_sale(self):
@@ -178,7 +185,7 @@ class Product(models.Model):
                     cap += i
             except:
                 break
-        print(f'capacidad: {cap}')
+        
         if cap.__len__() <= 2:
             return int(cap)
         else:

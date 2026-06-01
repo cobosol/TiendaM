@@ -117,6 +117,7 @@ def show_all_active(request, template_name="catalog/allActive.html"):
 def show_category(request, category_slug, template_name="catalog/category.html"):
     c = get_object_or_404(Category, slug=category_slug)
     products = c.product_set.all()
+    products = products.filter(is_active=True)
     page_title = c.name
     meta_keywords = c.meta_keywords
     meta_description = c.meta_description
@@ -249,6 +250,10 @@ def catalogo_productos(request, template_name="catalog/catalog.html"):
                 if request.session.test_cookie_worked():
                     request.session.delete_test_cookie()
                 url = reverse('catalogo_productos')
+                return HttpResponseRedirect(url)
+            elif postdata['submit'] == 'Buscar':
+                productSearch = postdata['producto']
+                url = '/catalogo/productos/' + productSearch + '/'
                 return HttpResponseRedirect(url)
         else:
             object_list = Product.objects.filter(is_active=True)

@@ -26,6 +26,7 @@ urlpatterns = [
     path('notification/', include('notification.urls')),
     path('wallet/', include('wallet.urls')),
     path('chatbot/', include('chatbot.urls')),
+    path('reports/', include('reports.urls')),
     path('', index_view, name="home"),
 ]
 
