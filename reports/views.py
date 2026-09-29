@@ -401,7 +401,8 @@ def admin_dashboard_mensual(request, template_name='reports/admin_dashboard.html
     pending_orders = Order.objects.filter(status__in=[1, 2]).count()
     delivered_orders = Order.objects.filter(status=Order.DELIVERED).count()
     paid_orders = Order.objects.filter(status=Order.PAIDED).count()
-    
+    cancelled_orders = Order.objects.filter(status=Order.CANCELLED).count()    
+
     # 2. Ventas del mes seleccionado
     month_orders = Order.objects.filter(
         date__date__range=[first_day_of_month, end_date]
@@ -424,12 +425,12 @@ def admin_dashboard_mensual(request, template_name='reports/admin_dashboard.html
     # Ventas del mes anterior para comparación
     last_month_sales_usd = Order.objects.filter(
         date__date__range=[first_day_last_month, last_day_last_month],
-        currency='USD'
+        currency='USD', status__in=[3, 2, 5]
     ).aggregate(total=Sum('end_total'))['total'] or 0
     
     last_month_sales_cup = Order.objects.filter(
         date__date__range=[first_day_last_month, last_day_last_month],
-        currency='CUP'
+        currency='CUP', status__in=[3, 2, 5]
     ).aggregate(total=Sum('cup_oficial'))['total'] or 0
     
     # Cálculo de crecimiento/descenso
@@ -469,7 +470,7 @@ def admin_dashboard_mensual(request, template_name='reports/admin_dashboard.html
     # 4. Clientes más activos (mes seleccionado)
     top_clients = Order.objects.filter(
         date__date__range=[first_day_of_month, end_date],
-        user__groups__isnull=True
+        user__groups__isnull=True, status__in=[3, 2, 5]
     ).values(
         'user__username',
         'user__first_name',
@@ -487,7 +488,7 @@ def admin_dashboard_mensual(request, template_name='reports/admin_dashboard.html
     
     # 5. Resumen por moneda (mes seleccionado)
     currency_summary = Order.objects.filter(
-        date__date__range=[first_day_of_month, end_date]
+        date__date__range=[first_day_of_month, end_date], status__in=[3, 2, 5]
     ).values('currency').annotate(
         count=Count('id'),
         total_amount=Sum('end_total'),
@@ -547,8 +548,8 @@ def admin_dashboard_mensual(request, template_name='reports/admin_dashboard.html
     ).order_by('-count')
     
     status_names = {
-        1: 'Pendiente',
-        2: 'Procesando',
+        Order.SUBMITTED: 'Pendiente',
+        Order.PROCESSED: 'Procesando',
         Order.DELIVERED: 'Entregado',
         Order.PAIDED: 'Pagado',
         Order.SHIPPED: 'Enviado',
@@ -573,6 +574,7 @@ def admin_dashboard_mensual(request, template_name='reports/admin_dashboard.html
         'pending_orders': pending_orders,
         'delivered_orders': delivered_orders,
         'paid_orders': paid_orders,
+        'cancelled_orders': cancelled_orders,
         'month_orders': month_orders,
         'month_sales_usd': float(month_sales_usd),
         'month_sales_cup': float(month_sales_cup),
@@ -672,12 +674,13 @@ def admin_orders_list(request, template_name='reports/admin_orders_list.html'):
 
     orders = Order.objects.all().order_by('-date')
 
-    products = Product.objects.all()
+    products_sales = Product_Sales.objects.all()
+    for ps in products_sales:
+        ps.save()
 
-    for p in products:
+    prod = Product.objects.all()
+    for p in prod:
         p.reserved = 0
-        p.save()
-
 
     start_date = request.GET.get('start_date', '2025-01-01')
     end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
