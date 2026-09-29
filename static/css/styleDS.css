@@ -9610,31 +9610,6 @@ a.text-dark:hover, a.text-dark:focus {
   object-fit: cover;
 }
 
-.section-title {
-  position: relative;
-  display: inline-block;
-  letter-spacing: 1px;
-  font-weight: bold;
-  color: #1C1C1C;
-}
-
-.section-title span {
-  position: relative;
-  background: #ffffff;
-  z-index: 1;
-}
-
-.section-title::before {
-  position: absolute;
-  content: "";
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  margin-top: -1px;
-  background: #1C1C1C;
-}
-
 .offer img {
   position: absolute;
   max-width: 50%;
@@ -9890,23 +9865,417 @@ table#receipt{
       height: 70px;
   }
 }
-.product-card .product-image-container {
-  height: 200px; /* Altura uniforme para todas las imágenes en escritorio */
-  overflow: hidden;
+
+/* ==========================================================================
+   MUHIA · REFACTOR 2024 — sistema de rejilla + tarjetas producto + secciones
+   Añadir al FINAL de styleN.css (después de Bootstrap compilado)
+   ========================================================================== */
+
+/* ---------- Tokens de marca (reusan las vars existentes) ---------- */
+:root{
+  --muhia-brand:#143d4f;
+  --muhia-brand-soft:#e7eef1;
+  --muhia-accent:#601010;
+  --muhia-accent-soft:#f6e7e7;
+  --muhia-gold:#f3b75c;
+  --muhia-text:#036481;
+  --muhia-ink:#1C1C1C;
+  --muhia-line:#EDF1FF;
+  --muhia-surface:#fcfcfc;
+  --muhia-white:#ffffff;
+  --muhia-radius:14px;
+  --muhia-radius-sm:10px;
+  --muhia-shadow-sm:0 1px 2px rgba(20,61,79,.06), 0 1px 3px rgba(20,61,79,.08);
+  --muhia-shadow:0 4px 14px rgba(20,61,79,.10);
+  --muhia-shadow-lg:0 18px 40px rgba(20,61,79,.16);
+  --muhia-ease:cubic-bezier(.2,.7,.3,1);
+  --muhia-golden:1.618;
 }
 
-.product-card .product-img-responsive {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Recorta la imagen para llenar el contenedor sin distorsión */
-  transition: transform 0.3s ease;
+/* ---------- Título de sección (sin tachado, con rayita inferior) ---------- */
+.section-title{
+  /* Reset duro contra cualquier ::before heredado */
+  position:relative;
+  display:block;
+  isolation:isolate;
+  text-decoration:none !important;
+  text-decoration-line:none !important;
+  border:0 !important;
+  background:none !important;
+  padding:0;
+  margin:0 0 1.25rem;
+  line-height:1.25;
+  letter-spacing:-.02em;
+  font-weight:800;
+  font-size:clamp(1.15rem,3vw,1.7rem);
+  color:var(--muhia-ink);
+  text-align:center;
+}
+.section-title *,
+.section-title span,
+.section-title strong,
+.section-title em{
+  text-decoration:none !important;
+  border:0 !important;
+  background:none !important;
+}
+/* Mata cualquier ::before externo (el que tachaba) */
+.section-title::before{
+  content:none !important;
+  display:none !important;
+}
+/* Nuestra rayita: SIEMPRE debajo del texto, nunca encima */
+.section-title::after{
+  content:"";
+  display:block;
+  width:56px;
+  height:3px;
+  border-radius:3px;
+  background:var(--muhia-brand);
+  margin:.6rem auto 0;
+  position:static;
+  inset:auto;
+  top:auto; right:auto; bottom:auto; left:auto;
+  transform:none;
+  border:0;
+  text-decoration:none;
 }
 
-/* Ajuste Responsive (para móviles) */
-@media (max-width: 768px) {
-  .product-card .product-image-container {
-      height: 100px; /* Altura más pequeña en móviles */
-      width: 50%;
-      height: 50%;
-    }
+/* ---------- Franja de ventajas ---------- */
+.feature-strip{
+  display:grid;
+  gap:.75rem;
+  grid-template-columns:1fr;
 }
+@media (min-width:768px){ .feature-strip{grid-template-columns:repeat(3,1fr);} }
+
+.feature-item{
+  display:flex;
+  align-items:center;
+  gap:.85rem;
+  padding:.9rem 1.1rem;
+  background:var(--muhia-white);
+  border:1px solid var(--muhia-line);
+  border-radius:var(--muhia-radius);
+  box-shadow:var(--muhia-shadow-sm);
+  color:inherit;
+  transition:transform .2s var(--muhia-ease),
+             box-shadow .2s var(--muhia-ease),
+             border-color .2s;
+}
+.feature-item:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--muhia-shadow);
+  border-color:#d7deea;
+  color:inherit;
+  text-decoration:none;
+}
+.feature-item .feature-ico{
+  flex:0 0 auto;
+  width:44px;height:44px;
+  display:grid;place-items:center;
+  border-radius:12px;
+  background:var(--muhia-brand-soft);
+  color:var(--muhia-brand);
+  font-size:1.3rem;
+}
+.feature-item .feature-txt{
+  font-weight:700;
+  font-size:clamp(.85rem,2vw,.95rem);
+  line-height:1.2;
+  margin:0;
+  color:var(--muhia-brand);
+}
+
+/* ---------- Rejilla responsive de productos ---------- */
+.products-grid{
+  display:grid;
+  gap:.7rem;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.products-grid > *{
+  width:auto;
+  max-width:none;
+  margin:0;
+  padding:0;
+}
+@media (min-width:576px){  .products-grid{gap:.9rem;} }
+@media (min-width:768px){  .products-grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
+@media (min-width:1200px){ .products-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem;} }
+@media (min-width:1500px){ .products-grid{grid-template-columns:repeat(5,minmax(0,1fr));} }
+@media (min-width:1900px){ .products-grid{grid-template-columns:repeat(6,minmax(0,1fr));} }
+
+/* ---------- Tarjeta producto ---------- */
+.product-card{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  background:var(--muhia-white);
+  border:1px solid var(--muhia-line);
+  border-radius:var(--muhia-radius);
+  overflow:hidden;
+  box-shadow:var(--muhia-shadow-sm);
+  transition:transform .25s var(--muhia-ease),
+             box-shadow .25s var(--muhia-ease),
+             border-color .25s;
+}
+.product-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--muhia-shadow-lg);
+  border-color:#d7deea;
+}
+
+/* Imagen — PROPORCIÓN ÁUREA VERTICAL 1 : 1.618 (ancho : alto). Sin altura fija. */
+.product-card .product-image-container{
+  position:relative;
+  width:100%;
+  height:auto;                       /* ← neutraliza cualquier height:200px previo */
+  aspect-ratio:1 / 1.618;
+  overflow:hidden;
+  background:linear-gradient(180deg,#eef1f5,#e4e9f0);
+  flex:0 0 auto;
+  isolation:isolate;
+}
+/* El <a> cubre todo el contenedor para que la img absoluta tenga referencia */
+.product-card .product-image-container > a{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+}
+/* Defensa contra CSS externo (Bootstrap .card-img-top, .img-fluid, etc.) */
+.product-card .product-img-responsive{
+  position:absolute;
+  inset:0;
+  width:100% !important;
+  height:100% !important;
+  max-height:none !important;
+  min-height:0 !important;
+  object-fit:cover !important;
+  object-position:center;
+  aspect-ratio:auto !important;
+  display:block;
+  transition:transform .55s var(--muhia-ease);
+}
+.product-card:hover .product-img-responsive{transform:scale(1.06);}
+
+/* Fallback navegadores sin aspect-ratio */
+@supports not (aspect-ratio:1 / 1.618){
+  .product-card .product-image-container::before{
+      content:"";
+      display:block;
+      padding-top:161.8%;
+  }
+}
+
+/* Badge */
+.product-badge{
+  position:absolute;
+  top:.5rem;left:.5rem;
+  z-index:2;
+  background:var(--muhia-accent);
+  color:#fff;
+  font-size:clamp(.6rem,1.6vw,.72rem);
+  font-weight:700;
+  letter-spacing:.02em;
+  line-height:1;
+  padding:.32rem .55rem;
+  border-radius:999px;
+  white-space:nowrap;
+}
+.product-badge.is-brand{background:var(--muhia-brand);}
+
+/* Cuerpo */
+.product-card .card-body{
+  display:flex;
+  flex-direction:column;
+  gap:.3rem;
+  flex:1 1 auto;
+  padding:.7rem .75rem .55rem;
+  background:transparent;
+  border:0;
+}
+.product-card .card-title{
+  font-size:clamp(.82rem,1.7vw,.95rem);
+  font-weight:700;
+  line-height:1.25;
+  margin:0;
+  min-height:2.5em;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  color:var(--muhia-ink);
+}
+.product-card .card-title a{color:var(--muhia-ink);text-decoration:none;}
+.product-card .card-title a:hover{color:var(--muhia-brand);text-decoration:none;}
+
+.product-price{
+  display:flex;
+  align-items:baseline;
+  flex-wrap:wrap;
+  gap:.25rem;
+  font-size:clamp(.9rem,1.9vw,1.05rem);
+  font-weight:800;
+  color:var(--muhia-accent);
+  letter-spacing:-.01em;
+  line-height:1.1;
+  margin-top:auto;
+}
+.product-price .currency{
+  font-size:.72em;
+  font-weight:700;
+  color:var(--muhia-text);
+  letter-spacing:.02em;
+}
+
+.product-details-link{
+  font-size:clamp(.68rem,1.5vw,.76rem);
+  font-weight:600;
+  color:var(--muhia-text);
+  display:inline-flex;
+  align-items:center;
+  gap:.3rem;
+  align-self:flex-start;
+  padding:.15rem 0;
+  text-decoration:none;
+}
+.product-details-link:hover{color:var(--muhia-brand);text-decoration:none;}
+
+/* Pie: cantidad + botón */
+.product-card .card-footer{
+  margin-top:0;
+  padding:.55rem .75rem .75rem;
+  background:transparent;
+  border-top:1px solid var(--muhia-line);
+}
+.product-card .card-footer .cart{width:100%;display:block;margin:0;}
+
+.qty-row{
+  display:flex;
+  align-items:stretch;
+  gap:.35rem;
+  width:100%;
+}
+.qty-input-wrap{
+  position:relative;
+  flex:1 1 auto;
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:.15rem;
+  border:1px solid var(--muhia-line);
+  border-radius:var(--muhia-radius-sm);
+  background:var(--muhia-white);
+  padding:0 .35rem;
+  transition:border-color .2s, box-shadow .2s;
+}
+.qty-input-wrap:focus-within{
+  border-color:var(--muhia-brand);
+  box-shadow:0 0 0 3px rgba(20,61,79,.12);
+}
+.cantidad-input{
+  width:100%;
+  min-width:0;
+  height:34px;
+  border:0;
+  background:transparent;
+  text-align:center;
+  font-size:.85rem;
+  font-weight:700;
+  color:var(--muhia-ink);
+  padding:0;
+  -moz-appearance:textfield;
+  appearance:textfield;
+}
+.cantidad-input::-webkit-outer-spin-button,
+.cantidad-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+.cantidad-input:focus{outline:none;}
+
+.qty-unit{
+  flex:0 0 auto;
+  font-size:.7rem;
+  font-weight:700;
+  color:var(--muhia-text);
+  text-transform:lowercase;
+  pointer-events:none;
+  padding-right:.1rem;
+}
+
+/* Botón añadir — usa colores MUHIA (no azul Bootstrap) */
+.btn-add{
+  flex:0 0 auto;
+  width:38px;
+  height:36px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.4rem;
+  border:1px solid var(--muhia-brand);
+  border-radius:var(--muhia-radius-sm);
+  background:var(--muhia-brand);
+  color:#fff;
+  font-size:.85rem;
+  font-weight:700;
+  line-height:1;
+  cursor:pointer;
+  transition:background .2s, border-color .2s, transform .12s var(--muhia-ease), box-shadow .2s;
+}
+.btn-add:hover{
+  background:var(--muhia-accent);
+  border-color:var(--muhia-accent);
+  box-shadow:0 6px 16px rgba(96,16,16,.28);
+}
+.btn-add:active{transform:scale(.94);}
+.btn-add .btn-add-text{display:none;}
+@media (min-width:1500px){
+  .btn-add{width:auto;padding:0 .8rem;}
+  .btn-add .btn-add-text{display:inline;}
+}
+
+/* ---------- Back-to-top (usa paleta MUHIA y anula animación agresiva) ---------- */
+.back-to-top{
+  position:fixed;
+  right:1rem;
+  bottom:5.5rem;
+  z-index:900;
+  width:42px;height:42px;
+  display:grid;
+  place-items:center;
+  padding:0;
+  border-radius:50%;
+  background:var(--muhia-brand);
+  border-color:var(--muhia-brand);
+  color:#fff;
+  box-shadow:var(--muhia-shadow);
+  animation:none;                /* ← neutraliza action 1s infinite alternate */
+}
+.back-to-top:hover{
+  background:var(--muhia-accent);
+  border-color:var(--muhia-accent);
+  color:#fff;
+}
+
+/* ---------- Ajustes finos responsive ---------- */
+@media (max-width:575.98px){
+  .back-to-top{right:.75rem;bottom:4.75rem;width:38px;height:38px;}
+  .product-card .card-body{padding:.6rem .6rem .45rem;}
+  .product-card .card-footer{padding:.45rem .6rem .6rem;}
+}
+
+.sidebar{height:100vh;position:sticky;top:0;overflow-y:auto;overscroll-behavior:contain;background:var(--muhia-white);border-right:1px solid var(--muhia-line);z-index:1000;}
+.sidebar-toggle{display:none;}
+.main-content{min-height:100vh;background:var(--muhia-surface);transition:all .3s var(--muhia-ease);}
+.content-inner{padding:1rem .9rem 2rem;}
+.overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(2px);z-index:999;}
+.overlay.active{display:block;}
+@media (max-width:991.98px){
+  .sidebar{position:fixed;top:0;left:-320px;width:300px;max-width:85vw;z-index:1000;transition:left .3s var(--muhia-ease);box-shadow:3px 0 24px rgba(0,0,0,.12);}
+  .sidebar.active{left:0;}
+  .sidebar-toggle{display:block;}
+}
+@media (min-width:768px){ .content-inner{padding:1.5rem 1.25rem 2.5rem;} }
+@media (min-width:1200px){ .content-inner{padding:1.75rem 2rem 3rem;} }
+@media (min-width:1600px){ .content-inner{padding:2rem 2.5rem 3.5rem;} }
