@@ -414,10 +414,10 @@ def checkOrderSummary(id_order):
             else:
                 cach_amount = cach_amount + payment.amount
         efectivo = (order.total_items * order.change_usd_cup) - transfer_amount - cards_amount
-        print(f'transfer_amount {transfer_amount}')
-        print(f'cards_amount {cards_amount}')
+        """ print(f'transfer_amount {transfer_amount}')
+        print(f'cards_amount {cards_amount}') """
         t = order.total_items * order.change_usd_cup
-        print(f'total:  {t}')
+        """ print(f'total:  {t}') """
         return (order.total_items * order.change_usd_cup) - transfer_amount - cards_amount 
     elif order.is_daily_summary and order.currency == 'CUP':
         order.total_reported = cards_amount + cach_amount + transfer_amount

@@ -59,20 +59,26 @@
             <tr>
               <th width="10%">Foto</th>
               <th width="35%">Nombre</th>
+              {% if comercial == 'True' %} 
+              <th width="15%">Disponibles</th>
+              <th width="15%">Reservados</th>  
+              {% endif %}
               <th width="10%">Precio</th>
-<!--               <th width="10%">Disponible MLC</th>
-              <th width="10%">Disponible CUP</th> -->
               <th width="10%">Estado</th>
               <th width="10%">Acciones</th>
             </tr>
           </thead>
           <tbody>
-          <!-- Recorremos los objetos o registros que tenemos en nuestra tabla 'jugos' y los listamos -->
+          <!-- Recorremos los objetos o registros que tenemos en nuestra tabla y los listamos -->
           {% for elem in object_list %}
             <tr>
               {% if MND == 'USD' %}
               <td><img src="{{elem.get_image_url}}" alt="{{elem.image}}" class="img-fluid" width="50%"></td>
               <td><a href="{{elem.get_absolute_url}}" class="btn btn-sm text-dark p-0">{{ elem.name }}</a></td>
+              {% if comercial == 'True' %} 
+              <td> {{ elem.count }} </td>  
+              <td> {{ elem.reserved }} </td>  
+              {% endif %}
               <td>{{ elem.price_base }}</td>
 <!--               <td>{% if elem.available_MLC %} Si {% else %} No {% endif %}</td>
               <td>{% if elem.available_CUP %} Si {% else %} No {% endif %}</td> -->
@@ -95,6 +101,10 @@
               {% else %}
               <td><img src="{{elem.get_image_url}}" alt="{{elem.image}}" class="img-fluid" width="50%"></td>
               <td><a href="{{elem.get_absolute_url}}" class="btn btn-sm text-dark p-0">{{ elem.name }}</a></td>
+              {% if comercial == 'True' %} 
+              <td> {{ elem.count }} </td>  
+              <td> {{ elem.reserved }} </td>  
+              {% endif %}
               <td> {%if elem.available_CUP %} {{ elem.price_cup }} {% endif %}</td>
 <!--               <td>{% if elem.available_MLC %} Si {% else %} No {% endif %}</td>
               <td>{% if elem.available_CUP %} Si {% else %} No {% endif %}</td> -->

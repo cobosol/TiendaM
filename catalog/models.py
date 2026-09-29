@@ -177,7 +177,7 @@ class Product(models.Model):
     @property
     def litres_units(self):
         cap = ''
-        if 'granel' in self.presentation.lower():
+        if 'granel' in self.presentation.lower() or 'u' in self.presentation.lower():
             return 1
         for i in self.presentation:
             try:

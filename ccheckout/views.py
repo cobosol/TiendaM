@@ -421,7 +421,9 @@ def pagar(request, template_name='checkout/pagar.html'):
                     order.update_status(Order.PROCESSED)
                     order.save()
                     pagarTransfer = order.pay_url #reverse(order.pay_url)
-                    return HttpResponseRedirect(pagarTransfer)
+                    messages.info(request, "Gracias!!!. En 24 horas puede ir a pagar y recoger su compra.")
+                    inicio = reverse('home')
+                    return HttpResponseRedirect(inicio) #HttpResponseRedirect(pagarTransfer)
             else:
                 messages.error(request, f"Error de validacion de la form {form.errors}")
     else:
@@ -545,7 +547,11 @@ def reserve(request, template_name='checkout/reserve.html'):
 # Pagina de pago por transfermovil
 @login_required
 def transfer(request, template_name='checkout/transfer.html', id=0):
-    order = Order.objects.filter(id=id)[0]
+    print("En transfer")
+    messages.info(request, "En este momento no estamos aceptando las transferecias a distancia. Pase por nuestro punto de venta y será atendido")
+    inicio = reverse('home')
+    return HttpResponseRedirect(inicio)
+    """ order = Order.objects.filter(id=id)[0]
     if request.method == 'POST': 
         postdata = request.POST.copy()
         if postdata['submit'] == 'Confirmar':
@@ -560,7 +566,7 @@ def transfer(request, template_name='checkout/transfer.html', id=0):
             notification_sale(request)
             receipt_url = reverse('checkout_procesado')
             return HttpResponseRedirect(receipt_url)
-    return render(request, template_name, locals())
+    return render(request, template_name, locals()) """
 
 # Página para crear resumen de ventas diarias
 def create_daily_summary(request):
@@ -1082,7 +1088,10 @@ def details(request, order_id, template_name='checkout/details.html'):
 
 @login_required
 def transfer_pay(request, order_id, template_name='checkout/transfer.html'):
-    order = Order.objects.filter(id=order_id)[0]
+    messages.info(request, "En este momento no estamos aceptando las transferecias a distancia. Pase por nuestro punto de venta y será atendido")
+    inicio = reverse('home')
+    return HttpResponseRedirect(inicio)
+    """ order = Order.objects.filter(id=order_id)[0]
     subtotal = order.total - order.delivery_price    
     order_items = OrderItem.objects.filter(order=order_id)
     orderN = order_id
@@ -1101,7 +1110,7 @@ def transfer_pay(request, order_id, template_name='checkout/transfer.html'):
             notification_sale(request)
             receipt_url = order.get_paided_url()
             return HttpResponseRedirect(receipt_url)
-    return render(request, template_name, locals())
+    return render(request, template_name, locals()) """
 
 def sales_manages(request):
     context = {}

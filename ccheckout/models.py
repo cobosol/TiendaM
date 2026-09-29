@@ -11,6 +11,7 @@ from django.contrib.auth import get_user_model
 import uuid
 import datetime
 from utils.models import Price
+from django.contrib import messages
 
 # Crear una clase delivery que incluya todas las definiciones de los envios.
 # El municipio con los precios (diccionario), descuentos por monto...
@@ -479,17 +480,20 @@ class OrderItem(models.Model):
     
     @property
     def total_CUP_discount(self):
-        price = self.order.price 
-        total = decimal.Decimal(self.quantity * self.price_cup)
-        if self.product.litres_units > 0:
-            price_litre = decimal.Decimal(1/self.product.litres_units)*self.price_cup
-        else:
-            price_litre = self.price_cup
-        if self.product.available_CUP and price.discount_amount_by_litre > 0 and price_litre > 300:       
-            cant_litres = self.quantity * decimal.Decimal(self.product.litres_units)
-            discount = int(cant_litres) * price.discount_amount_by_litre
-            return decimal.Decimal(total) - decimal.Decimal(discount)
-        return decimal.Decimal(total)
+        try: 
+            price = self.order.price 
+            total = decimal.Decimal(self.quantity * self.price_cup)
+            if self.product.litres_units > 0:
+                price_litre = decimal.Decimal(1/self.product.litres_units)*self.price_cup
+            else:
+                price_litre = self.price_cup
+            if self.product.available_CUP and price.discount_amount_by_litre > 0 and price_litre > 300:       
+                cant_litres = self.quantity * decimal.Decimal(self.product.litres_units)
+                discount = int(cant_litres) * price.discount_amount_by_litre
+                return decimal.Decimal(total) - decimal.Decimal(discount)
+            return decimal.Decimal(total)
+        except Exception as e:
+            return 0
 
     @property
     def total_base_CUP(self):
@@ -560,6 +564,7 @@ class PaymentMethod(models.Model):
         sum = 0
         line = details.split('\n')
         for l in line:
+            l = l.replace(',', '.')
             monto = l.split()
             sum = sum + float(monto[1])
         if sum != amount:

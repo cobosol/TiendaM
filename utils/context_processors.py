@@ -25,7 +25,7 @@ COMERCIAL_ROLL = ((SUMMARY,'RESUMEN'),
 
 def tienda_generales(request):
     user = request.user
-    MND = 'USD'
+    MND = 'CUP'
     C_ROLL = 'RESUMEN'
     distribuidor = 'False'
     productor = 'False'
@@ -51,12 +51,10 @@ def tienda_generales(request):
             comercial = 'True'
             adminAccess = 'True'
             if request.session.get(S_C_ROLL,'') == '':
-                print('session vacia')
                 request.session[S_C_ROLL] = SUMMARY
             else:
                 c = request.session.get(S_C_ROLL,'')
                 C_ROLL = COMERCIAL_ROLL[int(request.session.get(S_C_ROLL,''))][1] 
-                print(C_ROLL)
         MND = profile.MONEY_TYPE[profile.money_type][1]
         #TU = profile.CLIENT_TYPE[profile.client_type][1] 
     categories = Category.objects.filter(is_active=True)

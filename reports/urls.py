@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     # Dashboard
-    path('dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('dashboard/', views.admin_dashboard_mensual, name='admin_dashboard'),
     path('dashboard_general/', views.admin_dashboard_general, name='admin_dashboard_general'),
     
     # Listas de órdenes

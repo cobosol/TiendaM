@@ -51,7 +51,6 @@ from django.db.models import Q
 from django.contrib import messages
 import calendar
 
-
 # Añade esta vista al archivo views.py
 def admin_dashboard_general(request, template_name='reports/admin_dashboard_general.html'):
     """Dashboard principal para la gerencia"""
@@ -356,6 +355,271 @@ def admin_dashboard(request, template_name='reports/admin_dashboard.html'):
     
     return render(request, template_name, context)
 
+def admin_dashboard_mensual(request, template_name='reports/admin_dashboard.html'):
+    """Dashboard principal para la gerencia con selector de mes"""
+
+    today = date.today()
+    
+    # Obtener mes seleccionado (formato YYYY-MM)
+    selected_month = request.GET.get('month')
+    if selected_month:
+        try:
+            year, month = map(int, selected_month.split('-'))
+            first_day_of_month = date(year, month, 1)
+            # Último día del mes
+            days_in_month = calendar.monthrange(year, month)[1]
+            last_day_of_month = date(year, month, days_in_month)
+            # Si el mes seleccionado es el actual, el "today" para el rango es hoy, si no, es el último día del mes
+            if (year, month) == (today.year, today.month):
+                end_date = today
+            else:
+                end_date = last_day_of_month
+        except (ValueError, TypeError):
+            # Si hay error, usar mes actual
+            first_day_of_month = today.replace(day=1)
+            days_in_month = calendar.monthrange(today.year, today.month)[1]
+            last_day_of_month = today.replace(day=days_in_month)
+            end_date = today
+    else:
+        first_day_of_month = today.replace(day=1)
+        days_in_month = calendar.monthrange(today.year, today.month)[1]
+        last_day_of_month = today.replace(day=days_in_month)
+        end_date = today
+
+    # Para comparación con el mes anterior (siempre basado en el mes seleccionado)
+    if first_day_of_month.month == 1:
+        first_day_last_month = date(first_day_of_month.year - 1, 12, 1)
+        last_day_last_month = date(first_day_of_month.year - 1, 12, 31)
+    else:
+        prev_month = first_day_of_month.month - 1
+        first_day_last_month = date(first_day_of_month.year, prev_month, 1)
+        last_day_last_month = date(first_day_of_month.year, prev_month, 
+                                  calendar.monthrange(first_day_of_month.year, prev_month)[1])
+    
+    # 1. Estadísticas generales de órdenes (totales históricos, sin filtrar por mes)
+    total_orders = Order.objects.all().count()
+    pending_orders = Order.objects.filter(status__in=[1, 2]).count()
+    delivered_orders = Order.objects.filter(status=Order.DELIVERED).count()
+    paid_orders = Order.objects.filter(status=Order.PAIDED).count()
+    cancelled_orders = Order.objects.filter(status=Order.CANCELLED).count()    
+
+    # 2. Ventas del mes seleccionado
+    month_orders = Order.objects.filter(
+        date__date__range=[first_day_of_month, end_date]
+    ).count()
+    
+    month_sales_usd = Order.objects.filter(
+        date__date__range=[first_day_of_month, end_date],
+        currency='USD', status__in=[3, 2, 5]
+    ).aggregate(total=Sum('end_total'))['total'] or 0
+    
+    month_sales_cup = Order.objects.filter(
+        date__date__range=[first_day_of_month, end_date],
+        currency='CUP', status__in=[3, 2, 5]
+    ).aggregate(total=Sum('cup_oficial'))['total'] or 0
+    
+    month_sales_total = Order.objects.filter(
+        date__date__range=[first_day_of_month, end_date], status__in=[3, 2, 5]
+        ).aggregate(total=Sum('cup_oficial'))['total'] or 0
+    
+    # Ventas del mes anterior para comparación
+    last_month_sales_usd = Order.objects.filter(
+        date__date__range=[first_day_last_month, last_day_last_month],
+        currency='USD', status__in=[3, 2, 5]
+    ).aggregate(total=Sum('end_total'))['total'] or 0
+    
+    last_month_sales_cup = Order.objects.filter(
+        date__date__range=[first_day_last_month, last_day_last_month],
+        currency='CUP', status__in=[3, 2, 5]
+    ).aggregate(total=Sum('cup_oficial'))['total'] or 0
+    
+    # Cálculo de crecimiento/descenso
+    def calculate_growth(current, previous):
+        if previous == 0:
+            return 100 if current > 0 else 0
+        return ((current - previous) / previous) * 100
+    
+    usd_growth = calculate_growth(float(month_sales_usd), float(last_month_sales_usd))
+    cup_growth = calculate_growth(float(month_sales_cup), float(last_month_sales_cup))
+    
+    # 3. Productos más vendidos (mes seleccionado)
+    top_products = OrderItem.objects.filter(
+        order__date__date__range=[first_day_of_month, end_date]
+    ).values(
+        'product__name', 
+        'product__sku',
+        'product__count'
+    ).annotate(
+        total_sold=Sum('quantity'),
+        total_revenue=Sum(F('price') * F('quantity'))
+    ).order_by('-total_sold')[:10]
+    
+    # Convertir a lista y agregar ratio
+    top_products_list = []
+    for p in top_products:
+        p_dict = dict(p)
+        p_dict['total_sold'] = float(p_dict['total_sold']) if p_dict['total_sold'] else 0
+        p_dict['total_revenue'] = float(p_dict['total_revenue']) if p_dict['total_revenue'] else 0
+        stock = p_dict['product__count'] or 0
+        if stock > 0:
+            p_dict['sold_stock_ratio'] = (p_dict['total_sold'] / float(stock)) * 100
+        else:
+            p_dict['sold_stock_ratio'] = 0
+        top_products_list.append(p_dict)
+    
+    # 4. Clientes más activos (mes seleccionado)
+    top_clients = Order.objects.filter(
+        date__date__range=[first_day_of_month, end_date],
+        user__groups__isnull=True, status__in=[3, 2, 5]
+    ).values(
+        'user__username',
+        'user__first_name',
+        'user__last_name',
+        'user__email'
+    ).annotate(
+        order_count=Count('id'),
+        total_spent=Sum('cup_oficial'),
+        last_order=Max('date')
+    ).order_by('-total_spent')[:10]
+    
+    # Convertir a float total_spent
+    for c in top_clients:
+        c['total_spent'] = float(c['total_spent']) if c['total_spent'] else 0
+    
+    # 5. Resumen por moneda (mes seleccionado)
+    currency_summary = Order.objects.filter(
+        date__date__range=[first_day_of_month, end_date], status__in=[3, 2, 5]
+    ).values('currency').annotate(
+        count=Count('id'),
+        total_amount=Sum('end_total'),
+        cup_oficial=Sum('cup_oficial')
+    ).order_by('-count')
+    
+    for cs in currency_summary:
+        cs['total_amount'] = float(cs['total_amount']) if cs['total_amount'] else 0
+        cs['cup_oficial'] = float(cs['cup_oficial']) if cs['cup_oficial'] else 0
+    
+    # 6. Ventas diarias del mes (para gráfico)
+    daily_sales = Order.objects.filter(
+        date__date__range=[first_day_of_month, end_date],
+        status__in=[Order.DELIVERED, Order.PAIDED]
+    ).annotate(
+        sale_day=TruncDate('date')
+    ).values('sale_day').annotate(
+        daily_total=Sum('end_total'),
+        order_count=Count('id')
+    ).order_by('sale_day')
+    
+    # Preparar datos para gráfico
+    days_list = []
+    sales_list = []
+    orders_list = []
+    
+    current_day = first_day_of_month
+    while current_day <= end_date:
+        days_list.append(current_day.strftime("%d/%m"))
+        day_sales = next(
+            (item for item in daily_sales if item['sale_day'] == current_day),
+            {'daily_total': 0, 'order_count': 0}
+        )
+        sales_list.append(float(day_sales['daily_total']))
+        orders_list.append(day_sales['order_count'])
+        current_day += timedelta(days=1)
+    
+    # 7. Inventario crítico (opcional)
+    try:
+        low_stock_products = Product.objects.filter(
+            stock__lte=F('min_stock')
+        )[:10]
+    except:
+        low_stock_products = []
+    
+    # 8. Órdenes recientes del mes seleccionado
+    recent_orders = Order.objects.filter(
+        date__date__range=[first_day_of_month, end_date]
+    ).order_by('-date')[:10]
+    
+    # 9. Ventas por estado del mes
+    month_status_summary = Order.objects.filter(
+        date__date__range=[first_day_of_month, end_date]
+    ).values('status').annotate(
+        count=Count('id'),
+        total_amount=Sum('end_total')
+    ).order_by('-count')
+    
+    status_names = {
+        Order.SUBMITTED: 'Pendiente',
+        Order.PROCESSED: 'Procesando',
+        Order.DELIVERED: 'Entregado',
+        Order.PAIDED: 'Pagado',
+        Order.SHIPPED: 'Enviado',
+        Order.CONFIRMED: 'Confirmado'
+    }
+    
+    for item in month_status_summary:
+        item['status_name'] = status_names.get(item['status'], 'Desconocido')
+        item['total_amount'] = float(item['total_amount']) if item['total_amount'] else 0
+    
+    # 10. Progreso del mes (solo si es el mes actual, si no, mostrar 100% o el mes completo)
+    if (first_day_of_month.year, first_day_of_month.month) == (today.year, today.month):
+        month_progress = (today.day / days_in_month) * 100
+        month_display = today.strftime("%B %Y")
+    else:
+        month_progress = 100
+        month_display = first_day_of_month.strftime("%B %Y")
+    
+    # Preparar contexto
+    context = {
+        'total_orders': total_orders,
+        'pending_orders': pending_orders,
+        'delivered_orders': delivered_orders,
+        'paid_orders': paid_orders,
+        'cancelled_orders': cancelled_orders,
+        'month_orders': month_orders,
+        'month_sales_usd': float(month_sales_usd),
+        'month_sales_cup': float(month_sales_cup),
+        'month_sales_mlc': float(month_sales_total),
+        'usd_growth': usd_growth,
+        'cup_growth': cup_growth,
+        'last_month_sales_usd': float(last_month_sales_usd),
+        'last_month_sales_cup': float(last_month_sales_cup),
+        'top_products': top_products_list,
+        'top_clients': list(top_clients),
+        'currency_summary': list(currency_summary),
+        'low_stock_products': low_stock_products,
+        'recent_orders': recent_orders,
+        'month_status_summary': list(month_status_summary),
+        'days_list': json.dumps(days_list),
+        'sales_list': json.dumps(sales_list),
+        'orders_list': json.dumps(orders_list),
+        'current_month': month_display,
+        'first_day_of_month': first_day_of_month,
+        'end_date': end_date,
+        'today': today,
+        'month_progress': month_progress,
+        'selected_month': selected_month,  # para mantener en el selector
+        'months_list': get_last_12_months(),  # función para obtener los últimos 12 meses (opcional)
+    }
+    
+    return render(request, template_name, context)
+
+def get_last_12_months():
+    """Devuelve una lista de los últimos 12 meses en formato (valor, etiqueta)"""
+    from datetime import date, timedelta
+    months = []
+    today = date.today()
+    for i in range(12):
+        year = today.year
+        month = today.month - i
+        while month <= 0:
+            month += 12
+            year -= 1
+        months.append({
+            'value': f"{year}-{month:02d}",
+            'label': date(year, month, 1).strftime("%B %Y")
+        })
+    return months
+
 # Gestionar la lista de ordenes (compras) realizadas a la tienda
 def vendedor_orders_list(request, template_name='reports/vendedor_orders_list.html'):
 
@@ -410,6 +674,13 @@ def admin_orders_list(request, template_name='reports/admin_orders_list.html'):
 
     orders = Order.objects.all().order_by('-date')
 
+    products_sales = Product_Sales.objects.all()
+    for ps in products_sales:
+        ps.save()
+
+    prod = Product.objects.all()
+    for p in prod:
+        p.reserved = 0
 
     start_date = request.GET.get('start_date', '2025-01-01')
     end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
