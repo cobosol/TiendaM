@@ -5917,6 +5917,39 @@ a.close.disabled {
   transition: transform 0.6s ease-in-out;
 }
 
+/* ==========================================================================
+   BANNER · FIX del hueco en móviles
+   Bootstrap 4 no da altura a .carousel-item → la <img class="h-100"> cae a
+   height:auto y deja hueco debajo. Forzamos que llene el contenedor.
+   ========================================================================== */
+
+/* 1) Que el item ocupe la altura del contenedor (que SÍ tiene altura fija) */
+.carousel-inner > .carousel-item{
+  height:100%;
+}
+
+/* 2) Que la imagen llene el item (y recorte sin deformar) */
+.carousel-inner > .carousel-item > img{
+  width:100%;
+  height:100%;
+  object-position:center;
+  display:block;
+}
+
+@media (max-width:767.98px){
+  .carousel-inner{
+      height:auto !important;      /* anula el clamp inline */
+      aspect-ratio: 16 / 9;         /* ajusta a 3/2 o 4/3 si tu banner es más cuadrado */
+  }
+  .carousel-inner > .carousel-item{
+      height:100%;
+  }
+  /* Reduce un poco el margen inferior para que "respire" menos */
+  .banner{ margin-bottom:1rem !important; }
+  /* Espacio entre secciones más compacto en móvil */
+  .banner + section{ margin-top:0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .carousel-item {
     transition: none;
@@ -9867,11 +9900,11 @@ table#receipt{
 }
 
 /* ==========================================================================
-   MUHIA · REFACTOR 2024 — sistema de rejilla + tarjetas producto + secciones
-   Añadir al FINAL de styleN.css (después de Bootstrap compilado)
+   MUHIA · REFACTOR v2 — Bootstrap 4.5.3 compatible
+   Sistema de rejilla, tarjetas, secciones, banner y utilidades custom.
    ========================================================================== */
 
-/* ---------- Tokens de marca (reusan las vars existentes) ---------- */
+/* ---------- Tokens de marca (reutilizan la paleta existente) ---------- */
 :root{
   --muhia-brand:#143d4f;
   --muhia-brand-soft:#e7eef1;
@@ -9885,16 +9918,51 @@ table#receipt{
   --muhia-white:#ffffff;
   --muhia-radius:14px;
   --muhia-radius-sm:10px;
-  --muhia-shadow-sm:0 1px 2px rgba(20,61,79,.06), 0 1px 3px rgba(20,61,79,.08);
+  --muhia-shadow-sm:0 1px 2px rgba(20,61,79,.06),0 1px 3px rgba(20,61,79,.08);
   --muhia-shadow:0 4px 14px rgba(20,61,79,.10);
   --muhia-shadow-lg:0 18px 40px rgba(20,61,79,.16);
   --muhia-ease:cubic-bezier(.2,.7,.3,1);
-  --muhia-golden:1.618;
 }
 
-/* ---------- Título de sección (sin tachado, con rayita inferior) ---------- */
+/* ---------- Utilidades que no existen en BS4 ---------- */
+.gap-1{gap:.25rem !important;}
+.gap-2{gap:.5rem !important;}
+.gap-3{gap:1rem !important;}
+.gap-4{gap:1.5rem !important;}
+.text-line-through{text-decoration:line-through !important;}
+
+/* ==========================================================================
+ BANNER — respeta la proporción natural de la imagen, sin recortar
+ Se elimina cualquier altura fija: la altura la define la imagen.
+ ========================================================================== */
+.banner{ margin-bottom:1rem; }
+@media (min-width:768px){ .banner{ margin-bottom:1.5rem; } }
+
+.banner .carousel-inner{
+  height:auto;                     /* sin altura fija */
+  border-radius:var(--muhia-radius);
+  overflow:hidden;
+}
+.banner .carousel-item{
+  height:auto;
+}
+.banner .carousel-item > img{
+  display:block;
+  width:100%;
+  height:auto;                     /* mantiene el aspect-ratio original */
+  max-height:80vh;                 /* tope de seguridad en móvil apaisado */
+  object-fit:contain;              /* si se llega al tope, no recorta */
+  object-position:center;
+}
+.banner .carousel-caption{
+  /* Reafirmamos lo que ya tienes en Custom CSS, por si acaso */
+  z-index:10;
+}
+
+/* ==========================================================================
+ TÍTULOS DE SECCIÓN — sin tachado, rayita inferior
+ ========================================================================== */
 .section-title{
-  /* Reset duro contra cualquier ::before heredado */
   position:relative;
   display:block;
   isolation:isolate;
@@ -9906,11 +9974,13 @@ table#receipt{
   margin:0 0 1.25rem;
   line-height:1.25;
   letter-spacing:-.02em;
-  font-weight:800;
-  font-size:clamp(1.15rem,3vw,1.7rem);
+  font-weight:700;                  /* BS4 no tiene fw-* */
+  font-size:calc(1.325rem + .9vw); /* mismo cálculo que h2 de BS4 */
   color:var(--muhia-ink);
   text-align:center;
 }
+@media (min-width:1200px){ .section-title{ font-size:1.75rem; } }
+
 .section-title *,
 .section-title span,
 .section-title strong,
@@ -9919,12 +9989,9 @@ table#receipt{
   border:0 !important;
   background:none !important;
 }
-/* Mata cualquier ::before externo (el que tachaba) */
-.section-title::before{
-  content:none !important;
-  display:none !important;
-}
-/* Nuestra rayita: SIEMPRE debajo del texto, nunca encima */
+/* Mata el ::before original que tachaba */
+.section-title::before{ content:none !important; display:none !important; }
+/* Nuestra rayita decorativa, siempre DEBAJO del texto */
 .section-title::after{
   content:"";
   display:block;
@@ -9934,20 +10001,20 @@ table#receipt{
   background:var(--muhia-brand);
   margin:.6rem auto 0;
   position:static;
-  inset:auto;
-  top:auto; right:auto; bottom:auto; left:auto;
+  top:auto;right:auto;bottom:auto;left:auto;
   transform:none;
   border:0;
-  text-decoration:none;
 }
 
-/* ---------- Franja de ventajas ---------- */
+/* ==========================================================================
+ FEATURE STRIP (Calidad, Devoluciones, Soporte)
+ ========================================================================== */
 .feature-strip{
   display:grid;
   gap:.75rem;
   grid-template-columns:1fr;
 }
-@media (min-width:768px){ .feature-strip{grid-template-columns:repeat(3,1fr);} }
+@media (min-width:768px){ .feature-strip{ grid-template-columns:repeat(3,1fr); } }
 
 .feature-item{
   display:flex;
@@ -9959,11 +10026,13 @@ table#receipt{
   border-radius:var(--muhia-radius);
   box-shadow:var(--muhia-shadow-sm);
   color:inherit;
+  text-decoration:none;
   transition:transform .2s var(--muhia-ease),
              box-shadow .2s var(--muhia-ease),
              border-color .2s;
 }
-.feature-item:hover{
+.feature-item:hover,
+.feature-item:focus{
   transform:translateY(-3px);
   box-shadow:var(--muhia-shadow);
   border-color:#d7deea;
@@ -9980,14 +10049,16 @@ table#receipt{
   font-size:1.3rem;
 }
 .feature-item .feature-txt{
-  font-weight:700;
-  font-size:clamp(.85rem,2vw,.95rem);
+  font-weight:600;
+  font-size:calc(.85rem + .1vw);
   line-height:1.2;
   margin:0;
   color:var(--muhia-brand);
 }
 
-/* ---------- Rejilla responsive de productos ---------- */
+/* ==========================================================================
+ GRID DE PRODUCTOS (independiente de clases col-* de BS4)
+ ========================================================================== */
 .products-grid{
   display:grid;
   gap:.7rem;
@@ -9999,13 +10070,15 @@ table#receipt{
   margin:0;
   padding:0;
 }
-@media (min-width:576px){  .products-grid{gap:.9rem;} }
-@media (min-width:768px){  .products-grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
-@media (min-width:1200px){ .products-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.1rem;} }
-@media (min-width:1500px){ .products-grid{grid-template-columns:repeat(5,minmax(0,1fr));} }
-@media (min-width:1900px){ .products-grid{grid-template-columns:repeat(6,minmax(0,1fr));} }
+@media (min-width:576px){  .products-grid{ gap:.9rem; } }
+@media (min-width:768px){  .products-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media (min-width:1200px){ .products-grid{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:1.1rem; } }
+@media (min-width:1500px){ .products-grid{ grid-template-columns:repeat(5,minmax(0,1fr)); } }
+@media (min-width:1900px){ .products-grid{ grid-template-columns:repeat(6,minmax(0,1fr)); } }
 
-/* ---------- Tarjeta producto ---------- */
+/* ==========================================================================
+ TARJETA DE PRODUCTO
+ ========================================================================== */
 .product-card{
   position:relative;
   display:flex;
@@ -10026,42 +10099,38 @@ table#receipt{
   border-color:#d7deea;
 }
 
-/* Imagen — PROPORCIÓN ÁUREA VERTICAL 1 : 1.618 (ancho : alto). Sin altura fija. */
+/* Imagen: proporción áurea VERTICAL 1 : 1.618. Sin altura fija. */
 .product-card .product-image-container{
   position:relative;
   width:100%;
-  height:auto;                       /* ← neutraliza cualquier height:200px previo */
+  height:auto;
   aspect-ratio:1 / 1.618;
   overflow:hidden;
   background:linear-gradient(180deg,#eef1f5,#e4e9f0);
   flex:0 0 auto;
   isolation:isolate;
 }
-/* El <a> cubre todo el contenedor para que la img absoluta tenga referencia */
 .product-card .product-image-container > a{
   position:absolute;
-  inset:0;
+  top:0;right:0;bottom:0;left:0;
   display:block;
-  width:100%;
-  height:100%;
+  width:100%;height:100%;
 }
-/* Defensa contra CSS externo (Bootstrap .card-img-top, .img-fluid, etc.) */
 .product-card .product-img-responsive{
   position:absolute;
-  inset:0;
+  top:0;right:0;bottom:0;left:0;
   width:100% !important;
   height:100% !important;
   max-height:none !important;
   min-height:0 !important;
-  object-fit:cover !important;
+  object-fit:cover !important;      /* SOLO en miniaturas de producto, aquí sí recortamos a la proporción */
   object-position:center;
   aspect-ratio:auto !important;
   display:block;
   transition:transform .55s var(--muhia-ease);
 }
-.product-card:hover .product-img-responsive{transform:scale(1.06);}
+.product-card:hover .product-img-responsive{ transform:scale(1.06); }
 
-/* Fallback navegadores sin aspect-ratio */
 @supports not (aspect-ratio:1 / 1.618){
   .product-card .product-image-container::before{
       content:"";
@@ -10070,14 +10139,13 @@ table#receipt{
   }
 }
 
-/* Badge */
 .product-badge{
   position:absolute;
   top:.5rem;left:.5rem;
   z-index:2;
   background:var(--muhia-accent);
   color:#fff;
-  font-size:clamp(.6rem,1.6vw,.72rem);
+  font-size:.7rem;
   font-weight:700;
   letter-spacing:.02em;
   line-height:1;
@@ -10085,9 +10153,8 @@ table#receipt{
   border-radius:999px;
   white-space:nowrap;
 }
-.product-badge.is-brand{background:var(--muhia-brand);}
+.product-badge.is-brand{ background:var(--muhia-brand); }
 
-/* Cuerpo */
 .product-card .card-body{
   display:flex;
   flex-direction:column;
@@ -10098,8 +10165,8 @@ table#receipt{
   border:0;
 }
 .product-card .card-title{
-  font-size:clamp(.82rem,1.7vw,.95rem);
-  font-weight:700;
+  font-size:calc(.8rem + .15vw);
+  font-weight:600;
   line-height:1.25;
   margin:0;
   min-height:2.5em;
@@ -10109,16 +10176,16 @@ table#receipt{
   overflow:hidden;
   color:var(--muhia-ink);
 }
-.product-card .card-title a{color:var(--muhia-ink);text-decoration:none;}
-.product-card .card-title a:hover{color:var(--muhia-brand);text-decoration:none;}
+.product-card .card-title a{ color:var(--muhia-ink); text-decoration:none; }
+.product-card .card-title a:hover{ color:var(--muhia-brand); text-decoration:none; }
 
 .product-price{
   display:flex;
   align-items:baseline;
   flex-wrap:wrap;
   gap:.25rem;
-  font-size:clamp(.9rem,1.9vw,1.05rem);
-  font-weight:800;
+  font-size:calc(.85rem + .15vw);
+  font-weight:700;
   color:var(--muhia-accent);
   letter-spacing:-.01em;
   line-height:1.1;
@@ -10126,14 +10193,14 @@ table#receipt{
 }
 .product-price .currency{
   font-size:.72em;
-  font-weight:700;
+  font-weight:600;
   color:var(--muhia-text);
   letter-spacing:.02em;
 }
 
 .product-details-link{
-  font-size:clamp(.68rem,1.5vw,.76rem);
-  font-weight:600;
+  font-size:.72rem;
+  font-weight:500;
   color:var(--muhia-text);
   display:inline-flex;
   align-items:center;
@@ -10142,17 +10209,17 @@ table#receipt{
   padding:.15rem 0;
   text-decoration:none;
 }
-.product-details-link:hover{color:var(--muhia-brand);text-decoration:none;}
+.product-details-link:hover{ color:var(--muhia-brand); text-decoration:none; }
 
-/* Pie: cantidad + botón */
 .product-card .card-footer{
   margin-top:0;
   padding:.55rem .75rem .75rem;
   background:transparent;
   border-top:1px solid var(--muhia-line);
 }
-.product-card .card-footer .cart{width:100%;display:block;margin:0;}
+.product-card .card-footer .cart{ width:100%; display:block; margin:0; }
 
+/* Fila cantidad + botón */
 .qty-row{
   display:flex;
   align-items:stretch;
@@ -10184,27 +10251,26 @@ table#receipt{
   background:transparent;
   text-align:center;
   font-size:.85rem;
-  font-weight:700;
+  font-weight:600;
   color:var(--muhia-ink);
   padding:0;
   -moz-appearance:textfield;
   appearance:textfield;
 }
 .cantidad-input::-webkit-outer-spin-button,
-.cantidad-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
-.cantidad-input:focus{outline:none;}
+.cantidad-input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+.cantidad-input:focus{ outline:none; }
 
 .qty-unit{
   flex:0 0 auto;
   font-size:.7rem;
-  font-weight:700;
+  font-weight:600;
   color:var(--muhia-text);
   text-transform:lowercase;
   pointer-events:none;
   padding-right:.1rem;
 }
 
-/* Botón añadir — usa colores MUHIA (no azul Bootstrap) */
 .btn-add{
   flex:0 0 auto;
   width:38px;
@@ -10218,24 +10284,110 @@ table#receipt{
   background:var(--muhia-brand);
   color:#fff;
   font-size:.85rem;
-  font-weight:700;
+  font-weight:600;
   line-height:1;
   cursor:pointer;
-  transition:background .2s, border-color .2s, transform .12s var(--muhia-ease), box-shadow .2s;
+  transition:background .2s, border-color .2s,
+             transform .12s var(--muhia-ease), box-shadow .2s;
 }
 .btn-add:hover{
   background:var(--muhia-accent);
   border-color:var(--muhia-accent);
   box-shadow:0 6px 16px rgba(96,16,16,.28);
+  color:#fff;
 }
-.btn-add:active{transform:scale(.94);}
-.btn-add .btn-add-text{display:none;}
+.btn-add:active{ transform:scale(.94); }
+.btn-add .btn-add-text{ display:none; }
 @media (min-width:1500px){
-  .btn-add{width:auto;padding:0 .8rem;}
-  .btn-add .btn-add-text{display:inline;}
+  .btn-add{ width:auto; padding:0 .8rem; }
+  .btn-add .btn-add-text{ display:inline; }
 }
 
-/* ---------- Back-to-top (usa paleta MUHIA y anula animación agresiva) ---------- */
+/* ==========================================================================
+ TARJETAS DE OFERTA
+ ========================================================================== */
+.offer-card{
+  background:var(--muhia-white);
+  border:1px solid var(--muhia-line);
+  border-radius:var(--muhia-radius);
+  overflow:hidden;
+  box-shadow:var(--muhia-shadow-sm);
+  transition:transform .25s var(--muhia-ease), box-shadow .25s var(--muhia-ease);
+}
+.offer-card:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--muhia-shadow);
+}
+.offer-card .card-img-top{
+  width:100%;
+  object-fit:cover;
+  display:block;
+}
+.offer-card .card-title{
+  font-weight:700;
+  color:var(--muhia-accent);
+}
+.offer-card .card-text{
+  color:var(--muhia-text);
+}
+
+/* ==========================================================================
+ LAYOUT: SIDEBAR + CONTENIDO
+ ========================================================================== */
+.sidebar{
+  height:100vh;
+  position:sticky;
+  top:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  background:var(--muhia-white);
+  border-right:1px solid var(--muhia-line);
+  z-index:1000;
+}
+.sidebar::-webkit-scrollbar{ width:6px; }
+.sidebar::-webkit-scrollbar-thumb{ background:#cfd6e0; border-radius:99px; }
+.sidebar-toggle{ display:none; }
+
+.main-content{
+  min-height:100vh;
+  background:var(--muhia-surface);
+  transition:all .3s var(--muhia-ease);
+}
+.content-inner{ padding:1rem .9rem 2rem; }
+
+.overlay{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100vw;
+  height:100vh;
+  background:rgba(15,23,42,.55);
+  -webkit-backdrop-filter:blur(2px);
+  backdrop-filter:blur(2px);
+  z-index:999;
+}
+.overlay.active{ display:block; }
+
+@media (max-width:991.98px){
+  .sidebar{
+      position:fixed;
+      top:0;left:-320px;
+      width:300px;
+      max-width:85vw;
+      z-index:1000;
+      transition:left .3s var(--muhia-ease);
+      box-shadow:3px 0 24px rgba(0,0,0,.12);
+  }
+  .sidebar.active{ left:0; }
+  .sidebar-toggle{ display:block; }
+}
+@media (min-width:768px){ .content-inner{ padding:1.5rem 1.25rem 2.5rem; } }
+@media (min-width:1200px){ .content-inner{ padding:1.75rem 2rem 3rem; } }
+@media (min-width:1600px){ .content-inner{ padding:2rem 2.5rem 3.5rem; } }
+
+/* ==========================================================================
+ BACK TO TOP (neutraliza la animación original)
+ ========================================================================== */
 .back-to-top{
   position:fixed;
   right:1rem;
@@ -10247,35 +10399,111 @@ table#receipt{
   padding:0;
   border-radius:50%;
   background:var(--muhia-brand);
-  border-color:var(--muhia-brand);
+  border:1px solid var(--muhia-brand);
   color:#fff;
   box-shadow:var(--muhia-shadow);
-  animation:none;                /* ← neutraliza action 1s infinite alternate */
+  animation:none;
 }
 .back-to-top:hover{
   background:var(--muhia-accent);
   border-color:var(--muhia-accent);
   color:#fff;
 }
-
-/* ---------- Ajustes finos responsive ---------- */
 @media (max-width:575.98px){
-  .back-to-top{right:.75rem;bottom:4.75rem;width:38px;height:38px;}
-  .product-card .card-body{padding:.6rem .6rem .45rem;}
-  .product-card .card-footer{padding:.45rem .6rem .6rem;}
+  .back-to-top{ right:.75rem; bottom:4.75rem; width:38px; height:38px; }
 }
 
-.sidebar{height:100vh;position:sticky;top:0;overflow-y:auto;overscroll-behavior:contain;background:var(--muhia-white);border-right:1px solid var(--muhia-line);z-index:1000;}
-.sidebar-toggle{display:none;}
-.main-content{min-height:100vh;background:var(--muhia-surface);transition:all .3s var(--muhia-ease);}
-.content-inner{padding:1rem .9rem 2rem;}
-.overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(2px);z-index:999;}
-.overlay.active{display:block;}
-@media (max-width:991.98px){
-  .sidebar{position:fixed;top:0;left:-320px;width:300px;max-width:85vw;z-index:1000;transition:left .3s var(--muhia-ease);box-shadow:3px 0 24px rgba(0,0,0,.12);}
-  .sidebar.active{left:0;}
-  .sidebar-toggle{display:block;}
+/* ==========================================================================
+ CHATBOT (movido desde <style> inline de base.html)
+ ========================================================================== */
+#chat-container{
+  z-index:9999 !important;
+  display:none;
+  position:fixed;
+  bottom:20px;right:20px;
+  width:350px;
+  max-width:90vw;
+  box-shadow:0 0 20px rgba(0,0,0,.2);
+  border-radius:15px;
+  overflow:hidden;
+  transition:all .3s ease;
+  transform:translateY(20px);
+  opacity:0;
+  background:#fff;
 }
-@media (min-width:768px){ .content-inner{padding:1.5rem 1.25rem 2.5rem;} }
-@media (min-width:1200px){ .content-inner{padding:1.75rem 2rem 3rem;} }
-@media (min-width:1600px){ .content-inner{padding:2rem 2.5rem 3.5rem;} }
+#chat-container.show{ transform:translateY(0); opacity:1; }
+
+.chat-header{
+  background:linear-gradient(135deg,#143d4f,#601010);
+  color:#fff;
+  padding:12px 15px;
+  cursor:move;
+}
+.chat-messages{
+  height:300px;
+  overflow-y:auto;
+  padding:15px;
+  background:#f8f9fa;
+}
+.message-bot,.message-user{
+  padding:10px 15px;
+  margin-bottom:10px;
+  border-radius:15px;
+  max-width:85%;
+  animation:messageAppear .3s ease;
+  word-wrap:break-word;
+  font-size:.9rem;
+}
+.message-user{ background:#d1e7ff; margin-left:auto; }
+.message-bot{ background:#e9ecef; }
+@keyframes messageAppear{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.typing-indicator{
+  display:none;
+  padding:10px 15px;
+  background:#e9ecef;
+  border-radius:15px;
+  margin:0 15px 15px;
+  max-width:80%;
+}
+.typing-dots{ display:inline-flex; }
+.typing-dots span{
+  width:6px;height:6px;margin:0 2px;
+  background:#6c757d;border-radius:50%;
+  animation:typing 1.4s infinite both;
+}
+.typing-dots span:nth-child(2){ animation-delay:.2s; }
+.typing-dots span:nth-child(3){ animation-delay:.4s; }
+@keyframes typing{ 0%,80%,100%{opacity:.3;} 40%{opacity:1;} }
+
+.btn .spinner{ animation:spin 1s linear infinite; }
+@keyframes spin{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+
+@media (max-width:991.98px){
+  #chat-container{ width:calc(100vw - 40px); right:20px; left:20px; }
+  .chat-messages{ max-height:50vh; }
+}
+@media (max-width:575.98px){
+  #chat-button{ width:50px; height:50px; bottom:15px; right:15px; }
+  #chat-container{ bottom:10px; right:10px; left:10px; width:calc(100vw - 20px); }
+  .chat-messages{ max-height:45vh; }
+  .message-bot,.message-user{ max-width:90%; }
+}
+
+/* ==========================================================================
+ AJUSTES RESPONSIVE GENERALES
+ ========================================================================== */
+@media (max-width:767.98px){
+  body{ font-size:.9rem; }
+  .navbar-brand{ font-size:1.1rem; }
+  .navbar-nav{ text-align:center; padding:10px 0; }
+  .dropdown-menu{ text-align:center; }
+  footer .row{ text-align:center; }
+  footer .col-auto{ margin-bottom:10px; }
+  .container-fluid{ padding-left:15px; padding-right:15px; }
+  .product-card .card-body{ padding:.6rem .6rem .45rem; }
+  .product-card .card-footer{ padding:.45rem .6rem .6rem; }
+}

@@ -12234,3 +12234,33 @@ INFO 2026-09-29 16:06:28,766 basehttp 11310 140407869896448 "GET /compra/resumen
 INFO 2026-09-29 16:07:41,234 basehttp 11310 140407869896448 "POST /compra/resumen_diario/ HTTP/1.1" 302 0
 INFO 2026-09-29 16:07:41,379 basehttp 11310 140407869896448 "GET /compra/compras/683/ HTTP/1.1" 200 60377
 INFO 2026-09-29 16:07:49,144 basehttp 11310 140407869896448 "POST /compra/compras/683/ HTTP/1.1" 200 382484
+INFO 2026-10-01 08:19:27,710 autoreload 3159 140227152058176 Watching for file changes with StatReloader
+INFO 2026-10-01 08:30:57,534 autoreload 3159 140227152058176 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2026-10-01 08:30:59,550 autoreload 3366 140372795463488 Watching for file changes with StatReloader
+INFO 2026-10-01 08:31:36,986 autoreload 3599 140228166162240 Watching for file changes with StatReloader
+INFO 2026-10-01 08:31:54,968 basehttp 3599 140227993138944 "GET / HTTP/1.1" 200 82906
+INFO 2026-10-01 08:31:55,116 basehttp 3599 140227993138944 "GET /static/css/styleDS_2.css HTTP/1.1" 200 191890
+INFO 2026-10-01 08:31:55,195 basehttp 3599 140227983435520 "GET /static/img/imagenMes.jpg HTTP/1.1" 200 78060
+INFO 2026-10-01 08:31:55,326 basehttp 3599 140227993138944 "GET /static/img/avatar.png HTTP/1.1" 200 41029
+INFO 2026-10-01 08:31:55,348 basehttp 3599 140227983435520 "GET /media/Productos/Acond240ml.webp HTTP/1.1" 200 22936
+INFO 2026-10-01 08:31:57,696 basehttp 3599 140227983435520 "GET /media/Productos/DetBlanqueador1L.webp HTTP/1.1" 200 19464
+INFO 2026-10-01 08:42:55,016 autoreload 3599 140228166162240 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2026-10-01 08:42:56,695 autoreload 3785 139732150196032 Watching for file changes with StatReloader
+INFO 2026-10-01 08:43:46,927 autoreload 3785 139732150196032 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2026-10-01 08:43:48,998 autoreload 3853 140221082543936 Watching for file changes with StatReloader
+INFO 2026-10-01 08:44:04,329 autoreload 3938 139995553298240 Watching for file changes with StatReloader
+INFO 2026-10-01 08:44:11,217 basehttp 3938 139995381462784 "GET / HTTP/1.1" 200 82915
+INFO 2026-10-01 08:44:11,316 basehttp 3938 139995381462784 "GET /static/css/styleDS_3.css HTTP/1.1" 200 191871
+WARNING 2026-10-01 08:44:20,581 log 3938 139995381462784 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2026-10-01 08:44:20,583 basehttp 3938 139995381462784 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4374
+INFO 2026-10-01 08:44:23,735 basehttp 3938 139995381462784 "GET / HTTP/1.1" 200 82915
+INFO 2026-10-01 08:44:23,827 basehttp 3938 139995369780992 "GET /static/css/styleDS_3.css HTTP/1.1" 304 0
+INFO 2026-10-01 09:21:09,743 autoreload 3938 139995553298240 /media/ycoca/686BEC6D594A5571/00-Trabajo/00-Cobosi/00-Desarrollo/00-Proyectos/00-TiendaMUHIA/templates/base.html changed, reloading.
+INFO 2026-10-01 09:21:11,629 autoreload 4282 140173807855424 Watching for file changes with StatReloader
+INFO 2026-10-01 09:21:22,478 basehttp 4282 140173634959104 "GET / HTTP/1.1" 200 66768
+INFO 2026-10-01 09:21:22,614 basehttp 4282 140173634959104 "GET /static/css/styleDS_3.css HTTP/1.1" 200 197516
+WARNING 2026-10-01 09:21:34,985 log 4282 140173634959104 Not Found: /media/Productos/IMG_9531.jpg
+WARNING 2026-10-01 09:21:34,989 basehttp 4282 140173634959104 "GET /media/Productos/IMG_9531.jpg HTTP/1.1" 404 4374
+INFO 2026-10-01 09:27:29,381 autoreload 4541 140562693896000 Watching for file changes with StatReloader
+INFO 2026-10-01 09:27:36,040 basehttp 4541 140562522318592 "GET / HTTP/1.1" 200 66768
+INFO 2026-10-01 09:27:36,401 basehttp 4541 140562511685376 "GET /static/css/styleDS_4.css HTTP/1.1" 200 197435
