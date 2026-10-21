@@ -303,6 +303,8 @@ class eliminar_producto(SuccessMessageMixin, DeleteView):
         return reverse('productos') # Redireccionamos a la vista principal
 
 def lista_productos_precios(request):
+    if not request.user.is_staff:
+        return JsonResponse({'status': 'error', 'message': 'No tiene permisos para esta acción'})
     objetos = Product.objects.all().order_by('name')
     
     return render(request, 'catalog/actualiza_precios.html', {
@@ -312,10 +314,10 @@ def lista_productos_precios(request):
 @csrf_exempt
 @require_POST
 def actualizar_precios(request, pk, campo):
+    if not request.user.is_staff:
+        return JsonResponse({'status': 'error', 'message': 'No tiene permisos para esta acción'})
     objeto = get_object_or_404(Product, pk=pk)
     nuevo_valor = request.POST.get(campo)
-    print(campo)
-    print(nuevo_valor)
     campos_editables = ['price_base', 'old_price']
 
     if campo not in campos_editables:
