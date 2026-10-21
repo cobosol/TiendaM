@@ -43,14 +43,14 @@
               <div class="d-flex align-items-baseline justify-content-center mb-2 mt-auto">
                   {% if p.on_sale %}
                   <span class="text-danger fw-bolder fs-8 me-2">
-                      {{ p.price_base|currency }} 
+                      {{ p.price_base|currency }} USD
                   </span>
                   <span class="text-muted text-decoration-line-through small">
-                      {{ p.old_price|currency }}
+                      {{ p.old_price|currency }} USD
                   </span>
                   {% else %}
                   <span class="text-primary fw-bolder fs-8">
-                      {{ p.price_base|currency }}
+                      {{ p.price_base|currency }} USD
                   </span>
                   {% endif %}
               </div>
@@ -104,14 +104,14 @@
             <div class="d-flex align-items-baseline justify-content-center mb-2 mt-auto">
                 {% if p.on_sale %}
                 <span class="text-danger fw-bolder fs-8 me-2">
-                    {{ p.price_base|currency }} 
+                    {{ p.price_base|currency }} USD
                 </span>
                 <span class="text-muted text-decoration-line-through small">
-                    {{ p.old_price|currency }}
+                    {{ p.old_price|currency }} USD
                 </span>
                 {% else %}
                 <span class="text-primary fw-bolder fs-8">
-                    {{ p.price_base|currency }}
+                    {{ p.price_base|currency }} USD
                 </span>
                 {% endif %}
             </div>
@@ -140,7 +140,7 @@
         </div>
       </div>
       {% endif %}                  
-    {% elif MND == 'CUP' and p.available_CUP %}
+    {% elif MND == 'CUP' %} <!-- and p.available_CUP --> 
       {% if vendedor == 'True' or comercial == 'True' %}
       <div class="col-6 col-md-2 col-lg-2 mb-2">
         <div class="card h-100 product-card border-0 shadow-sm rounded-3 overflow-hidden">                
@@ -173,14 +173,21 @@
                     {{ p.price_cup|currency }} CUP 
                 </span>
                 <span class="text-muted text-decoration-line-through small">
-                    {{ p.old_price_cup|currency }}
+                    {{ p.old_price_cup|currency }} CUP
                 </span>
-                {% else %}
+                {% elif p.available_CUP%}
                 <span class="text-primary fw-bolder fs-8">
                     {{ p.price_cup|currency }} CUP
                 </span>
                 {% endif %}
+                
+                <span class="text-danger text-center fw-bolder fs-12">
+                  {{ p.price_base|currency }} USD
+                </span> 
+                
             </div>
+
+            
 
             <div class="card-footer d-flex text-center justify-content-between bg-light border">
               {% if p.count > 0 %}
@@ -224,19 +231,23 @@
             </p>              
           <div class="d-flex align-items-baseline justify-content-center mb-2 mt-auto">
             {% if p.on_sale %}
-                <span class="text-danger fw-bolder fs-8 me-2">
+                <span class="text-success fw-bolder fs-8 me-2">
                     {{ p.price_cup|currency }} CUP 
                 </span>
                 <span class="text-muted text-decoration-line-through small">
-                    {{ p.old_price_cup|currency }}
+                    {{ p.old_price_cup|currency }} CUP
                 </span>
-                {% else %}
+            {% elif p.available_CUP %}
                 <span class="text-primary fw-bolder fs-8">
                     {{ p.price_cup|currency }} CUP
                 </span>
-                {% endif %} 
+            {% endif %} 
           </div>
-
+          
+            <span class="text-danger text-center fw-bolder fs-12">
+              {{ p.price_base|currency }} USD
+            </span>
+          
           <div class="card-footer d-flex text-center justify-content-between bg-light border">
             {% if p.count > 0 %}
             <form method="post" action="." class="cart">

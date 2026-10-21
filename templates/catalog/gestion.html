@@ -5,13 +5,13 @@
 
 
 {% block content %}
-{% if request.user.is_superuser or request.user.is_staff or vendedor == 'True' %}
+
     <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-2">
       <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 100px">
           <h4 class="text-primary font-weight-semi-bold mb-3" style="font-family: sans-serif;">Contenidos a actualizar</h4>
       </div>
-  </div>
+    </div>
   <!-- Page Header End -->
 <!-- <section class="content-header">   
 	<div class="content-header x_panel x_title">
@@ -33,6 +33,7 @@
             </tr>
           </thead>
           <tbody class="h5" >
+            {% if request.user.is_staff or vendedor == 'True' %}
             <tr>
                 <td><a class="nav-link" href="{% url 'productos'  %}">Productos</a></td>
                 <td> Productos en catálogo de MUHIA</td>
@@ -40,15 +41,18 @@
             <tr>
               <td><a class="nav-link" href="{% url 'lista_productos_inventario' %}">Actualizar inventarios</a></td>
               <td>Inventarios de productos en cada almacén</td>
-          </tr>
+            </tr>
+            {% endif %}
+          {% if request.user.is_staff %}
           <tr>
             <td><a class="nav-link" href="{% url 'lista_productos_precios' %}">Actualizar precios</a></td>
             <td>Precio base en USD de los productos</td>
-        </tr>
+          </tr>
+          {% endif %}
           </tbody>
         </table>
       </div>
     </div>
 </div>
-{% endif %}
+
 {% endblock %}
